@@ -1,0 +1,32 @@
+# .github/workflows/ci-be.yml
+name: CI - Backend
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-be:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./be  # Thư mục backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Finish BE CI
+        run: echo "Backend CI completed!"
