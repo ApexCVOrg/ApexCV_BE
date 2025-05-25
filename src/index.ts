@@ -1,6 +1,5 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import helloRouter from "./routes/hello";
 import dotenv from "dotenv";
 import userRouter from "./routes/users";
@@ -13,26 +12,12 @@ import conversationRouter from "./routes/conversations";
 import messageRouter from "./routes/messages";
 import brandRouter from "./routes/brands";
 import authRouter from "./routes/auth";
+import connectDB from "./config/db";
 
 dotenv.config();
 
 const app: Application = express();
 const port: number | string = process.env.PORT || 5000;
-const mongoURI: string = process.env.MONGO_URI || "YOUR_MONGODB_URI";
-
-// Hàm kết nối MongoDB với Mongoose
-const connectDB = async () => {
-  try {
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions); // Thêm kiểu để tránh cảnh báo
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1); // Dừng server nếu kết nối thất bại
-  }
-};
 
 // Kết nối database trước khi start server
 connectDB();
