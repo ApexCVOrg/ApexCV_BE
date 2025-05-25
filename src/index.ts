@@ -3,7 +3,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import helloRouter from "./routes/hello";
 import dotenv from "dotenv";
-dotenv.config();
 import userRouter from "./routes/users";
 import categoryRouter from "./routes/categories";
 import productRouter from "./routes/products";
@@ -13,10 +12,13 @@ import cartRouter from "./routes/carts";
 import conversationRouter from "./routes/conversations";
 import messageRouter from "./routes/messages";
 import brandRouter from "./routes/brands";
+import authRouter from "./routes/auth";
+
+dotenv.config();
 
 const app: Application = express();
 const port: number | string = process.env.PORT || 5000;
-const mongoURI: string = process.env.MONGO_URI || "mongodb://localhost:27017/nidas";
+const mongoURI: string = process.env.MONGO_URI || "YOUR_MONGODB_URI";
 
 // Hàm kết nối MongoDB với Mongoose
 const connectDB = async () => {
@@ -40,7 +42,8 @@ app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
   })
 );
 
@@ -59,6 +62,7 @@ app.use("/api/carts", cartRouter);
 app.use("/api/conversations", conversationRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/brands", brandRouter);
+app.use("/api/auth", authRouter);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
