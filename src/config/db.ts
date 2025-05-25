@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const connectDB = async () => {
+const connectDB = async (): Promise<void> => {
   try {
     // Thay YOUR_MONGO_URI bằng connection string MongoDB của bạn
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
+    const conn = await mongoose.connect(process.env.MONGO_URI || "YOUR_MONGODB_URI", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    });
+    } as mongoose.ConnectOptions);
 
     console.log(`MongoDB connected: ${conn.connection.host}`);
   } catch (error) {
@@ -15,4 +15,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;
