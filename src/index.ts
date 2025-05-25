@@ -12,6 +12,7 @@ import orderRouter from "./routes/orders";
 import cartRouter from "./routes/carts";
 import conversationRouter from "./routes/conversations";
 import messageRouter from "./routes/messages";
+import brandRouter from "./routes/brands";
 
 const app: Application = express();
 const port: number | string = process.env.PORT || 5000;
@@ -57,6 +58,8 @@ app.use("/api/orders", orderRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/conversations", conversationRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/brands", brandRouter);
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
