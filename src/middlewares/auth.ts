@@ -1,64 +1,67 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/User';
 
-// Giả sử bạn có service hoặc model để xử lý auth, ví dụ userService
-// import userService from '../services/userService';
-
-// Hàm đăng ký user (ví dụ đơn giản)
-export const register = async (req: Request, res: Response) => {
+// Middleware xác thực JWT token
+export const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
   try {
-    const { email, password } = req.body;
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    // TODO: validate, hash password, lưu user vào DB
-
-    return res.status(201).json({ message: 'Đăng ký thành công' });
-  } catch (error) {
-    return res.status(500).json({ message: 'Lỗi server', error });
-  }
-};
-
-// Hàm đăng nhập user (ví dụ đơn giản)
-export const login = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
-
-    // TODO: kiểm tra user, so sánh password, tạo JWT
-
-    return res.status(200).json({ message: 'Đăng nhập thành công', token: 'jwt-token-example' });
-  } catch (error) {
-    return res.status(500).json({ message: 'Lỗi server', error });
-  }
-};
-
-// Callback OAuth Google
-export const handleGoogleCallback = async (req: Request, res: Response) => {
-  try {
-    const { code } = req.query;
-    if (!code || typeof code !== 'string') {
-      return res.status(400).json({ message: 'Thiếu mã code từ Google' });
+    if (!token) {
+      res.status(401).json({ message: 'Không tìm thấy token xác thực' });
+      return;
     }
 
-    // TODO: Dùng code lấy access token Google, lấy profile user
-    // TODO: Tạo hoặc cập nhật user trong DB, tạo JWT
-
-    return res.status(200).json({ message: 'Xử lý callback Google thành công' });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
+    User.findById(decoded.id)
+      .then(user => {
+        if (!user) {
+          res.status(401).json({ message: 'Người dùng không tồn tại' });
+          return;
+        }
+        req.user = user;
+        next();
+      })
+      .catch(error => {
+        res.status(401).json({ message: 'Token không hợp lệ' });
+      });
   } catch (error) {
-    return res.status(500).json({ message: 'Lỗi xử lý callback Google', error });
+    res.status(401).json({ message: 'Token không hợp lệ' });
   }
 };
 
-// Callback OAuth Facebook
-export const handleFacebookCallback = async (req: Request, res: Response) => {
-  try {
-    const { code } = req.query;
-    if (!code || typeof code !== 'string') {
-      return res.status(400).json({ message: 'Thiếu mã code từ Facebook' });
-    }
-
-    // TODO: Dùng code lấy access token Facebook, lấy profile user
-    // TODO: Tạo hoặc cập nhật user trong DB, tạo JWT
-
-    return res.status(200).json({ message: 'Xử lý callback Facebook thành công' });
-  } catch (error) {
-    return res.status(500).json({ message: 'Lỗi xử lý callback Facebook', error });
+// Middleware kiểm tra quyền admin
+export const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
+  if (req.user && req.user.role === 'ADMIN') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Không có quyền truy cập' });
   }
 };
+
+// Middleware kiểm tra quyền user
+export const isUser = (req: Request, res: Response, next: NextFunction): void => {
+  if (req.user && (req.user.role === 'USER' || req.user.role === 'ADMIN')) {
+    next();
+  } else {
+    res.status(403).json({ message: 'Không có quyền truy cập' });
+  }
+};
+
+// Middleware kiểm tra quyền sở hữu (chỉ cho phép user sở hữu hoặc admin)
+export const isOwner = (req: Request, res: Response, next: NextFunction): void => {
+  const resourceId = req.params.id;
+  
+  if (!req.user) {
+    res.status(401).json({ message: 'Không tìm thấy thông tin người dùng' });
+    return;
+  }
+
+  if (req.user.role === 'ADMIN' || req.user._id.toString() === resourceId) {
+    next();
+  } else {
+    res.status(403).json({ message: 'Không có quyền truy cập' });
+  }
+};
+
