@@ -1,18 +1,22 @@
 import express from 'express';
 import { register, login, handleGoogleCallback, handleFacebookCallback } from '../controllers/auth.controller';
+import { authenticateToken, isAdmin, isUser } from '../middlewares/auth';
 
 const router = express.Router();
 
-// Route đăng ký
+// Public routes
 router.post('/register', register);
-
-// Route đăng nhập
 router.post('/login', login);
+router.get('/google/callback', handleGoogleCallback);
+router.get('/facebook/callback', handleFacebookCallback);
 
-// OAuth callback Google
-router.get('/login/oauth2/code/google', handleGoogleCallback);
+// Protected routes
+router.get('/profile', authenticateToken, isUser, (req, res) => {
+  res.json({ user: req.user });
+});
 
-// OAuth callback Facebook
-router.get('/login/oauth2/code/facebook', handleFacebookCallback);
+router.get('/admin', authenticateToken, isAdmin, (req, res) => {
+  res.json({ message: 'Admin access granted' });
+});
 
 export default router;
