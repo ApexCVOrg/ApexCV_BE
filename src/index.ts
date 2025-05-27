@@ -13,7 +13,19 @@ import messageRouter from "./routes/messages";
 import brandRouter from "./routes/brands";
 import authRouter from "./routes/auth";
 import connectDB from "./config/db";
-
+import { 
+  API_BASE,
+  AUTH_ROUTES, 
+  USER_ROUTES, 
+  CATEGORY_ROUTES,
+  PRODUCT_ROUTES,
+  REVIEW_ROUTES,
+  ORDER_ROUTES,
+  CART_ROUTES,
+  CONVERSATION_ROUTES,
+  MESSAGE_ROUTES,
+  BRAND_ROUTES 
+} from './constants/routes';
 dotenv.config();
 
 const app: Application = express();
@@ -37,17 +49,17 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Server is running...");
 });
 
-// Sử dụng route /api
-app.use("/api/users", userRouter);
-app.use("/api/categories", categoryRouter);
-app.use("/api/products", productRouter);
-app.use("/api/reviews", reviewRouter);
-app.use("/api/orders", orderRouter);
-app.use("/api/carts", cartRouter);
-app.use("/api/conversations", conversationRouter);
-app.use("/api/messages", messageRouter);
-app.use("/api/brands", brandRouter);
-app.use("/api/auth", authRouter);
+// Register routes
+app.use(API_BASE + AUTH_ROUTES.BASE, authRouter);
+app.use(API_BASE + USER_ROUTES.BASE, userRouter);
+app.use(API_BASE + CATEGORY_ROUTES.BASE, categoryRouter);
+app.use(API_BASE + PRODUCT_ROUTES.BASE, productRouter);
+app.use(API_BASE + REVIEW_ROUTES.BASE, reviewRouter);
+app.use(API_BASE + ORDER_ROUTES.BASE, orderRouter);
+app.use(API_BASE + CART_ROUTES.BASE, cartRouter);
+app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter);
+app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter);
+app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
