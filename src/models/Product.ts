@@ -11,7 +11,7 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   discountPrice: Number,
   categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
-  brand: String,
+  brand: { type: Schema.Types.ObjectId, ref: "Brand" },
   images: [String],
   sizes: [sizeSchema],
   colors: [String],
