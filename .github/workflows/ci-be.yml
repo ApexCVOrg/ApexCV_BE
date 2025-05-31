@@ -2,9 +2,9 @@ name: CI - Backend
 
 on:
   push:
-    branches: [ "master", "main" ]  # Thêm nhánh bạn dùng
+    branches: [ "master", "dev" ]  # Thêm nhánh bạn dùng
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "master", "dev" ]
   workflow_dispatch:
 
 jobs:
