@@ -34,7 +34,7 @@ const app: Application = express();
 const port: number | string = process.env.PORT || 5000;
 
 // Kết nối database trước khi start server
-connectDB();
+  connectDB();
 
 app.use(express.json());
 
