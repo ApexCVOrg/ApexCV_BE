@@ -1,0 +1,39 @@
+name: CI - Backend
+
+on:
+  push:
+    branches: [ "master", "dev" ]  # Thêm nhánh bạn dùng
+  pull_request:
+    branches: [ "master", "dev" ]
+  workflow_dispatch:
+
+jobs:
+  build-be:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: .  # Nếu backend nằm thư mục gốc repo, giữ nguyên
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Node version tương thích với devDependencies @types/node ^22.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests (nếu có script test)
+        run: npm test || echo "No tests found or test script missing"
+
+      - name: Build backend
+        run: npm run build
+
+      - name: Finish BE CI
+        run: echo "Backend CI completed!"

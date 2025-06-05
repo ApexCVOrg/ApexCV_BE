@@ -6,6 +6,8 @@ export const AUTH_ROUTES = {
   BASE: '/auth',
   REGISTER: '/register',
   LOGIN: '/login',
+  VERIFY_EMAIL: '/verify-email',
+  RESEND_VERIFICATION: '/resend-verification',
   PROFILE: '/profile',
   ADMIN: '/admin',
   GOOGLE: {
