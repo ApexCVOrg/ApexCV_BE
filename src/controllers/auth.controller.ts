@@ -15,53 +15,33 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
   try {
     const { username, email, password, fullName, phone, address } = req.body;
 
-    // Validate required fields
-    if (!username || !email || !password) {
-      res.status(400).json({
-        success: false,
-        message: 'validation_error',
-        errors: {
-          username: !username ? 'username_required' : undefined,
-          email: !email ? 'email_required' : undefined,
-          password: !password ? 'password_required' : undefined,
-        },
-      });
-      return; // Ensure we don't continue after sending a response
-    }
+    console.log('🔍 Registration attempt:', { 
+      username, 
+      email, 
+      fullName, 
+      phone,
+      hasPassword: !!password,
+      address 
+    });
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      res.status(400).json({
-        success: false,
-        message: 'validation_error',
-        errors: { email: 'invalid_email' },
-      });
-      return;
-    }
-
-    // Validate password length
-    if (password.length < 6) {
-      res.status(400).json({
-        success: false,
-        message: 'validation_error',
-        errors: { password: 'password_too_short' },
-      });
-      return;
-    }
-
-    // Check if email or username already exists in either User or PendingUser
+    // Check if email or username already exists
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     const existingPendingUser = await PendingUser.findOne({ $or: [{ email }, { username }] });
 
     if (existingUser || existingPendingUser) {
+      const errors: { [key: string]: string } = {};
+      if (existingUser?.email === email || existingPendingUser?.email === email) {
+        errors.email = 'Email is already in use';
+      }
+      if (existingUser?.username === username || existingPendingUser?.username === username) {
+        errors.username = 'Username is already taken';
+      }
+      
+      console.log('❌ User already exists:', errors);
       res.status(400).json({
         success: false,
         message: 'validation_error',
-        errors: {
-          email: existingUser?.email === email || existingPendingUser?.email === email ? 'email_already_used' : undefined,
-          username: existingUser?.username === username || existingPendingUser?.username === username ? 'username_taken' : undefined,
-        },
+        errors
       });
       return;
     }
@@ -70,33 +50,63 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     let addresses: any[] = [];
     if (address) {
       if (Array.isArray(address)) {
-        addresses = address;
+        // Validate each address object
+        addresses = address.map(addr => {
+          if (typeof addr === 'object' && addr !== null) {
+            return {
+              recipientName: addr.recipientName || '',
+              street: addr.street || '',
+              city: addr.city || '',
+              state: addr.state || '',
+              country: addr.country || '',
+              addressNumber: addr.addressNumber || '',
+              isDefault: addr.isDefault || false
+            };
+          }
+          return null;
+        }).filter(addr => addr !== null);
       } else if (typeof address === 'string') {
         try {
           const parsed = JSON.parse(address);
           if (Array.isArray(parsed)) {
-            addresses = parsed;
+            addresses = parsed.map(addr => {
+              if (typeof addr === 'object' && addr !== null) {
+                return {
+                  recipientName: addr.recipientName || '',
+                  street: addr.street || '',
+                  city: addr.city || '',
+                  state: addr.state || '',
+                  country: addr.country || '',
+                  addressNumber: addr.addressNumber || '',
+                  isDefault: addr.isDefault || false
+                };
+              }
+              return null;
+            }).filter(addr => addr !== null);
           } else {
+            console.log('❌ Invalid address format: not an array');
             res.status(400).json({
               success: false,
               message: 'validation_error',
-              errors: { address: 'address_must_be_array' },
+              errors: { address: 'Address must be an array' }
             });
             return;
           }
         } catch {
+          console.log('❌ Invalid address JSON format');
           res.status(400).json({
             success: false,
             message: 'validation_error',
-            errors: { address: 'invalid_address_json' },
+            errors: { address: 'Invalid address JSON format' }
           });
           return;
         }
       } else {
+        console.log('❌ Invalid address type:', typeof address);
         res.status(400).json({
           success: false,
           message: 'validation_error',
-          errors: { address: 'address_must_be_array_or_string' },
+          errors: { address: 'Address must be an array or JSON string' }
         });
         return;
       }
@@ -104,19 +114,19 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
 
     // Hash password
     const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // Generate verification code
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    console.log('Generated verification code:', verificationCode);
+    console.log('✅ Generated verification code:', verificationCode);
 
     // Save to pending users
     const pendingUser = new PendingUser({
       username,
       email,
-      passwordHash,
+      passwordHash: hashedPassword,
       fullName,
       phone,
       addresses,
@@ -125,14 +135,17 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     });
 
     await pendingUser.save();
-    console.log('Saved pending user with verification code:', verificationCode);
+    console.log('✅ Saved pending user:', { email, username });
 
     // Send verification email
     try {
       await sendVerificationEmail(email, verificationCode);
-      console.log('Verification email sent successfully to:', email);
+      console.log('✅ Verification email sent successfully to:', email);
     } catch (emailError: any) {
-      console.error('Detailed email error in register:', emailError);
+      console.error('❌ Email sending failed:', {
+        error: emailError.message,
+        email: email
+      });
       await PendingUser.deleteOne({ email });
       res.status(500).json({
         success: false,
@@ -143,9 +156,10 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     }
 
     // Return success with pending status
+    console.log('✅ Registration completed successfully:', { email, status: 'pending' });
     res.status(201).json({
       success: true,
-      message: 'Registration pending verification',
+      message: 'Registration successful, please check your email for verification',
       data: {
         email,
         status: 'pending',
@@ -153,10 +167,13 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
       }
     });
   } catch (error: any) {
-    console.error('Register error:', error);
+    console.error('❌ Registration error:', {
+      message: error.message,
+      stack: error.stack
+    });
     res.status(500).json({
       success: false,
-      message: 'server_error',
+      message: 'Server error',
       error: error.message || 'Unknown error occurred'
     });
   }

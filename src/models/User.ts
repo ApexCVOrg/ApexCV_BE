@@ -6,7 +6,7 @@ const addressSchema = new Schema({
   city: String,
   state: String,
   country: String,
-  phone: String,
+  addressNumber: String,
   isDefault: { type: Boolean, default: false },
 });
 
@@ -24,7 +24,8 @@ const userSchema = new Schema({
   facebookId: { type: String, unique: true, sparse: true },
   createdAt: { type: Date, default: Date.now },
 });
-  interface IUser extends Document {
+
+interface IUser extends Document {
   username: string;
   email: string;
   passwordHash: string;
@@ -33,4 +34,5 @@ const userSchema = new Schema({
   addresses: any[];
   role: string;
 }
+
 export const User = mongoose.model("User", userSchema);
