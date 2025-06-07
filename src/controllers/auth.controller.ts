@@ -6,6 +6,9 @@ import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios';
 import { PendingUser } from '../models/PendingUser';
 import { sendVerificationEmail } from '../services/email.service';
+import dotenv from 'dotenv';
+dotenv.config();
+
 const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
@@ -371,10 +374,9 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
       return;
     }
 
-    // Đảm bảo redirect_uri khớp với frontend
     const { tokens } = await googleClient.getToken({
       code,
-      redirect_uri: process.env.GOOGLE_REDIRECT_URI, // Phải khớp với frontend
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
     });
 
     if (!tokens.id_token) {
@@ -390,22 +392,24 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
     });
 
     const payload = ticket.getPayload();
+
     if (!payload || !payload.email) {
       res.status(400).json({ message: 'Cannot verify Google token or missing email' });
       return;
     }
 
-    // Tìm hoặc tạo user
     let user = await User.findOne({ email: payload.email });
-    
-    if (user && !user.googleId) {
-      user.googleId = payload.sub;
+
+    if (user) {
+      // Gán googleId và avatarUrl nếu chưa có
+      if (!user.googleId) user.googleId = payload.sub;
+      if (!user.avatar && payload.picture) user.avatar = payload.picture;
       await user.save();
-    }
-    
-    if (!user) {
-      const username = payload.email.split('@')[0] + Math.random().toString(36).substring(2, 8);
-      
+    } else {
+      // Tạo user mới
+      const baseUsername = payload.email.split('@')[0];
+      const username = baseUsername
+
       const existingUser = await User.findOne({ username });
       if (existingUser) {
         res.status(400).json({ message: 'Username already exists' });
@@ -419,7 +423,9 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
         passwordHash: '',
         role: 'user',
         googleId: payload.sub,
+        avatar: payload.picture, // 👈 Lưu ảnh Google avatar
       });
+
       await user.save();
     }
 
@@ -429,24 +435,24 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    // Redirect về trang success với token
     res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`);
-    return;
   } catch (error) {
     console.error('Google callback error:', error);
     res.redirect(`${process.env.FRONTEND_URL}/auth/error`);
-    return;
   }
 };
 
-export const handleFacebookCallback: RequestHandler = async (req, res) => {
+export const handleFacebookCallback: RequestHandler = async (req, res): Promise<void> => {
   try {
     const { code } = req.query;
+
+    // Validate code
     if (!code || typeof code !== 'string') {
-      res.status(400).json({ message: 'Missing Facebook code' });
+      res.status(400).json({ message: 'Thiếu mã xác thực từ Facebook (code).' });
       return;
     }
 
+    // Lấy access_token từ Facebook
     const tokenResponse = await axios.get('https://graph.facebook.com/v12.0/oauth/access_token', {
       params: {
         client_id: process.env.FACEBOOK_APP_ID,
@@ -457,7 +463,12 @@ export const handleFacebookCallback: RequestHandler = async (req, res) => {
     });
 
     const { access_token } = tokenResponse.data;
+    if (!access_token) {
+      res.status(401).json({ message: 'Không nhận được access token từ Facebook.' });
+      return;
+    }
 
+    // Lấy thông tin người dùng từ Facebook
     const userResponse = await axios.get('https://graph.facebook.com/me', {
       params: {
         fields: 'id,email,name',
@@ -465,44 +476,64 @@ export const handleFacebookCallback: RequestHandler = async (req, res) => {
       },
     });
 
-    const { id, email, name } = userResponse.data;
+    const { id: facebookId, email, name } = userResponse.data;
 
-    // Check if user exists
+    if (!email) {
+      res.status(400).json({ message: 'Không lấy được email từ Facebook. Vui lòng cấp quyền email.' });
+      return;
+    }
+
+    // Tìm user trong MongoDB
     let user = await User.findOne({ email });
+
     if (!user) {
-      // Generate username from email
-      const username = email.split('@')[0] + Math.random().toString(36).substring(2, 8);
-      
-      // Check if username exists
-      const existingUser = await User.findOne({ username });
-      if (existingUser) {
-        res.status(400).json({ message: 'Username already exists' });
-        return;
+      // Tạo username tránh trùng
+      let baseUsername = email.split('@')[0];
+      let username = baseUsername;
+      let isUnique = false;
+
+      while (!isUnique) {
+        const existing = await User.findOne({ username });
+        if (!existing) {
+          isUnique = true;
+        } else {
+          username = `${baseUsername}`;
+        }
       }
 
+      // Tạo user mới
       user = new User({
         username,
         email,
         fullName: name,
-        passwordHash: '', // OAuth users don't need password
+        passwordHash: '', // không cần vì dùng OAuth
         role: 'USER',
-        facebookId: id,
+        facebookId,
       });
+
       await user.save();
     }
 
+    // Tạo JWT trả về FE
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
+      {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
 
+    // Redirect về FE
     res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`);
     return;
-  } catch (error) {
-    console.error('Facebook callback error:', error);
-    res.status(500).json({ message: 'Facebook callback error: ' + (error as Error).message });
+  } catch (error: any) {
+    console.error('Facebook callback error:', error?.response?.data || error.message);
+    res.status(500).json({
+      message: 'Lỗi khi xử lý đăng nhập bằng Facebook.',
+      error: error?.response?.data || error.message,
+    });
     return;
   }
-  
 };
