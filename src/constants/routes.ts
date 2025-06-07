@@ -87,6 +87,24 @@ export const BRAND_ROUTES = {
   DETAIL: '/:id',
 } as const;
 
+// Manager routes
+export const MANAGER_ROUTES = {
+  BASE: '/manager',
+  DASHBOARD: '/dashboard',
+  PRODUCTS: '/products',
+  CATEGORIES: '/categories',
+  ORDERS: '/orders',
+  CUSTOMERS: '/customers',
+  SETTINGS: '/settings',
+  STATS: {
+    SALES: '/stats/sales',
+    USERS: '/stats/users',
+    ORDERS: '/stats/orders',
+    CUSTOMERS: '/stats/customers',
+  },
+};
+
+
 // Helper function to build full API routes
 export const buildRoute = (base: string, path: string): string => {
   return `${API_BASE}${base}${path}`;
