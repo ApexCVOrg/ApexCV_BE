@@ -1,7 +1,54 @@
 import express, { Request, Response, Router } from "express";
 import { User } from "../models/User";
+import { authenticateToken, isUser } from "../middlewares/auth";
 
 const router: Router = express.Router();
+
+// Apply authentication middleware to profile routes
+router.use(authenticateToken, isUser);
+
+// Profile management
+router.get("/profile", async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.user.id).select('-passwordHash');
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching profile: " + (error as Error).message });
+  }
+});
+
+router.put("/update-profile", async (req: Request, res: Response) => {
+  try {
+    const { fullName, phone, avatar, addresses } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { fullName, phone, avatar, addresses },
+      { new: true }
+    ).select('-passwordHash');
+    
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ message: "Error updating profile: " + (error as Error).message });
+  }
+});
+
+router.put("/change-password", async (req: Request, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    // TODO: Implement password change logic
+    res.json({ message: "Password changed successfully" });
+  } catch (error) {
+    res.status(400).json({ message: "Error changing password: " + (error as Error).message });
+  }
+});
 
 // Lấy danh sách tất cả người dùng
 router.get("/", async (_req: Request, res: Response): Promise<void> => {

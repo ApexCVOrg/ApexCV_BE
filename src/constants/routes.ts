@@ -6,6 +6,8 @@ export const AUTH_ROUTES = {
   BASE: '/auth',
   REGISTER: '/register',
   LOGIN: '/login',
+  VERIFY_EMAIL: '/verify-email',
+  RESEND_VERIFICATION: '/resend-verification',
   PROFILE: '/profile',
   ADMIN: '/admin',
   GOOGLE: {
@@ -84,6 +86,24 @@ export const BRAND_ROUTES = {
   LIST: '/',
   DETAIL: '/:id',
 } as const;
+
+// Manager routes
+export const MANAGER_ROUTES = {
+  BASE: '/manager',
+  DASHBOARD: '/dashboard',
+  PRODUCTS: '/products',
+  CATEGORIES: '/categories',
+  ORDERS: '/orders',
+  CUSTOMERS: '/customers',
+  SETTINGS: '/settings',
+  STATS: {
+    SALES: '/stats/sales',
+    USERS: '/stats/users',
+    ORDERS: '/stats/orders',
+    CUSTOMERS: '/stats/customers',
+  },
+};
+
 
 // Helper function to build full API routes
 export const buildRoute = (base: string, path: string): string => {
