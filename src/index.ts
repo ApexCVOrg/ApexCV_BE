@@ -1,6 +1,5 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import helloRouter from "./routes/hello";
 import dotenv from "dotenv";
 import userRouter from "./routes/users";
 import categoryRouter from "./routes/categories";
