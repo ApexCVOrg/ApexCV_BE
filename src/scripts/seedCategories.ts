@@ -26,27 +26,97 @@ const categoriesData = [
     name: "Sale",
     subcategories: ["Shoes", "Clothing", "Accessories"],
   },
+  
 ];
 
 export const seedCategories = async () => {
-  const count = await Category.countDocuments();
-  if (count > 0) return; // Đã có dữ liệu → bỏ qua
+  try {
+    // Get all existing categories
+    const existingCategories = await Category.find({});
+    const existingParentNames = new Set(existingCategories
+      .filter(cat => !cat.parentCategory)
+      .map(cat => cat.name));
+    
+    const existingSubNames = new Set(existingCategories
+      .filter(cat => cat.parentCategory)
+      .map(cat => cat.name));
 
-  for (const cat of categoriesData) {
-    const parent = await new Category({
-      name: cat.name,
-      parentCategory: null,
-      status: "active",
-    }).save();
+    // Collect all names from seed data
+    const seedParentNames = new Set(categoriesData.map(cat => cat.name));
+    const seedSubNames = new Set(categoriesData.flatMap(cat => cat.subcategories));
 
-    for (const sub of cat.subcategories) {
-      await new Category({
-        name: sub,
-        parentCategory: parent._id,
-        status: "active",
-      }).save();
+    // Find categories to delete
+    const parentNamesToDelete = [...existingParentNames].filter(name => !seedParentNames.has(name));
+    const subNamesToDelete = [...existingSubNames].filter(name => !seedSubNames.has(name));
+
+    // Delete categories that are not in seed data
+    if (parentNamesToDelete.length > 0) {
+      await Category.deleteMany({ 
+        name: { $in: parentNamesToDelete },
+        parentCategory: null 
+      });
+      console.log(`🗑️ Deleted parent categories: ${parentNamesToDelete.join(', ')}`);
     }
-  }
 
-  console.log("✅ Seeded initial categories.");
+    if (subNamesToDelete.length > 0) {
+      await Category.deleteMany({ 
+        name: { $in: subNamesToDelete },
+        parentCategory: { $ne: null }
+      });
+      console.log(`🗑️ Deleted subcategories: ${subNamesToDelete.join(', ')}`);
+    }
+
+    // Add new categories
+    for (const cat of categoriesData) {
+      // Check if parent category exists
+      let parent = await Category.findOne({ 
+        name: cat.name,
+        parentCategory: null 
+      });
+      
+      if (!parent) {
+        // Create parent if not exists
+        parent = await new Category({
+          name: cat.name,
+          parentCategory: null,
+          status: "active",
+        }).save();
+        console.log(`✅ Created parent category: ${cat.name}`);
+      } else {
+        console.log(`ℹ️ Parent category already exists: ${cat.name}`);
+      }
+
+      // Check and create subcategories
+      for (const sub of cat.subcategories) {
+        const existingSub = await Category.findOne({ 
+          name: sub,
+          parentCategory: parent._id 
+        });
+
+        if (!existingSub) {
+          try {
+            await new Category({
+              name: sub,
+              parentCategory: parent._id,
+              status: "active",
+            }).save();
+            console.log(`✅ Created subcategory: ${sub} under ${cat.name}`);
+          } catch (error: any) {
+            if (error.code === 11000) {
+              console.log(`ℹ️ Subcategory already exists: ${sub}`);
+            } else {
+              throw error;
+            }
+          }
+        } else {
+          console.log(`ℹ️ Subcategory already exists: ${sub} under ${cat.name}`);
+        }
+      }
+    }
+
+    console.log("✅ Category seeding completed.");
+  } catch (error) {
+    console.error("❌ Error seeding categories:", error);
+    throw error;
+  }
 };
