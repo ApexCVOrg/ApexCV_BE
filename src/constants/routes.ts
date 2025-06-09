@@ -1,5 +1,5 @@
 // API Base path
-export const API_BASE = '/api';
+export const API_BASE = '/api'
 
 // Auth routes
 export const AUTH_ROUTES = {
@@ -11,50 +11,50 @@ export const AUTH_ROUTES = {
   PROFILE: '/profile',
   ADMIN: '/admin',
   GOOGLE: {
-    CALLBACK: '/google/callback',
+    CALLBACK: '/google/callback'
   },
   FACEBOOK: {
-    CALLBACK: '/facebook/callback',
-  },
-} as const;
+    CALLBACK: '/facebook/callback'
+  }
+} as const
 
 // User routes
 export const USER_ROUTES = {
   BASE: '/users',
   PROFILE: '/profile',
-  SETTINGS: '/settings',
-} as const;
+  SETTINGS: '/settings'
+} as const
 
 // Category routes
 export const CATEGORY_ROUTES = {
   BASE: '/categories',
   LIST: '/',
-  DETAIL: '/:id',
-} as const;
+  DETAIL: '/:id'
+} as const
 
 // Product routes
 export const PRODUCT_ROUTES = {
   BASE: '/products',
   LIST: '/',
   DETAIL: '/:id',
-  SEARCH: '/search',
-} as const;
+  SEARCH: '/search'
+} as const
 
 // Review routes
 export const REVIEW_ROUTES = {
   BASE: '/reviews',
   LIST: '/',
   DETAIL: '/:id',
-  PRODUCT: '/product/:productId',
-} as const;
+  PRODUCT: '/product/:productId'
+} as const
 
 // Order routes
 export const ORDER_ROUTES = {
   BASE: '/orders',
   LIST: '/',
   DETAIL: '/:id',
-  USER: '/user/:userId',
-} as const;
+  USER: '/user/:userId'
+} as const
 
 // Cart routes
 export const CART_ROUTES = {
@@ -62,30 +62,30 @@ export const CART_ROUTES = {
   USER: '/user/:userId',
   ADD_ITEM: '/add',
   REMOVE_ITEM: '/remove',
-  UPDATE_ITEM: '/update',
-} as const;
+  UPDATE_ITEM: '/update'
+} as const
 
 // Conversation routes
 export const CONVERSATION_ROUTES = {
   BASE: '/conversations',
   LIST: '/',
   DETAIL: '/:id',
-  USER: '/user/:userId',
-} as const;
+  USER: '/user/:userId'
+} as const
 
 // Message routes
 export const MESSAGE_ROUTES = {
   BASE: '/messages',
   LIST: '/',
-  CONVERSATION: '/conversation/:conversationId',
-} as const;
+  CONVERSATION: '/conversation/:conversationId'
+} as const
 
 // Brand routes
 export const BRAND_ROUTES = {
   BASE: '/brands',
   LIST: '/',
-  DETAIL: '/:id',
-} as const;
+  DETAIL: '/:id'
+} as const
 
 // Manager routes
 export const MANAGER_ROUTES = {
@@ -100,15 +100,9 @@ export const MANAGER_ROUTES = {
     SALES: '/stats/sales',
     USERS: '/stats/users',
     ORDERS: '/stats/orders',
-    CUSTOMERS: '/stats/customers',
-  },
-};
-
-
-// Helper function to build full API routes
+    CUSTOMERS: '/stats/customers'
+  }
+} as const
 export const buildRoute = (base: string, path: string): string => {
-  return `${API_BASE}${base}${path}`;
-};
-
-// Example usage:
-// buildRoute(AUTH_ROUTES.BASE, AUTH_ROUTES.LOGIN) => '/api/auth/login' 
+  return `${API_BASE}${base}${path}`
+}
