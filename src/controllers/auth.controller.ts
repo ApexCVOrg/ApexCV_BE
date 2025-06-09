@@ -444,41 +444,74 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
 
 export const handleFacebookCallback: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const { code } = req.query;
+    const { code, state } = req.query;
+
+    // Validate state parameter
+    if (!state || state !== req.session.state) {
+      console.error('Invalid state parameter:', { received: state, expected: req.session.state });
+      res.status(400).json({ message: 'Invalid state parameter' });
+      return;
+    }
+
+    // Clear state from session
+    delete req.session.state;
 
     // Validate code
     if (!code || typeof code !== 'string') {
+      console.error('Missing or invalid code:', code);
       res.status(400).json({ message: 'Thiếu mã xác thực từ Facebook (code).' });
       return;
     }
 
     // Lấy access_token từ Facebook
-    const tokenResponse = await axios.get('https://graph.facebook.com/v12.0/oauth/access_token', {
-      params: {
-        client_id: process.env.FACEBOOK_APP_ID,
-        client_secret: process.env.FACEBOOK_APP_SECRET,
-        redirect_uri: process.env.FACEBOOK_REDIRECT_URI,
-        code,
-      },
-    });
+    let tokenResponse;
+    try {
+      tokenResponse = await axios.get('https://graph.facebook.com/v12.0/oauth/access_token', {
+        params: {
+          client_id: process.env.FACEBOOK_APP_ID,
+          client_secret: process.env.FACEBOOK_APP_SECRET,
+          redirect_uri: process.env.FACEBOOK_REDIRECT_URI,
+          code,
+        },
+      });
+    } catch (error: any) {
+      console.error('Error getting access token:', error.response?.data || error.message);
+      res.status(401).json({ 
+        message: 'Không thể lấy access token từ Facebook.',
+        error: error.response?.data || error.message 
+      });
+      return;
+    }
 
     const { access_token } = tokenResponse.data;
     if (!access_token) {
+      console.error('No access token in response:', tokenResponse.data);
       res.status(401).json({ message: 'Không nhận được access token từ Facebook.' });
       return;
     }
 
     // Lấy thông tin người dùng từ Facebook
-    const userResponse = await axios.get('https://graph.facebook.com/me', {
-      params: {
-        fields: 'id,email,name',
-        access_token,
-      },
-    });
+    let userResponse;
+    try {
+      userResponse = await axios.get('https://graph.facebook.com/me', {
+        params: {
+          fields: 'id,email,name,picture',
+          access_token,
+        },
+      });
+    } catch (error: any) {
+      console.error('Error getting user info:', error.response?.data || error.message);
+      res.status(401).json({ 
+        message: 'Không thể lấy thông tin người dùng từ Facebook.',
+        error: error.response?.data || error.message 
+      });
+      return;
+    }
 
-    const { id: facebookId, email, name } = userResponse.data;
+    const { id: facebookId, email, name, picture } = userResponse.data;
 
     if (!email) {
+      console.error('No email in Facebook response:', userResponse.data);
       res.status(400).json({ message: 'Không lấy được email từ Facebook. Vui lòng cấp quyền email.' });
       return;
     }
@@ -491,13 +524,15 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
       let baseUsername = email.split('@')[0];
       let username = baseUsername;
       let isUnique = false;
+      let counter = 1;
 
       while (!isUnique) {
         const existing = await User.findOne({ username });
         if (!existing) {
           isUnique = true;
         } else {
-          username = `${baseUsername}`;
+          username = `${baseUsername}${counter}`;
+          counter++;
         }
       }
 
@@ -509,8 +544,15 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
         passwordHash: '', // không cần vì dùng OAuth
         role: 'USER',
         facebookId,
+        avatar: picture?.data?.url, // Lưu avatar từ Facebook
       });
 
+      await user.save();
+    } else {
+      // Cập nhật thông tin nếu cần
+      if (!user.facebookId) user.facebookId = facebookId;
+      if (!user.avatar && picture?.data?.url) user.avatar = picture.data.url;
+      if (!user.fullName) user.fullName = name;
       await user.save();
     }
 

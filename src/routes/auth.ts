@@ -32,7 +32,10 @@ router.get('/google/callback', handleGoogleCallback);
 
 // Facebook OAuth routes
 router.get('/facebook', (req, res) => {
-  const facebookAuthUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${process.env.FACEBOOK_CLIENT_ID}&redirect_uri=${process.env.FACEBOOK_CALLBACK_URL}&scope=email,public_profile`;
+  const state = Math.random().toString(36).substring(7);
+  req.session.state = state;
+  
+  const facebookAuthUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${process.env.FACEBOOK_APP_ID}&redirect_uri=${process.env.FACEBOOK_REDIRECT_URI}&scope=email,public_profile&state=${state}`;
   res.redirect(facebookAuthUrl);
 });
 router.get('/facebook/callback', handleFacebookCallback);

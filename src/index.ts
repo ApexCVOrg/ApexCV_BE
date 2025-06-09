@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import session from "express-session";
 import helloRouter from "./routes/hello";
 import dotenv from "dotenv";
 import userRouter from "./routes/users";
@@ -34,9 +35,20 @@ const app: Application = express();
 const port: number | string = process.env.PORT || 5000;
 
 // Kết nối database trước khi start server
-  connectDB();
+connectDB();
 
 app.use(express.json());
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
 
 app.use(
   cors({
