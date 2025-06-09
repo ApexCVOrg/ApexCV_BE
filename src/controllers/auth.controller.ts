@@ -5,6 +5,8 @@ import { User } from '../models/User';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios';
 import { sendVerificationEmail } from '../services/email.service';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -443,7 +445,6 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
       return;
     }
 
-    // Get tokens from Google
     const { tokens } = await googleClient.getToken({
       code,
       redirect_uri: process.env.GOOGLE_REDIRECT_URI,
@@ -466,6 +467,7 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
     });
 
     const payload = ticket.getPayload();
+
     if (!payload || !payload.email) {
       res.status(400).json({ 
         success: false,
@@ -474,19 +476,18 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
       return;
     }
 
-    // Find or create user
     let user = await User.findOne({ email: payload.email });
-    
-    if (user && !user.googleId) {
-      // Link Google account to existing user
-      user.googleId = payload.sub;
+
+    if (user) {
+      // Gán googleId và avatarUrl nếu chưa có
+      if (!user.googleId) user.googleId = payload.sub;
+      if (!user.avatar && payload.picture) user.avatar = payload.picture;
       await user.save();
-    }
-    
-    if (!user) {
-      // Generate unique username
-      const username = payload.email.split('@')[0] + Math.random().toString(36).substring(2, 8);
-      
+    } else {
+      // Tạo user mới
+      const baseUsername = payload.email.split('@')[0];
+      const username = baseUsername
+
       const existingUser = await User.findOne({ username });
       if (existingUser) {
         res.status(400).json({ 
@@ -504,8 +505,9 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
         passwordHash: '',
         role: 'user',
         googleId: payload.sub,
-        isVerified: true // Google accounts are pre-verified
+        avatar: payload.picture, // 👈 Lưu ảnh Google avatar
       });
+
       await user.save();
     }
 
@@ -516,7 +518,6 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    // Redirect to frontend with token
     res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`);
   } catch (error) {
     console.error('Google callback error:', error);
@@ -524,18 +525,17 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
   }
 };
 
-export const handleFacebookCallback: RequestHandler = async (req, res) => {
+export const handleFacebookCallback: RequestHandler = async (req, res): Promise<void> => {
   try {
     const { code } = req.query;
+
+    // Validate code
     if (!code || typeof code !== 'string') {
-      res.status(400).json({ 
-        success: false,
-        message: 'Missing Facebook code' 
-      });
+      res.status(400).json({ message: 'Thiếu mã xác thực từ Facebook (code).' });
       return;
     }
 
-    // Get access token
+    // Lấy access_token từ Facebook
     const tokenResponse = await axios.get('https://graph.facebook.com/v12.0/oauth/access_token', {
       params: {
         client_id: process.env.FACEBOOK_APP_ID,
@@ -546,8 +546,12 @@ export const handleFacebookCallback: RequestHandler = async (req, res) => {
     });
 
     const { access_token } = tokenResponse.data;
+    if (!access_token) {
+      res.status(401).json({ message: 'Không nhận được access token từ Facebook.' });
+      return;
+    }
 
-    // Get user data
+    // Lấy thông tin người dùng từ Facebook
     const userResponse = await axios.get('https://graph.facebook.com/me', {
       params: {
         fields: 'id,email,name',
@@ -555,47 +559,64 @@ export const handleFacebookCallback: RequestHandler = async (req, res) => {
       },
     });
 
-    const { id, email, name } = userResponse.data;
+    const { id: facebookId, email, name } = userResponse.data;
 
-    // Find or create user
+    if (!email) {
+      res.status(400).json({ message: 'Không lấy được email từ Facebook. Vui lòng cấp quyền email.' });
+      return;
+    }
+
+    // Tìm user trong MongoDB
     let user = await User.findOne({ email });
+
     if (!user) {
-      // Generate unique username
-      const username = email.split('@')[0] + Math.random().toString(36).substring(2, 8);
-      
-      const existingUser = await User.findOne({ username });
-      if (existingUser) {
-        res.status(400).json({ 
-          success: false,
-          message: 'Username already exists' 
-        });
-        return;
+      // Tạo username tránh trùng
+      let baseUsername = email.split('@')[0];
+      let username = baseUsername;
+      let isUnique = false;
+
+      while (!isUnique) {
+        const existing = await User.findOne({ username });
+        if (!existing) {
+          isUnique = true;
+        } else {
+          username = `${baseUsername}`;
+        }
       }
 
-      // Create new user
+      // Tạo user mới
       user = new User({
         username,
         email,
         fullName: name,
-        passwordHash: '',
-        role: 'user',
-        facebookId: id,
-        isVerified: true // Facebook accounts are pre-verified
+        passwordHash: '', // không cần vì dùng OAuth
+        role: 'USER',
+        facebookId,
       });
+
       await user.save();
     }
 
-    // Generate JWT token
+    // Tạo JWT trả về FE
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
+      {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
 
-    // Redirect to frontend with token
+    // Redirect về FE
     res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`);
-  } catch (error) {
-    console.error('Facebook callback error:', error);
-    res.redirect(`${process.env.FRONTEND_URL}/auth/error`);
+    return;
+  } catch (error: any) {
+    console.error('Facebook callback error:', error?.response?.data || error.message);
+    res.status(500).json({
+      message: 'Lỗi khi xử lý đăng nhập bằng Facebook.',
+      error: error?.response?.data || error.message,
+    });
+    return;
   }
 };

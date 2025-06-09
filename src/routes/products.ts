@@ -1,63 +1,75 @@
 import express, { Request, Response, Router } from "express";
 import { Product } from "../models/Product";
+import { Category } from "../models/Category";
+import { CATEGORY_MESSAGES } from "../constants/categories";
 
 const router: Router = express.Router();
 
-router.get("/", async (_req: Request, res: Response): Promise<void> => {
+// Get all products
+router.get("/", async (_req: Request, res: Response) => {
   try {
-    const products = await Product.find().populate("categories");
+    const products = await Product.find()
+      .populate("categories", "name") // chỉ lấy tên category
+      .sort({ createdAt: -1 })
+      .lean();
     res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy danh sách sản phẩm: " + (error as Error).message });
+  } catch (error: any) {
+    res.status(500).json({ message: "Error fetching products", error: error?.message || "Unknown error" });
   }
 });
 
-router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+// Create product
+router.post("/", async (req: Request, res: Response) => {
   try {
-    const product = await Product.findById(req.params.id).populate("categories");
-    if (!product) {
-      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, status } = req.body;
+    const product = new Product({
+      name,
+      description,
+      price,
+      discountPrice,
+      categories,
+      brand,
+      images,
+      sizes,
+      colors,
+      tags,
+      status,
+    });
+    const saved = await product.save();
+    res.status(201).json({ ...saved.toObject(), message: "Product created successfully!" });
+  } catch (error: any) {
+    res.status(400).json({ message: "Error creating product", error: error?.message || "Unknown error" });
+  }
+});
+
+// Update product
+router.put("/:id", async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+    const updated = await Product.findByIdAndUpdate(id, updateData, { new: true });
+    if (!updated) {
+      res.status(404).json({ message: "Product not found" });
       return;
     }
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy thông tin sản phẩm: " + (error as Error).message });
+    res.json({ ...updated.toObject(), message: "Product updated successfully!" });
+  } catch (error: any) {
+    res.status(400).json({ message: "Error updating product", error: error?.message || "Unknown error" });
   }
 });
 
-router.post("/", async (req: Request, res: Response): Promise<void> => {
+// Delete product
+router.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const product = new Product(req.body);
-    const savedProduct = await product.save();
-    res.status(201).json(savedProduct);
-  } catch (error) {
-    res.status(400).json({ message: "Lỗi khi tạo sản phẩm: " + (error as Error).message });
-  }
-});
-
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!product) {
-      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+    const { id } = req.params;
+    const deleted = await Product.findByIdAndDelete(id);
+    if (!deleted) {
+      res.status(404).json({ message: "Product not found" });
       return;
     }
-    res.json(product);
-  } catch (error) {
-    res.status(400).json({ message: "Lỗi khi cập nhật sản phẩm: " + (error as Error).message });
-  }
-});
-
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const product = await Product.findByIdAndDelete(req.params.id);
-    if (!product) {
-      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
-      return;
-    }
-    res.json({ message: "Đã xóa sản phẩm thành công" });
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi xóa sản phẩm: " + (error as Error).message });
+    res.json({ message: "Product deleted successfully!" });
+  } catch (error: any) {
+    res.status(500).json({ message: "Error deleting product", error: error?.message || "Unknown error" });
   }
 });
 

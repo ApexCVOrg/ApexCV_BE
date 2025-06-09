@@ -12,6 +12,7 @@ import conversationRouter from "./routes/conversations";
 import messageRouter from "./routes/messages";
 import brandRouter from "./routes/brands";
 import authRouter from "./routes/auth";
+import managerRouter from "./routes/manager";
 import connectDB from "./config/db";
 import { 
   API_BASE,
@@ -24,7 +25,8 @@ import {
   CART_ROUTES,
   CONVERSATION_ROUTES,
   MESSAGE_ROUTES,
-  BRAND_ROUTES 
+  BRAND_ROUTES,
+  MANAGER_ROUTES,
 } from './constants/routes';
 dotenv.config();
 
@@ -32,7 +34,7 @@ const app: Application = express();
 const port: number | string = process.env.PORT || 5000;
 
 // Kết nối database trước khi start server
-connectDB();
+  connectDB();
 
 app.use(express.json());
 
@@ -60,6 +62,7 @@ app.use(API_BASE + CART_ROUTES.BASE, cartRouter);
 app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter);
 app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter);
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter);
+app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
