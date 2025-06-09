@@ -103,7 +103,6 @@ export const MANAGER_ROUTES = {
     CUSTOMERS: '/stats/customers'
   }
 } as const
-
 export const buildRoute = (base: string, path: string): string => {
   return `${API_BASE}${base}${path}`
 }
