@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { register, login, handleGoogleCallback, handleFacebookCallback, verifyEmail, resendVerificationCode } from '../controllers/auth.controller';
+import { register, login, handleGoogleCallback, handleFacebookCallback, verifyEmail, resendVerificationCode, forgotPassword, verifyOTP, resetPassword } from '../controllers/auth.controller';
 import { authenticateToken, isAdmin, isUser } from '../middlewares/auth';
 import { validateRegister } from '../middlewares/validation';
 import { OAuth2Client } from 'google-auth-library';
@@ -10,6 +10,9 @@ const router: Router = express.Router();
 router.post('/register', validateRegister, register);
 router.post('/verify-email', verifyEmail);
 router.post('/resend-verification', resendVerificationCode);
+router.post('/forgot-password', forgotPassword);
+router.post('/verify-otp', verifyOTP);
+router.post('/reset-password', resetPassword);
 router.post('/login', login);
 
 // Google OAuth routes
