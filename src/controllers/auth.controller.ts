@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios';
-import { sendVerificationEmail } from '../services/email.service';
+import { sendVerificationEmail, sendResetPasswordEmail } from '../services/email.service';
 
 const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -32,6 +32,25 @@ setInterval(() => {
   for (const [email, data] of verificationStore.entries()) {
     if (data.expiresAt < now) {
       verificationStore.delete(email);
+    }
+  }
+}, 60 * 60 * 1000);
+
+// Store reset password data in memory with expiration
+interface ResetPasswordData {
+  email: string;
+  otp: string;
+  expiresAt: Date;
+}
+
+const resetPasswordStore = new Map<string, ResetPasswordData>();
+
+// Clean up expired reset password data every hour
+setInterval(() => {
+  const now = new Date();
+  for (const [email, data] of resetPasswordStore.entries()) {
+    if (data.expiresAt < now) {
+      resetPasswordStore.delete(email);
     }
   }
 }, 60 * 60 * 1000);
@@ -684,6 +703,188 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
     res.status(500).json({
       success: false,
       message: 'Internal server error',
+    });
+  }
+};
+
+export const forgotPassword: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      });
+      return;
+    }
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'No account found with this email'
+      });
+      return;
+    }
+
+    // Generate OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // Store OTP
+    resetPasswordStore.set(email, {
+      email,
+      otp,
+      expiresAt
+    });
+
+    // Send reset password email
+    try {
+      await sendResetPasswordEmail(email, otp);
+      res.status(200).json({
+        success: true,
+        message: 'Password reset OTP sent successfully'
+      });
+    } catch (error) {
+      console.error('Failed to send reset password email:', error);
+      resetPasswordStore.delete(email);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to send reset password email'
+      });
+    }
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+};
+
+export const verifyOTP: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      res.status(400).json({
+        success: false,
+        message: 'Email and OTP are required'
+      });
+      return;
+    }
+
+    const resetData = resetPasswordStore.get(email);
+    if (!resetData) {
+      res.status(400).json({
+        success: false,
+        message: 'No reset request found for this email'
+      });
+      return;
+    }
+
+    if (resetData.expiresAt < new Date()) {
+      resetPasswordStore.delete(email);
+      res.status(400).json({
+        success: false,
+        message: 'OTP has expired'
+      });
+      return;
+    }
+
+    if (resetData.otp !== otp) {
+      res.status(400).json({
+        success: false,
+        message: 'Invalid OTP'
+      });
+      return;
+    }
+
+    // Generate a temporary token for password reset
+    const token = jwt.sign(
+      { email, purpose: 'password_reset' },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '10m' }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'OTP verified successfully',
+      data: { token }
+    });
+  } catch (error) {
+    console.error('Verify reset OTP error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+};
+
+export const resetPassword: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      res.status(400).json({
+        success: false,
+        message: 'Token and new password are required'
+      });
+      return;
+    }
+
+    // Verify token
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { email: string; purpose: string };
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: 'Invalid or expired token'
+      });
+      return;
+    }
+
+    if (decoded.purpose !== 'password_reset') {
+      res.status(400).json({
+        success: false,
+        message: 'Invalid token purpose'
+      });
+      return;
+    }
+
+    // Find user
+    const user = await User.findOne({ email: decoded.email });
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+      return;
+    }
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update password
+    user.passwordHash = hashedPassword;
+    await user.save();
+
+    // Clear reset data
+    resetPasswordStore.delete(decoded.email);
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successfully'
+    });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error'
     });
   }
 };
