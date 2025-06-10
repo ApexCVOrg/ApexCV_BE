@@ -1,6 +1,7 @@
 // src/config/db.ts
 import mongoose from "mongoose";
 import { seedCategories } from "../scripts/seedCategories";
+import { seedProducts } from "../scripts/seedProducts";
 
 const connectDB = async (): Promise<void> => {
   try {
@@ -11,7 +12,8 @@ const connectDB = async (): Promise<void> => {
 
     console.log(`MongoDB connected: ${conn.connection.host}`);
 
-    await seedCategories(); // Gọi seed tại đây
+    await seedCategories();
+    await seedProducts();
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${(error as Error).message}`);
     process.exit(1);
