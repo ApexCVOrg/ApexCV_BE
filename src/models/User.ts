@@ -26,6 +26,7 @@ const userSchema = new Schema({
   verificationCode: String,
   verificationCodeExpires: Date,
   createdAt: { type: Date, default: Date.now },
+  refreshToken: { type: String },
 });
 
 interface IUser extends Document {
@@ -42,6 +43,7 @@ interface IUser extends Document {
   googleId?: string;
   facebookId?: string;
   avatar?: string;
+  refreshToken?: string;
 }
 
 export const User = mongoose.model<IUser>("User", userSchema);

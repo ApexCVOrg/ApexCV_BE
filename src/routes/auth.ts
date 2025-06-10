@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
-import { register, login, handleGoogleCallback, handleFacebookCallback, verifyEmail, resendVerificationCode, forgotPassword, verifyOTP, resetPassword } from '../controllers/auth.controller';
-import { authenticateToken, isAdmin, isUser } from '../middlewares/auth';
+import { register, login, handleGoogleCallback, handleFacebookCallback, verifyEmail, resendVerificationCode, forgotPassword, verifyOTP, resetPassword, logout, refreshToken } from '../controllers/auth.controller';
+import { authenticateToken, isAdmin, isUser, checkInactivity } from '../middlewares/auth';
 import { validateRegister } from '../middlewares/validation';
 import { OAuth2Client } from 'google-auth-library';
 
@@ -64,30 +64,16 @@ router.post('/reset-password', async (req, res) => {
 });
 
 // Token management
-router.post('/refresh-token', async (req, res) => {
-  try {
-    // TODO: Implement refresh token
-    res.json({ message: 'Token refreshed successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error refreshing token: ' + (error as Error).message });
-  }
-});
+router.post('/refresh-token', refreshToken);
 
-router.post('/logout', authenticateToken, async (req, res) => {
-  try {
-    // TODO: Implement logout
-    res.json({ message: 'Logged out successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error logging out: ' + (error as Error).message });
-  }
-});
+router.post('/logout', authenticateToken, logout);
 
 // Protected routes
-router.get('/profile', authenticateToken, isUser, (req, res) => {
+router.get('/profile', authenticateToken, checkInactivity, isUser, (req, res) => {
   res.json({ user: req.user });
 });
 
-router.get('/admin', authenticateToken, isAdmin, (req, res) => {
+router.get('/admin', authenticateToken, checkInactivity, isAdmin, (req, res) => {
   res.json({ message: 'Admin access granted' });
 });
 
