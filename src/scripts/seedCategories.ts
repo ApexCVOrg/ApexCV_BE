@@ -2,68 +2,195 @@
 import { Category } from "../models/Category";
 
 const categoriesData = [
-  {
-    name: "Shoes",
-    subcategories: ["Running Shoes", "Basketball Shoes", "Soccer Shoes", "Sneakers"],
-  },
-  {
-    name: "Clothing",
-    subcategories: ["Jackets", "T-shirts", "Pants", "Hoodies"],
-  },
-  {
-    name: "Accessories",
-    subcategories: ["Bags", "Hats", "Socks", "Watches"],
-  },
-  {
-    name: "Sports",
-    subcategories: ["Football", "Running", "Training"],
-  },
-  {
-    name: "Kids",
-    subcategories: ["Shoes", "Clothing", "Accessories"],
-  },
-  {
-    name: "Sale",
-    subcategories: ["Shoes", "Clothing", "Accessories"],
-  },
+    {
+      name: "Men",
+      subcategories: [
+        {
+          name: "Men Arsenal",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Men Juventus",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Men Bayern Munich",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Men Real Madrid",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Men Manchester United",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+      ],
+    },
+    {
+      name: "Women",
+      subcategories: [
+        {
+          name: "Women Arsenal",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Women Juventus",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Women Bayern Munich",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Women Real Madrid",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Women Manchester United",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+      ],
+    },
+  ];
   
-];
 
 export const seedCategories = async () => {
   try {
     // Get all existing categories
     const existingCategories = await Category.find({});
-    const existingParentNames = new Set(existingCategories
-      .filter(cat => !cat.parentCategory)
-      .map(cat => cat.name));
     
-    const existingSubNames = new Set(existingCategories
-      .filter(cat => cat.parentCategory)
-      .map(cat => cat.name));
+    // Create sets of all category names from seed data
+    const seedCategoryNames = new Set();
+    categoriesData.forEach(cat => {
+      seedCategoryNames.add(cat.name); // Add parent category (Men/Women)
+      cat.subcategories.forEach(sub => {
+        seedCategoryNames.add(sub.name); // Add team categories (Men Arsenal, Women Arsenal, etc.)
+        sub.subcategories.forEach(productType => {
+          seedCategoryNames.add(`${sub.name} ${productType}`); // Add product type categories
+        });
+      });
+    });
 
-    // Collect all names from seed data
-    const seedParentNames = new Set(categoriesData.map(cat => cat.name));
-    const seedSubNames = new Set(categoriesData.flatMap(cat => cat.subcategories));
-
-    // Find categories to delete
-    const parentNamesToDelete = [...existingParentNames].filter(name => !seedParentNames.has(name));
-    const subNamesToDelete = [...existingSubNames].filter(name => !seedSubNames.has(name));
+    // Find categories to delete (those that exist in DB but not in seed data)
+    const categoriesToDelete = existingCategories.filter(cat => !seedCategoryNames.has(cat.name));
 
     // Delete categories that are not in seed data
-    if (parentNamesToDelete.length > 0) {
-      await Category.deleteMany({ 
-        name: { $in: parentNamesToDelete },
-        parentCategory: null 
+    if (categoriesToDelete.length > 0) {
+      await Category.deleteMany({
+        _id: { $in: categoriesToDelete.map(cat => cat._id) }
       });
-      console.log(`🗑️ Deleted parent categories: ${parentNamesToDelete.join(', ')}`);
-    }
-
-    if (subNamesToDelete.length > 0) {
-      await Category.deleteMany({ 
-        name: { $in: subNamesToDelete },
-        parentCategory: { $ne: null }
-      });
-      console.log(`🗑️ Deleted subcategories: ${subNamesToDelete.join(', ')}`);
+      console.log(`🗑️ Deleted ${categoriesToDelete.length} categories that are not in seed data`);
     }
 
     // Add new categories
@@ -89,27 +216,40 @@ export const seedCategories = async () => {
       // Check and create subcategories
       for (const sub of cat.subcategories) {
         const existingSub = await Category.findOne({ 
-          name: sub,
+          name: sub.name,
           parentCategory: parent._id 
         });
 
+        let teamSub;
         if (!existingSub) {
-          try {
+          teamSub = await new Category({
+            name: sub.name,
+            parentCategory: parent._id,
+            status: "active",
+          }).save();
+          console.log(`✅ Created team subcategory: ${sub.name} under ${cat.name}`);
+        } else {
+          teamSub = existingSub;
+          console.log(`ℹ️ Team subcategory already exists: ${sub.name} under ${cat.name}`);
+        }
+
+        // Create the product type subcategories
+        for (const productType of sub.subcategories) {
+          const existingProductType = await Category.findOne({ 
+            name: `${sub.name} ${productType}`,
+            parentCategory: teamSub._id 
+          });
+
+          if (!existingProductType) {
             await new Category({
-              name: sub,
-              parentCategory: parent._id,
+              name: `${sub.name} ${productType}`,
+              parentCategory: teamSub._id,
               status: "active",
             }).save();
-            console.log(`✅ Created subcategory: ${sub} under ${cat.name}`);
-          } catch (error: any) {
-            if (error.code === 11000) {
-              console.log(`ℹ️ Subcategory already exists: ${sub}`);
-            } else {
-              throw error;
-            }
+            console.log(`✅ Created product type: ${sub.name} ${productType} under ${sub.name}`);
+          } else {
+            console.log(`ℹ️ Product type already exists: ${sub.name} ${productType} under ${sub.name}`);
           }
-        } else {
-          console.log(`ℹ️ Subcategory already exists: ${sub} under ${cat.name}`);
         }
       }
     }
