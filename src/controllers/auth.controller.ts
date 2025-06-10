@@ -297,8 +297,17 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '24h' }
+      { expiresIn: '10m' }
     );
+
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
+      { expiresIn: '30d' }
+    );
+    user.refreshToken = refreshToken;
+    await user.save();
 
     console.log('Email verification successful for:', email);
 
@@ -307,6 +316,7 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
       message: 'Email verified successfully',
       data: {
         token,
+        refreshToken,
         user: { 
           id: user._id,
           email: user.email,
@@ -383,7 +393,11 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     if (!loginUsername || !loginPassword) {
       res.status(400).json({
         success: false,
-        message: 'Username and password are required',
+        message: 'login.errors.requiredFields',
+        errors: {
+          username: !loginUsername ? 'Username is required' : undefined,
+          password: !loginPassword ? 'Password is required' : undefined
+        }
       });
       return;
     }
@@ -395,7 +409,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     if (!user) {
       res.status(401).json({
         success: false,
-        message: 'Invalid username or password',
+        message: 'login.errors.invalidCredentials'
       });
       return;
     }
@@ -406,7 +420,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     if (!isPasswordValid) {
       res.status(401).json({
         success: false,
-        message: 'Invalid username or password',
+        message: 'login.errors.invalidCredentials'
       });
       return;
     }
@@ -415,7 +429,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     if (!user.isVerified) {
       res.status(403).json({
         success: false,
-        message: 'Please verify your email first',
+        message: 'login.errors.unverified'
       });
       return;
     }
@@ -424,15 +438,25 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '24h' }
+      { expiresIn: '10m' }
     );
+
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
+      { expiresIn: '30d' }
+    );
+    user.refreshToken = refreshToken;
+    await user.save();
 
     // Return success response
     res.status(200).json({
       success: true,
-      message: 'Login successful',
+      message: 'login.success',
       data: {
         token,
+        refreshToken,
         user: {
           id: user._id,
           username: user.username,
@@ -445,11 +469,10 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     console.error('Login error:', error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: 'login.errors.server'
     });
   }
 };
-
 
 export const handleGoogleCallback: RequestHandler = async (req, res) => {
   try {
@@ -532,7 +555,7 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '24h' }
+      { expiresIn: '10m' }
     );
 
     // Redirect to frontend with token
@@ -665,7 +688,7 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
         role: user.role,
       },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '24h' }
+      { expiresIn: '10m' }
     );
 
     // Redirect về FE
@@ -683,6 +706,9 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
 
 export const logout: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
+    // Clear JWT token cookie if it exists
+    res.clearCookie('token');
+    
     // Destroy session
     req.session.destroy((err) => {
       if (err) {
@@ -692,6 +718,12 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
           message: 'Failed to logout',
         });
       } else {
+        // Clear all cookies
+        const cookies = req.cookies;
+        for (const cookieName in cookies) {
+          res.clearCookie(cookieName);
+        }
+        
         res.status(200).json({
           success: true,
           message: 'Logout successful',
@@ -886,5 +918,35 @@ export const resetPassword: RequestHandler = async (req: Request, res: Response)
       success: false,
       message: 'Internal server error'
     });
+  }
+};
+
+export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      res.status(400).json({ message: 'Missing refresh token' });
+      return;
+    }
+    let decoded: any;
+    try {
+      decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key');
+    } catch (err) {
+      res.status(401).json({ message: 'Invalid or expired refresh token' });
+      return;
+    }
+    const user = await User.findOne({ _id: decoded.id, refreshToken });
+    if (!user) {
+      res.status(401).json({ message: 'Invalid refresh token' });
+      return;
+    }
+    const token = jwt.sign(
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '10m' }
+    );
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: 'Error refreshing token' });
   }
 };

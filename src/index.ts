@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import session from "express-session";
+import cookieParser from "cookie-parser";
+import MongoStore from "connect-mongo";
 import helloRouter from "./routes/hello";
 import dotenv from "dotenv";
 import userRouter from "./routes/users";
@@ -38,15 +40,22 @@ const port: number | string = process.env.PORT || 5000;
 connectDB();
 
 app.use(express.json());
+app.use(cookieParser());
 
 // Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
+    ttl: 10 * 60, // 10 minutes
+    autoRemove: 'native'
+  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    httpOnly: true,
+    maxAge: 10 * 60 * 1000 // 10 minutes
   }
 }));
 

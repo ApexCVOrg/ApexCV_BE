@@ -16,6 +16,7 @@ const productSchema = new Schema({
   sizes: [sizeSchema],
   colors: [String],
   tags: [String],
+  label: [String],
   ratingsAverage: { type: Number, default: 0 },
   ratingsQuantity: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
