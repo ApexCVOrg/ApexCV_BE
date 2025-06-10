@@ -13,7 +13,7 @@ import conversationRouter from "./routes/conversations";
 import messageRouter from "./routes/messages";
 import brandRouter from "./routes/brands";
 import authRouter from "./routes/auth";
-import managerRouter from "./routes/manager";
+import managerRouter from "./routes/admin/manager";
 import connectDB from "./config/db";
 import { 
   API_BASE,

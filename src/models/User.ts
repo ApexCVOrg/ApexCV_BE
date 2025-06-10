@@ -22,6 +22,9 @@ const userSchema = new Schema({
   addresses: [addressSchema],
   googleId: { type: String, unique: true, sparse: true },
   facebookId: { type: String, unique: true, sparse: true },
+  isVerified: { type: Boolean, default: false },
+  verificationCode: String,
+  verificationCodeExpires: Date,
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -33,6 +36,12 @@ interface IUser extends Document {
   phone: string;
   addresses: any[];
   role: string;
+  isVerified: boolean;
+  verificationCode: string;
+  verificationCodeExpires: Date;
+  googleId?: string;
+  facebookId?: string;
+  avatar?: string;
 }
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model<IUser>("User", userSchema);
