@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import session from "express-session";
 import helloRouter from "./routes/hello";
 import dotenv from "dotenv";
 import userRouter from "./routes/users";
@@ -12,6 +13,7 @@ import conversationRouter from "./routes/conversations";
 import messageRouter from "./routes/messages";
 import brandRouter from "./routes/brands";
 import authRouter from "./routes/auth";
+import managerRouter from "./routes/admin/manager";
 import connectDB from "./config/db";
 import { 
   API_BASE,
@@ -24,7 +26,8 @@ import {
   CART_ROUTES,
   CONVERSATION_ROUTES,
   MESSAGE_ROUTES,
-  BRAND_ROUTES 
+  BRAND_ROUTES,
+  MANAGER_ROUTES,
 } from './constants/routes';
 dotenv.config();
 
@@ -35,6 +38,17 @@ const port: number | string = process.env.PORT || 5000;
 connectDB();
 
 app.use(express.json());
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
 
 app.use(
   cors({
@@ -60,6 +74,7 @@ app.use(API_BASE + CART_ROUTES.BASE, cartRouter);
 app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter);
 app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter);
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter);
+app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
