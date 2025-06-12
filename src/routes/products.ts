@@ -9,7 +9,7 @@ const router: Router = express.Router();
 router.get("/", async (_req: Request, res: Response) => {
   try {
     const products = await Product.find()
-      .populate("categories", "name") // chỉ lấy tên category
+      .populate("categories", "name")
       .sort({ createdAt: -1 })
       .lean();
     res.json(products);
@@ -21,7 +21,7 @@ router.get("/", async (_req: Request, res: Response) => {
 // Create product
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, status } = req.body;
+    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags } = req.body;
     const product = new Product({
       name,
       description,
@@ -33,7 +33,6 @@ router.post("/", async (req: Request, res: Response) => {
       sizes,
       colors,
       tags,
-      status,
     });
     const saved = await product.save();
     res.status(201).json({ ...saved.toObject(), message: "Product created successfully!" });

@@ -21,4 +21,21 @@ const productSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// Add virtual for brand name
+productSchema.virtual('brandName').get(function() {
+  return this.brand ? this.brand.name : 'Unknown Brand';
+});
+
+// Add virtual for formatted categories
+productSchema.virtual('formattedCategories').get(function() {
+  return this.categories ? this.categories.map(cat => ({
+    _id: cat._id,
+    name: cat.name
+  })) : [];
+});
+
+// Ensure virtuals are included when converting to JSON
+productSchema.set('toJSON', { virtuals: true });
+productSchema.set('toObject', { virtuals: true });
+
 export const Product = mongoose.model("Product", productSchema);
