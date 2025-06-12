@@ -1,4 +1,5 @@
 // src/seeds/category.seed.ts
+import mongoose from "mongoose";
 import { Category } from "../models/Category";
 
 const categoriesData = [
@@ -6,7 +7,7 @@ const categoriesData = [
       name: "Men",
       subcategories: [
         {
-          name: "Men Arsenal",
+          name: "Arsenal",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -21,7 +22,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Men Juventus",
+          name: "Juventus",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -36,7 +37,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Men Bayern Munich",
+          name: "Bayern Munich",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -51,7 +52,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Men Real Madrid",
+          name: "Real Madrid",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -66,7 +67,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Men Manchester United",
+          name: "Manchester United",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -86,7 +87,7 @@ const categoriesData = [
       name: "Women",
       subcategories: [
         {
-          name: "Women Arsenal",
+          name: "Arsenal",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -101,7 +102,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Women Juventus",
+          name: "Juventus",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -116,7 +117,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Women Bayern Munich",
+          name: "Bayern Munich",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -131,7 +132,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Women Real Madrid",
+          name: "Real Madrid",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -146,7 +147,7 @@ const categoriesData = [
           ],
         },
         {
-          name: "Women Manchester United",
+          name: "Manchester United",
           subcategories: [
             "Football Boots",
             "Training Shoes",
@@ -167,17 +168,19 @@ const categoriesData = [
 
 export const seedCategories = async () => {
   try {
+    console.log("🔄 Starting category seeding...");
+    
     // Get all existing categories
     const existingCategories = await Category.find({});
     
     // Create sets of all category names from seed data
-    const seedCategoryNames = new Set();
+    const seedCategoryNames = new Set<string>();
     categoriesData.forEach(cat => {
       seedCategoryNames.add(cat.name); // Add parent category (Men/Women)
       cat.subcategories.forEach(sub => {
-        seedCategoryNames.add(sub.name); // Add team categories (Men Arsenal, Women Arsenal, etc.)
+        seedCategoryNames.add(sub.name); // Add team categories (Arsenal, Juventus, etc.)
         sub.subcategories.forEach(productType => {
-          seedCategoryNames.add(`${sub.name} ${productType}`); // Add product type categories
+          seedCategoryNames.add(productType); // Add product type categories
         });
       });
     });
@@ -236,19 +239,19 @@ export const seedCategories = async () => {
         // Create the product type subcategories
         for (const productType of sub.subcategories) {
           const existingProductType = await Category.findOne({ 
-            name: `${sub.name} ${productType}`,
+            name: productType,
             parentCategory: teamSub._id 
           });
 
           if (!existingProductType) {
             await new Category({
-              name: `${sub.name} ${productType}`,
+              name: productType,
               parentCategory: teamSub._id,
               status: "active",
             }).save();
-            console.log(`✅ Created product type: ${sub.name} ${productType} under ${sub.name}`);
+            console.log(`✅ Created product type: ${productType} under ${sub.name}`);
           } else {
-            console.log(`ℹ️ Product type already exists: ${sub.name} ${productType} under ${sub.name}`);
+            console.log(`ℹ️ Product type already exists: ${productType} under ${sub.name}`);
           }
         }
       }
