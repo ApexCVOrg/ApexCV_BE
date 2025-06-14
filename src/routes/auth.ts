@@ -10,7 +10,9 @@ import {
   verifyOTP,
   resetPassword,
   logout,
-  refreshToken
+  refreshToken,
+  sendEmailChangeVerification,
+  changePassword
 } from '../controllers/auth.controller'
 import { authenticateToken, isAdmin, isUser, checkInactivity } from '../middlewares/auth'
 import { validateRegister } from '../middlewares/validation'
@@ -19,6 +21,14 @@ import { OAuth2Client } from 'google-auth-library'
 const router: Router = express.Router()
 
 // Public routes
+router.post('/register', validateRegister, register);
+router.post('/verify-email', authenticateToken, verifyEmail);
+router.post('/send-email-change-verification', authenticateToken, sendEmailChangeVerification);
+router.post('/resend-verification', resendVerificationCode);
+router.post('/forgot-password', forgotPassword);
+router.post('/verify-otp', verifyOTP);
+router.post('/reset-password', resetPassword);
+router.post('/login', login);
 router.post('/register', validateRegister, register)
 router.post('/verify-email', verifyEmail)
 router.post('/resend-verification', resendVerificationCode)
@@ -88,5 +98,7 @@ router.get('/profile', authenticateToken, checkInactivity, isUser, (req, res) =>
 router.get('/admin', authenticateToken, checkInactivity, isAdmin, (req, res) => {
   res.json({ message: 'Admin access granted' })
 })
+
+router.post('/change-password', authenticateToken, changePassword)
 
 export default router

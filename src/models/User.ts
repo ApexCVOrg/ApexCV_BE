@@ -43,6 +43,7 @@ interface IUser extends Document {
   googleId?: string
   facebookId?: string
   avatar?: string
+  status?: string
   refreshToken?: string
 }
 
