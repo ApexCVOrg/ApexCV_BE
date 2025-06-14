@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose'
 
 const addressSchema = new Schema({
   recipientName: String,
@@ -7,8 +7,8 @@ const addressSchema = new Schema({
   state: String,
   country: String,
   addressNumber: String,
-  isDefault: { type: Boolean, default: false },
-});
+  isDefault: { type: Boolean, default: false }
+})
 
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -16,7 +16,7 @@ const userSchema = new Schema({
   passwordHash: { type: String, required: false },
   fullName: String,
   phone: String,
-  role: { type: String, enum: ["user", "admin", "manager"], default: "user" },
+  role: { type: String, enum: ['user', 'admin', 'manager'], default: 'user' },
   status: String,
   avatar: String,
   addresses: [addressSchema],
@@ -26,23 +26,25 @@ const userSchema = new Schema({
   verificationCode: String,
   verificationCodeExpires: Date,
   createdAt: { type: Date, default: Date.now },
-});
+  refreshToken: { type: String }
+})
 
 interface IUser extends Document {
-  username: string;
-  email: string;
-  passwordHash: string;
-  fullName: string;
-  phone: string;
-  addresses: any[];
-  role: string;
-  isVerified: boolean;
-  verificationCode: string;
-  verificationCodeExpires: Date;
-  googleId?: string;
-  facebookId?: string;
-  avatar?: string;
-  status?: string;
+  username: string
+  email: string
+  passwordHash: string
+  fullName: string
+  phone: string
+  addresses: any[]
+  role: string
+  isVerified: boolean
+  verificationCode: string
+  verificationCodeExpires: Date
+  googleId?: string
+  facebookId?: string
+  avatar?: string
+  status?: string
+  refreshToken?: string
 }
 
-export const User = mongoose.model<IUser>("User", userSchema);
+export const User = mongoose.model<IUser>('User', userSchema)
