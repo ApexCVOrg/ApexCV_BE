@@ -39,7 +39,9 @@ export const getProducts = async (_req: Request, res: Response) => {
 
 export const getProductById = async (req: Request, res: Response) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id)
+      .populate("categories", "name")
+      .populate({ path: "brand", select: "name", strictPopulate: false });
     if (!product) return res.status(404).json({ message: "Product not found" });
     res.json(product);
   } catch (error) {
