@@ -11,29 +11,51 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     console.log('Token:', token);
 
     if (!token) {
+      console.log('No token found in request');
       res.status(401).json({ message: 'Không tìm thấy token xác thực' });
       return;
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
-    console.log('Decoded token:', decoded);
-    
-    User.findById(decoded.id)
-      .then(user => {
-        console.log('Found user:', user);
-        if (!user) {
-          res.status(401).json({ message: 'Người dùng không tồn tại' });
-          return;
-        }
-        req.user = user;
-        next();
-      })
-      .catch(error => {
-        console.log('Error finding user:', error);
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
+      console.log('Decoded token:', decoded);
+      
+      // Try both id and userId from token
+      const userId = decoded.userId || decoded.id;
+      console.log('Extracted userId:', userId);
+      
+      if (!userId) {
+        console.log('No userId found in token');
+        res.status(401).json({ message: 'Token không hợp lệ - không tìm thấy ID người dùng' });
+        return;
+      }
+      
+      User.findById(userId)
+        .then(user => {
+          console.log('Found user:', user);
+          if (!user) {
+            console.log('User not found in database');
+            res.status(401).json({ message: 'Người dùng không tồn tại' });
+            return;
+          }
+          req.user = user;
+          console.log('User authenticated successfully');
+          next();
+        })
+        .catch(error => {
+          console.log('Error finding user:', error);
+          res.status(401).json({ message: 'Token không hợp lệ' });
+        });
+    } catch (jwtError) {
+      console.log('JWT verification error:', jwtError);
+      if (jwtError instanceof jwt.TokenExpiredError) {
+        res.status(401).json({ message: 'Token đã hết hạn' });
+      } else {
         res.status(401).json({ message: 'Token không hợp lệ' });
-      });
+      }
+    }
   } catch (error) {
-    console.log('JWT verify error:', error);
+    console.log('General error in auth middleware:', error);
     res.status(401).json({ message: 'Token không hợp lệ' });
   }
 };

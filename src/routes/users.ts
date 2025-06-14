@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import { authenticateToken } from "../middlewares/auth";
 import { checkPermission, checkPermissions } from "../middlewares/permission";
 import { Permission } from "../types/filter/permissions";
+import { getProfile, updateProfile } from "../controllers/user.controller";
 
 const router: Router = express.Router();
 
@@ -10,29 +11,9 @@ const router: Router = express.Router();
 router.use(authenticateToken);
 
 // Get user profile
-router.get("/profile", checkPermission(Permission.VIEW_PROFILE), async (req: Request, res: Response) => {
-  try {
-    const user = await User.findById(req.user?._id).select('-passwordHash');
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching profile" });
-  }
-});
-
+router.get('/profile', getProfile);
 // Update user profile
-router.put("/profile", checkPermission(Permission.EDIT_PROFILE), async (req: Request, res: Response) => {
-  try {
-    const { fullName, phone, addresses } = req.body;
-    const user = await User.findByIdAndUpdate(
-      req.user?._id,
-      { fullName, phone, addresses },
-      { new: true }
-    ).select('-passwordHash');
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Error updating profile" });
-  }
-});
+router.put('/profile', updateProfile);
 
 // Get all users (admin only)
 router.get("/", checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
