@@ -1,5 +1,5 @@
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
 
 export const sessionConfig = {
   secret: process.env.SESSION_SECRET || 'your-secret-key',
@@ -15,4 +15,4 @@ export const sessionConfig = {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 1 day
   }
-}; 
+}
