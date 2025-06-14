@@ -163,6 +163,86 @@ const categoriesData = [
         },
       ],
     },
+    {
+      name: "Kids",
+      subcategories: [
+        {
+          name: "Arsenal",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Juventus",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Bayern Munich",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Real Madrid",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Manchester United",
+          subcategories: [
+            "Football Boots",
+            "Training Shoes",
+            "Running Shoes",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+      ],
+    },
   ];
   
 

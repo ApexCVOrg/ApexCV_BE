@@ -1,4 +1,30 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+
+interface ICategory {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+}
+
+interface IBrand {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+}
+
+interface IProduct extends Document {
+  name: string;
+  description?: string;
+  price: number;
+  discountPrice?: number;
+  categories: mongoose.Types.ObjectId[] | ICategory[];
+  brand: mongoose.Types.ObjectId | IBrand;
+  images: string[];
+  sizes: { size: string; stock: number }[];
+  colors: string[];
+  tags: string[];
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  createdAt: Date;
+}
 
 const sizeSchema = new Schema({
   size: String,
@@ -22,13 +48,15 @@ const productSchema = new Schema({
 });
 
 // Add virtual for brand name
-productSchema.virtual('brandName').get(function() {
-  return this.brand ? this.brand.name : 'Unknown Brand';
+productSchema.virtual('brandName').get(function(this: IProduct) {
+  const brand = this.brand as IBrand;
+  return brand?.name || 'Unknown Brand';
 });
 
 // Add virtual for formatted categories
-productSchema.virtual('formattedCategories').get(function() {
-  return this.categories ? this.categories.map(cat => ({
+productSchema.virtual('formattedCategories').get(function(this: IProduct) {
+  const categories = this.categories as ICategory[];
+  return categories ? categories.map(cat => ({
     _id: cat._id,
     name: cat.name
   })) : [];
@@ -38,4 +66,4 @@ productSchema.virtual('formattedCategories').get(function() {
 productSchema.set('toJSON', { virtuals: true });
 productSchema.set('toObject', { virtuals: true });
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.model<IProduct>("Product", productSchema);
