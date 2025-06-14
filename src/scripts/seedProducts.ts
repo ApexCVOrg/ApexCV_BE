@@ -85,6 +85,76 @@ const productsData = [
     colors: ["White", "Purple"],
     tags: ["real-madrid", "hoodie", "women"],
     brand: "Adidas"
+  },
+  {
+    name: "Arsenal Kids Home Jersey 2024/25",
+    description: "Official Arsenal FC home jersey for kids, perfect for young fans. Made with comfortable, breathable materials and featuring the latest team design.",
+    price: 1599000,
+    discountPrice: 1399000,
+    categoryPath: ["Kids", "Arsenal", "T-Shirts"],
+    images: ["/images/products/arsenal-kids-home-jersey-2024.jpg"],
+    sizes: [
+      { size: "4-5Y", stock: 20 },
+      { size: "6-7Y", stock: 25 },
+      { size: "8-9Y", stock: 20 },
+      { size: "10-11Y", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["arsenal", "jersey", "football", "home", "kids"],
+    brand: "Nike"
+  },
+  {
+    name: "Real Madrid Kids Training Shoes",
+    description: "Comfortable and durable training shoes for young Real Madrid fans. Perfect for both training and casual wear.",
+    price: 2199000,
+    discountPrice: 1899000,
+    categoryPath: ["Kids", "Real Madrid", "Training Shoes"],
+    images: ["/images/products/real-madrid-kids-training-shoes.jpg"],
+    sizes: [
+      { size: "28", stock: 15 },
+      { size: "29", stock: 20 },
+      { size: "30", stock: 25 },
+      { size: "31", stock: 20 },
+      { size: "32", stock: 15 }
+    ],
+    colors: ["White", "Black"],
+    tags: ["real-madrid", "shoes", "training", "kids"],
+    brand: "Adidas"
+  },
+  {
+    name: "Bayern Munich Kids Tracksuit",
+    description: "Stylish and comfortable tracksuit for young Bayern Munich fans. Perfect for training and casual wear.",
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Bayern Munich", "Tracksuits"],
+    images: ["/images/products/bayern-kids-tracksuit.jpg"],
+    sizes: [
+      { size: "4-5Y", stock: 15 },
+      { size: "6-7Y", stock: 20 },
+      { size: "8-9Y", stock: 25 },
+      { size: "10-11Y", stock: 20 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["bayern", "tracksuit", "training", "kids"],
+    brand: "Adidas"
+  },
+  {
+    name: "Manchester United Kids Football Boots",
+    description: "Lightweight and comfortable football boots for young Manchester United players. Perfect for training and matches.",
+    price: 2499000,
+    discountPrice: 2199000,
+    categoryPath: ["Kids", "Manchester United", "Football Boots"],
+    images: ["/images/products/man-utd-kids-boots.jpg"],
+    sizes: [
+      { size: "28", stock: 10 },
+      { size: "29", stock: 15 },
+      { size: "30", stock: 20 },
+      { size: "31", stock: 15 },
+      { size: "32", stock: 10 }
+    ],
+    colors: ["Black", "Red"],
+    tags: ["manchester-united", "boots", "football", "kids"],
+    brand: "Nike"
   }
 ];
 
