@@ -11,7 +11,8 @@ import {
   resetPassword,
   logout,
   refreshToken,
-  sendEmailChangeVerification
+  sendEmailChangeVerification,
+  changePassword
 } from '../controllers/auth.controller'
 import { authenticateToken, isAdmin, isUser, checkInactivity } from '../middlewares/auth'
 import { validateRegister } from '../middlewares/validation'
@@ -97,5 +98,7 @@ router.get('/profile', authenticateToken, checkInactivity, isUser, (req, res) =>
 router.get('/admin', authenticateToken, checkInactivity, isAdmin, (req, res) => {
   res.json({ message: 'Admin access granted' })
 })
+
+router.post('/change-password', authenticateToken, changePassword)
 
 export default router
