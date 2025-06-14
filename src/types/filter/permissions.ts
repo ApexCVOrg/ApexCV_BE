@@ -41,7 +41,7 @@ const userPermissions = [
   Permission.WRITE_REVIEW,
   Permission.VIEW_PRODUCTS,
   Permission.VIEW_CATEGORIES
-];
+]
 
 // Define manager specific permissions
 const managerPermissions = [
@@ -52,7 +52,7 @@ const managerPermissions = [
   Permission.MANAGE_INVENTORY,
   Permission.VIEW_ALL_USERS,
   Permission.MANAGE_REVIEWS
-];
+]
 
 // Define admin specific permissions
 const adminPermissions = [
@@ -62,10 +62,10 @@ const adminPermissions = [
   Permission.VIEW_ALL_REPORTS,
   Permission.MANAGE_SYSTEM,
   Permission.MANAGE_SETTINGS
-];
+]
 
 export const RolePermissions = {
   user: userPermissions,
   manager: [...userPermissions, ...managerPermissions],
   admin: [...userPermissions, ...managerPermissions, ...adminPermissions]
-}; 
+}

@@ -89,9 +89,10 @@ const getAllProducts: RequestHandler = async (req, res, next) => {
 router.get("/", getAllProducts);
 
 // Create product
-router.post("/", async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags } = req.body;
+    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, label, status } =
+      req.body
     const product = new Product({
       name,
       description,
@@ -111,12 +112,12 @@ router.post("/", async (req: Request, res: Response) => {
     ]);
     res.status(201).json({ ...populated.toObject(), message: "Product created successfully!" });
   } catch (error: any) {
-    res.status(400).json({ message: "Error creating product", error: error?.message || "Unknown error" });
+    res.status(400).json({ message: 'Error creating product', error: error?.message || 'Unknown error' })
   }
-});
+})
 
 // Update product
-router.put("/:id", async (req: Request<{ id: string }>, res: Response) => {
+router.put('/:id', async (req: Request<{ id: string }>, res: Response) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
@@ -124,28 +125,28 @@ router.put("/:id", async (req: Request<{ id: string }>, res: Response) => {
       .populate("categories", "name")
       .populate("brand", "name");
     if (!updated) {
-      res.status(404).json({ message: "Product not found" });
-      return;
+      res.status(404).json({ message: 'Product not found' })
+      return
     }
-    res.json({ ...updated.toObject(), message: "Product updated successfully!" });
+    res.json({ ...updated.toObject(), message: 'Product updated successfully!' })
   } catch (error: any) {
-    res.status(400).json({ message: "Error updating product", error: error?.message || "Unknown error" });
+    res.status(400).json({ message: 'Error updating product', error: error?.message || 'Unknown error' })
   }
-});
+})
 
 // Delete product
-router.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
+router.delete('/:id', async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const { id } = req.params;
-    const deleted = await Product.findByIdAndDelete(id);
+    const { id } = req.params
+    const deleted = await Product.findByIdAndDelete(id)
     if (!deleted) {
-      res.status(404).json({ message: "Product not found" });
-      return;
+      res.status(404).json({ message: 'Product not found' })
+      return
     }
-    res.json({ message: "Product deleted successfully!" });
+    res.json({ message: 'Product deleted successfully!' })
   } catch (error: any) {
-    res.status(500).json({ message: "Error deleting product", error: error?.message || "Unknown error" });
+    res.status(500).json({ message: 'Error deleting product', error: error?.message || 'Unknown error' })
   }
-});
+})
 
-export default router;
+export default router
