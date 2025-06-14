@@ -26,6 +26,9 @@ interface VerificationData {
 
 const verificationStore = new Map<string, VerificationData>()
 
+// Store for email change verification
+const emailChangeStore = new Map<string, { email: string; verificationCode: string; expiresAt: Date }>();
+
 // Clean up expired verification data every hour
 setInterval(
   () => {
@@ -252,15 +255,29 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
     // Log the received code for debugging
     console.log('Received verification request:', { email, code })
 
-    const verificationData = verificationStore.get(email)
+    // Check both verification stores
+    const registrationData = verificationStore.get(email);
+    const emailChangeData = emailChangeStore.get(email);
+
+    if (!registrationData && !emailChangeData) {
+      console.log('No verification data found for email:', email);
+      res.status(400).json({ 
+        success: false, 
+        message: 'Verification data not found or expired' 
+      });
+      return;
+    }
+
+    // Determine which store to use and handle type checking
+    const isEmailChange = !!emailChangeData;
+    const verificationData = isEmailChange ? emailChangeData : registrationData;
 
     if (!verificationData) {
-      console.log('No verification data found for email:', email)
-      res.status(400).json({
-        success: false,
-        message: 'Verification data not found or expired'
-      })
-      return
+      res.status(400).json({ 
+        success: false, 
+        message: 'Verification data not found or expired' 
+      });
+      return;
     }
 
     // Log the stored code for debugging
@@ -280,61 +297,110 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
     }
 
     if (verificationData.expiresAt < new Date()) {
-      console.log('Verification code expired for email:', email)
-      verificationStore.delete(email)
-      res.status(400).json({
-        success: false,
-        message: 'Verification code expired'
-      })
-      return
+      console.log('Verification code expired for email:', email);
+      if (isEmailChange) {
+        emailChangeStore.delete(email);
+      } else {
+        verificationStore.delete(email);
+      }
+      res.status(400).json({ 
+        success: false, 
+        message: 'Verification code expired' 
+      });
+      return;
     }
 
-    // Create new user
-    const user = new User({
-      username: verificationData.username,
-      email: verificationData.email,
-      passwordHash: verificationData.passwordHash,
-      fullName: verificationData.fullName,
-      phone: verificationData.phone,
-      addresses: verificationData.addresses,
-      isVerified: true
-    })
-
-    await user.save()
-    verificationStore.delete(email)
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
-    )
-
-    // Generate refresh token
-    const refreshToken = jwt.sign(
-      { id: user._id, username: user.username, role: user.role },
-      process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
-      { expiresIn: '30d' }
-    )
-    user.refreshToken = refreshToken
-    await user.save()
-
-    console.log('Email verification successful for:', email)
-
-    res.status(200).json({
-      success: true,
-      message: 'Email verified successfully',
-      data: {
-        token,
-        refreshToken,
-        user: {
-          id: user._id,
-          email: user.email,
-          fullName: user.fullName,
-          role: user.role
-        }
+    if (isEmailChange) {
+      // Handle email change verification
+      const userId = req.user?._id;
+      if (!userId) {
+        res.status(401).json({ 
+          success: false, 
+          message: 'Unauthorized' 
+        });
+        return;
       }
-    })
+
+      const user = await User.findById(userId);
+      if (!user) {
+        res.status(404).json({ 
+          success: false, 
+          message: 'User not found' 
+        });
+        return;
+      }
+
+      // Update user's email
+      user.email = email;
+      await user.save();
+      emailChangeStore.delete(email);
+
+      // Generate new JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET || 'your-secret-key',
+        { expiresIn: '24h' }
+      );
+
+      res.status(200).json({
+        success: true,
+        message: 'Email updated successfully',
+        data: {
+          token,
+          user: { 
+            id: user._id,
+            email: user.email,
+            fullName: user.fullName,
+            role: user.role
+          }
+        }
+      });
+    } else {
+      // Handle registration verification
+      if (!registrationData) {
+        res.status(400).json({ 
+          success: false, 
+          message: 'Registration data not found' 
+        });
+        return;
+      }
+
+      const user = new User({
+        username: registrationData.username,
+        email: registrationData.email,
+        passwordHash: registrationData.passwordHash,
+        fullName: registrationData.fullName,
+        phone: registrationData.phone,
+        addresses: registrationData.addresses,
+        isVerified: true
+      });
+
+      await user.save();
+      verificationStore.delete(email);
+
+      // Generate JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET || 'your-secret-key',
+        { expiresIn: '24h' }
+      );
+
+      console.log('Email verification successful for:', email);
+
+      res.status(200).json({
+        success: true,
+        message: 'Email verified successfully',
+        data: {
+          token,
+          user: { 
+            id: user._id,
+            email: user.email,
+            fullName: user.fullName,
+            role: user.role
+          }
+        }
+      });
+    }
   } catch (error: any) {
     console.error('Email verification error:', error)
     res.status(500).json({
@@ -353,8 +419,11 @@ export const resendVerificationCode: RequestHandler = async (req, res) => {
       return
     }
 
-    const verificationData = verificationStore.get(email)
-    if (!verificationData) {
+    // Check both verification stores
+    const registrationData = verificationStore.get(email);
+    const emailChangeData = emailChangeStore.get(email);
+
+    if (!registrationData && !emailChangeData) {
       res.status(400).json({
         success: false,
         message: 'No verification data found for this email'
@@ -362,12 +431,24 @@ export const resendVerificationCode: RequestHandler = async (req, res) => {
       return
     }
 
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    verificationData.verificationCode = verificationCode
-    verificationData.expiresAt = expiresAt
-    verificationStore.set(email, verificationData)
+    if (emailChangeData) {
+      // Handle email change verification resend
+      emailChangeStore.set(email, {
+        email,
+        verificationCode,
+        expiresAt
+      });
+    } else if (registrationData) {
+      // Handle registration verification resend
+      verificationStore.set(email, {
+        ...registrationData,
+        verificationCode,
+        expiresAt
+      });
+    }
 
     try {
       await sendVerificationEmail(email, verificationCode)
@@ -930,7 +1011,77 @@ export const resetPassword: RequestHandler = async (req: Request, res: Response)
       message: 'Internal server error'
     })
   }
-}
+};
+
+export const sendEmailChangeVerification: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      });
+      return;
+    }
+
+    // Check if email is already in use
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is already in use'
+      });
+      return;
+    }
+
+    // Generate verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // Store verification data
+    emailChangeStore.set(email, {
+      email,
+      verificationCode,
+      expiresAt
+    });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, verificationCode);
+      console.log('✅ Email change verification code sent successfully to:', email);
+    } catch (emailError: any) {
+      console.error('❌ Email sending failed:', {
+        error: emailError.message,
+        email: email
+      });
+      emailChangeStore.delete(email);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to send verification email',
+        error: emailError.message || 'Unknown error occurred'
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Verification code sent successfully',
+      data: {
+        email,
+        status: 'pending',
+        message: 'Please check your email for verification code'
+      }
+    });
+  } catch (error: any) {
+    console.error('Send email change verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message || 'Unknown error occurred'
+    });
+  }
+};
 
 export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
   try {
