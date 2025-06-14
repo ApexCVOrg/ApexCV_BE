@@ -6,20 +6,18 @@ import { seedBrands } from "../scripts/seedBrands";
 
 const connectDB = async (): Promise<void> => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/nidas", {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions);
+      useUnifiedTopology: true
+    } as mongoose.ConnectOptions)
 
-    console.log(`MongoDB connected: ${conn.connection.host}`);
+    console.log(`MongoDB connected: ${conn.connection.host}`)
 
-    await seedCategories();
-    await seedBrands();
-    await seedProducts();
+    await seedCategories(); // Gọi seed tại đây
   } catch (error) {
-    console.error(`❌ MongoDB connection error: ${(error as Error).message}`);
-    process.exit(1);
+    console.error(`❌ MongoDB connection error: ${(error as Error).message}`)
+    process.exit(1)
   }
-};
+}
 
-export default connectDB;
+export default connectDB

@@ -40,7 +40,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
 // Middleware kiểm tra quyền admin
 export const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
-  if (req.user && req.user.role === 'ADMIN') {
+  if (req.user && req.user.role === 'admin') {
     next();
   } else {
     res.status(403).json({ message: 'Không có quyền truy cập' });
@@ -49,7 +49,7 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction): void =
 
 // Middleware kiểm tra quyền user
 export const isUser = (req: Request, res: Response, next: NextFunction): void => {
-  if (req.user && (req.user.role === 'USER' || req.user.role === 'ADMIN')) {
+  if (req.user && (req.user.role === 'USER' || req.user.role === 'admin')) {
     next();
   } else {
     res.status(403).json({ message: 'Không có quyền truy cập' });
@@ -65,7 +65,7 @@ export const isOwner = (req: Request, res: Response, next: NextFunction): void =
     return;
   }
 
-  if (req.user.role === 'ADMIN' || req.user._id.toString() === resourceId) {
+  if (req.user.role === 'admin' || req.user._id.toString() === resourceId) {
     next();
   } else {
     res.status(403).json({ message: 'Không có quyền truy cập' });
@@ -74,7 +74,7 @@ export const isOwner = (req: Request, res: Response, next: NextFunction): void =
 
 // Middleware kiểm tra quyền manager
 export const isManager = (req: Request, res: Response, next: NextFunction): void => {
-  if (req.user && (req.user.role === 'MANAGER' || req.user.role === 'ADMIN')) {
+  if (req.user && (req.user.role === 'manager' || req.user.role === 'admin')) {
     next();
   } else {
     res.status(403).json({ message: 'Không có quyền truy cập' });

@@ -1,17 +1,41 @@
 import express, { Request, Response, Router } from "express";
+import mongoose from "mongoose";
 import { Product } from "../models/Product";
 import { Category } from "../models/Category";
 import { CATEGORY_MESSAGES } from "../constants/categories";
 
 const router: Router = express.Router();
 
-// Get all products
-router.get("/", async (_req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response): Promise<void> => {
   try {
-    const products = await Product.find()
-      .populate("categories", "name")
-      .sort({ createdAt: -1 })
-      .lean();
+    const { category, brand, minPrice, maxPrice, sortBy } = req.query;
+
+    const filter: any = {};
+
+    if (category) {
+      const categoryIds = category.toString().split(',').map(id => new mongoose.Types.ObjectId(id));
+      filter.categories = { $all: categoryIds }; // phải có tất cả các category này
+    }
+
+    if (brand) {
+      const brandIds = brand.toString().split(',').map(id => new mongoose.Types.ObjectId(id));
+      filter.brand = { $in: brandIds };
+    }
+
+    if (minPrice || maxPrice) {
+      filter.price = {
+        ...(minPrice && { $gte: Number(minPrice) }),
+        ...(maxPrice && { $lte: Number(maxPrice) })
+      };
+    }
+
+    let query = Product.find(filter).populate("categories");
+
+    if (sortBy === 'priceAsc') query = query.sort({ price: 1 });
+    else if (sortBy === 'priceDesc') query = query.sort({ price: -1 });
+    else query = query.sort({ createdAt: -1 });
+
+    const products = await query;
     res.json(products);
   } catch (error: any) {
     res.status(500).json({ message: "Error fetching products", error: error?.message || "Unknown error" });
