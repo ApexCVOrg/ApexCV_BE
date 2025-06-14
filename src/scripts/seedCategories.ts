@@ -256,7 +256,7 @@ export const seedCategories = async () => {
     // Create sets of all category names from seed data
     const seedCategoryNames = new Set<string>();
     categoriesData.forEach(cat => {
-      seedCategoryNames.add(cat.name); // Add parent category (Men/Women)
+      seedCategoryNames.add(cat.name); // Add parent category (Men/Women/Kids)
       cat.subcategories.forEach(sub => {
         seedCategoryNames.add(sub.name); // Add team categories (Arsenal, Juventus, etc.)
         sub.subcategories.forEach(productType => {
@@ -298,40 +298,58 @@ export const seedCategories = async () => {
 
       // Check and create subcategories
       for (const sub of cat.subcategories) {
+        // First, ensure team category exists at root level
+        let teamCategory = await Category.findOne({ 
+          name: sub.name,
+          parentCategory: null 
+        });
+
+        if (!teamCategory) {
+          teamCategory = await new Category({
+            name: sub.name,
+            parentCategory: null,
+            status: "active",
+          }).save();
+          console.log(`✅ Created team category: ${sub.name}`);
+        } else {
+          console.log(`ℹ️ Team category already exists: ${sub.name}`);
+        }
+
+        // Then create gender-specific team category
         const existingSub = await Category.findOne({ 
           name: sub.name,
           parentCategory: parent._id 
         });
 
-        let teamSub;
+        let genderTeamSub;
         if (!existingSub) {
-          teamSub = await new Category({
+          genderTeamSub = await new Category({
             name: sub.name,
             parentCategory: parent._id,
             status: "active",
           }).save();
-          console.log(`✅ Created team subcategory: ${sub.name} under ${cat.name}`);
+          console.log(`✅ Created ${cat.name} team subcategory: ${sub.name}`);
         } else {
-          teamSub = existingSub;
-          console.log(`ℹ️ Team subcategory already exists: ${sub.name} under ${cat.name}`);
+          genderTeamSub = existingSub;
+          console.log(`ℹ️ ${cat.name} team subcategory already exists: ${sub.name}`);
         }
 
         // Create the product type subcategories
         for (const productType of sub.subcategories) {
           const existingProductType = await Category.findOne({ 
             name: productType,
-            parentCategory: teamSub._id 
+            parentCategory: genderTeamSub._id 
           });
 
           if (!existingProductType) {
             await new Category({
               name: productType,
-              parentCategory: teamSub._id,
+              parentCategory: genderTeamSub._id,
               status: "active",
             }).save();
-            console.log(`✅ Created product type: ${productType} under ${sub.name}`);
+            console.log(`✅ Created product type: ${productType} under ${sub.name} for ${cat.name}`);
           } else {
-            console.log(`ℹ️ Product type already exists: ${productType} under ${sub.name}`);
+            console.log(`ℹ️ Product type already exists: ${productType} under ${sub.name} for ${cat.name}`);
           }
         }
       }
