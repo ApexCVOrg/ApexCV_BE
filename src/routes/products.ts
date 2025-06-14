@@ -29,7 +29,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
       };
     }
 
-    let query = Product.find(filter).populate("categories");
+    let query = Product.find(filter).populate("categories", "name");
 
     if (sortBy === 'priceAsc') query = query.sort({ price: 1 });
     else if (sortBy === 'priceDesc') query = query.sort({ price: -1 });
@@ -45,7 +45,7 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
 // Create product
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, status } = req.body;
+    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, label, status } = req.body;
     const product = new Product({
       name,
       description,
@@ -57,6 +57,7 @@ router.post("/", async (req: Request, res: Response) => {
       sizes,
       colors,
       tags,
+      label,
       status,
     });
     const saved = await product.save();
