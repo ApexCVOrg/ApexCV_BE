@@ -1,81 +1,51 @@
 import express, { Request, Response, Router } from "express";
 import { User } from "../models/User";
-import { authenticateToken, isUser } from "../middlewares/auth";
+import { authenticateToken } from "../middlewares/auth";
+import { checkPermission, checkPermissions } from "../middlewares/permission";
+import { Permission } from "../types/filter/permissions";
 
 const router: Router = express.Router();
 
-// Apply authentication middleware to profile routes
-router.use(authenticateToken, isUser);
+// Apply authentication middleware to all routes
+router.use(authenticateToken);
 
-// Profile management
-router.get("/profile", async (req: Request, res: Response) => {
+// Get user profile
+router.get("/profile", checkPermission(Permission.VIEW_PROFILE), async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.user.id).select('-passwordHash');
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
+    const user = await User.findById(req.user?._id).select('-passwordHash');
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching profile: " + (error as Error).message });
+    res.status(500).json({ message: "Error fetching profile" });
   }
 });
 
-router.put("/update-profile", async (req: Request, res: Response) => {
+// Update user profile
+router.put("/profile", checkPermission(Permission.EDIT_PROFILE), async (req: Request, res: Response) => {
   try {
-    const { fullName, phone, avatar, addresses } = req.body;
+    const { fullName, phone, addresses } = req.body;
     const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { fullName, phone, avatar, addresses },
+      req.user?._id,
+      { fullName, phone, addresses },
       { new: true }
     ).select('-passwordHash');
-    
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
     res.json(user);
   } catch (error) {
-    res.status(400).json({ message: "Error updating profile: " + (error as Error).message });
+    res.status(500).json({ message: "Error updating profile" });
   }
 });
 
-router.put("/change-password", async (req: Request, res: Response) => {
+// Get all users (admin only)
+router.get("/", checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
-    const { currentPassword, newPassword } = req.body;
-    // TODO: Implement password change logic
-    res.json({ message: "Password changed successfully" });
-  } catch (error) {
-    res.status(400).json({ message: "Error changing password: " + (error as Error).message });
-  }
-});
-
-// Lấy danh sách tất cả người dùng
-router.get("/", async (_req: Request, res: Response): Promise<void> => {
-  try {
-    const users = await User.find();
+    const users = await User.find().select('-passwordHash');
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy danh sách người dùng: " + (error as Error).message });
+    res.status(500).json({ message: "Error fetching users" });
   }
 });
 
-// Lấy thông tin người dùng theo ID
-router.get("/:id", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      res.status(404).json({ message: "Không tìm thấy người dùng" });
-      return;
-    }
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy thông tin người dùng: " + (error as Error).message });
-  }
-});
-
-// Tạo người dùng mới
-router.post("/", async (req: Request, res: Response): Promise<void> => {
+// Create new user (admin only)
+router.post("/", checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
     const {
       username,
@@ -119,42 +89,39 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-// Cập nhật người dùng
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
+// Update user (admin only)
+router.put("/:id", checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
+    const { id } = req.params;
     const updateData = req.body;
-
-    // Không cho cập nhật email trùng
-    if (updateData.email) {
-      const existingUser = await User.findOne({ email: updateData.email, _id: { $ne: req.params.id } });
-      if (existingUser) {
-        res.status(400).json({ message: "Email đã được đăng ký bởi người dùng khác" });
-        return;
-      }
-    }
-
-    const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    
+    // Prevent updating sensitive fields
+    delete updateData.passwordHash;
+    delete updateData.email;
+    
+    const user = await User.findByIdAndUpdate(id, updateData, { new: true }).select('-passwordHash');
     if (!user) {
-      res.status(404).json({ message: "Không tìm thấy người dùng" });
+      res.status(404).json({ message: "User not found" });
       return;
     }
     res.json(user);
   } catch (error) {
-    res.status(400).json({ message: "Lỗi khi cập nhật người dùng: " + (error as Error).message });
+    res.status(500).json({ message: "Error updating user" });
   }
 });
 
-// Xóa người dùng
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
+// Delete user (admin only)
+router.delete("/:id", checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
     if (!user) {
-      res.status(404).json({ message: "Không tìm thấy người dùng" });
+      res.status(404).json({ message: "User not found" });
       return;
     }
-    res.json({ message: "Đã xóa người dùng thành công" });
+    res.json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi khi xóa người dùng: " + (error as Error).message });
+    res.status(500).json({ message: "Error deleting user" });
   }
 });
 
