@@ -1,6 +1,6 @@
 // src/seeds/category.seed.ts
 import mongoose from "mongoose";
-import { Category } from "../models/Category";
+import { Category, ensureCategoryIndexes } from "../models/Category";
 
 const categoriesData = [
     {
@@ -249,43 +249,26 @@ const categoriesData = [
 export const seedCategories = async () => {
   try {
     console.log("🔄 Starting category seeding...");
-    
-    // Get all existing categories
-    const existingCategories = await Category.find({});
-    
-    // Create sets of all category names from seed data
-    const seedCategoryNames = new Set<string>();
-    categoriesData.forEach(cat => {
-      seedCategoryNames.add(cat.name); // Add parent category (Men/Women/Kids)
-      cat.subcategories.forEach(sub => {
-        seedCategoryNames.add(sub.name); // Add team categories (Arsenal, Juventus, etc.)
-        sub.subcategories.forEach(productType => {
-          seedCategoryNames.add(productType); // Add product type categories
-        });
-      });
+
+    // Xóa triệt để các document lỗi (parentCategory undefined/null/không phải ObjectId)
+    const deleteResult = await Category.deleteMany({
+      $or: [
+        { parentCategory: { $exists: false } },
+        { parentCategory: { $type: 10 } } // null
+      ]
     });
-
-    // Find categories to delete (those that exist in DB but not in seed data)
-    const categoriesToDelete = existingCategories.filter(cat => !seedCategoryNames.has(cat.name));
-
-    // Delete categories that are not in seed data
-    if (categoriesToDelete.length > 0) {
-      await Category.deleteMany({
-        _id: { $in: categoriesToDelete.map(cat => cat._id) }
-      });
-      console.log(`🗑️ Deleted ${categoriesToDelete.length} categories that are not in seed data`);
+    if (deleteResult.deletedCount > 0) {
+      console.log(`🗑️ Đã xóa ${deleteResult.deletedCount} document category lỗi (parentCategory undefined/null)`);
     }
 
-    // Add new categories
+    // Ensure indexes are properly set up
+    await ensureCategoryIndexes();
+
+    // Create all parent categories if not exist
+    const parentCategories = [];
     for (const cat of categoriesData) {
-      // Check if parent category exists
-      let parent = await Category.findOne({ 
-        name: cat.name,
-        parentCategory: null 
-      });
-      
+      let parent = await Category.findOne({ name: cat.name, parentCategory: null });
       if (!parent) {
-        // Create parent if not exists
         parent = await new Category({
           name: cat.name,
           parentCategory: null,
@@ -295,56 +278,51 @@ export const seedCategories = async () => {
       } else {
         console.log(`ℹ️ Parent category already exists: ${cat.name}`);
       }
+      parentCategories.push(parent);
+    }
+    const parentMap = new Map(parentCategories.map(p => [p.name, p]));
 
-      // Check and create subcategories
+    // Xử lý triệt để duplicate: Xóa các document team bị duplicate (cùng name, cùng parentCategory)
+    const teamNames = Array.from(new Set(categoriesData.flatMap(cat => cat.subcategories.map(sub => sub.name))));
+    for (const parent of parentCategories) {
+      for (const teamName of teamNames) {
+        const dups = await Category.find({ name: teamName, parentCategory: parent._id });
+        if (dups.length > 1) {
+          // Giữ lại 1 document, xóa các document còn lại
+          const toDelete = dups.slice(1).map(d => d._id);
+          await Category.deleteMany({ _id: { $in: toDelete } });
+          console.log(`🗑️ Đã xóa ${toDelete.length} document team duplicate: ${teamName} - parent: ${parent._id}`);
+        }
+      }
+    }
+
+    // For each parent (Men, Women, Kids), create team and product type categories
+    for (const cat of categoriesData) {
+      const parent = parentMap.get(cat.name);
+      if (!parent) {
+        console.warn(`⚠️ Parent category not found for ${cat.name}, skipping...`);
+        continue;
+      }
       for (const sub of cat.subcategories) {
-        // First, ensure team category exists at root level
-        let teamCategory = await Category.findOne({ 
-          name: sub.name,
-          parentCategory: null 
-        });
-
+        // Create team category for this parent
+        let teamCategory = await Category.findOne({ name: sub.name, parentCategory: parent._id });
         if (!teamCategory) {
           teamCategory = await new Category({
-            name: sub.name,
-            parentCategory: null,
-            status: "active",
-          }).save();
-          console.log(`✅ Created team category: ${sub.name}`);
-        } else {
-          console.log(`ℹ️ Team category already exists: ${sub.name}`);
-        }
-
-        // Then create gender-specific team category
-        const existingSub = await Category.findOne({ 
-          name: sub.name,
-          parentCategory: parent._id 
-        });
-
-        let genderTeamSub;
-        if (!existingSub) {
-          genderTeamSub = await new Category({
             name: sub.name,
             parentCategory: parent._id,
             status: "active",
           }).save();
-          console.log(`✅ Created ${cat.name} team subcategory: ${sub.name}`);
+          console.log(`✅ Created team category: ${sub.name} for parent: ${cat.name}`);
         } else {
-          genderTeamSub = existingSub;
-          console.log(`ℹ️ ${cat.name} team subcategory already exists: ${sub.name}`);
+          console.log(`ℹ️ Team category already exists: ${sub.name} for parent: ${cat.name}`);
         }
-
-        // Create the product type subcategories
+        // Create product type subcategories for this team
         for (const productType of sub.subcategories) {
-          const existingProductType = await Category.findOne({ 
-            name: productType,
-            parentCategory: genderTeamSub._id 
-          });
-
-          if (!existingProductType) {
+          let productTypeCategory = await Category.findOne({ name: productType, parentCategory: teamCategory._id });
+          if (!productTypeCategory) {
             await new Category({
               name: productType,
-              parentCategory: genderTeamSub._id,
+              parentCategory: teamCategory._id,
               status: "active",
             }).save();
             console.log(`✅ Created product type: ${productType} under ${sub.name} for ${cat.name}`);
