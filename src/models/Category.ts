@@ -12,9 +12,17 @@ export interface ICategory extends Document {
 
 const CategorySchema = new Schema<ICategory>(
   {
-    name: { type: String, required: true, unique: true },
+    name: { 
+      type: String, 
+      required: true,
+      trim: true
+    },
     description: String,
-    parentCategory: { type: Schema.Types.ObjectId, ref: 'Category', default: null },
+    parentCategory: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null
+    },
     status: {
       type: String,
       enum: [CATEGORY_STATUS.ACTIVE, CATEGORY_STATUS.INACTIVE],
@@ -23,5 +31,32 @@ const CategorySchema = new Schema<ICategory>(
   },
   { timestamps: true }
 )
+
+// Remove all old indexes
+CategorySchema.indexes().forEach(index => {
+  CategorySchema.index(index[0], { ...index[1], unique: false });
+});
+
+// Add compound index for name and parentCategory to allow same name with different parents
+CategorySchema.index({ name: 1, parentCategory: 1 }, { unique: true });
+
+// Function to ensure indexes are properly set up
+export const ensureCategoryIndexes = async () => {
+  try {
+    // Drop all existing indexes
+    await Category.collection.dropIndexes();
+    console.log('✅ Dropped all existing category indexes');
+
+    // Create new compound index
+    await Category.collection.createIndex(
+      { name: 1, parentCategory: 1 },
+      { unique: true }
+    );
+    console.log('✅ Created new category compound index');
+  } catch (error) {
+    console.error('❌ Error setting up category indexes:', error);
+    throw error;
+  }
+};
 
 export const Category = mongoose.model<ICategory>('Category', CategorySchema)
