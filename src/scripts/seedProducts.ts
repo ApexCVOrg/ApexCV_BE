@@ -44,7 +44,7 @@ const productsData = [
     price: 1999000,
     discountPrice: 1799000,
     categoryPath: ["Women", "Arsenal", "T-Shirts"],
-    images: ["/images/products/arsenal-women-home-jersey-2024.jpg"],
+    images: ["Arsenal_24-25_Home_Jersey_Red.avif"],
     sizes: [
       { size: "XS", stock: 10 },
       { size: "S", stock: 20 },
@@ -61,7 +61,7 @@ const productsData = [
     price: 1899000,
     discountPrice: 1599000,
     categoryPath: ["Women", "Arsenal", "Hoodies"],
-    images: ["/images/products/arsenal-women-hoodie.jpg"],
+    images: ["Arsenal_Women_Hoodie.jpg"],
     sizes: [
       { size: "S", stock: 15 },
       { size: "M", stock: 20 },
@@ -89,20 +89,20 @@ const productsData = [
     brand: "Nike"
   },
   {
-    name: "Arsenal Kids Training Shoes",
-    description: "Comfortable and durable training shoes for young Arsenal fans. Perfect for both training and casual wear.",
+    name: "Arsenal Kids Tracksuit",
+    description: "Stylish and comfortable tracksuit for young Arsenal fans. Perfect for training and casual wear.",
     price: 1899000,
     discountPrice: 1599000,
-    categoryPath: ["Kids", "Arsenal", "Training Shoes"],
-    images: ["/images/products/arsenal-kids-training-shoes.jpg"],
+    categoryPath: ["Kids", "Arsenal", "Tracksuits"],
+    images: ["/images/products/arsenal-kids-tracksuit.jpg"],
     sizes: [
-      { size: "28", stock: 15 },
-      { size: "29", stock: 20 },
-      { size: "30", stock: 25 },
-      { size: "31", stock: 20 }
+      { size: "4-5Y", stock: 15 },
+      { size: "6-7Y", stock: 20 },
+      { size: "8-9Y", stock: 25 },
+      { size: "10-11Y", stock: 20 }
     ],
-    colors: ["Black", "Red"],
-    tags: ["arsenal", "shoes", "training", "kids"],
+    colors: ["Red", "White"],
+    tags: ["arsenal", "tracksuit", "training", "kids"],
     brand: "Adidas"
   },
   // Real Madrid Products
@@ -145,7 +145,7 @@ const productsData = [
     price: 2099000,
     discountPrice: 1899000,
     categoryPath: ["Women", "Real Madrid", "T-Shirts"],
-    images: ["/images/products/real-madrid-women-home-jersey-2024.jpg"],
+    images: ["Real_Madrid_24-25_Home_Jersey_White_IT5182_HM1.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -162,7 +162,7 @@ const productsData = [
     price: 1999000,
     discountPrice: 1699000,
     categoryPath: ["Women", "Real Madrid", "Hoodies"],
-    images: ["/images/products/real-madrid-women-hoodie.jpg"],
+    images: ["Real_Madrid_Travel_Hoodie_Grey_GR4277.avif"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 25 },
@@ -190,20 +190,20 @@ const productsData = [
     brand: "Adidas"
   },
   {
-    name: "Real Madrid Kids Training Shoes",
-    description: "Comfortable and durable training shoes for young Real Madrid fans. Perfect for both training and casual wear.",
-    price: 1999000,
-    discountPrice: 1699000,
-    categoryPath: ["Kids", "Real Madrid", "Training Shoes"],
-    images: ["/images/products/real-madrid-kids-training-shoes.jpg"],
+    name: "Real Madrid Kids Tracksuit",
+    description: "Stylish and comfortable tracksuit for young Real Madrid fans. Perfect for training and casual wear.",
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Real Madrid", "Tracksuits"],
+    images: ["/images/products/real-madrid-kids-tracksuit.jpg"],
     sizes: [
-      { size: "28", stock: 20 },
-      { size: "29", stock: 25 },
-      { size: "30", stock: 30 },
-      { size: "31", stock: 25 }
+      { size: "4-5Y", stock: 15 },
+      { size: "6-7Y", stock: 20 },
+      { size: "8-9Y", stock: 25 },
+      { size: "10-11Y", stock: 20 }
     ],
     colors: ["White", "Black"],
-    tags: ["real-madrid", "shoes", "training", "kids"],
+    tags: ["real-madrid", "tracksuit", "training", "kids"],
     brand: "Adidas"
   },
   // Bayern Munich Products
@@ -213,7 +213,7 @@ const productsData = [
     price: 2299000,
     discountPrice: 1999000,
     categoryPath: ["Men", "Bayern Munich", "T-Shirts"],
-    images: ["/images/products/bayern-home-jersey-2024.jpg"],
+    images: ["FC_Bayern_24-25_Home_Jersey.avif"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 30 },
@@ -230,7 +230,7 @@ const productsData = [
     price: 3299000,
     discountPrice: 2799000,
     categoryPath: ["Men", "Bayern Munich", "Jackets"],
-    images: ["/images/products/bayern-training-jacket.jpg"],
+    images: ["FC_Bayern_Anniversary_Track.avif"],
     sizes: [
       { size: "M", stock: 25 },
       { size: "L", stock: 20 },
@@ -246,7 +246,7 @@ const productsData = [
     price: 2099000,
     discountPrice: 1899000,
     categoryPath: ["Women", "Bayern Munich", "T-Shirts"],
-    images: ["/images/products/bayern-women-home-jersey-2024.jpg"],
+    images: ["FC_Bayern_Shirt.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -263,7 +263,7 @@ const productsData = [
     price: 1999000,
     discountPrice: 1699000,
     categoryPath: ["Women", "Bayern Munich", "Hoodies"],
-    images: ["/images/products/bayern-women-hoodie.jpg"],
+    images: ["FC_Bayern_Hoodie.jpg"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 25 },
@@ -291,20 +291,20 @@ const productsData = [
     brand: "Adidas"
   },
   {
-    name: "Bayern Munich Kids Training Shoes",
-    description: "Comfortable and durable training shoes for young Bayern Munich fans. Perfect for both training and casual wear.",
-    price: 1999000,
-    discountPrice: 1699000,
-    categoryPath: ["Kids", "Bayern Munich", "Training Shoes"],
-    images: ["/images/products/bayern-kids-training-shoes.jpg"],
+    name: "Bayern Munich Kids Tracksuit",
+    description: "Stylish and comfortable tracksuit for young Bayern Munich fans. Perfect for training and casual wear.",
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Bayern Munich", "Tracksuits"],
+    images: ["/images/products/bayern-kids-tracksuit.jpg"],
     sizes: [
-      { size: "28", stock: 20 },
-      { size: "29", stock: 25 },
-      { size: "30", stock: 30 },
-      { size: "31", stock: 25 }
+      { size: "4-5Y", stock: 15 },
+      { size: "6-7Y", stock: 20 },
+      { size: "8-9Y", stock: 25 },
+      { size: "10-11Y", stock: 20 }
     ],
-    colors: ["Red", "Black"],
-    tags: ["bayern", "shoes", "training", "kids"],
+    colors: ["Red", "White"],
+    tags: ["bayern", "tracksuit", "training", "kids"],
     brand: "Adidas"
   },
   // Juventus Products
@@ -314,7 +314,7 @@ const productsData = [
     price: 2299000,
     discountPrice: 1999000,
     categoryPath: ["Men", "Juventus", "T-Shirts"],
-    images: ["/images/products/juventus-home-jersey-2024.jpg"],
+    images: ["Ao_DJau_San_Nha_Juventus_25-26.avif"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 30 },
@@ -331,7 +331,7 @@ const productsData = [
     price: 3299000,
     discountPrice: 2799000,
     categoryPath: ["Men", "Juventus", "Jackets"],
-    images: ["/images/products/juventus-training-jacket.jpg"],
+    images: ["juv_jacket.jpg"],
     sizes: [
       { size: "M", stock: 25 },
       { size: "L", stock: 20 },
@@ -347,7 +347,7 @@ const productsData = [
     price: 2099000,
     discountPrice: 1899000,
     categoryPath: ["Women", "Juventus", "T-Shirts"],
-    images: ["/images/products/juventus-women-home-jersey-2024.jpg"],
+    images: ["Juventus_Shirt.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -364,7 +364,7 @@ const productsData = [
     price: 1999000,
     discountPrice: 1699000,
     categoryPath: ["Women", "Juventus", "Hoodies"],
-    images: ["/images/products/juventus-women-hoodie.jpg"],
+    images: ["Juventus_Hoodie.png"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 25 },
@@ -392,20 +392,20 @@ const productsData = [
     brand: "Adidas"
   },
   {
-    name: "Juventus Kids Training Shoes",
-    description: "Comfortable and durable training shoes for young Juventus fans. Perfect for both training and casual wear.",
-    price: 1999000,
-    discountPrice: 1699000,
-    categoryPath: ["Kids", "Juventus", "Training Shoes"],
-    images: ["/images/products/juventus-kids-training-shoes.jpg"],
+    name: "Juventus Kids Tracksuit",
+    description: "Stylish and comfortable tracksuit for young Juventus fans. Perfect for training and casual wear.",
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Juventus", "Tracksuits"],
+    images: ["/images/products/juventus-kids-tracksuit.jpg"],
     sizes: [
-      { size: "28", stock: 20 },
-      { size: "29", stock: 25 },
-      { size: "30", stock: 30 },
-      { size: "31", stock: 25 }
+      { size: "4-5Y", stock: 15 },
+      { size: "6-7Y", stock: 20 },
+      { size: "8-9Y", stock: 25 },
+      { size: "10-11Y", stock: 20 }
     ],
     colors: ["Black", "White"],
-    tags: ["juventus", "shoes", "training", "kids"],
+    tags: ["juventus", "tracksuit", "training", "kids"],
     brand: "Adidas"
   },
   // Manchester United Products
@@ -448,7 +448,7 @@ const productsData = [
     price: 2099000,
     discountPrice: 1899000,
     categoryPath: ["Women", "Manchester United", "T-Shirts"],
-    images: ["/images/products/man-utd-women-home-jersey-2024.jpg"],
+    images: ["MU_Tshirt.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -465,7 +465,7 @@ const productsData = [
     price: 1999000,
     discountPrice: 1699000,
     categoryPath: ["Women", "Manchester United", "Hoodies"],
-    images: ["/images/products/man-utd-women-hoodie.jpg"],
+    images: ["MU_Hoodie.avif"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 25 },
@@ -493,20 +493,20 @@ const productsData = [
     brand: "Adidas"
   },
   {
-    name: "Manchester United Kids Training Shoes",
-    description: "Comfortable and durable training shoes for young Manchester United fans. Perfect for both training and casual wear.",
-    price: 1999000,
-    discountPrice: 1699000,
-    categoryPath: ["Kids", "Manchester United", "Training Shoes"],
-    images: ["/images/products/man-utd-kids-training-shoes.jpg"],
+    name: "Manchester United Kids Tracksuit",
+    description: "Stylish and comfortable tracksuit for young Manchester United fans. Perfect for training and casual wear.",
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Manchester United", "Tracksuits"],
+    images: ["/images/products/man-utd-kids-tracksuit.jpg"],
     sizes: [
-      { size: "28", stock: 20 },
-      { size: "29", stock: 25 },
-      { size: "30", stock: 30 },
-      { size: "31", stock: 25 }
+      { size: "4-5Y", stock: 15 },
+      { size: "6-7Y", stock: 20 },
+      { size: "8-9Y", stock: 25 },
+      { size: "10-11Y", stock: 20 }
     ],
-    colors: ["Black", "Red"],
-    tags: ["manchester-united", "shoes", "training", "kids"],
+    colors: ["Red", "Black"],
+    tags: ["manchester-united", "tracksuit", "training", "kids"],
     brand: "Adidas"
   },
   // Additional Arsenal Products
@@ -527,46 +527,12 @@ const productsData = [
     brand: "Nike"
   },
   {
-    name: "Arsenal Men's Training Shoes",
-    description: "Professional training shoes endorsed by Arsenal FC. Perfect for training sessions and casual wear.",
-    price: 3674000,
-    discountPrice: 3184000,
-    categoryPath: ["Men", "Arsenal", "Training Shoes"],
-    images: ["Arsenal_Men's_Training_Shoes.avif"],
-    sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
-    ],
-    colors: ["Red", "White"],
-    tags: ["arsenal", "shoes", "training"],
-    brand: "Adidas"
-  },
-  {
-    name: "Arsenal Women's Training Pants",
-    description: "Comfortable and stylish training pants for Arsenal women's collection. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Women", "Arsenal", "Training Pants"],
-    images: ["/images/products/arsenal-women-training-pants.jpg"],
-    sizes: [
-      { size: "XS", stock: 15 },
-      { size: "S", stock: 25 },
-      { size: "M", stock: 30 },
-      { size: "L", stock: 20 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["arsenal", "pants", "training", "women"],
-    brand: "Adidas"
-  },
-  {
     name: "Arsenal Women's Training Shoes",
     description: "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
     price: 3299000,
     discountPrice: 2799000,
     categoryPath: ["Women", "Arsenal", "Training Shoes"],
-    images: ["/images/products/arsenal-women-training-shoes.jpg"],
+    images: ["Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"],
     sizes: [
       { size: "36", stock: 10 },
       { size: "37", stock: 15 },
@@ -575,23 +541,6 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["arsenal", "shoes", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Arsenal Kids Tracksuit",
-    description: "Stylish and comfortable tracksuit for young Arsenal fans. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Kids", "Arsenal", "Tracksuits"],
-    images: ["/images/products/arsenal-kids-tracksuit.jpg"],
-    sizes: [
-      { size: "4-5Y", stock: 15 },
-      { size: "6-7Y", stock: 20 },
-      { size: "8-9Y", stock: 25 },
-      { size: "10-11Y", stock: 20 }
-    ],
-    colors: ["Red", "White"],
-    tags: ["arsenal", "tracksuit", "training", "kids"],
     brand: "Adidas"
   },
   {
@@ -629,29 +578,12 @@ const productsData = [
     brand: "Adidas"
   },
   {
-    name: "Real Madrid Men's Training Shoes",
-    description: "Professional training shoes endorsed by Real Madrid. Perfect for training sessions and casual wear.",
-    price: 3674000,
-    discountPrice: 3184000,
-    categoryPath: ["Men", "Real Madrid", "Training Shoes"],
-    images: ["Real_Madrid_Shoes_White.avif"],
-    sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
-    ],
-    colors: ["White", "Black"],
-    tags: ["real-madrid", "shoes", "training"],
-    brand: "Adidas"
-  },
-  {
-    name: "Real Madrid Women's Training Pants",
-    description: "Comfortable and stylish training pants for Real Madrid women's collection. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Women", "Real Madrid", "Training Pants"],
-    images: ["/images/products/real-madrid-women-training-pants.jpg"],
+    name: "Real Madrid Women's Training Shorts",
+    description: "Comfortable and stylish training shorts for Real Madrid women's collection. Perfect for training and casual wear.",
+    price: 1599000,
+    discountPrice: 1399000,
+    categoryPath: ["Women", "Real Madrid", "Shorts"],
+    images: ["Real_Madrid_Short.jpg"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -659,58 +591,7 @@ const productsData = [
       { size: "L", stock: 20 }
     ],
     colors: ["Black", "White"],
-    tags: ["real-madrid", "pants", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Real Madrid Women's Training Shoes",
-    description: "Professional training shoes for Real Madrid women's collection. Perfect for training sessions and casual wear.",
-    price: 3299000,
-    discountPrice: 2799000,
-    categoryPath: ["Women", "Real Madrid", "Training Shoes"],
-    images: ["/images/products/real-madrid-women-training-shoes.jpg"],
-    sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
-    ],
-    colors: ["White", "Black"],
-    tags: ["real-madrid", "shoes", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Real Madrid Kids Tracksuit",
-    description: "Stylish and comfortable tracksuit for young Real Madrid fans. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Kids", "Real Madrid", "Tracksuits"],
-    images: ["/images/products/real-madrid-kids-tracksuit.jpg"],
-    sizes: [
-      { size: "4-5Y", stock: 15 },
-      { size: "6-7Y", stock: 20 },
-      { size: "8-9Y", stock: 25 },
-      { size: "10-11Y", stock: 20 }
-    ],
-    colors: ["White", "Black"],
-    tags: ["real-madrid", "tracksuit", "training", "kids"],
-    brand: "Adidas"
-  },
-  {
-    name: "Real Madrid Kids Football Boots",
-    description: "Lightweight and comfortable football boots for young Real Madrid players. Perfect for training and matches.",
-    price: 2499000,
-    discountPrice: 2199000,
-    categoryPath: ["Kids", "Real Madrid", "Football Boots"],
-    images: ["/images/products/real-madrid-kids-boots.jpg"],
-    sizes: [
-      { size: "28", stock: 10 },
-      { size: "29", stock: 15 },
-      { size: "30", stock: 20 },
-      { size: "31", stock: 15 }
-    ],
-    colors: ["Black", "White"],
-    tags: ["real-madrid", "boots", "football", "kids"],
+    tags: ["real-madrid", "shorts", "training", "women"],
     brand: "Adidas"
   },
   // Additional Bayern Munich Products
@@ -720,7 +601,7 @@ const productsData = [
     price: 1126000,
     discountPrice: 979000,
     categoryPath: ["Men", "Bayern Munich", "Shorts"],
-    images: ["/images/products/bayern-home-shorts-2024.jpg"],
+    images: ["FC_Bayern_24-25_Home_Shorts.avif"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 30 },
@@ -730,91 +611,6 @@ const productsData = [
     tags: ["bayern", "shorts", "football", "home"],
     brand: "Adidas"
   },
-  {
-    name: "Bayern Munich Men's Training Shoes",
-    description: "Professional training shoes endorsed by Bayern Munich. Perfect for training sessions and casual wear.",
-    price: 3674000,
-    discountPrice: 3184000,
-    categoryPath: ["Men", "Bayern Munich", "Training Shoes"],
-    images: ["/images/products/bayern-training-shoes.jpg"],
-    sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
-    ],
-    colors: ["Red", "White"],
-    tags: ["bayern", "shoes", "training"],
-    brand: "Adidas"
-  },
-  {
-    name: "Bayern Munich Women's Training Pants",
-    description: "Comfortable and stylish training pants for Bayern Munich women's collection. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Women", "Bayern Munich", "Training Pants"],
-    images: ["/images/products/bayern-women-training-pants.jpg"],
-    sizes: [
-      { size: "XS", stock: 15 },
-      { size: "S", stock: 25 },
-      { size: "M", stock: 30 },
-      { size: "L", stock: 20 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["bayern", "pants", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Bayern Munich Women's Training Shoes",
-    description: "Professional training shoes for Bayern Munich women's collection. Perfect for training sessions and casual wear.",
-    price: 3299000,
-    discountPrice: 2799000,
-    categoryPath: ["Women", "Bayern Munich", "Training Shoes"],
-    images: ["/images/products/bayern-women-training-shoes.jpg"],
-    sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
-    ],
-    colors: ["Red", "White"],
-    tags: ["bayern", "shoes", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Bayern Munich Kids Tracksuit",
-    description: "Stylish and comfortable tracksuit for young Bayern Munich fans. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Kids", "Bayern Munich", "Tracksuits"],
-    images: ["/images/products/bayern-kids-tracksuit.jpg"],
-    sizes: [
-      { size: "4-5Y", stock: 15 },
-      { size: "6-7Y", stock: 20 },
-      { size: "8-9Y", stock: 25 },
-      { size: "10-11Y", stock: 20 }
-    ],
-    colors: ["Red", "White"],
-    tags: ["bayern", "tracksuit", "training", "kids"],
-    brand: "Adidas"
-  },
-  {
-    name: "Bayern Munich Kids Football Boots",
-    description: "Lightweight and comfortable football boots for young Bayern Munich players. Perfect for training and matches.",
-    price: 2499000,
-    discountPrice: 2199000,
-    categoryPath: ["Kids", "Bayern Munich", "Football Boots"],
-    images: ["/images/products/bayern-kids-boots.jpg"],
-    sizes: [
-      { size: "28", stock: 10 },
-      { size: "29", stock: 15 },
-      { size: "30", stock: 20 },
-      { size: "31", stock: 15 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["bayern", "boots", "football", "kids"],
-    brand: "Adidas"
-  },
   // Additional Juventus Products
   {
     name: "Juventus Men's Home Shorts 2024/25",
@@ -822,7 +618,7 @@ const productsData = [
     price: 1126000,
     discountPrice: 979000,
     categoryPath: ["Men", "Juventus", "Shorts"],
-    images: ["/images/products/juventus-home-shorts-2024.jpg"],
+    images: ["Juventus_25-26_Home_Shorts.avif"],
     sizes: [
       { size: "S", stock: 20 },
       { size: "M", stock: 30 },
@@ -830,91 +626,6 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "shorts", "football", "home"],
-    brand: "Adidas"
-  },
-  {
-    name: "Juventus Men's Training Shoes",
-    description: "Professional training shoes endorsed by Juventus. Perfect for training sessions and casual wear.",
-    price: 3674000,
-    discountPrice: 3184000,
-    categoryPath: ["Men", "Juventus", "Training Shoes"],
-    images: ["/images/products/juventus-training-shoes.jpg"],
-    sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
-    ],
-    colors: ["Black", "White"],
-    tags: ["juventus", "shoes", "training"],
-    brand: "Adidas"
-  },
-  {
-    name: "Juventus Women's Training Pants",
-    description: "Comfortable and stylish training pants for Juventus women's collection. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Women", "Juventus", "Training Pants"],
-    images: ["/images/products/juventus-women-training-pants.jpg"],
-    sizes: [
-      { size: "XS", stock: 15 },
-      { size: "S", stock: 25 },
-      { size: "M", stock: 30 },
-      { size: "L", stock: 20 }
-    ],
-    colors: ["Black", "White"],
-    tags: ["juventus", "pants", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Juventus Women's Training Shoes",
-    description: "Professional training shoes for Juventus women's collection. Perfect for training sessions and casual wear.",
-    price: 3299000,
-    discountPrice: 2799000,
-    categoryPath: ["Women", "Juventus", "Training Shoes"],
-    images: ["/images/products/juventus-women-training-shoes.jpg"],
-    sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
-    ],
-    colors: ["Black", "White"],
-    tags: ["juventus", "shoes", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Juventus Kids Tracksuit",
-    description: "Stylish and comfortable tracksuit for young Juventus fans. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Kids", "Juventus", "Tracksuits"],
-    images: ["/images/products/juventus-kids-tracksuit.jpg"],
-    sizes: [
-      { size: "4-5Y", stock: 15 },
-      { size: "6-7Y", stock: 20 },
-      { size: "8-9Y", stock: 25 },
-      { size: "10-11Y", stock: 20 }
-    ],
-    colors: ["Black", "White"],
-    tags: ["juventus", "tracksuit", "training", "kids"],
-    brand: "Adidas"
-  },
-  {
-    name: "Juventus Kids Football Boots",
-    description: "Lightweight and comfortable football boots for young Juventus players. Perfect for training and matches.",
-    price: 2499000,
-    discountPrice: 2199000,
-    categoryPath: ["Kids", "Juventus", "Football Boots"],
-    images: ["/images/products/juventus-kids-boots.jpg"],
-    sizes: [
-      { size: "28", stock: 10 },
-      { size: "29", stock: 15 },
-      { size: "30", stock: 20 },
-      { size: "31", stock: 15 }
-    ],
-    colors: ["Black", "White"],
-    tags: ["juventus", "boots", "football", "kids"],
     brand: "Adidas"
   },
   // Additional Manchester United Products
@@ -934,91 +645,6 @@ const productsData = [
     tags: ["manchester-united", "shorts", "football", "home"],
     brand: "Adidas"
   },
-  {
-    name: "Manchester United Men's Training Shoes",
-    description: "Professional training shoes endorsed by Manchester United. Perfect for training sessions and casual wear.",
-    price: 3674000,
-    discountPrice: 3184000,
-    categoryPath: ["Men", "Manchester United", "Training Shoes"],
-    images: ["MU_shoes.jpg"],
-    sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["manchester-united", "shoes", "training"],
-    brand: "Adidas"
-  },
-  {
-    name: "Manchester United Women's Training Pants",
-    description: "Comfortable and stylish training pants for Manchester United women's collection. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Women", "Manchester United", "Training Pants"],
-    images: ["/images/products/man-utd-women-training-pants.jpg"],
-    sizes: [
-      { size: "XS", stock: 15 },
-      { size: "S", stock: 25 },
-      { size: "M", stock: 30 },
-      { size: "L", stock: 20 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["manchester-united", "pants", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Manchester United Women's Training Shoes",
-    description: "Professional training shoes for Manchester United women's collection. Perfect for training sessions and casual wear.",
-    price: 3299000,
-    discountPrice: 2799000,
-    categoryPath: ["Women", "Manchester United", "Training Shoes"],
-    images: ["/images/products/man-utd-women-training-shoes.jpg"],
-    sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["manchester-united", "shoes", "training", "women"],
-    brand: "Adidas"
-  },
-  {
-    name: "Manchester United Kids Tracksuit",
-    description: "Stylish and comfortable tracksuit for young Manchester United fans. Perfect for training and casual wear.",
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Kids", "Manchester United", "Tracksuits"],
-    images: ["/images/products/man-utd-kids-tracksuit.jpg"],
-    sizes: [
-      { size: "4-5Y", stock: 15 },
-      { size: "6-7Y", stock: 20 },
-      { size: "8-9Y", stock: 25 },
-      { size: "10-11Y", stock: 20 }
-    ],
-    colors: ["Red", "Black"],
-    tags: ["manchester-united", "tracksuit", "training", "kids"],
-    brand: "Adidas"
-  },
-  {
-    name: "Manchester United Kids Football Boots",
-    description: "Lightweight and comfortable football boots for young Manchester United players. Perfect for training and matches.",
-    price: 2499000,
-    discountPrice: 2199000,
-    categoryPath: ["Kids", "Manchester United", "Football Boots"],
-    images: ["/images/products/man-utd-kids-boots.jpg"],
-    sizes: [
-      { size: "28", stock: 10 },
-      { size: "29", stock: 15 },
-      { size: "30", stock: 20 },
-      { size: "31", stock: 15 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["manchester-united", "boots", "football", "kids"],
-    brand: "Adidas"
-  },
   // Additional Women's Training Shorts
   {
     name: "Arsenal Women's Training Shorts",
@@ -1026,7 +652,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Women", "Arsenal", "Shorts"],
-    images: ["/images/products/arsenal-women-training-shorts.jpg"],
+    images: ["Arsenal_Women_Short.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -1043,7 +669,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Women", "Real Madrid", "Shorts"],
-    images: ["/images/products/real-madrid-women-training-shorts.jpg"],
+    images: ["Real_Madrid_Short.jpg"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -1060,7 +686,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Women", "Bayern Munich", "Shorts"],
-    images: ["/images/products/bayern-women-training-shorts.jpg"],
+    images: ["FC_Bayern_Short.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -1077,7 +703,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Women", "Juventus", "Shorts"],
-    images: ["/images/products/juventus-women-training-shorts.jpg"],
+    images: ["Juventus_Short.png"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -1094,7 +720,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Women", "Manchester United", "Shorts"],
-    images: ["/images/products/man-utd-women-training-shorts.jpg"],
+    images: ["MU_Short.avif"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
