@@ -10,7 +10,8 @@ import {
   verifyOTP,
   resetPassword,
   logout,
-  refreshToken
+  refreshToken,
+  sendEmailChangeVerification
 } from '../controllers/auth.controller'
 import { authenticateToken, isAdmin, isUser, checkInactivity } from '../middlewares/auth'
 import { validateRegister } from '../middlewares/validation'
@@ -19,6 +20,14 @@ import { OAuth2Client } from 'google-auth-library'
 const router: Router = express.Router()
 
 // Public routes
+router.post('/register', validateRegister, register);
+router.post('/verify-email', authenticateToken, verifyEmail);
+router.post('/send-email-change-verification', authenticateToken, sendEmailChangeVerification);
+router.post('/resend-verification', resendVerificationCode);
+router.post('/forgot-password', forgotPassword);
+router.post('/verify-otp', verifyOTP);
+router.post('/reset-password', resetPassword);
+router.post('/login', login);
 router.post('/register', validateRegister, register)
 router.post('/verify-email', verifyEmail)
 router.post('/resend-verification', resendVerificationCode)
