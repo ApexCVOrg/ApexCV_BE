@@ -77,7 +77,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Kids", "Arsenal", "T-Shirts"],
-    images: ["/images/products/arsenal-kids-home-jersey-2024.jpg"],
+    images: ["Arsenal_Shirt.avif"],
     sizes: [
       { size: "4-5Y", stock: 20 },
       { size: "6-7Y", stock: 25 },
@@ -94,7 +94,7 @@ const productsData = [
     price: 1899000,
     discountPrice: 1599000,
     categoryPath: ["Kids", "Arsenal", "Tracksuits"],
-    images: ["/images/products/arsenal-kids-tracksuit.jpg"],
+    images: ["Arsenal_Tracksuit.png"],
     sizes: [
       { size: "4-5Y", stock: 15 },
       { size: "6-7Y", stock: 20 },
@@ -178,7 +178,7 @@ const productsData = [
     price: 1699000,
     discountPrice: 1499000,
     categoryPath: ["Kids", "Real Madrid", "T-Shirts"],
-    images: ["/images/products/real-madrid-kids-home-jersey-2024.jpg"],
+    images: ["Real_Madrid_24-25_Home_Jersey_Kids_White_IT5186_21_model.avif"],
     sizes: [
       { size: "4-5Y", stock: 25 },
       { size: "6-7Y", stock: 30 },
@@ -195,7 +195,7 @@ const productsData = [
     price: 1899000,
     discountPrice: 1599000,
     categoryPath: ["Kids", "Real Madrid", "Tracksuits"],
-    images: ["/images/products/real-madrid-kids-tracksuit.jpg"],
+    images: ["Real_Madrid_Tiro_24_Competition_Training_Tracksuit_Bottoms_Kids_Blue_IT5120_21_model.avif"],
     sizes: [
       { size: "4-5Y", stock: 15 },
       { size: "6-7Y", stock: 20 },
@@ -246,7 +246,7 @@ const productsData = [
     price: 2099000,
     discountPrice: 1899000,
     categoryPath: ["Women", "Bayern Munich", "T-Shirts"],
-    images: ["FC_Bayern_Shirt.avif"],
+    images: ["FC_Bayern_Shirt.png"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
@@ -279,7 +279,7 @@ const productsData = [
     price: 1699000,
     discountPrice: 1499000,
     categoryPath: ["Kids", "Bayern Munich", "T-Shirts"],
-    images: ["/images/products/bayern-kids-home-jersey-2024.jpg"],
+    images: ["FC_Bayern_24-25_Home_Jersey_Kids_Red_IT2249_21_model.avif"],
     sizes: [
       { size: "4-5Y", stock: 25 },
       { size: "6-7Y", stock: 30 },
@@ -296,7 +296,7 @@ const productsData = [
     price: 1899000,
     discountPrice: 1599000,
     categoryPath: ["Kids", "Bayern Munich", "Tracksuits"],
-    images: ["/images/products/bayern-kids-tracksuit.jpg"],
+    images: ["294607_adidas-bayern-munchen-trainingspak-1-4-zip-2024-2025-kids-bordeauxrood-wit-rood.jpg"],
     sizes: [
       { size: "4-5Y", stock: 15 },
       { size: "6-7Y", stock: 20 },
@@ -380,7 +380,7 @@ const productsData = [
     price: 1699000,
     discountPrice: 1499000,
     categoryPath: ["Kids", "Juventus", "T-Shirts"],
-    images: ["/images/products/juventus-kids-home-jersey-2024.jpg"],
+    images: ["Juventus_25-26_Shorts_Kids_Black_JN5221_21_model.avif"],
     sizes: [
       { size: "4-5Y", stock: 25 },
       { size: "6-7Y", stock: 30 },
@@ -397,7 +397,7 @@ const productsData = [
     price: 1899000,
     discountPrice: 1599000,
     categoryPath: ["Kids", "Juventus", "Tracksuits"],
-    images: ["/images/products/juventus-kids-tracksuit.jpg"],
+    images: ["Juventus_Tiro_24_Competition_Training_Tracksuit_Bottoms_Kids_Blue_IS5818_21_model.avif"],
     sizes: [
       { size: "4-5Y", stock: 15 },
       { size: "6-7Y", stock: 20 },
@@ -481,7 +481,7 @@ const productsData = [
     price: 1699000,
     discountPrice: 1499000,
     categoryPath: ["Kids", "Manchester United", "T-Shirts"],
-    images: ["/images/products/man-utd-kids-home-jersey-2024.jpg"],
+    images: ["MU_Shirt.avif"],
     sizes: [
       { size: "4-5Y", stock: 25 },
       { size: "6-7Y", stock: 30 },
@@ -498,7 +498,7 @@ const productsData = [
     price: 1899000,
     discountPrice: 1599000,
     categoryPath: ["Kids", "Manchester United", "Tracksuits"],
-    images: ["/images/products/man-utd-kids-tracksuit.jpg"],
+    images: ["Manchester_United_Track_Suit_Kids_Blue_IT4200_21_model.avif"],
     sizes: [
       { size: "4-5Y", stock: 15 },
       { size: "6-7Y", stock: 20 },
@@ -686,7 +686,7 @@ const productsData = [
     price: 1599000,
     discountPrice: 1399000,
     categoryPath: ["Women", "Bayern Munich", "Shorts"],
-    images: ["FC_Bayern_Short.avif"],
+    images: ["FC_Bayern_Short.png"],
     sizes: [
       { size: "XS", stock: 15 },
       { size: "S", stock: 25 },
