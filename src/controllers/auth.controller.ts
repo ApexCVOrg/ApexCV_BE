@@ -26,6 +26,9 @@ interface VerificationData {
 
 const verificationStore = new Map<string, VerificationData>()
 
+// Store for email change verification
+const emailChangeStore = new Map<string, { email: string; verificationCode: string; expiresAt: Date }>();
+
 // Clean up expired verification data every hour
 setInterval(
   () => {
@@ -63,15 +66,14 @@ setInterval(
 
 export const register: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { username, email, password, fullName, phone, address } = req.body
+    const { username, email, password, fullName, phone } = req.body
 
     console.log('🔍 Registration attempt:', {
       username,
       email,
       fullName,
       phone,
-      hasPassword: !!password,
-      address
+      hasPassword: !!password
     })
 
     // Check if email or username already exists
@@ -104,82 +106,13 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
       return
     }
 
-    // Process address
-    let addresses: any[] = []
-    if (address) {
-      if (Array.isArray(address)) {
-        // Validate each address object
-        addresses = address
-          .map((addr) => {
-            if (typeof addr === 'object' && addr !== null) {
-              return {
-                recipientName: addr.recipientName || '',
-                street: addr.street || '',
-                city: addr.city || '',
-                state: addr.state || '',
-                country: addr.country || '',
-                addressNumber: addr.addressNumber || '',
-                isDefault: addr.isDefault || false
-              }
-            }
-            return null
-          })
-          .filter((addr) => addr !== null)
-      } else if (typeof address === 'string') {
-        try {
-          const parsed = JSON.parse(address)
-          if (Array.isArray(parsed)) {
-            addresses = parsed
-              .map((addr) => {
-                if (typeof addr === 'object' && addr !== null) {
-                  return {
-                    recipientName: addr.recipientName || '',
-                    street: addr.street || '',
-                    city: addr.city || '',
-                    state: addr.state || '',
-                    country: addr.country || '',
-                    addressNumber: addr.addressNumber || '',
-                    isDefault: addr.isDefault || false
-                  }
-                }
-                return null
-              })
-              .filter((addr) => addr !== null)
-          } else {
-            console.log('❌ Invalid address format: not an array')
-            res.status(400).json({
-              success: false,
-              message: 'validation_error',
-              errors: { address: 'Address must be an array' }
-            })
-            return
-          }
-        } catch {
-          console.log('❌ Invalid address JSON format')
-          res.status(400).json({
-            success: false,
-            message: 'validation_error',
-            errors: { address: 'Invalid address JSON format' }
-          })
-          return
-        }
-      } else {
-        res.status(400).json({
-          success: false,
-          message: 'validation_error',
-          errors: { address: 'Address must be an array or JSON string' }
-        })
-        return
-      }
-    }
-
     // Hash password
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
     // Generate verification code
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000) // 1 minute
 
     console.log('✅ Generated verification code:', verificationCode)
 
@@ -190,7 +123,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
       passwordHash: hashedPassword,
       fullName,
       phone,
-      addresses,
+      addresses: [],
       verificationCode,
       expiresAt
     })
@@ -252,15 +185,29 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
     // Log the received code for debugging
     console.log('Received verification request:', { email, code })
 
-    const verificationData = verificationStore.get(email)
+    // Check both verification stores
+    const registrationData = verificationStore.get(email);
+    const emailChangeData = emailChangeStore.get(email);
+
+    if (!registrationData && !emailChangeData) {
+      console.log('No verification data found for email:', email);
+      res.status(400).json({ 
+        success: false, 
+        message: 'Verification data not found or expired' 
+      });
+      return;
+    }
+
+    // Determine which store to use and handle type checking
+    const isEmailChange = !!emailChangeData;
+    const verificationData = isEmailChange ? emailChangeData : registrationData;
 
     if (!verificationData) {
-      console.log('No verification data found for email:', email)
-      res.status(400).json({
-        success: false,
-        message: 'Verification data not found or expired'
-      })
-      return
+      res.status(400).json({ 
+        success: false, 
+        message: 'Verification data not found or expired' 
+      });
+      return;
     }
 
     // Log the stored code for debugging
@@ -280,61 +227,110 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
     }
 
     if (verificationData.expiresAt < new Date()) {
-      console.log('Verification code expired for email:', email)
-      verificationStore.delete(email)
-      res.status(400).json({
-        success: false,
-        message: 'Verification code expired'
-      })
-      return
+      console.log('Verification code expired for email:', email);
+      if (isEmailChange) {
+        emailChangeStore.delete(email);
+      } else {
+        verificationStore.delete(email);
+      }
+      res.status(400).json({ 
+        success: false, 
+        message: 'Verification code expired' 
+      });
+      return;
     }
 
-    // Create new user
-    const user = new User({
-      username: verificationData.username,
-      email: verificationData.email,
-      passwordHash: verificationData.passwordHash,
-      fullName: verificationData.fullName,
-      phone: verificationData.phone,
-      addresses: verificationData.addresses,
-      isVerified: true
-    })
-
-    await user.save()
-    verificationStore.delete(email)
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
-    )
-
-    // Generate refresh token
-    const refreshToken = jwt.sign(
-      { id: user._id, username: user.username, role: user.role },
-      process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
-      { expiresIn: '30d' }
-    )
-    user.refreshToken = refreshToken
-    await user.save()
-
-    console.log('Email verification successful for:', email)
-
-    res.status(200).json({
-      success: true,
-      message: 'Email verified successfully',
-      data: {
-        token,
-        refreshToken,
-        user: {
-          id: user._id,
-          email: user.email,
-          fullName: user.fullName,
-          role: user.role
-        }
+    if (isEmailChange) {
+      // Handle email change verification
+      const userId = req.user?._id;
+      if (!userId) {
+        res.status(401).json({ 
+          success: false, 
+          message: 'Unauthorized' 
+        });
+        return;
       }
-    })
+
+      const user = await User.findById(userId);
+      if (!user) {
+        res.status(404).json({ 
+          success: false, 
+          message: 'User not found' 
+        });
+        return;
+      }
+
+      // Update user's email
+      user.email = email;
+      await user.save();
+      emailChangeStore.delete(email);
+
+      // Generate new JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET || 'your-secret-key',
+        { expiresIn: '24h' }
+      );
+
+      res.status(200).json({
+        success: true,
+        message: 'Email updated successfully',
+        data: {
+          token,
+          user: { 
+            id: user._id,
+            email: user.email,
+            fullName: user.fullName,
+            role: user.role
+          }
+        }
+      });
+    } else {
+      // Handle registration verification
+      if (!registrationData) {
+        res.status(400).json({ 
+          success: false, 
+          message: 'Registration data not found' 
+        });
+        return;
+      }
+
+      const user = new User({
+        username: registrationData.username,
+        email: registrationData.email,
+        passwordHash: registrationData.passwordHash,
+        fullName: registrationData.fullName,
+        phone: registrationData.phone,
+        addresses: registrationData.addresses,
+        isVerified: true
+      });
+
+      await user.save();
+      verificationStore.delete(email);
+
+      // Generate JWT token
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET || 'your-secret-key',
+        { expiresIn: '24h' }
+      );
+
+      console.log('Email verification successful for:', email);
+
+      res.status(200).json({
+        success: true,
+        message: 'Email verified successfully',
+        data: {
+          token,
+          user: { 
+            id: user._id,
+            email: user.email,
+            fullName: user.fullName,
+            role: user.role
+          }
+        }
+      });
+    }
   } catch (error: any) {
     console.error('Email verification error:', error)
     res.status(500).json({
@@ -353,8 +349,11 @@ export const resendVerificationCode: RequestHandler = async (req, res) => {
       return
     }
 
-    const verificationData = verificationStore.get(email)
-    if (!verificationData) {
+    // Check both verification stores
+    const registrationData = verificationStore.get(email);
+    const emailChangeData = emailChangeStore.get(email);
+
+    if (!registrationData && !emailChangeData) {
       res.status(400).json({
         success: false,
         message: 'No verification data found for this email'
@@ -362,12 +361,24 @@ export const resendVerificationCode: RequestHandler = async (req, res) => {
       return
     }
 
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 minute
 
-    verificationData.verificationCode = verificationCode
-    verificationData.expiresAt = expiresAt
-    verificationStore.set(email, verificationData)
+    if (emailChangeData) {
+      // Handle email change verification resend
+      emailChangeStore.set(email, {
+        email,
+        verificationCode,
+        expiresAt
+      });
+    } else if (registrationData) {
+      // Handle registration verification resend
+      verificationStore.set(email, {
+        ...registrationData,
+        verificationCode,
+        expiresAt
+      });
+    }
 
     try {
       await sendVerificationEmail(email, verificationCode)
@@ -773,7 +784,7 @@ export const forgotPassword: RequestHandler = async (req: Request, res: Response
 
     // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000) // 1 minute
 
     // Store OTP
     resetPasswordStore.set(email, {
@@ -930,7 +941,77 @@ export const resetPassword: RequestHandler = async (req: Request, res: Response)
       message: 'Internal server error'
     })
   }
-}
+};
+
+export const sendEmailChangeVerification: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      });
+      return;
+    }
+
+    // Check if email is already in use
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is already in use'
+      });
+      return;
+    }
+
+    // Generate verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // Store verification data
+    emailChangeStore.set(email, {
+      email,
+      verificationCode,
+      expiresAt
+    });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, verificationCode);
+      console.log('✅ Email change verification code sent successfully to:', email);
+    } catch (emailError: any) {
+      console.error('❌ Email sending failed:', {
+        error: emailError.message,
+        email: email
+      });
+      emailChangeStore.delete(email);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to send verification email',
+        error: emailError.message || 'Unknown error occurred'
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Verification code sent successfully',
+      data: {
+        email,
+        status: 'pending',
+        message: 'Please check your email for verification code'
+      }
+    });
+  } catch (error: any) {
+    console.error('Send email change verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message || 'Unknown error occurred'
+    });
+  }
+};
 
 export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -959,5 +1040,216 @@ export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
     res.json({ token })
   } catch (error) {
     res.status(500).json({ message: 'Error refreshing token' })
+  }
+}
+
+export const changePassword: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { currentPassword, newPassword } = req.body
+    const userId = req.user?.id
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: 'Unauthorized'
+      })
+      return
+    }
+
+    // Find user
+    const user = await User.findById(userId)
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      })
+      return
+    }
+
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.passwordHash)
+    if (!isMatch) {
+      res.status(400).json({
+        success: false,
+        message: 'Current password is incorrect'
+      })
+      return
+    }
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(newPassword, salt)
+
+    // Update password
+    user.passwordHash = hashedPassword
+    await user.save()
+
+    res.json({
+      success: true,
+      message: 'Password changed successfully'
+    })
+  } catch (error) {
+    console.error('Error changing password:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to change password'
+    })
+  }
+}
+
+export const sendOTP: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body
+
+    if (!email) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      })
+      return
+    }
+
+    // Check if email is already in verification process
+    if (verificationStore.has(email)) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is already in verification process'
+      })
+      return
+    }
+
+    // Generate verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000) // 1 minute
+
+    console.log('✅ Generated OTP for email:', email, 'Code:', verificationCode)
+
+    // Store verification data in memory
+    verificationStore.set(email, {
+      username: '',
+      email,
+      passwordHash: '',
+      fullName: '',
+      phone: '',
+      addresses: [],
+      verificationCode,
+      expiresAt
+    })
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, verificationCode)
+      console.log('✅ OTP email sent successfully to:', email)
+    } catch (emailError: any) {
+      console.error('❌ Email sending failed:', {
+        error: emailError.message,
+        email: email
+      })
+      verificationStore.delete(email)
+      res.status(500).json({
+        success: false,
+        message: 'Failed to send OTP email',
+        error: emailError.message || 'Unknown error occurred'
+      })
+      return
+    }
+
+    // Return success
+    console.log('✅ OTP sent successfully:', { email, status: 'sent' })
+    res.status(200).json({
+      success: true,
+      message: 'OTP sent successfully',
+      data: {
+        email,
+        status: 'sent',
+        message: 'Please check your email for OTP code'
+      }
+    })
+  } catch (error: any) {
+    console.error('❌ Send OTP error:', {
+      message: error.message,
+      stack: error.stack
+    })
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message || 'Unknown error occurred'
+    })
+  }
+}
+
+export const saveAddress: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, address } = req.body
+
+    if (!email || !address) {
+      res.status(400).json({
+        success: false,
+        message: 'Email and address are required'
+      })
+      return
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email })
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      })
+      return
+    }
+
+    // Process address
+    let addresses: any[] = []
+    if (address) {
+      if (Array.isArray(address)) {
+        addresses = address
+      } else if (typeof address === 'string') {
+        try {
+          addresses = JSON.parse(address)
+        } catch {
+          console.log('❌ Invalid address JSON format')
+          res.status(400).json({
+            success: false,
+            message: 'validation_error',
+            errors: { address: 'Invalid address JSON format' }
+          })
+          return
+        }
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'validation_error',
+          errors: { address: 'Address must be an array or JSON string' }
+        })
+        return
+      }
+    }
+
+    // Update user with addresses
+    user.addresses = addresses
+    await user.save()
+
+    console.log('✅ Address saved successfully for user:', email)
+
+    res.status(200).json({
+      success: true,
+      message: 'Address saved successfully',
+      data: {
+        email,
+        addresses: user.addresses
+      }
+    })
+  } catch (error: any) {
+    console.error('❌ Save address error:', {
+      message: error.message,
+      stack: error.stack
+    })
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message || 'Unknown error occurred'
+    })
   }
 }
