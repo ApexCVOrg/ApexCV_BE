@@ -10,7 +10,9 @@ import {
   verifyOTP,
   resetPassword,
   logout,
-  refreshToken
+  refreshToken,
+  sendOTP,
+  saveAddress
 } from '../controllers/auth.controller'
 import { authenticateToken, isAdmin, isUser, checkInactivity } from '../middlewares/auth'
 import { validateRegister } from '../middlewares/validation'
@@ -20,8 +22,10 @@ const router: Router = express.Router()
 
 // Public routes
 router.post('/register', validateRegister, register)
+router.post('/send-otp', sendOTP)
 router.post('/verify-email', verifyEmail)
 router.post('/resend-verification', resendVerificationCode)
+router.post('/save-address', saveAddress)
 router.post('/forgot-password', forgotPassword)
 router.post('/verify-otp', verifyOTP)
 router.post('/reset-password', resetPassword)

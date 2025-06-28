@@ -18,8 +18,6 @@ const brandsData = [
 
 export const seedBrands = async () => {
   try {
-    console.log("🔄 Starting brand seeding...");
-    
     // Get all existing brands
     const existingBrands = await Brand.find({});
     
@@ -34,7 +32,6 @@ export const seedBrands = async () => {
       await Brand.deleteMany({
         _id: { $in: brandsToDelete.map(brand => brand._id) }
       });
-      console.log(`🗑️ Deleted ${brandsToDelete.length} brands that are not in seed data`);
     }
     
     // Create or update brands
@@ -42,17 +39,12 @@ export const seedBrands = async () => {
       const existingBrand = await Brand.findOne({ name: brandData.name }) as mongoose.Document & { _id: mongoose.Types.ObjectId };
       
       if (existingBrand) {
-        console.log(`ℹ️ Brand already exists: ${brandData.name}`);
         continue;
       }
 
-      const newBrand = await new Brand(brandData).save();
-      console.log(`✅ Created brand: ${brandData.name} with ID: ${newBrand._id}`);
+      await new Brand(brandData).save();
     }
-
-    console.log("\n✅ Brand seeding completed.");
   } catch (error) {
-    console.error("\n❌ Error seeding brands:", error);
     throw error;
   }
 }; 

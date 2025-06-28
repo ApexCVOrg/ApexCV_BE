@@ -63,15 +63,14 @@ setInterval(
 
 export const register: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { username, email, password, fullName, phone, address } = req.body
+    const { username, email, password, fullName, phone } = req.body
 
     console.log('🔍 Registration attempt:', {
       username,
       email,
       fullName,
       phone,
-      hasPassword: !!password,
-      address
+      hasPassword: !!password
     })
 
     // Check if email or username already exists
@@ -104,82 +103,13 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
       return
     }
 
-    // Process address
-    let addresses: any[] = []
-    if (address) {
-      if (Array.isArray(address)) {
-        // Validate each address object
-        addresses = address
-          .map((addr) => {
-            if (typeof addr === 'object' && addr !== null) {
-              return {
-                recipientName: addr.recipientName || '',
-                street: addr.street || '',
-                city: addr.city || '',
-                state: addr.state || '',
-                country: addr.country || '',
-                addressNumber: addr.addressNumber || '',
-                isDefault: addr.isDefault || false
-              }
-            }
-            return null
-          })
-          .filter((addr) => addr !== null)
-      } else if (typeof address === 'string') {
-        try {
-          const parsed = JSON.parse(address)
-          if (Array.isArray(parsed)) {
-            addresses = parsed
-              .map((addr) => {
-                if (typeof addr === 'object' && addr !== null) {
-                  return {
-                    recipientName: addr.recipientName || '',
-                    street: addr.street || '',
-                    city: addr.city || '',
-                    state: addr.state || '',
-                    country: addr.country || '',
-                    addressNumber: addr.addressNumber || '',
-                    isDefault: addr.isDefault || false
-                  }
-                }
-                return null
-              })
-              .filter((addr) => addr !== null)
-          } else {
-            console.log('❌ Invalid address format: not an array')
-            res.status(400).json({
-              success: false,
-              message: 'validation_error',
-              errors: { address: 'Address must be an array' }
-            })
-            return
-          }
-        } catch {
-          console.log('❌ Invalid address JSON format')
-          res.status(400).json({
-            success: false,
-            message: 'validation_error',
-            errors: { address: 'Invalid address JSON format' }
-          })
-          return
-        }
-      } else {
-        res.status(400).json({
-          success: false,
-          message: 'validation_error',
-          errors: { address: 'Address must be an array or JSON string' }
-        })
-        return
-      }
-    }
-
     // Hash password
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
     // Generate verification code
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000) // 1 minute
 
     console.log('✅ Generated verification code:', verificationCode)
 
@@ -190,7 +120,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
       passwordHash: hashedPassword,
       fullName,
       phone,
-      addresses,
+      addresses: [],
       verificationCode,
       expiresAt
     })
@@ -363,10 +293,10 @@ export const resendVerificationCode: RequestHandler = async (req, res) => {
     }
 
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
+    const newExpiresAt = new Date(Date.now() + 1 * 60 * 1000)
 
     verificationData.verificationCode = verificationCode
-    verificationData.expiresAt = expiresAt
+    verificationData.expiresAt = newExpiresAt
     verificationStore.set(email, verificationData)
 
     try {
@@ -773,7 +703,7 @@ export const forgotPassword: RequestHandler = async (req: Request, res: Response
 
     // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000) // 1 minute
 
     // Store OTP
     resetPasswordStore.set(email, {
@@ -959,5 +889,162 @@ export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
     res.json({ token })
   } catch (error) {
     res.status(500).json({ message: 'Error refreshing token' })
+  }
+}
+
+export const sendOTP: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body
+
+    if (!email) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      })
+      return
+    }
+
+    // Check if email is already in verification process
+    if (verificationStore.has(email)) {
+      res.status(400).json({
+        success: false,
+        message: 'Email is already in verification process'
+      })
+      return
+    }
+
+    // Generate verification code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
+    const expiresAt = new Date(Date.now() + 1 * 60 * 1000) // 1 minute
+
+    console.log('✅ Generated OTP for email:', email, 'Code:', verificationCode)
+
+    // Store verification data in memory
+    verificationStore.set(email, {
+      username: '',
+      email,
+      passwordHash: '',
+      fullName: '',
+      phone: '',
+      addresses: [],
+      verificationCode,
+      expiresAt
+    })
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, verificationCode)
+      console.log('✅ OTP email sent successfully to:', email)
+    } catch (emailError: any) {
+      console.error('❌ Email sending failed:', {
+        error: emailError.message,
+        email: email
+      })
+      verificationStore.delete(email)
+      res.status(500).json({
+        success: false,
+        message: 'Failed to send OTP email',
+        error: emailError.message || 'Unknown error occurred'
+      })
+      return
+    }
+
+    // Return success
+    console.log('✅ OTP sent successfully:', { email, status: 'sent' })
+    res.status(200).json({
+      success: true,
+      message: 'OTP sent successfully',
+      data: {
+        email,
+        status: 'sent',
+        message: 'Please check your email for OTP code'
+      }
+    })
+  } catch (error: any) {
+    console.error('❌ Send OTP error:', {
+      message: error.message,
+      stack: error.stack
+    })
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message || 'Unknown error occurred'
+    })
+  }
+}
+
+export const saveAddress: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, address } = req.body
+
+    if (!email || !address) {
+      res.status(400).json({
+        success: false,
+        message: 'Email and address are required'
+      })
+      return
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email })
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      })
+      return
+    }
+
+    // Process address
+    let addresses: any[] = []
+    if (address) {
+      if (Array.isArray(address)) {
+        addresses = address
+      } else if (typeof address === 'string') {
+        try {
+          addresses = JSON.parse(address)
+        } catch {
+          console.log('❌ Invalid address JSON format')
+          res.status(400).json({
+            success: false,
+            message: 'validation_error',
+            errors: { address: 'Invalid address JSON format' }
+          })
+          return
+        }
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'validation_error',
+          errors: { address: 'Address must be an array or JSON string' }
+        })
+        return
+      }
+    }
+
+    // Update user with addresses
+    user.addresses = addresses
+    await user.save()
+
+    console.log('✅ Address saved successfully for user:', email)
+
+    res.status(200).json({
+      success: true,
+      message: 'Address saved successfully',
+      data: {
+        email,
+        addresses: user.addresses
+      }
+    })
+  } catch (error: any) {
+    console.error('❌ Save address error:', {
+      message: error.message,
+      stack: error.stack
+    })
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message || 'Unknown error occurred'
+    })
   }
 }
