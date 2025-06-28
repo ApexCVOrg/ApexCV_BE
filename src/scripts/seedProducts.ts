@@ -20,7 +20,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["arsenal", "jersey", "football", "home"],
-    brand: "Nike"
+    brand: "Nike",
+    status: "active"
   },
   {
     name: "Arsenal Men's Training Jacket",
@@ -36,7 +37,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["arsenal", "jacket", "training"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Arsenal Women's Home Jersey 2024/25",
@@ -53,7 +55,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["arsenal", "jersey", "football", "home", "women"],
-    brand: "Nike"
+    brand: "Nike",
+    status: "active"
   },
   {
     name: "Arsenal Women's Training Hoodie",
@@ -69,7 +72,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["arsenal", "hoodie", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Arsenal Kids Home Jersey 2024/25",
@@ -86,7 +90,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["arsenal", "jersey", "football", "home", "kids"],
-    brand: "Nike"
+    brand: "Nike",
+    status: "active"
   },
   {
     name: "Arsenal Kids Tracksuit",
@@ -103,7 +108,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["arsenal", "tracksuit", "training", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Real Madrid Products
   {
@@ -121,7 +127,8 @@ const productsData = [
     ],
     colors: ["White", "Black"],
     tags: ["real-madrid", "jersey", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Men's Training Jacket",
@@ -137,7 +144,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["real-madrid", "jacket", "training"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Women's Home Jersey 2024/25",
@@ -154,7 +162,8 @@ const productsData = [
     ],
     colors: ["White", "Black"],
     tags: ["real-madrid", "jersey", "football", "home", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Women's Training Hoodie",
@@ -170,7 +179,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["real-madrid", "hoodie", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Kids Home Jersey 2024/25",
@@ -187,7 +197,8 @@ const productsData = [
     ],
     colors: ["White", "Black"],
     tags: ["real-madrid", "jersey", "football", "home", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Kids Tracksuit",
@@ -204,7 +215,8 @@ const productsData = [
     ],
     colors: ["White", "Black"],
     tags: ["real-madrid", "tracksuit", "training", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Bayern Munich Products
   {
@@ -222,7 +234,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["bayern", "jersey", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Bayern Munich Men's Training Jacket",
@@ -238,7 +251,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["bayern", "jacket", "training"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Bayern Munich Women's Home Jersey 2024/25",
@@ -255,7 +269,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["bayern", "jersey", "football", "home", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Bayern Munich Women's Training Hoodie",
@@ -271,7 +286,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["bayern", "hoodie", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Bayern Munich Kids Home Jersey 2024/25",
@@ -288,7 +304,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["bayern", "jersey", "football", "home", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Bayern Munich Kids Tracksuit",
@@ -305,7 +322,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["bayern", "tracksuit", "training", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Juventus Products
   {
@@ -323,7 +341,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "jersey", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Juventus Men's Training Jacket",
@@ -339,7 +358,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "jacket", "training"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Juventus Women's Home Jersey 2024/25",
@@ -356,7 +376,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "jersey", "football", "home", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Juventus Women's Training Hoodie",
@@ -372,7 +393,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "hoodie", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Juventus Kids Home Jersey 2024/25",
@@ -389,7 +411,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "jersey", "football", "home", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Juventus Kids Tracksuit",
@@ -406,7 +429,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "tracksuit", "training", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Manchester United Products
   {
@@ -424,7 +448,8 @@ const productsData = [
     ],
     colors: ["Red", "Black"],
     tags: ["manchester-united", "jersey", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Manchester United Men's Training Jacket",
@@ -440,7 +465,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["manchester-united", "jacket", "training"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Manchester United Women's Home Jersey 2024/25",
@@ -457,7 +483,8 @@ const productsData = [
     ],
     colors: ["Red", "Black"],
     tags: ["manchester-united", "jersey", "football", "home", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Manchester United Women's Training Hoodie",
@@ -473,7 +500,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["manchester-united", "hoodie", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Manchester United Kids Home Jersey 2024/25",
@@ -490,7 +518,8 @@ const productsData = [
     ],
     colors: ["Red", "Black"],
     tags: ["manchester-united", "jersey", "football", "home", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Manchester United Kids Tracksuit",
@@ -507,7 +536,8 @@ const productsData = [
     ],
     colors: ["Red", "Black"],
     tags: ["manchester-united", "tracksuit", "training", "kids"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Additional Arsenal Products
   {
@@ -524,7 +554,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["arsenal", "shorts", "football", "home"],
-    brand: "Nike"
+    brand: "Nike",
+    status: "active"
   },
   {
     name: "Arsenal Women's Training Shoes",
@@ -541,7 +572,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["arsenal", "shoes", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Arsenal Kids Football Boots",
@@ -558,7 +590,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["arsenal", "boots", "football", "kids"],
-    brand: "Nike"
+    brand: "Nike",
+    status: "active"
   },
   // Additional Real Madrid Products
   {
@@ -575,7 +608,8 @@ const productsData = [
     ],
     colors: ["White", "Black"],
     tags: ["real-madrid", "shorts", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Women's Training Shorts",
@@ -592,7 +626,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["real-madrid", "shorts", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Additional Bayern Munich Products
   {
@@ -609,7 +644,8 @@ const productsData = [
     ],
     colors: ["Red", "White"],
     tags: ["bayern", "shorts", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Additional Juventus Products
   {
@@ -626,7 +662,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "shorts", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Additional Manchester United Products
   {
@@ -643,7 +680,8 @@ const productsData = [
     ],
     colors: ["Red", "Black"],
     tags: ["manchester-united", "shorts", "football", "home"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   // Additional Women's Training Shorts
   {
@@ -661,7 +699,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["arsenal", "shorts", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Real Madrid Women's Training Shorts",
@@ -678,7 +717,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["real-madrid", "shorts", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Bayern Munich Women's Training Shorts",
@@ -695,7 +735,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["bayern", "shorts", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Juventus Women's Training Shorts",
@@ -712,7 +753,8 @@ const productsData = [
     ],
     colors: ["Black", "White"],
     tags: ["juventus", "shorts", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   },
   {
     name: "Manchester United Women's Training Shorts",
@@ -729,7 +771,8 @@ const productsData = [
     ],
     colors: ["Black", "Red"],
     tags: ["manchester-united", "shorts", "training", "women"],
-    brand: "Adidas"
+    brand: "Adidas",
+    status: "active"
   }
 ];
 
@@ -775,7 +818,6 @@ const findCategoryIdsByPath = async (categoryPath: string[]) => {
 
 export const seedProducts = async () => {
   try {
-    console.log("🔄 Starting product seeding...");
     
     // Get all existing products
     const existingProducts = await Product.find({});
@@ -791,11 +833,9 @@ export const seedProducts = async () => {
       await Product.deleteMany({
         _id: { $in: productsToDelete.map(product => product._id) }
       });
-      console.log(`🗑️ Deleted ${productsToDelete.length} products that are not in seed data`);
     }
     
     for (const product of productsData) {
-      console.log(`\n📦 Processing product: ${product.name}`);
       
       // Check if product already exists
       const existing = await Product.findOne({ name: product.name });
@@ -810,8 +850,6 @@ export const seedProducts = async () => {
       try {
         // Get category IDs from path
         const categoryIds = await findCategoryIdsByPath(product.categoryPath);
-        console.log(`✅ Found categories for ${product.name}:`, categoryIds);
-
         if (existing) {
           // Update existing product
           const updatedProduct = await Product.findByIdAndUpdate(
@@ -826,15 +864,11 @@ export const seedProducts = async () => {
               sizes: product.sizes || [],
               colors: product.colors || [],
               tags: product.tags || [],
-              brand: brand._id
+              brand: brand._id,
+              status: product.status || 'active'
             },
             { new: true }
           );
-          if (updatedProduct) {
-            console.log(`✅ Updated product: ${product.name} with ID: ${updatedProduct._id}`);
-          } else {
-            console.error(`❌ Failed to update product: ${product.name}`);
-          }
         } else {
           // Create new product
           const newProduct = await new Product({
@@ -847,9 +881,9 @@ export const seedProducts = async () => {
             sizes: product.sizes || [],
             colors: product.colors || [],
             tags: product.tags || [],
-            brand: brand._id
+            brand: brand._id,
+            status: product.status || 'active'
           }).save();
-          console.log(`✅ Created product: ${product.name} with ID: ${newProduct._id}`);
         }
       } catch (error) {
         console.error(`❌ Error processing categories for ${product.name}:`, error);
@@ -857,7 +891,6 @@ export const seedProducts = async () => {
       }
     }
 
-    console.log("\n✅ Product seeding completed.");
   } catch (error) {
     console.error("\n❌ Error seeding products:", error);
     throw error;

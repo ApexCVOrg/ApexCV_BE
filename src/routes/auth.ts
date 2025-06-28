@@ -11,6 +11,8 @@ import {
   resetPassword,
   logout,
   refreshToken,
+  sendOTP,
+  saveAddress,
   sendEmailChangeVerification,
   changePassword
 } from '../controllers/auth.controller'
@@ -21,21 +23,15 @@ import { OAuth2Client } from 'google-auth-library'
 const router: Router = express.Router()
 
 // Public routes
-router.post('/register', validateRegister, register);
-router.post('/verify-email', authenticateToken, verifyEmail);
-router.post('/send-email-change-verification', authenticateToken, sendEmailChangeVerification);
-router.post('/resend-verification', resendVerificationCode);
-router.post('/forgot-password', forgotPassword);
-router.post('/verify-otp', verifyOTP);
-router.post('/reset-password', resetPassword);
-router.post('/login', login);
 router.post('/register', validateRegister, register)
+router.post('/login', login)
+router.post('/send-otp', sendOTP)
 router.post('/verify-email', verifyEmail)
 router.post('/resend-verification', resendVerificationCode)
+router.post('/save-address', saveAddress)
 router.post('/forgot-password', forgotPassword)
 router.post('/verify-otp', verifyOTP)
 router.post('/reset-password', resetPassword)
-router.post('/login', login)
 
 // Google OAuth routes
 router.get('/google', (req, res) => {
@@ -48,7 +44,7 @@ router.get('/google', (req, res) => {
   const url = googleClient.generateAuthUrl({
     access_type: 'offline',
     scope: ['profile', 'email'],
-    redirect_uri: process.env.GOOGLE_REDIRECT_URI // ✅ thêm dòng này
+    redirect_uri: process.env.GOOGLE_REDIRECT_URI
   })
 
   res.redirect(url)
@@ -66,31 +62,14 @@ router.get('/facebook', (req, res) => {
 })
 router.get('/facebook/callback', handleFacebookCallback)
 
-// Password management
-router.post('/forgot-password', async (req, res) => {
-  try {
-    // TODO: Implement forgot password
-    res.json({ message: 'Password reset instructions sent' })
-  } catch (error) {
-    res.status(500).json({ message: 'Error processing forgot password request: ' + (error as Error).message })
-  }
-})
-
-router.post('/reset-password', async (req, res) => {
-  try {
-    // TODO: Implement reset password
-    res.json({ message: 'Password reset successful' })
-  } catch (error) {
-    res.status(500).json({ message: 'Error resetting password: ' + (error as Error).message })
-  }
-})
-
 // Token management
 router.post('/refresh-token', refreshToken)
-
 router.post('/logout', authenticateToken, logout)
 
 // Protected routes
+router.post('/send-email-change-verification', authenticateToken, sendEmailChangeVerification)
+router.post('/change-password', authenticateToken, changePassword)
+
 router.get('/profile', authenticateToken, checkInactivity, isUser, (req, res) => {
   res.json({ user: req.user })
 })
@@ -98,7 +77,5 @@ router.get('/profile', authenticateToken, checkInactivity, isUser, (req, res) =>
 router.get('/admin', authenticateToken, checkInactivity, isAdmin, (req, res) => {
   res.json({ message: 'Admin access granted' })
 })
-
-router.post('/change-password', authenticateToken, changePassword)
 
 export default router

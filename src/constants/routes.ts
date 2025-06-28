@@ -8,6 +8,7 @@ export const AUTH_ROUTES = {
   LOGIN: '/login',
   VERIFY_EMAIL: '/verify-email',
   RESEND_VERIFICATION: '/resend-verification',
+  SAVE_ADDRESS: '/save-address',
   PROFILE: '/profile',
   ADMIN: '/admin',
   GOOGLE: {
