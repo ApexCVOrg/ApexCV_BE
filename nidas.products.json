@@ -1,0 +1,3008 @@
+[{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc07"
+  },
+  "name": "Arsenal Men's Home Jersey 2024/25",
+  "description": "Official Arsenal FC home jersey for the 2024/25 season. Made with high-quality materials and featuring the latest team design.",
+  "price": 2199000,
+  "discountPrice": 1959000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a893"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a89f"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbfc"
+  },
+  "images": [
+    "Arsenal_Home_2425.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab27"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab28"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab29"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 10,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab2a"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "arsenal",
+    "jersey",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.003Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc12"
+  },
+  "name": "Arsenal Men's Training Jacket",
+  "description": "Premium training jacket with Arsenal FC branding. Perfect for training sessions and casual wear.",
+  "price": 3184000,
+  "discountPrice": 2694000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a893"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8a8"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Arsenal_Training_Jacket.avif"
+  ],
+  "sizes": [
+    {
+      "size": "M",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab38"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab39"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 10,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab3a"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "arsenal",
+    "jacket",
+    "training"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.014Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc1c"
+  },
+  "name": "Arsenal Women's Home Jersey 2024/25",
+  "description": "Official Arsenal FC women's home jersey for the 2024/25 season. Designed specifically for female fans.",
+  "price": 1999000,
+  "discountPrice": 1799000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a938"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a944"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbfc"
+  },
+  "images": [
+    "Arsenal_24-25_Home_Jersey_Red.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 10,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab48"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab49"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab4a"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab4b"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "arsenal",
+    "jersey",
+    "football",
+    "home",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.024Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc27"
+  },
+  "name": "Arsenal Women's Training Hoodie",
+  "description": "Comfortable and stylish hoodie for Arsenal women's collection. Perfect for training and casual wear.",
+  "price": 1899000,
+  "discountPrice": 1599000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a938"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a950"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Arsenal_Women_Hoodie.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab59"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab5a"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab5b"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "arsenal",
+    "hoodie",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.032Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc31"
+  },
+  "name": "Arsenal Kids Home Jersey 2024/25",
+  "description": "Official Arsenal FC home jersey for kids, perfect for young fans. Made with comfortable, breathable materials.",
+  "price": 1599000,
+  "discountPrice": 1399000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9dd"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9e9"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbfc"
+  },
+  "images": [
+    "/images/products/arsenal-kids-home-jersey-2024.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab69"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab6a"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab6b"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab6c"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "arsenal",
+    "jersey",
+    "football",
+    "home",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.040Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc3c"
+  },
+  "name": "Arsenal Kids Tracksuit",
+  "description": "Stylish and comfortable tracksuit for young Arsenal fans. Perfect for training and casual wear.",
+  "price": 1899000,
+  "discountPrice": 1599000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9dd"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9ef"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/arsenal-kids-tracksuit.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab7b"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab7c"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab7d"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab7e"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "arsenal",
+    "tracksuit",
+    "training",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.048Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc47"
+  },
+  "name": "Real Madrid Men's Home Jersey 2024/25",
+  "description": "Official Real Madrid home jersey for the 2024/25 season. Premium quality with the latest team design.",
+  "price": 2299000,
+  "discountPrice": 1999000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8f6"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a902"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Real_Madrid_24-25_Home.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab8d"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab8e"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab8f"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab90"
+      }
+    }
+  ],
+  "colors": [
+    "White",
+    "Black"
+  ],
+  "tags": [
+    "real-madrid",
+    "jersey",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.058Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc52"
+  },
+  "name": "Real Madrid Men's Training Jacket",
+  "description": "Professional training jacket with Real Madrid branding. Ideal for training and casual wear.",
+  "price": 3299000,
+  "discountPrice": 2799000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8f6"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a90b"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Real_Madrid_Training_Jacket.avif"
+  ],
+  "sizes": [
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab9e"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281ab9f"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281aba0"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "real-madrid",
+    "jacket",
+    "training"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.064Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc5c"
+  },
+  "name": "Real Madrid Women's Home Jersey 2024/25",
+  "description": "Official Real Madrid women's home jersey for the 2024/25 season. Stylish and comfortable design.",
+  "price": 2099000,
+  "discountPrice": 1899000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a99b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9a7"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Real_Madrid_24-25_Home_Jersey_White_IT5182_HM1.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abae"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abaf"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abb0"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abb1"
+      }
+    }
+  ],
+  "colors": [
+    "White",
+    "Black"
+  ],
+  "tags": [
+    "real-madrid",
+    "jersey",
+    "football",
+    "home",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.075Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc67"
+  },
+  "name": "Real Madrid Women's Training Hoodie",
+  "description": "Stylish and comfortable hoodie for Real Madrid women's collection. Perfect for training and casual wear.",
+  "price": 1999000,
+  "discountPrice": 1699000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a99b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9b3"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Real_Madrid_Travel_Hoodie_Grey_GR4277.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abbf"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abc0"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abc1"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "real-madrid",
+    "hoodie",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.083Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc71"
+  },
+  "name": "Real Madrid Kids Home Jersey 2024/25",
+  "description": "Official Real Madrid home jersey for kids. Perfect for young fans with comfortable materials.",
+  "price": 1699000,
+  "discountPrice": 1499000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa40"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa4c"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/real-madrid-kids-home-jersey-2024.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abcf"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abd0"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abd1"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abd2"
+      }
+    }
+  ],
+  "colors": [
+    "White",
+    "Black"
+  ],
+  "tags": [
+    "real-madrid",
+    "jersey",
+    "football",
+    "home",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.092Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc7c"
+  },
+  "name": "Real Madrid Kids Tracksuit",
+  "description": "Stylish and comfortable tracksuit for young Real Madrid fans. Perfect for training and casual wear.",
+  "price": 1899000,
+  "discountPrice": 1599000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa40"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa52"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/real-madrid-kids-tracksuit.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abe1"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abe2"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abe3"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abe4"
+      }
+    }
+  ],
+  "colors": [
+    "White",
+    "Black"
+  ],
+  "tags": [
+    "real-madrid",
+    "tracksuit",
+    "training",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.099Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc87"
+  },
+  "name": "Bayern Munich Men's Home Jersey 2024/25",
+  "description": "Official Bayern Munich home jersey for the 2024/25 season. Premium quality with the latest team design.",
+  "price": 2299000,
+  "discountPrice": 1999000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8d5"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8e1"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "FC_Bayern_24-25_Home_Jersey.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abf3"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abf4"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abf5"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf276c84dd272281abf6"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "bayern",
+    "jersey",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.107Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc92"
+  },
+  "name": "Bayern Munich Men's Training Jacket",
+  "description": "Professional training jacket with Bayern Munich branding. Ideal for training and casual wear.",
+  "price": 3299000,
+  "discountPrice": 2799000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8d5"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8ea"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "FC_Bayern_Anniversary_Track.avif"
+  ],
+  "sizes": [
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac04"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac05"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac06"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "bayern",
+    "jacket",
+    "training"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.113Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cc9c"
+  },
+  "name": "Bayern Munich Women's Home Jersey 2024/25",
+  "description": "Official Bayern Munich women's home jersey for the 2024/25 season. Stylish and comfortable design.",
+  "price": 2099000,
+  "discountPrice": 1899000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a97a"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a986"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "FC_Bayern_Shirt.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac14"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac15"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac16"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac17"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "bayern",
+    "jersey",
+    "football",
+    "home",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.121Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cca7"
+  },
+  "name": "Bayern Munich Women's Training Hoodie",
+  "description": "Stylish and comfortable hoodie for Bayern Munich women's collection. Perfect for training and casual wear.",
+  "price": 1999000,
+  "discountPrice": 1699000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a97a"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a992"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "FC_Bayern_Hoodie.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac25"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac26"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac27"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "bayern",
+    "hoodie",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.128Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccb1"
+  },
+  "name": "Bayern Munich Kids Home Jersey 2024/25",
+  "description": "Official Bayern Munich home jersey for kids. Perfect for young fans with comfortable materials.",
+  "price": 1699000,
+  "discountPrice": 1499000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa1f"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa2b"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/bayern-kids-home-jersey-2024.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac35"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac36"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac37"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac38"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "bayern",
+    "jersey",
+    "football",
+    "home",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.135Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccbc"
+  },
+  "name": "Bayern Munich Kids Tracksuit",
+  "description": "Stylish and comfortable tracksuit for young Bayern Munich fans. Perfect for training and casual wear.",
+  "price": 1899000,
+  "discountPrice": 1599000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa1f"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa31"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/bayern-kids-tracksuit.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac47"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac48"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac49"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac4a"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "bayern",
+    "tracksuit",
+    "training",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.142Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccc7"
+  },
+  "name": "Juventus Men's Home Jersey 2024/25",
+  "description": "Official Juventus home jersey for the 2024/25 season. Premium quality with the latest team design.",
+  "price": 2299000,
+  "discountPrice": 1999000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8b4"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8c0"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Ao_DJau_San_Nha_Juventus_25-26.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac59"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac5a"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac5b"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac5c"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "jersey",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.152Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccd2"
+  },
+  "name": "Juventus Men's Training Jacket",
+  "description": "Professional training jacket with Juventus branding. Ideal for training and casual wear.",
+  "price": 3299000,
+  "discountPrice": 2799000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8b4"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8c9"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "juv_jacket.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac6a"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac6b"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac6c"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "jacket",
+    "training"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.162Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccdc"
+  },
+  "name": "Juventus Women's Home Jersey 2024/25",
+  "description": "Official Juventus women's home jersey for the 2024/25 season. Stylish and comfortable design.",
+  "price": 2099000,
+  "discountPrice": 1899000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a959"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a965"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Juventus_Shirt.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac7a"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac7b"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac7c"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac7d"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "jersey",
+    "football",
+    "home",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.170Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cce7"
+  },
+  "name": "Juventus Women's Training Hoodie",
+  "description": "Stylish and comfortable hoodie for Juventus women's collection. Perfect for training and casual wear.",
+  "price": 1999000,
+  "discountPrice": 1699000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a959"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a971"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Juventus_Hoodie.png"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac8b"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac8c"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac8d"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "hoodie",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.178Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccf1"
+  },
+  "name": "Juventus Kids Home Jersey 2024/25",
+  "description": "Official Juventus home jersey for kids. Perfect for young fans with comfortable materials.",
+  "price": 1699000,
+  "discountPrice": 1499000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9fe"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa0a"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/juventus-kids-home-jersey-2024.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac9b"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac9c"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac9d"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ac9e"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "jersey",
+    "football",
+    "home",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.186Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340ccfc"
+  },
+  "name": "Juventus Kids Tracksuit",
+  "description": "Stylish and comfortable tracksuit for young Juventus fans. Perfect for training and casual wear.",
+  "price": 1899000,
+  "discountPrice": 1599000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9fe"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa10"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/juventus-kids-tracksuit.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acad"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acae"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acaf"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acb0"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "tracksuit",
+    "training",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.194Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd07"
+  },
+  "name": "Manchester United Men's Home Jersey 2024/25",
+  "description": "Official Manchester United home jersey for the 2024/25 season. Premium quality with the latest team design.",
+  "price": 2299000,
+  "discountPrice": 1999000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a917"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a923"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Manchester_United_24-25_Home_Jersey_Red.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acbf"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acc0"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acc1"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acc2"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "Black"
+  ],
+  "tags": [
+    "manchester-united",
+    "jersey",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.204Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd12"
+  },
+  "name": "Manchester United Men's Training Jacket",
+  "description": "Professional training jacket with Manchester United branding. Ideal for training and casual wear.",
+  "price": 3299000,
+  "discountPrice": 2799000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a917"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a92c"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "MU_Training_Jacket.avif"
+  ],
+  "sizes": [
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acd0"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acd1"
+      }
+    },
+    {
+      "size": "XL",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acd2"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "manchester-united",
+    "jacket",
+    "training"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.210Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd1c"
+  },
+  "name": "Manchester United Women's Home Jersey 2024/25",
+  "description": "Official Manchester United women's home jersey for the 2024/25 season. Stylish and comfortable design.",
+  "price": 2099000,
+  "discountPrice": 1899000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9bc"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9c8"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "MU_Tshirt.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ace0"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ace1"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ace2"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ace3"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "Black"
+  ],
+  "tags": [
+    "manchester-united",
+    "jersey",
+    "football",
+    "home",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.218Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd27"
+  },
+  "name": "Manchester United Women's Training Hoodie",
+  "description": "Stylish and comfortable hoodie for Manchester United women's collection. Perfect for training and casual wear.",
+  "price": 1999000,
+  "discountPrice": 1699000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9bc"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9d4"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "MU_Hoodie.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acf1"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acf2"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281acf3"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "manchester-united",
+    "hoodie",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.226Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd31"
+  },
+  "name": "Manchester United Kids Home Jersey 2024/25",
+  "description": "Official Manchester United home jersey for kids. Perfect for young fans with comfortable materials.",
+  "price": 1699000,
+  "discountPrice": 1499000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa61"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa6d"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/man-utd-kids-home-jersey-2024.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad01"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad02"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad03"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad04"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "Black"
+  ],
+  "tags": [
+    "manchester-united",
+    "jersey",
+    "football",
+    "home",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.232Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd3c"
+  },
+  "name": "Manchester United Kids Tracksuit",
+  "description": "Stylish and comfortable tracksuit for young Manchester United fans. Perfect for training and casual wear.",
+  "price": 1899000,
+  "discountPrice": 1599000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa61"
+    },
+    {
+      "$oid": "685fbf276c84dd272281aa73"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "/images/products/man-utd-kids-tracksuit.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "4-5Y",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad13"
+      }
+    },
+    {
+      "size": "6-7Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad14"
+      }
+    },
+    {
+      "size": "8-9Y",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad15"
+      }
+    },
+    {
+      "size": "10-11Y",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad16"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "Black"
+  ],
+  "tags": [
+    "manchester-united",
+    "tracksuit",
+    "training",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.242Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd47"
+  },
+  "name": "Arsenal Men's Home Shorts 2024/25",
+  "description": "Official Arsenal FC home shorts for the 2024/25 season. Lightweight and comfortable for match day.",
+  "price": 1126000,
+  "discountPrice": 979000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a893"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8a2"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbfc"
+  },
+  "images": [
+    "Arsenal_24-25_Home_Shorts.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad24"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad25"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad26"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "arsenal",
+    "shorts",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.250Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd51"
+  },
+  "name": "Arsenal Women's Training Shoes",
+  "description": "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
+  "price": 3299000,
+  "discountPrice": 2799000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a938"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a93e"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"
+  ],
+  "sizes": [
+    {
+      "size": "36",
+      "stock": 10,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad34"
+      }
+    },
+    {
+      "size": "37",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad35"
+      }
+    },
+    {
+      "size": "38",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad36"
+      }
+    },
+    {
+      "size": "39",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad37"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "arsenal",
+    "shoes",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.260Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd5c"
+  },
+  "name": "Arsenal Kids Football Boots",
+  "description": "Lightweight and comfortable football boots for young Arsenal players. Perfect for training and matches.",
+  "price": 2499000,
+  "discountPrice": 2199000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a881"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9dd"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9e0"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbfc"
+  },
+  "images": [
+    "/images/products/arsenal-kids-boots.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "28",
+      "stock": 10,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad46"
+      }
+    },
+    {
+      "size": "29",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad47"
+      }
+    },
+    {
+      "size": "30",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad48"
+      }
+    },
+    {
+      "size": "31",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad49"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "arsenal",
+    "boots",
+    "football",
+    "kids"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.268Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd67"
+  },
+  "name": "Real Madrid Men's Home Shorts 2024/25",
+  "description": "Official Real Madrid home shorts for the 2024/25 season. Lightweight and comfortable for match day.",
+  "price": 1126000,
+  "discountPrice": 979000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8f6"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a905"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Real_Madrid_25-26_Home_Shorts.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad57"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad58"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad59"
+      }
+    }
+  ],
+  "colors": [
+    "White",
+    "Black"
+  ],
+  "tags": [
+    "real-madrid",
+    "shorts",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.276Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd71"
+  },
+  "name": "Real Madrid Women's Training Shorts",
+  "description": "Comfortable and stylish training shorts for Real Madrid women's collection. Perfect for training and casual wear.",
+  "price": 1599000,
+  "discountPrice": 1399000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a99b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9aa"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Real_Madrid_Short.jpg"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adb8"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adb9"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adba"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adbb"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "real-madrid",
+    "shorts",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.285Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd7c"
+  },
+  "name": "Bayern Munich Men's Home Shorts 2024/25",
+  "description": "Official Bayern Munich home shorts for the 2024/25 season. Lightweight and comfortable for match day.",
+  "price": 1126000,
+  "discountPrice": 979000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8d5"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8e4"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "FC_Bayern_24-25_Home_Shorts.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad78"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad79"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad7a"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "White"
+  ],
+  "tags": [
+    "bayern",
+    "shorts",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.293Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd86"
+  },
+  "name": "Juventus Men's Home Shorts 2024/25",
+  "description": "Official Juventus home shorts for the 2024/25 season. Lightweight and comfortable for match day.",
+  "price": 1126000,
+  "discountPrice": 979000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8b4"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a8c3"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Juventus_25-26_Home_Shorts.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad87"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad88"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad89"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "shorts",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.302Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd90"
+  },
+  "name": "Manchester United Men's Home Shorts 2024/25",
+  "description": "Official Manchester United home shorts for the 2024/25 season. Lightweight and comfortable for match day.",
+  "price": 1126000,
+  "discountPrice": 979000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87b"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a917"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a926"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Manchester_United_24-25_Home_Shorts.avif"
+  ],
+  "sizes": [
+    {
+      "size": "S",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad96"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad97"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ad98"
+      }
+    }
+  ],
+  "colors": [
+    "Red",
+    "Black"
+  ],
+  "tags": [
+    "manchester-united",
+    "shorts",
+    "football",
+    "home"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.312Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cd9a"
+  },
+  "name": "Arsenal Women's Training Shorts",
+  "description": "Comfortable and stylish training shorts for Arsenal women's collection. Perfect for training and casual wear.",
+  "price": 1599000,
+  "discountPrice": 1399000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a938"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a947"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Arsenal_Women_Short.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ada6"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ada7"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ada8"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281ada9"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "arsenal",
+    "shorts",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.321Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cdb7"
+  },
+  "name": "Bayern Munich Women's Training Shorts",
+  "description": "Comfortable and stylish training shorts for Bayern Munich women's collection. Perfect for training and casual wear.",
+  "price": 1599000,
+  "discountPrice": 1399000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a97a"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a989"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "FC_Bayern_Short.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adca"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adcb"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adcc"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adcd"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "bayern",
+    "shorts",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.346Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cdc2"
+  },
+  "name": "Juventus Women's Training Shorts",
+  "description": "Comfortable and stylish training shorts for Juventus women's collection. Perfect for training and casual wear.",
+  "price": 1599000,
+  "discountPrice": 1399000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a959"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a968"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "Juventus_Short.png"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281addc"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281addd"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adde"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281addf"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "White"
+  ],
+  "tags": [
+    "juventus",
+    "shorts",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.353Z"
+  },
+  "__v": 0,
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "684f07eda597d0715340cdcd"
+  },
+  "name": "Manchester United Women's Training Shorts",
+  "description": "Comfortable and stylish training shorts for Manchester United women's collection. Perfect for training and casual wear.",
+  "price": 1599000,
+  "discountPrice": 1399000,
+  "categories": [
+    {
+      "$oid": "685fbf276c84dd272281a87e"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9bc"
+    },
+    {
+      "$oid": "685fbf276c84dd272281a9cb"
+    }
+  ],
+  "brand": {
+    "$oid": "684f07eca597d0715340cbff"
+  },
+  "images": [
+    "MU_Short.avif"
+  ],
+  "sizes": [
+    {
+      "size": "XS",
+      "stock": 15,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adee"
+      }
+    },
+    {
+      "size": "S",
+      "stock": 25,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adef"
+      }
+    },
+    {
+      "size": "M",
+      "stock": 30,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adf0"
+      }
+    },
+    {
+      "size": "L",
+      "stock": 20,
+      "_id": {
+        "$oid": "685fbf286c84dd272281adf1"
+      }
+    }
+  ],
+  "colors": [
+    "Black",
+    "Red"
+  ],
+  "tags": [
+    "manchester-united",
+    "shorts",
+    "training",
+    "women"
+  ],
+  "label": [],
+  "ratingsAverage": 0,
+  "ratingsQuantity": 0,
+  "createdAt": {
+    "$date": "2025-06-15T17:50:37.361Z"
+  },
+  "__v": 0,
+  "status": "active"
+}]
