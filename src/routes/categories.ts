@@ -7,13 +7,13 @@ const router: Router = express.Router()
 // Helper function to build category tree
 const buildCategoryTree = (categories: any[], parentId: string | null = null): any[] => {
   return categories
-    .filter(cat => {
+    .filter((cat) => {
       if (parentId === null) {
         return !cat.parentCategory
       }
       return cat.parentCategory && cat.parentCategory.toString() === parentId
     })
-    .map(cat => ({
+    .map((cat) => ({
       _id: cat._id.toString(),
       name: cat.name,
       description: cat.description || '',

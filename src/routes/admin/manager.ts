@@ -31,6 +31,14 @@ import {
   getBrands
 } from '../../controllers/managerController'
 import { authenticateToken, isManager } from '../../middlewares/auth'
+import {
+  getDashboardSummary,
+  getLowStockProducts,
+  getTodaySales,
+  getOrderStats as getDashboardOrderStats,
+  getTopSellingProducts,
+  getSalesChart
+} from '../../controllers/dashboardController'
 
 const router = express.Router()
 
@@ -91,5 +99,13 @@ router.get('/stats/customers', getCustomerStats)
 
 //Brands
 router.get('/brands', getBrands)
+
+// Dashboard endpoints
+router.get('/dashboard/summary', getDashboardSummary)
+router.get('/dashboard/low-stock', getLowStockProducts)
+router.get('/dashboard/today-sales', getTodaySales)
+router.get('/dashboard/order-stats', getDashboardOrderStats)
+router.get('/dashboard/top-products', getTopSellingProducts)
+router.get('/dashboard/sales-chart', getSalesChart)
 
 export default router
