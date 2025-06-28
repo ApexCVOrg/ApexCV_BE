@@ -57,7 +57,7 @@ export const sendVerificationEmail = async (email: string, code: string): Promis
       from: `"ApexCV" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: 'ApexCV - Email Verification Code',
-      text: `Your ApexCV verification code is: ${code}. This code will expire in 10 minutes.`,
+      text: `Your ApexCV verification code is: ${code}. This code will expire in 1 minute.`,
       html: generateEmailHTML(code)
     }
 
@@ -103,7 +103,7 @@ const generateEmailHTML = (code: string): string => `
     </div>
 
     <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0; color: #92400e; font-weight: 500;">⏰ This code will expire in 10 minutes</p>
+      <p style="margin: 0; color: #92400e; font-weight: 500;">⏰ This code will expire in 1 minute</p>
     </div>
 
     <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
@@ -131,7 +131,7 @@ export const sendResetPasswordEmail = async (email: string, otp: string): Promis
       from: `"ApexCV" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: 'ApexCV - Password Reset OTP',
-      text: `Your ApexCV password reset OTP is: ${otp}. This code will expire in 10 minutes.`,
+      text: `Your ApexCV password reset OTP is: ${otp}. This code will expire in 1 minute.`,
       html: generateResetPasswordEmailHTML(otp)
     }
 
@@ -172,7 +172,7 @@ const generateResetPasswordEmailHTML = (otp: string): string => `
     </div>
 
     <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0; color: #92400e; font-weight: 500;">⏰ This OTP will expire in 10 minutes</p>
+      <p style="margin: 0; color: #92400e; font-weight: 500;">⏰ This OTP will expire in 1 minute</p>
     </div>
 
     <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">

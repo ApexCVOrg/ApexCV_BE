@@ -4,11 +4,41 @@ import { CATEGORY_MESSAGES } from '../constants/categories'
 
 const router: Router = express.Router()
 
+// Helper function to build category tree
+const buildCategoryTree = (categories: any[], parentId: string | null = null): any[] => {
+  return categories
+    .filter(cat => {
+      if (parentId === null) {
+        return !cat.parentCategory
+      }
+      return cat.parentCategory && cat.parentCategory.toString() === parentId
+    })
+    .map(cat => ({
+      _id: cat._id.toString(),
+      name: cat.name,
+      description: cat.description || '',
+      status: cat.status,
+      parentCategory: cat.parentCategory ? cat.parentCategory.toString() : null,
+      children: buildCategoryTree(categories, cat._id.toString()),
+      createdAt: cat.createdAt,
+      updatedAt: cat.updatedAt
+    }))
+}
+
 // Get all categories as flat list
 router.get('/', async (req: Request, res: Response): Promise<void> => {
   try {
+    const { tree } = req.query
     const categories = await Category.find().sort({ createdAt: 1 }).lean()
 
+    // If tree parameter is provided, return hierarchical structure
+    if (tree === 'true') {
+      const treeStructure = buildCategoryTree(categories)
+      res.json(treeStructure)
+      return
+    }
+
+    // Default: return flat list
     const mappedCategories = categories.map((cat) => ({
       id: cat._id.toString(),
       name: cat.name,
@@ -27,6 +57,18 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     res.json(mappedCategories)
   } catch (error: any) {
     console.error('Error fetching categories:', error)
+    res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+  }
+})
+
+// Get categories as tree structure (alternative endpoint)
+router.get('/tree', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const categories = await Category.find().sort({ createdAt: 1 }).lean()
+    const treeStructure = buildCategoryTree(categories)
+    res.json(treeStructure)
+  } catch (error: any) {
+    console.error('Error fetching category tree:', error)
     res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
   }
 })
