@@ -841,25 +841,13 @@ const findCategoryIdsByPath = async (categoryPath: string[]) => {
 
 export const seedProducts = async () => {
   try {
-    // Get all existing products
-    const existingProducts = await Product.find({})
-
-    // Create a set of all product names from seed data
-    const seedProductNames = new Set(productsData.map((product) => product.name))
-
-    // Find products to delete (those that exist in DB but not in seed data)
-    const productsToDelete = existingProducts.filter((product) => !seedProductNames.has(product.name))
-
-    // Delete products that are not in seed data
-    if (productsToDelete.length > 0) {
-      await Product.deleteMany({
-        _id: { $in: productsToDelete.map((product) => product._id) }
-      })
-    }
-
     for (const product of productsData) {
       // Check if product already exists
       const existing = await Product.findOne({ name: product.name })
+
+      if (existing) {
+        continue
+      }
 
       // Get brand ObjectId
       const brand = await Brand.findOne({ name: product.brand })
@@ -871,41 +859,21 @@ export const seedProducts = async () => {
       try {
         // Get category IDs from path
         const categoryIds = await findCategoryIdsByPath(product.categoryPath)
-        if (existing) {
-          // Update existing product
-          const updatedProduct = await Product.findByIdAndUpdate(
-            existing._id,
-            {
-              name: product.name,
-              description: product.description,
-              price: product.price,
-              discountPrice: product.discountPrice || null,
-              categories: categoryIds,
-              images: product.images,
-              sizes: product.sizes || [],
-              colors: product.colors || [],
-              tags: product.tags || [],
-              brand: brand._id,
-              status: product.status || 'active'
-            },
-            { new: true }
-          )
-        } else {
-          // Create new product
-          const newProduct = await new Product({
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            discountPrice: product.discountPrice || null,
-            categories: categoryIds,
-            images: product.images,
-            sizes: product.sizes || [],
-            colors: product.colors || [],
-            tags: product.tags || [],
-            brand: brand._id,
-            status: product.status || 'active'
-          }).save()
-        }
+        
+        // Create new product
+        const newProduct = await new Product({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          discountPrice: product.discountPrice || null,
+          categories: categoryIds,
+          images: product.images,
+          sizes: product.sizes || [],
+          colors: product.colors || [],
+          tags: product.tags || [],
+          brand: brand._id,
+          status: product.status || 'active'
+        }).save()
       } catch (error) {
         console.error(`❌ Error processing categories for ${product.name}:`, error)
         continue
