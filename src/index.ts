@@ -16,6 +16,7 @@ import messageRouter from './routes/messages'
 import brandRouter from './routes/brands'
 import authRouter from './routes/auth'
 import managerRouter from './routes/admin/manager'
+import favoritesRouter from './routes/favorites'
 import connectDB from './config/db'
 import {
   API_BASE,
@@ -29,7 +30,8 @@ import {
   CONVERSATION_ROUTES,
   MESSAGE_ROUTES,
   BRAND_ROUTES,
-  MANAGER_ROUTES
+  MANAGER_ROUTES,
+  FAVORITES_ROUTES
 } from './constants/routes'
 dotenv.config()
 
@@ -87,6 +89,7 @@ app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter)
 app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter)
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
 app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
+app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
