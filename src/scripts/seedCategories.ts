@@ -9,9 +9,7 @@ const categoriesData = [
         {
           name: "Arsenal",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -24,9 +22,7 @@ const categoriesData = [
         {
           name: "Juventus",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -39,9 +35,7 @@ const categoriesData = [
         {
           name: "Bayern Munich",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -54,9 +48,7 @@ const categoriesData = [
         {
           name: "Real Madrid",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -69,9 +61,7 @@ const categoriesData = [
         {
           name: "Manchester United",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -89,9 +79,7 @@ const categoriesData = [
         {
           name: "Arsenal",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -104,9 +92,7 @@ const categoriesData = [
         {
           name: "Juventus",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -119,9 +105,7 @@ const categoriesData = [
         {
           name: "Bayern Munich",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -134,9 +118,7 @@ const categoriesData = [
         {
           name: "Real Madrid",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -149,9 +131,7 @@ const categoriesData = [
         {
           name: "Manchester United",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -169,9 +149,7 @@ const categoriesData = [
         {
           name: "Arsenal",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -184,9 +162,7 @@ const categoriesData = [
         {
           name: "Juventus",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -199,9 +175,7 @@ const categoriesData = [
         {
           name: "Bayern Munich",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -214,9 +188,7 @@ const categoriesData = [
         {
           name: "Real Madrid",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -229,9 +201,7 @@ const categoriesData = [
         {
           name: "Manchester United",
           subcategories: [
-            "Football Boots",
-            "Training Shoes",
-            "Running Shoes",
+            "Sneakers",
             "T-Shirts",
             "Shorts",
             "Tracksuits",
@@ -284,6 +254,34 @@ export const seedCategories = async () => {
           const toDelete = dups.slice(1).map(d => d._id);
           await Category.deleteMany({ _id: { $in: toDelete } });
         }
+      }
+    }
+
+    // Xóa các categories không còn tồn tại trong categoriesData
+    for (const parent of parentCategories) {
+      // Lấy danh sách teams trong categoriesData cho parent này
+      const validTeams = categoriesData
+        .find(cat => cat.name === parent.name)
+        ?.subcategories.map(sub => sub.name) || [];
+
+      // Xóa các team không còn trong categoriesData
+      await Category.deleteMany({
+        parentCategory: parent._id,
+        name: { $nin: validTeams }
+      });
+
+      // Với mỗi team còn lại, xóa các product types không còn trong categoriesData
+      const teams = await Category.find({ parentCategory: parent._id });
+      for (const team of teams) {
+        const validProductTypes = categoriesData
+          .find(cat => cat.name === parent.name)
+          ?.subcategories.find(sub => sub.name === team.name)
+          ?.subcategories || [];
+
+        await Category.deleteMany({
+          parentCategory: team._id,
+          name: { $nin: validProductTypes }
+        });
       }
     }
 
