@@ -1,64 +1,148 @@
-import express, { Request, Response, Router } from "express";
-import { Product } from "../models/Product";
+import express from 'express'
+import type { Request, Response, NextFunction, RequestHandler } from 'express'
+import mongoose from 'mongoose'
+import { Product } from '../models/Product'
+import { Category } from '../models/Category'
+import { CATEGORY_MESSAGES } from '../constants/categories'
 
-const router: Router = express.Router();
+const router = express.Router()
 
-router.get("/", async (_req: Request, res: Response): Promise<void> => {
+interface ProductQuery {
+  gender?: string
+}
+
+// Get all products
+const getAllProducts: RequestHandler = async (req, res, next) => {
   try {
-    const products = await Product.find().populate("categories");
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy danh sách sản phẩm: " + (error as Error).message });
-  }
-});
+    const { gender } = req.query as ProductQuery
 
-router.get("/:id", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const product = await Product.findById(req.params.id).populate("categories");
-    if (!product) {
-      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
-      return;
+    // Validate gender parameter
+    if (gender && !['men', 'women', 'kids'].includes(gender.toString().toLowerCase())) {
+      res.status(400).json({
+        message: 'Invalid gender parameter. Must be one of: men, women, kids'
+      })
+      return
     }
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy thông tin sản phẩm: " + (error as Error).message });
-  }
-});
 
-router.post("/", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const product = new Product(req.body);
-    const savedProduct = await product.save();
-    res.status(201).json(savedProduct);
-  } catch (error) {
-    res.status(400).json({ message: "Lỗi khi tạo sản phẩm: " + (error as Error).message });
-  }
-});
+    let query = Product.find()
 
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!product) {
-      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
-      return;
+    if (gender) {
+      const genderName = gender.toString().toLowerCase()
+
+      // Find the gender category
+      const genderCategory = await Category.findOne({
+        name: genderName.charAt(0).toUpperCase() + genderName.slice(1),
+        parentCategory: null
+      })
+
+      if (!genderCategory) {
+        res.status(404).json({
+          message: `Gender category not found: ${genderName}`
+        })
+        return
+      }
+
+      // Find all categories under this gender
+      const genderCategories = await Category.find({
+        parentCategory: genderCategory._id
+      })
+
+      if (!genderCategories.length) {
+        res.status(404).json({
+          message: `No team categories found for gender: ${genderName}`
+        })
+        return
+      }
+
+      // Get all product type categories under these team categories
+      const productTypeCategories = await Category.find({
+        parentCategory: { $in: genderCategories.map((cat) => cat._id) }
+      })
+
+      if (!productTypeCategories.length) {
+        res.status(404).json({
+          message: `No product categories found for gender: ${genderName}`
+        })
+        return
+      }
+
+      // Filter products that have any of these categories
+      query = query.where('categories').in(productTypeCategories.map((cat) => cat._id))
     }
-    res.json(product);
-  } catch (error) {
-    res.status(400).json({ message: "Lỗi khi cập nhật sản phẩm: " + (error as Error).message });
-  }
-});
 
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
+    const products = await query.populate('categories', 'name').populate('brand', 'name').sort({ createdAt: -1 }).lean()
+
+    res.json({
+      success: true,
+      count: products.length,
+      data: products
+    })
+  } catch (error: any) {
+    next(error)
+  }
+}
+
+router.get('/', getAllProducts)
+
+// Create product
+router.post('/', async (req: Request, res: Response) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
-    if (!product) {
-      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
-      return;
-    }
-    res.json({ message: "Đã xóa sản phẩm thành công" });
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi xóa sản phẩm: " + (error as Error).message });
+    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, label, status } =
+      req.body
+    const product = new Product({
+      name,
+      description,
+      price,
+      discountPrice,
+      categories,
+      brand,
+      images,
+      sizes,
+      colors,
+      tags
+    })
+    const saved = await product.save()
+    const populated = await saved.populate([
+      { path: 'categories', select: 'name' },
+      { path: 'brand', select: 'name' }
+    ])
+    res.status(201).json({ ...populated.toObject(), message: 'Product created successfully!' })
+  } catch (error: any) {
+    res.status(400).json({ message: 'Error creating product', error: error?.message || 'Unknown error' })
   }
-});
+})
 
-export default router;
+// Update product
+router.put('/:id', async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    const { id } = req.params
+    const updateData = req.body
+    const updated = await Product.findByIdAndUpdate(id, updateData, { new: true })
+      .populate('categories', 'name')
+      .populate('brand', 'name')
+    if (!updated) {
+      res.status(404).json({ message: 'Product not found' })
+      return
+    }
+    res.json({ ...updated.toObject(), message: 'Product updated successfully!' })
+  } catch (error: any) {
+    res.status(400).json({ message: 'Error updating product', error: error?.message || 'Unknown error' })
+  }
+})
+
+// Delete product
+router.delete('/:id', async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    const { id } = req.params
+    const deleted = await Product.findByIdAndDelete(id)
+    if (!deleted) {
+      res.status(404).json({ message: 'Product not found' })
+      return
+    }
+    res.json({ message: 'Product deleted successfully!' })
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error deleting product', error: error?.message || 'Unknown error' })
+  }
+})
+
+export default router

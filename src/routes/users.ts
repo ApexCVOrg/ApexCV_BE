@@ -1,56 +1,57 @@
-import express, { Request, Response, Router } from "express";
-import { User } from "../models/User";
+import express, { Request, Response, Router } from 'express'
+import { User } from '../models/User'
+import { authenticateToken } from '../middlewares/auth'
+import { checkPermission, checkPermissions } from '../middlewares/permission'
+import { Permission } from '../types/filter/permissions'
+import { 
+  getProfile, 
+  updateProfile, 
+  getFavorites, 
+  addToFavorites, 
+  removeFromFavorites, 
+  checkFavorite 
+} from '../controllers/user.controller'
 
-const router: Router = express.Router();
+const router: Router = express.Router()
 
-// Lấy danh sách tất cả người dùng
-router.get("/", async (_req: Request, res: Response): Promise<void> => {
+// Apply authentication middleware to all routes
+router.use(authenticateToken)
+
+// Get user profile
+router.get('/profile', getProfile)
+// Update user profile
+router.put('/profile', updateProfile)
+
+// Favorites routes
+router.get('/favorites', getFavorites)
+router.post('/favorites/add/:productId', addToFavorites)
+router.delete('/favorites/remove/:productId', removeFromFavorites)
+router.get('/favorites/check/:productId', checkFavorite)
+
+// Get all users (admin only)
+router.get('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
-    const users = await User.find();
-    res.json(users);
+    const users = await User.find().select('-passwordHash')
+    res.json(users)
   } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy danh sách người dùng: " + (error as Error).message });
+    res.status(500).json({ message: 'Error fetching users' })
   }
-});
+})
 
-// Lấy thông tin người dùng theo ID
-router.get("/:id", async (req: Request, res: Response): Promise<void> => {
+// Create new user (admin only)
+router.post('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      res.status(404).json({ message: "Không tìm thấy người dùng" });
-      return;
-    }
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy thông tin người dùng: " + (error as Error).message });
-  }
-});
-
-// Tạo người dùng mới
-router.post("/", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const {
-      username,
-      email,
-      passwordHash,
-      fullName,
-      phone,
-      role,
-      status,
-      avatar,
-      addresses,
-    } = req.body;
+    const { username, email, passwordHash, fullName, phone, role, status, avatar, addresses } = req.body
 
     if (!username || !email || !passwordHash) {
-      res.status(400).json({ message: "username, email và passwordHash là bắt buộc" });
-      return;
+      res.status(400).json({ message: 'username, email và passwordHash là bắt buộc' })
+      return
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email })
     if (existingUser) {
-      res.status(400).json({ message: "Email đã được đăng ký" });
-      return;
+      res.status(400).json({ message: 'Email đã được đăng ký' })
+      return
     }
 
     const user = new User({
@@ -62,53 +63,50 @@ router.post("/", async (req: Request, res: Response): Promise<void> => {
       role,
       status,
       avatar,
-      addresses,
-    });
+      addresses
+    })
 
-    const savedUser = await user.save();
-    res.status(201).json(savedUser);
+    const savedUser = await user.save()
+    res.status(201).json(savedUser)
   } catch (error) {
-    res.status(400).json({ message: "Lỗi khi tạo người dùng: " + (error as Error).message });
+    res.status(400).json({ message: 'Lỗi khi tạo người dùng: ' + (error as Error).message })
   }
-});
+})
 
-// Cập nhật người dùng
-router.put("/:id", async (req: Request, res: Response): Promise<void> => {
+// Update user (admin only)
+router.put('/:id', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
-    const updateData = req.body;
+    const { id } = req.params
+    const updateData = req.body
 
-    // Không cho cập nhật email trùng
-    if (updateData.email) {
-      const existingUser = await User.findOne({ email: updateData.email, _id: { $ne: req.params.id } });
-      if (existingUser) {
-        res.status(400).json({ message: "Email đã được đăng ký bởi người dùng khác" });
-        return;
-      }
-    }
+    // Prevent updating sensitive fields
+    delete updateData.passwordHash
+    delete updateData.email
 
-    const user = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    const user = await User.findByIdAndUpdate(id, updateData, { new: true }).select('-passwordHash')
     if (!user) {
-      res.status(404).json({ message: "Không tìm thấy người dùng" });
-      return;
+      res.status(404).json({ message: 'User not found' })
+      return
     }
-    res.json(user);
+    res.json(user)
   } catch (error) {
-    res.status(400).json({ message: "Lỗi khi cập nhật người dùng: " + (error as Error).message });
+    res.status(500).json({ message: 'Error updating user' })
   }
-});
+})
 
-// Xóa người dùng
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
+// Delete user (admin only)
+router.delete('/:id', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const { id } = req.params
+    const user = await User.findByIdAndDelete(id)
     if (!user) {
-      res.status(404).json({ message: "Không tìm thấy người dùng" });
-      return;
+      res.status(404).json({ message: 'User not found' })
+      return
     }
-    res.json({ message: "Đã xóa người dùng thành công" });
+    res.json({ message: 'User deleted successfully' })
   } catch (error) {
-    res.status(500).json({ message: "Lỗi khi xóa người dùng: " + (error as Error).message });
+    res.status(500).json({ message: 'Error deleting user' })
   }
-});
+})
 
-export default router;
+export default router
