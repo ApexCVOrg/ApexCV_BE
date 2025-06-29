@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { Product } from "../models/Product";
 import { Category } from "../models/Category";
 import { Brand } from "../models/Brand";
+import { seedCategories } from "./seedCategories";
 
 const productsData = [
   // Arsenal Products
@@ -557,42 +558,6 @@ const productsData = [
     brand: "Nike",
     status: "active"
   },
-  {
-    name: "Arsenal Women's Training Shoes",
-    description: "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
-    price: 3299000,
-    discountPrice: 2799000,
-    categoryPath: ["Women", "Arsenal", "Training Shoes"],
-    images: ["Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"],
-    sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["arsenal", "shoes", "training", "women"],
-    brand: "Adidas",
-    status: "active"
-  },
-  {
-    name: "Arsenal Kids Football Boots",
-    description: "Lightweight and comfortable football boots for young Arsenal players. Perfect for training and matches.",
-    price: 2499000,
-    discountPrice: 2199000,
-    categoryPath: ["Kids", "Arsenal", "Football Boots"],
-    images: ["/images/products/arsenal-kids-boots.jpg"],
-    sizes: [
-      { size: "28", stock: 10 },
-      { size: "29", stock: 15 },
-      { size: "30", stock: 20 },
-      { size: "31", stock: 15 }
-    ],
-    colors: ["Black", "Red"],
-    tags: ["arsenal", "boots", "football", "kids"],
-    brand: "Nike",
-    status: "active"
-  },
   // Additional Real Madrid Products
   {
     name: "Real Madrid Men's Home Shorts 2024/25",
@@ -773,6 +738,188 @@ const productsData = [
     tags: ["manchester-united", "shorts", "training", "women"],
     brand: "Adidas",
     status: "active"
+  },
+  // Men's Sneakers
+  {
+    name: "Arsenal Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Arsenal design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Arsenal", "Sneakers"],
+    images: ["Arsenal_Men's_Training_Shoes.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["arsenal", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Real Madrid Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Real Madrid design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Real Madrid", "Sneakers"],
+    images: ["Real_Madrid_Shoes_White.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["White", "Black"],
+    tags: ["real-madrid", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Bayern Munich Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Bayern Munich design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Bayern Munich", "Sneakers"],
+    images: ["FC_Bayern_Shoes.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["bayern", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Juventus Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Juventus design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Juventus", "Sneakers"],
+    images: ["gazelle-juventus-terrace-icons-shoes.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Black", "White"],
+    tags: ["juventus", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Manchester United Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Manchester United design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Manchester United", "Sneakers"],
+    images: ["MU_shoes.jpg"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Red", "Black"],
+    tags: ["manchester-united", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // Women's Sneakers
+  {
+    name: "Arsenal Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Arsenal design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Arsenal", "Sneakers"],
+    images: ["Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["arsenal", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Real Madrid Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Real Madrid design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Real Madrid", "Sneakers"],
+    images: ["Samba_Real_Madrid_Shoes_White_JQ4038_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["White", "Black"],
+    tags: ["real-madrid", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Bayern Munich Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Bayern Munich design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Bayern Munich", "Sneakers"],
+    images: ["Samba_FC_Bayern_Shoes_Red_JQ4039_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["bayern", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Juventus Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Juventus design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Juventus", "Sneakers"],
+    images: ["Samba_Juventus_Shoes_Black_JQ4040_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Black", "White"],
+    tags: ["juventus", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Manchester United Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Manchester United design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Manchester United", "Sneakers"],
+    images: ["Gazelle_Manchester_United_Terrace_Icons_Shoes_White_JS3040_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Red", "Black"],
+    tags: ["manchester-united", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
   }
 ];
 
@@ -818,6 +965,9 @@ const findCategoryIdsByPath = async (categoryPath: string[]) => {
 
 export const seedProducts = async () => {
   try {
+    // Xóa tất cả categories cũ và tạo lại cấu trúc categories mới
+    await Category.deleteMany({});
+    await seedCategories();
     
     // Get all existing products
     const existingProducts = await Product.find({});
@@ -870,20 +1020,20 @@ export const seedProducts = async () => {
             { new: true }
           );
         } else {
-          // Create new product
-          const newProduct = await new Product({
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            discountPrice: product.discountPrice || null,
-            categories: categoryIds,
-            images: product.images,
-            sizes: product.sizes || [],
-            colors: product.colors || [],
-            tags: product.tags || [],
+        // Create new product
+        const newProduct = await new Product({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          discountPrice: product.discountPrice || null,
+          categories: categoryIds,
+          images: product.images,
+          sizes: product.sizes || [],
+          colors: product.colors || [],
+          tags: product.tags || [],
             brand: brand._id,
             status: product.status || 'active'
-          }).save();
+        }).save();
         }
       } catch (error) {
         console.error(`❌ Error processing categories for ${product.name}:`, error);
