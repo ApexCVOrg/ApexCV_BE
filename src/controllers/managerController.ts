@@ -24,8 +24,15 @@ export const getDashboard = async (_req: Request, res: Response) => {
 export const getProducts = async (_req: Request, res: Response) => {
   try {
     const products = await Product.find()
-      .populate('categories', 'name') // chỉ lấy tên category
-      .populate({ path: 'brand', select: 'name', strictPopulate: false })
+      .populate({
+        path: 'categories',
+        populate: {
+          path: 'parentCategory',
+          select: 'name',
+          populate: { path: 'parentCategory', select: 'name' }
+        }
+      })
+      .populate('brand', 'name')
       .sort({ createdAt: -1 })
       .lean()
     res.json(products)

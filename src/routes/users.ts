@@ -1,9 +1,9 @@
-import express, { Request, Response, Router } from "express";
-import { User } from "../models/User";
-import { authenticateToken } from "../middlewares/auth";
-import { checkPermission, checkPermissions } from "../middlewares/permission";
-import { Permission } from "../types/filter/permissions";
-import { getProfile, updateProfile } from "../controllers/user.controller";
+import express, { Request, Response, Router } from 'express'
+import { User } from '../models/User'
+import { authenticateToken } from '../middlewares/auth'
+import { checkPermission, checkPermissions } from '../middlewares/permission'
+import { Permission } from '../types/filter/permissions'
+import { getProfile, updateProfile } from '../controllers/user.controller'
 
 const router: Router = express.Router()
 
@@ -11,9 +11,9 @@ const router: Router = express.Router()
 router.use(authenticateToken)
 
 // Get user profile
-router.get('/profile', getProfile);
+router.get('/profile', getProfile)
 // Update user profile
-router.put('/profile', updateProfile);
+router.put('/profile', updateProfile)
 
 // Get all users (admin only)
 router.get('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {

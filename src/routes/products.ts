@@ -1,92 +1,88 @@
-import express from "express";
-import type { Request, Response, NextFunction, RequestHandler } from "express";
-import mongoose from "mongoose";
-import { Product } from "../models/Product";
-import { Category } from "../models/Category";
-import { CATEGORY_MESSAGES } from "../constants/categories";
+import express from 'express'
+import type { Request, Response, NextFunction, RequestHandler } from 'express'
+import mongoose from 'mongoose'
+import { Product } from '../models/Product'
+import { Category } from '../models/Category'
+import { CATEGORY_MESSAGES } from '../constants/categories'
 
-const router = express.Router();
+const router = express.Router()
 
 interface ProductQuery {
-  gender?: string;
+  gender?: string
 }
 
 // Get all products
 const getAllProducts: RequestHandler = async (req, res, next) => {
   try {
-    const { gender } = req.query as ProductQuery;
-    
+    const { gender } = req.query as ProductQuery
+
     // Validate gender parameter
     if (gender && !['men', 'women', 'kids'].includes(gender.toString().toLowerCase())) {
-      res.status(400).json({ 
-        message: "Invalid gender parameter. Must be one of: men, women, kids" 
-      });
-      return;
+      res.status(400).json({
+        message: 'Invalid gender parameter. Must be one of: men, women, kids'
+      })
+      return
     }
-    
-    let query = Product.find();
-    
+
+    let query = Product.find()
+
     if (gender) {
-      const genderName = gender.toString().toLowerCase();
-      
+      const genderName = gender.toString().toLowerCase()
+
       // Find the gender category
-      const genderCategory = await Category.findOne({ 
+      const genderCategory = await Category.findOne({
         name: genderName.charAt(0).toUpperCase() + genderName.slice(1),
-        parentCategory: null 
-      });
-      
+        parentCategory: null
+      })
+
       if (!genderCategory) {
-        res.status(404).json({ 
-          message: `Gender category not found: ${genderName}` 
-        });
-        return;
+        res.status(404).json({
+          message: `Gender category not found: ${genderName}`
+        })
+        return
       }
-      
+
       // Find all categories under this gender
       const genderCategories = await Category.find({
         parentCategory: genderCategory._id
-      });
-      
+      })
+
       if (!genderCategories.length) {
-        res.status(404).json({ 
-          message: `No team categories found for gender: ${genderName}` 
-        });
-        return;
+        res.status(404).json({
+          message: `No team categories found for gender: ${genderName}`
+        })
+        return
       }
-      
+
       // Get all product type categories under these team categories
       const productTypeCategories = await Category.find({
-        parentCategory: { $in: genderCategories.map(cat => cat._id) }
-      });
-      
+        parentCategory: { $in: genderCategories.map((cat) => cat._id) }
+      })
+
       if (!productTypeCategories.length) {
-        res.status(404).json({ 
-          message: `No product categories found for gender: ${genderName}` 
-        });
-        return;
+        res.status(404).json({
+          message: `No product categories found for gender: ${genderName}`
+        })
+        return
       }
-      
+
       // Filter products that have any of these categories
-      query = query.where('categories').in(productTypeCategories.map(cat => cat._id));
+      query = query.where('categories').in(productTypeCategories.map((cat) => cat._id))
     }
 
-    const products = await query
-      .populate("categories", "name")
-      .populate("brand", "name")
-      .sort({ createdAt: -1 })
-      .lean();
-      
+    const products = await query.populate('categories', 'name').populate('brand', 'name').sort({ createdAt: -1 }).lean()
+
     res.json({
       success: true,
       count: products.length,
       data: products
-    });
+    })
   } catch (error: any) {
-    next(error);
+    next(error)
   }
-};
+}
 
-router.get("/", getAllProducts);
+router.get('/', getAllProducts)
 
 // Create product
 router.post('/', async (req: Request, res: Response) => {
@@ -103,14 +99,14 @@ router.post('/', async (req: Request, res: Response) => {
       images,
       sizes,
       colors,
-      tags,
-    });
-    const saved = await product.save();
+      tags
+    })
+    const saved = await product.save()
     const populated = await saved.populate([
       { path: 'categories', select: 'name' },
       { path: 'brand', select: 'name' }
-    ]);
-    res.status(201).json({ ...populated.toObject(), message: "Product created successfully!" });
+    ])
+    res.status(201).json({ ...populated.toObject(), message: 'Product created successfully!' })
   } catch (error: any) {
     res.status(400).json({ message: 'Error creating product', error: error?.message || 'Unknown error' })
   }
@@ -119,11 +115,11 @@ router.post('/', async (req: Request, res: Response) => {
 // Update product
 router.put('/:id', async (req: Request<{ id: string }>, res: Response) => {
   try {
-    const { id } = req.params;
-    const updateData = req.body;
+    const { id } = req.params
+    const updateData = req.body
     const updated = await Product.findByIdAndUpdate(id, updateData, { new: true })
-      .populate("categories", "name")
-      .populate("brand", "name");
+      .populate('categories', 'name')
+      .populate('brand', 'name')
     if (!updated) {
       res.status(404).json({ message: 'Product not found' })
       return
