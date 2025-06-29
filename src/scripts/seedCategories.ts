@@ -3,247 +3,218 @@ import mongoose from 'mongoose'
 import { Category, ensureCategoryIndexes } from '../models/Category'
 
 const categoriesData = [
-  {
-    name: 'Men',
-    subcategories: [
-      {
-        name: 'Arsenal',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Juventus',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Bayern Munich',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Real Madrid',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Manchester United',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Women',
-    subcategories: [
-      {
-        name: 'Arsenal',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Juventus',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Bayern Munich',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Real Madrid',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Manchester United',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Kids',
-    subcategories: [
-      {
-        name: 'Arsenal',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Juventus',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Bayern Munich',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Real Madrid',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      },
-      {
-        name: 'Manchester United',
-        subcategories: [
-          'Football Boots',
-          'Training Shoes',
-          'Running Shoes',
-          'T-Shirts',
-          'Shorts',
-          'Tracksuits',
-          'Jackets',
-          'Hoodies',
-          'Socks',
-          'Bags'
-        ]
-      }
-    ]
-  }
-]
+    {
+      name: "Men",
+      subcategories: [
+        {
+          name: "Arsenal",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Juventus",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Bayern Munich",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Real Madrid",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Manchester United",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+      ],
+    },
+    {
+      name: "Women",
+      subcategories: [
+        {
+          name: "Arsenal",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Juventus",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Bayern Munich",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Real Madrid",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Manchester United",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+      ],
+    },
+    {
+      name: "Kids",
+      subcategories: [
+        {
+          name: "Arsenal",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Juventus",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Bayern Munich",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Real Madrid",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+        {
+          name: "Manchester United",
+          subcategories: [
+            "Sneakers",
+            "T-Shirts",
+            "Shorts",
+            "Tracksuits",
+            "Jackets",
+            "Hoodies",
+            "Socks",
+            "Bags"
+          ],
+        },
+      ],
+    },
+  ];
+  
 
 export const seedCategories = async () => {
   try {
