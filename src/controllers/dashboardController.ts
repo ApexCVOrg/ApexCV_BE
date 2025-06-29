@@ -66,12 +66,12 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
         $or: [{ 'sizes.stock': { $lt: 5 } }, { status: 'out_of_stock' }]
       }),
 
-      // Today's sales
+      // Today's sales - using paidAt instead of createdAt
       Order.aggregate([
         {
           $match: {
-            createdAt: { $gte: today, $lt: tomorrow },
-            orderStatus: { $in: ['paid', 'shipped', 'delivered'] }
+            paidAt: { $gte: today, $lt: tomorrow },
+            isPaid: true
           }
         },
         {
@@ -91,19 +91,19 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
       // Cancelled orders count
       Order.countDocuments({ orderStatus: 'cancelled' }),
 
-      // Sales chart data (last 12 months)
+      // Sales chart data (last 12 months) - chỉ lấy đơn đã thanh toán
       Order.aggregate([
         {
           $match: {
-            createdAt: { $gte: twelveMonthsAgo },
-            orderStatus: { $in: ['paid', 'shipped', 'delivered'] }
+            isPaid: true,
+            paidAt: { $gte: twelveMonthsAgo }
           }
         },
         {
           $group: {
             _id: {
-              year: { $year: '$createdAt' },
-              month: { $month: '$createdAt' }
+              year: { $year: '$paidAt' },
+              month: { $month: '$paidAt' }
             },
             revenue: { $sum: '$totalPrice' },
             orders: { $sum: 1 }
@@ -114,11 +114,12 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
         }
       ]),
 
-      // Top selling products
+      // Top selling products - chỉ lấy đơn đã thanh toán
       Order.aggregate([
         {
           $match: {
-            orderStatus: { $in: ['paid', 'shipped', 'delivered'] }
+            isPaid: true,
+            paidAt: { $gte: twelveMonthsAgo }
           }
         },
         {
@@ -161,7 +162,7 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
         }
       ]),
 
-      // Order statistics by status
+      // Order statistics by status - LẤY TẤT CẢ ĐƠN HÀNG, không lọc isPaid hay paidAt
       Order.aggregate([
         {
           $group: {
@@ -225,11 +226,11 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
       data: dashboardData
     })
   } catch (error: any) {
-    console.error('Dashboard summary error:', error)
+    console.error('Error fetching dashboard summary:', error)
     res.status(500).json({
       success: false,
-      message: 'Error fetching dashboard data',
-      error: error.message || 'Unknown error occurred'
+      message: 'Error fetching dashboard summary',
+      error: error.message
     })
   }
 }
@@ -272,8 +273,8 @@ export const getTodaySales = async (_req: Request, res: Response): Promise<void>
     const result = await Order.aggregate([
       {
         $match: {
-          createdAt: { $gte: today, $lt: tomorrow },
-          orderStatus: { $in: ['paid', 'shipped', 'delivered'] }
+          paidAt: { $gte: today, $lt: tomorrow },
+          isPaid: true
         }
       },
       {
@@ -306,7 +307,19 @@ export const getTodaySales = async (_req: Request, res: Response): Promise<void>
 
 export const getOrderStats = async (_req: Request, res: Response): Promise<void> => {
   try {
+    // Calculate 12 months ago for filtering
+    const twelveMonthsAgo = new Date()
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 11)
+    twelveMonthsAgo.setDate(1)
+    twelveMonthsAgo.setHours(0, 0, 0, 0)
+
     const stats = await Order.aggregate([
+      {
+        $match: {
+          paidAt: { $gte: twelveMonthsAgo },
+          isPaid: true
+        }
+      },
       {
         $group: {
           _id: '$orderStatus',
@@ -354,8 +367,8 @@ export const getTopSellingProducts = async (req: Request, res: Response): Promis
     const topProducts = await Order.aggregate([
       {
         $match: {
-          createdAt: { $gte: startDate },
-          orderStatus: { $in: ['paid', 'shipped', 'delivered'] }
+          paidAt: { $gte: startDate },
+          isPaid: true
         }
       },
       {
@@ -434,15 +447,15 @@ export const getSalesChart = async (req: Request, res: Response): Promise<void> 
     const salesData = await Order.aggregate([
       {
         $match: {
-          createdAt: { $gte: startDate },
-          orderStatus: { $in: ['paid', 'shipped', 'delivered'] }
+          paidAt: { $gte: startDate },
+          isPaid: true
         }
       },
       {
         $group: {
           _id: {
-            year: { $year: '$createdAt' },
-            month: { $month: '$createdAt' }
+            year: { $year: '$paidAt' },
+            month: { $month: '$paidAt' }
           },
           revenue: { $sum: '$totalPrice' },
           orders: { $sum: 1 }
