@@ -3,8 +3,11 @@ import cors from 'cors'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import MongoStore from 'connect-mongo'
-import helloRouter from './routes/hello'
+import os from 'os'
 import dotenv from 'dotenv'
+import connectDB from './config/db'
+
+import authRouter from './routes/auth'
 import userRouter from './routes/users'
 import categoryRouter from './routes/categories'
 import productRouter from './routes/products'
@@ -14,9 +17,8 @@ import cartRouter from './routes/carts'
 import conversationRouter from './routes/conversations'
 import messageRouter from './routes/messages'
 import brandRouter from './routes/brands'
-import authRouter from './routes/auth'
 import managerRouter from './routes/admin/manager'
-import connectDB from './config/db'
+
 import {
   API_BASE,
   AUTH_ROUTES,
@@ -31,47 +33,72 @@ import {
   BRAND_ROUTES,
   MANAGER_ROUTES
 } from './constants/routes'
+
 dotenv.config()
+connectDB()
 
 const app: Application = express()
-const port: number | string = process.env.PORT || 5000
+const PORT = Number(process.env.PORT) || 5000
+const HOST = process.env.HOST || '0.0.0.0'
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
+const EXTRA_ORIGINS = process.env.EXTRA_ORIGINS?.split(',') || []
 
-// Kết nối database trước khi start server
-connectDB()
+// Danh sách origin được phép
+const allowedOrigins = [
+  FRONTEND_URL,
+  'http://10.0.2.2:5000',      // Android emulator
+  'http://10.0.3.2:5000',      // Genymotion
+  ...EXTRA_ORIGINS
+]
+
+// Lấy IP LAN để debug trên device thật
+function getLocalIp(): string | undefined {
+  const nets = os.networkInterfaces()
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]!) {
+      if (net.family === 'IPv4' && !net.internal) {
+        return net.address
+      }
+    }
+  }
+}
+
+// Middleware
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.includes(origin)) return callback(null, true)
+    return callback(new Error(`Origin ${origin} không được phép`))
+  },
+  methods: ['GET','POST','PUT','DELETE','PATCH','OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type','Authorization','Accept','Origin','X-Requested-With'],
+  optionsSuccessStatus: 204
+}))
+// Đúng: bắt mọi preflight request
+// ✅ Bắt mọi preflight request cho tất cả routes
+app.options(/.*/, cors());
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
+    ttl: 10 * 60,        // 10 minutes
+    autoRemove: 'native'
+  }),
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 10 * 60 * 1000  // 10 minutes
+  }
+}))
 
-// Session configuration
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
-      ttl: 10 * 60, // 10 minutes
-      autoRemove: 'native'
-    }),
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: true,
-      maxAge: 10 * 60 * 1000 // 10 minutes
-    }
-  })
-)
-
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization']
-  })
-)
-
-// Route test
-app.get('/', (req: Request, res: Response) => {
+// Health-check route
+app.get('/', (_req: Request, res: Response) => {
   res.send('Server is running...')
 })
 
@@ -88,6 +115,11 @@ app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter)
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
 app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`)
+// Start server và log thêm IP LAN cho debug
+app.listen(PORT, HOST, () => {
+  console.log(`– Server đang chạy trên: http://${HOST}:${PORT}  (cho web/emulator)`)
+  const lanIp = getLocalIp()
+  if (lanIp) {
+    console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
+  }
 })
