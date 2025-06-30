@@ -773,6 +773,28 @@ const productsData = [
     tags: ["manchester-united", "shorts", "training", "women"],
     brand: "Adidas",
     status: "active"
+  },
+  {
+    name: "Trê test",
+    description: "Comfortable and stylish training shorts for Manchester United women's collection. Perfect for training and casual wear.",
+    price: 1599000,
+    discountPrice: 1399000,
+    categoryPath: ["Women", "Manchester United", "Shorts"],
+    images: ["MU_Short.avif"],
+    sizes: [
+      {sku: "1234567890", size: "XS", stock: 15, color: "Red"},
+      {sku: "1234567891", size: "S", stock: 25, color: "Red"},
+      {sku: "1234567892", size: "M", stock: 30, color: "Red"},
+      {sku: "1234567893", size: "L", stock: 20, color: "Red"},
+      {sku: "1234567894", size: "XS", stock: 12, color: "White"},
+      {sku: "1234567895", size: "S", stock: 22, color: "White"},
+      {sku: "1234567896", size: "M", stock: 32, color: "White"},
+      {sku: "1234567897", size: "L", stock: 22, color: "White"}
+    ],
+    colors: ["Black", "Red"],
+    tags: ["manchester-united", "shorts", "training", "women"],
+    brand: "Adidas",
+    status: "active"
   }
 ];
 
