@@ -95,6 +95,7 @@ export const MANAGER_ROUTES = {
   PRODUCTS: '/products',
   CATEGORIES: '/categories',
   ORDERS: '/orders',
+  USERS: '/users',
   CUSTOMERS: '/customers',
   SETTINGS: '/settings',
   STATS: {
