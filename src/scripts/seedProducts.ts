@@ -78,6 +78,24 @@ const productsData = [
     status: 'active'
   },
   {
+    name: "Arsenal Women's Training Shoes",
+    description: "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ['Women', 'Arsenal', 'Sneakers'],
+    images: ['Arsenal_Women_Training_Shoes.avif'],
+    sizes: [
+      { size: '36', stock: 10 },
+      { size: '37', stock: 15 },
+      { size: '38', stock: 20 },
+      { size: '39', stock: 15 }
+    ],
+    colors: ['Red', 'White'],
+    tags: ['arsenal', 'sneakers', 'training', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
     name: 'Arsenal Kids Home Jersey 2024/25',
     description:
       'Official Arsenal FC home jersey for kids, perfect for young fans. Made with comfortable, breathable materials.',
@@ -112,6 +130,24 @@ const productsData = [
     colors: ['Red', 'White'],
     tags: ['arsenal', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Arsenal Kids Football Boots',
+    description: 'Professional football boots for young Arsenal fans. Perfect for training and match play.',
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Arsenal", "Sneakers"],
+    images: ["Arsenal_Kids_Boots.avif"],
+    sizes: [
+      { size: '1K', stock: 10 },
+      { size: '2K', stock: 15 },
+      { size: '3K', stock: 20 },
+      { size: '4K', stock: 15 }
+    ],
+    colors: ['Red', 'White'],
+    tags: ['arsenal', 'boots', 'football', 'kids'],
+    brand: 'Nike',
     status: 'active'
   },
   // Real Madrid Products
@@ -940,6 +976,109 @@ const productsData = [
     tags: ["manchester-united", "sneakers", "casual", "women"],
     brand: "Adidas",
     status: "active"
+  },
+  // Sample Sneakers from FE TestCardsPage
+  {
+    name: 'Nike Span 2',
+    description: 'Nike Span 2 - classic running shoes with modern comfort.',
+    price: 2300000,
+    discountPrice: 2100000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['nike-span-2.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Nike Air Force 1 High',
+    description: 'Nike Air Force 1 High - iconic high-top sneakers.',
+    price: 2500000,
+    discountPrice: 2300000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['nike-air-force-1-high.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Nike Air Force',
+    description: 'Nike Air Force - timeless streetwear sneakers.',
+    price: 2100000,
+    discountPrice: 1900000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['nike-air-force.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Air Max 90',
+    description: 'Nike Air Max 90 - legendary comfort and style.',
+    price: 2200000,
+    discountPrice: 2000000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['air-max-90.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Air Max Excee',
+    description: 'Nike Air Max Excee - inspired by the Air Max 90.',
+    price: 2000000,
+    discountPrice: 1800000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['air-max-excee-.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Air Max 270',
+    description: 'Nike Air Max 270 - modern cushioning and bold design.',
+    price: 2400000,
+    discountPrice: 2200000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['air-max-270.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
   }
 ]
 

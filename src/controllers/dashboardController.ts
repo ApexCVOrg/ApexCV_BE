@@ -487,3 +487,50 @@ export const getSalesChart = async (req: Request, res: Response): Promise<void> 
     })
   }
 }
+
+export const getPublicTopSellingProducts = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const limit = parseInt(req.query.limit as string) || 5;
+    const days = parseInt(req.query.days as string) || 30;
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    const topProducts = await Order.aggregate([
+      { $match: { paidAt: { $gte: startDate }, isPaid: true } },
+      { $unwind: '$orderItems' },
+      { $lookup: { from: 'products', localField: 'orderItems.product', foreignField: '_id', as: 'product' } },
+      { $unwind: '$product' },
+      { $lookup: { from: 'categories', localField: 'product.categories', foreignField: '_id', as: 'category' } },
+      { $group: {
+        _id: '$orderItems.product',
+        name: { $first: '$product.name' },
+        category: { $first: { $arrayElemAt: ['$category.name', 0] } },
+        image: { $first: { $arrayElemAt: ['$product.images', 0] } },
+        totalSold: { $sum: '$orderItems.quantity' },
+        revenue: { $sum: { $multiply: ['$orderItems.price', '$orderItems.quantity'] } }
+      } },
+      { $sort: { totalSold: -1 } },
+      { $limit: limit }
+    ]);
+
+    const formattedProducts = topProducts.map((product: any) => ({
+      _id: product._id.toString(),
+      name: product.name,
+      image: product.image || '',
+      totalQuantity: product.totalSold,
+      totalRevenue: product.revenue,
+      category: product.category || 'Uncategorized',
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: formattedProducts
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching top selling products',
+      error: error.message
+    });
+  }
+}
