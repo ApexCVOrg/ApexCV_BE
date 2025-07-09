@@ -18,6 +18,7 @@ import conversationRouter from './routes/conversations'
 import messageRouter from './routes/messages'
 import brandRouter from './routes/brands'
 import managerRouter from './routes/admin/manager'
+import { errorHandler } from './middlewares/errorHandler'
 
 import {
   API_BASE,
@@ -114,6 +115,8 @@ app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter)
 app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter)
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
 app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
+
+app.use(errorHandler as express.ErrorRequestHandler)
 
 // Start server và log thêm IP LAN cho debug
 app.listen(PORT, HOST, () => {
