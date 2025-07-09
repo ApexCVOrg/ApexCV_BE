@@ -44,6 +44,7 @@ import {
   getTopSellingProducts,
   getSalesChart
 } from '../../controllers/dashboardController'
+import settingsRouter from './settings'
 
 const router = express.Router()
 
@@ -102,8 +103,7 @@ router.put('/customers/:id', updateCustomer)
 router.delete('/customers/:id', deleteCustomer)
 
 // Settings
-router.get('/settings', getSettings)
-router.put('/settings', updateSettings)
+router.use('/settings', settingsRouter)
 
 // Stats
 router.get('/stats/sales', getSalesStats)
