@@ -78,13 +78,31 @@ const productsData = [
     status: 'active'
   },
   {
+    name: "Arsenal Women's Training Shoes",
+    description: "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ['Women', 'Arsenal', 'Sneakers'],
+    images: ['Arsenal_Women_Training_Shoes.avif'],
+    sizes: [
+      { size: '36', stock: 10 },
+      { size: '37', stock: 15 },
+      { size: '38', stock: 20 },
+      { size: '39', stock: 15 }
+    ],
+    colors: ['Red', 'White'],
+    tags: ['arsenal', 'sneakers', 'training', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
     name: 'Arsenal Kids Home Jersey 2024/25',
     description:
       'Official Arsenal FC home jersey for kids, perfect for young fans. Made with comfortable, breathable materials.',
     price: 1599000,
     discountPrice: 1399000,
-    categoryPath: ['Kids', 'Arsenal', 'T-Shirts'],
-    images: ['/images/products/arsenal-kids-home-jersey-2024.jpg'],
+    categoryPath: ["Kids", "Arsenal", "T-Shirts"],
+    images: ["Arsenal_Shirt.avif"],
     sizes: [
       { size: '4-5Y', stock: 20 },
       { size: '6-7Y', stock: 25 },
@@ -101,8 +119,8 @@ const productsData = [
     description: 'Stylish and comfortable tracksuit for young Arsenal fans. Perfect for training and casual wear.',
     price: 1899000,
     discountPrice: 1599000,
-    categoryPath: ['Kids', 'Arsenal', 'Tracksuits'],
-    images: ['/images/products/arsenal-kids-tracksuit.jpg'],
+    categoryPath: ["Kids", "Arsenal", "Tracksuits"],
+    images: ["Arsenal_Tracksuit.png"],
     sizes: [
       { size: '4-5Y', stock: 15 },
       { size: '6-7Y', stock: 20 },
@@ -112,6 +130,24 @@ const productsData = [
     colors: ['Red', 'White'],
     tags: ['arsenal', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Arsenal Kids Football Boots',
+    description: 'Professional football boots for young Arsenal fans. Perfect for training and match play.',
+    price: 1899000,
+    discountPrice: 1599000,
+    categoryPath: ["Kids", "Arsenal", "Sneakers"],
+    images: ["Arsenal_Kids_Boots.avif"],
+    sizes: [
+      { size: '1K', stock: 10 },
+      { size: '2K', stock: 15 },
+      { size: '3K', stock: 20 },
+      { size: '4K', stock: 15 }
+    ],
+    colors: ['Red', 'White'],
+    tags: ['arsenal', 'boots', 'football', 'kids'],
+    brand: 'Nike',
     status: 'active'
   },
   // Real Madrid Products
@@ -192,8 +228,8 @@ const productsData = [
     description: 'Official Real Madrid home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ['Kids', 'Real Madrid', 'T-Shirts'],
-    images: ['/images/products/real-madrid-kids-home-jersey-2024.jpg'],
+    categoryPath: ["Kids", "Real Madrid", "T-Shirts"],
+    images: ["Real_Madrid_24-25_Home_Jersey_Kids_White_IT5186_21_model.avif"],
     sizes: [
       { size: '4-5Y', stock: 25 },
       { size: '6-7Y', stock: 30 },
@@ -210,8 +246,8 @@ const productsData = [
     description: 'Stylish and comfortable tracksuit for young Real Madrid fans. Perfect for training and casual wear.',
     price: 1899000,
     discountPrice: 1599000,
-    categoryPath: ['Kids', 'Real Madrid', 'Tracksuits'],
-    images: ['/images/products/real-madrid-kids-tracksuit.jpg'],
+    categoryPath: ["Kids", "Real Madrid", "Tracksuits"],
+    images: ["Real_Madrid_Tiro_24_Competition_Training_Tracksuit_Bottoms_Kids_Blue_IT5120_21_model.avif"],
     sizes: [
       { size: '4-5Y', stock: 15 },
       { size: '6-7Y', stock: 20 },
@@ -265,8 +301,8 @@ const productsData = [
     description: "Official Bayern Munich women's home jersey for the 2024/25 season. Stylish and comfortable design.",
     price: 2099000,
     discountPrice: 1899000,
-    categoryPath: ['Women', 'Bayern Munich', 'T-Shirts'],
-    images: ['FC_Bayern_Shirt.avif'],
+    categoryPath: ["Women", "Bayern Munich", "T-Shirts"],
+    images: ["FC_Bayern_Shirt.png"],
     sizes: [
       { size: 'XS', stock: 15 },
       { size: 'S', stock: 25 },
@@ -301,8 +337,8 @@ const productsData = [
     description: 'Official Bayern Munich home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ['Kids', 'Bayern Munich', 'T-Shirts'],
-    images: ['/images/products/bayern-kids-home-jersey-2024.jpg'],
+    categoryPath: ["Kids", "Bayern Munich", "T-Shirts"],
+    images: ["FC_Bayern_24-25_Home_Jersey_Kids_Red_IT2249_21_model.avif"],
     sizes: [
       { size: '4-5Y', stock: 25 },
       { size: '6-7Y', stock: 30 },
@@ -320,8 +356,8 @@ const productsData = [
       'Stylish and comfortable tracksuit for young Bayern Munich fans. Perfect for training and casual wear.',
     price: 1899000,
     discountPrice: 1599000,
-    categoryPath: ['Kids', 'Bayern Munich', 'Tracksuits'],
-    images: ['/images/products/bayern-kids-tracksuit.jpg'],
+    categoryPath: ["Kids", "Bayern Munich", "Tracksuits"],
+    images: ["294607_adidas-bayern-munchen-trainingspak-1-4-zip-2024-2025-kids-bordeauxrood-wit-rood.jpg"],
     sizes: [
       { size: '4-5Y', stock: 15 },
       { size: '6-7Y', stock: 20 },
@@ -410,8 +446,8 @@ const productsData = [
     description: 'Official Juventus home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ['Kids', 'Juventus', 'T-Shirts'],
-    images: ['/images/products/juventus-kids-home-jersey-2024.jpg'],
+    categoryPath: ["Kids", "Juventus", "T-Shirts"],
+    images: ["Juventus_25-26_Shorts_Kids_Black_JN5221_21_model.avif"],
     sizes: [
       { size: '4-5Y', stock: 25 },
       { size: '6-7Y', stock: 30 },
@@ -428,8 +464,8 @@ const productsData = [
     description: 'Stylish and comfortable tracksuit for young Juventus fans. Perfect for training and casual wear.',
     price: 1899000,
     discountPrice: 1599000,
-    categoryPath: ['Kids', 'Juventus', 'Tracksuits'],
-    images: ['/images/products/juventus-kids-tracksuit.jpg'],
+    categoryPath: ["Kids", "Juventus", "Tracksuits"],
+    images: ["Juventus_Tiro_24_Competition_Training_Tracksuit_Bottoms_Kids_Blue_IS5818_21_model.avif"],
     sizes: [
       { size: '4-5Y', stock: 15 },
       { size: '6-7Y', stock: 20 },
@@ -520,8 +556,8 @@ const productsData = [
     description: 'Official Manchester United home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ['Kids', 'Manchester United', 'T-Shirts'],
-    images: ['/images/products/man-utd-kids-home-jersey-2024.jpg'],
+    categoryPath: ["Kids", "Manchester United", "T-Shirts"],
+    images: ["MU_Shirt.avif"],
     sizes: [
       { size: '4-5Y', stock: 25 },
       { size: '6-7Y', stock: 30 },
@@ -539,8 +575,8 @@ const productsData = [
       'Stylish and comfortable tracksuit for young Manchester United fans. Perfect for training and casual wear.',
     price: 1899000,
     discountPrice: 1599000,
-    categoryPath: ['Kids', 'Manchester United', 'Tracksuits'],
-    images: ['/images/products/man-utd-kids-tracksuit.jpg'],
+    categoryPath: ["Kids", "Manchester United", "Tracksuits"],
+    images: ["Manchester_United_Track_Suit_Kids_Blue_IT4200_21_model.avif"],
     sizes: [
       { size: '4-5Y', stock: 15 },
       { size: '6-7Y', stock: 20 },
@@ -567,44 +603,6 @@ const productsData = [
     ],
     colors: ['Red', 'White'],
     tags: ['arsenal', 'shorts', 'football', 'home'],
-    brand: 'Nike',
-    status: 'active'
-  },
-  {
-    name: "Arsenal Women's Training Shoes",
-    description:
-      "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
-    price: 3299000,
-    discountPrice: 2799000,
-    categoryPath: ['Women', 'Arsenal', 'Training Shoes'],
-    images: ['Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif'],
-    sizes: [
-      { size: '36', stock: 10 },
-      { size: '37', stock: 15 },
-      { size: '38', stock: 20 },
-      { size: '39', stock: 15 }
-    ],
-    colors: ['Black', 'Red'],
-    tags: ['arsenal', 'shoes', 'training', 'women'],
-    brand: 'Adidas',
-    status: 'active'
-  },
-  {
-    name: 'Arsenal Kids Football Boots',
-    description:
-      'Lightweight and comfortable football boots for young Arsenal players. Perfect for training and matches.',
-    price: 2499000,
-    discountPrice: 2199000,
-    categoryPath: ['Kids', 'Arsenal', 'Football Boots'],
-    images: ['/images/products/arsenal-kids-boots.jpg'],
-    sizes: [
-      { size: '28', stock: 10 },
-      { size: '29', stock: 15 },
-      { size: '30', stock: 20 },
-      { size: '31', stock: 15 }
-    ],
-    colors: ['Black', 'Red'],
-    tags: ['arsenal', 'boots', 'football', 'kids'],
     brand: 'Nike',
     status: 'active'
   },
@@ -746,8 +744,8 @@ const productsData = [
       "Comfortable and stylish training shorts for Bayern Munich women's collection. Perfect for training and casual wear.",
     price: 1599000,
     discountPrice: 1399000,
-    categoryPath: ['Women', 'Bayern Munich', 'Shorts'],
-    images: ['FC_Bayern_Short.avif'],
+    categoryPath: ["Women", "Bayern Munich", "Shorts"],
+    images: ["FC_Bayern_Short.png"],
     sizes: [
       { size: 'XS', stock: 15 },
       { size: 'S', stock: 25 },
@@ -792,9 +790,294 @@ const productsData = [
       { size: 'M', stock: 30 },
       { size: 'L', stock: 20 }
     ],
-    colors: ['Black', 'Red'],
-    tags: ['manchester-united', 'shorts', 'training', 'women'],
-    brand: 'Adidas',
+    colors: ["Black", "Red"],
+    tags: ["manchester-united", "shorts", "training", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // Men's Sneakers
+  {
+    name: "Arsenal Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Arsenal design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Arsenal", "Sneakers"],
+    images: ["Arsenal_Men's_Training_Shoes.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["arsenal", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Real Madrid Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Real Madrid design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Real Madrid", "Sneakers"],
+    images: ["Real_Madrid_Shoes_White.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["White", "Black"],
+    tags: ["real-madrid", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Bayern Munich Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Bayern Munich design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Bayern Munich", "Sneakers"],
+    images: ["FC_Bayern_Shoes.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["bayern", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Juventus Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Juventus design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Juventus", "Sneakers"],
+    images: ["gazelle-juventus-terrace-icons-shoes.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Black", "White"],
+    tags: ["juventus", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Manchester United Men's Sneakers",
+    description: "Stylish and comfortable sneakers with Manchester United design. Perfect for casual wear and everyday activities.",
+    price: 2899000,
+    discountPrice: 2499000,
+    categoryPath: ["Men", "Manchester United", "Sneakers"],
+    images: ["MU_shoes.jpg"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Red", "Black"],
+    tags: ["manchester-united", "sneakers", "casual", "men"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // Women's Sneakers
+  {
+    name: "Arsenal Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Arsenal design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Arsenal", "Sneakers"],
+    images: ["Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["arsenal", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Real Madrid Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Real Madrid design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Real Madrid", "Sneakers"],
+    images: ["Samba_Real_Madrid_Shoes_White_JQ4038_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["White", "Black"],
+    tags: ["real-madrid", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Bayern Munich Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Bayern Munich design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Bayern Munich", "Sneakers"],
+    images: ["Samba_FC_Bayern_Shoes_Red_JQ4039_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Red", "White"],
+    tags: ["bayern", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Juventus Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Juventus design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Juventus", "Sneakers"],
+    images: ["Samba_Juventus_Shoes_Black_JQ4040_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Black", "White"],
+    tags: ["juventus", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Manchester United Women's Sneakers",
+    description: "Stylish and comfortable sneakers with Manchester United design for women. Perfect for casual wear and everyday activities.",
+    price: 2699000,
+    discountPrice: 2299000,
+    categoryPath: ["Women", "Manchester United", "Sneakers"],
+    images: ["Gazelle_Manchester_United_Terrace_Icons_Shoes_White_JS3040_HM1.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Red", "Black"],
+    tags: ["manchester-united", "sneakers", "casual", "women"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // Sample Sneakers from FE TestCardsPage
+  {
+    name: 'Nike Span 2',
+    description: 'Nike Span 2 - classic running shoes with modern comfort.',
+    price: 2300000,
+    discountPrice: 2100000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['nike-span-2.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Nike Air Force 1 High',
+    description: 'Nike Air Force 1 High - iconic high-top sneakers.',
+    price: 2500000,
+    discountPrice: 2300000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['nike-air-force-1-high.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Nike Air Force',
+    description: 'Nike Air Force - timeless streetwear sneakers.',
+    price: 2100000,
+    discountPrice: 1900000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['nike-air-force.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Air Max 90',
+    description: 'Nike Air Max 90 - legendary comfort and style.',
+    price: 2200000,
+    discountPrice: 2000000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['air-max-90.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Air Max Excee',
+    description: 'Nike Air Max Excee - inspired by the Air Max 90.',
+    price: 2000000,
+    discountPrice: 1800000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['air-max-excee-.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
+    status: 'active'
+  },
+  {
+    name: 'Air Max 270',
+    description: 'Nike Air Max 270 - modern cushioning and bold design.',
+    price: 2400000,
+    discountPrice: 2200000,
+    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    images: ['air-max-270.png'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['new', 'hot'],
+    brand: 'Nike',
     status: 'active'
   }
 ]

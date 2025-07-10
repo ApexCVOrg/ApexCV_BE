@@ -4,7 +4,7 @@ import { User } from '../models/User'
 
 // Store last activity time for each user
 const userActivity = new Map<string, number>()
-const INACTIVITY_LIMIT = 10 * 60 * 1000 // 10 phút
+const INACTIVITY_LIMIT = 60 * 60 * 1000 // 1 giờ
 
 // Middleware to check user inactivity
 export const checkInactivity = (req: Request, res: Response, next: NextFunction): void => {

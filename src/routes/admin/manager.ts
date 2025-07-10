@@ -28,7 +28,12 @@ import {
   getUserStats,
   getOrderStats,
   getCustomerStats,
-  getBrands
+  getBrands,
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser
 } from '../../controllers/managerController'
 import { authenticateToken, isManager } from '../../middlewares/auth'
 import {
@@ -39,6 +44,7 @@ import {
   getTopSellingProducts,
   getSalesChart
 } from '../../controllers/dashboardController'
+import settingsRouter from './settings'
 
 const router = express.Router()
 
@@ -79,6 +85,15 @@ router.get('/orders/:id', (req, res, next) => {
 router.put('/orders/:id', updateOrderStatus)
 router.delete('/orders/:id', deleteOrder)
 
+// Users CRUD
+router.get('/users', getUsers)
+router.get('/users/:id', (req, res, next) => {
+  Promise.resolve(getUserById(req, res)).catch(next)
+})
+router.post('/users', createUser)
+router.put('/users/:id', updateUser)
+router.delete('/users/:id', deleteUser)
+
 // Customers CRUD
 router.get('/customers', getCustomers)
 router.get('/customers/:id', (req, res, next) => {
@@ -88,8 +103,7 @@ router.put('/customers/:id', updateCustomer)
 router.delete('/customers/:id', deleteCustomer)
 
 // Settings
-router.get('/settings', getSettings)
-router.put('/settings', updateSettings)
+router.use('/settings', settingsRouter)
 
 // Stats
 router.get('/stats/sales', getSalesStats)
