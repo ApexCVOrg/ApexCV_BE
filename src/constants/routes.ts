@@ -23,7 +23,8 @@ export const AUTH_ROUTES = {
 export const USER_ROUTES = {
   BASE: '/users',
   PROFILE: '/profile',
-  SETTINGS: '/settings'
+  SETTINGS: '/settings',
+  FAVORITES: '/favorites'
 } as const
 
 // Category routes
@@ -105,6 +106,16 @@ export const MANAGER_ROUTES = {
     CUSTOMERS: '/stats/customers'
   }
 } as const
+
+// Favorites routes
+export const FAVORITES_ROUTES = {
+  BASE: '/favorites',
+  LIST: '/',
+  ADD: '/add/:productId',
+  REMOVE: '/remove/:productId',
+  CHECK: '/check/:productId'
+} as const
+
 export const buildRoute = (base: string, path: string): string => {
   return `${API_BASE}${base}${path}`
 }
