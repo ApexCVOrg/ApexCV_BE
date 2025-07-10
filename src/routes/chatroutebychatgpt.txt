@@ -1,0 +1,78 @@
+// import { Router, Request, Response } from 'express'
+// import OpenAI from 'openai'
+// import { db } from '../config/firebase'
+// import { ChatRequest, ChatResponse, ChatRecord } from '../types/chat'
+// import dotenv from 'dotenv'
+
+// dotenv.config()
+
+// const router = Router()
+
+// // Initialize OpenAI
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY
+// })
+
+// // POST /chat
+// router.post('/', async (req: Request, res: Response) => {
+//   try {
+//     const { message, userId }: ChatRequest = req.body
+
+//     // Validate input
+//     if (!message || !userId) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Message and userId are required'
+//       })
+//     }
+
+//     // Call OpenAI Chat Completion API
+//     const completion = await openai.chat.completions.create({
+//       model: 'gpt-3.5-turbo',
+//       messages: [
+//         {
+//           role: 'system',
+//           content: 'Bạn là trợ lý bán hàng thời trang'
+//         },
+//         {
+//           role: 'user',
+//           content: message
+//         }
+//       ],
+//       max_tokens: 500,
+//       temperature: 0.7
+//     })
+
+//     const reply = completion.choices[0]?.message?.content || 'Xin lỗi, tôi không thể trả lời ngay lúc này.'
+
+//     // Prepare response
+//     const response: ChatResponse = {
+//       reply
+//     }
+
+//     // Save to Firestore
+//     const chatRecord: ChatRecord = {
+//       userId,
+//       message,
+//       reply,
+//       createdAt: new Date().toISOString()
+//     }
+
+//     await db.collection('chats').add(chatRecord)
+
+//     res.json({
+//       success: true,
+//       data: response
+//     })
+
+//   } catch (error) {
+//     console.error('Chat API Error:', error)
+//     res.status(500).json({
+//       success: false,
+//       message: 'Internal server error',
+//       error: error instanceof Error ? error.message : 'Unknown error'
+//     })
+//   }
+// })
+
+// export default router 
