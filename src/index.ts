@@ -19,8 +19,8 @@ import messageRouter from './routes/messages'
 import brandRouter from './routes/brands'
 import managerRouter from './routes/admin/manager'
 import chatRouter from './routes/chat.route'
+import favoritesRouter from './routes/favorites'
 import { errorHandler } from './middlewares/errorHandler'
-
 import {
   API_BASE,
   AUTH_ROUTES,
@@ -34,7 +34,8 @@ import {
   MESSAGE_ROUTES,
   BRAND_ROUTES,
   CHAT_ROUTES,
-  MANAGER_ROUTES
+  MANAGER_ROUTES,
+  FAVORITES_ROUTES
 } from './constants/routes'
 
 dotenv.config()
@@ -118,6 +119,7 @@ app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter)
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
 app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
+app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 
 app.use(errorHandler as express.ErrorRequestHandler)
 

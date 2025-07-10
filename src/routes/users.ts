@@ -3,7 +3,14 @@ import { User } from '../models/User'
 import { authenticateToken } from '../middlewares/auth'
 import { checkPermission, checkPermissions } from '../middlewares/permission'
 import { Permission } from '../types/filter/permissions'
-import { getProfile, updateProfile } from '../controllers/user.controller'
+import { 
+  getProfile, 
+  updateProfile, 
+  getFavorites, 
+  addToFavorites, 
+  removeFromFavorites, 
+  checkFavorite 
+} from '../controllers/user.controller'
 
 const router: Router = express.Router()
 
@@ -14,6 +21,12 @@ router.use(authenticateToken)
 router.get('/profile', getProfile)
 // Update user profile
 router.put('/profile', updateProfile)
+
+// Favorites routes
+router.get('/favorites', getFavorites)
+router.post('/favorites/add/:productId', addToFavorites)
+router.delete('/favorites/remove/:productId', removeFromFavorites)
+router.get('/favorites/check/:productId', checkFavorite)
 
 // Get all users (admin only)
 router.get('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {
