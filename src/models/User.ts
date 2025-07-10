@@ -20,6 +20,7 @@ const userSchema = new Schema({
   status: { type: String, enum: ['active', 'inactive', 'suspended'], default: 'active' },
   avatar: String,
   addresses: [addressSchema],
+  favorites: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   googleId: { type: String, unique: true, sparse: true },
   facebookId: { type: String, unique: true, sparse: true },
   isVerified: { type: Boolean, default: false },
@@ -49,6 +50,7 @@ interface IUser extends Document {
   fullName?: string
   phone?: string
   addresses: any[]
+  favorites: mongoose.Types.ObjectId[]
   role: string
   status: string
   isVerified: boolean
