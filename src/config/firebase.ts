@@ -1,17 +1,29 @@
 // src/firebase.ts
 import admin from 'firebase-admin'
 import dotenv from 'dotenv'
-import path from 'path'
-import fs from 'fs'
 
 dotenv.config()
 
 if (!admin.apps.length) {
-  const serviceAccountPath = path.resolve(__dirname, './nidas-s-chat-box-firebase-adminsdk-fbsvc-c726f209a0.json')
+  // Validate required environment variables
+  const requiredEnvVars = [
+    'FIREBASE_PROJECT_ID',
+    'FIREBASE_PRIVATE_KEY',
+    'FIREBASE_CLIENT_EMAIL'
+  ]
 
-  const serviceAccount = JSON.parse(
-    fs.readFileSync(serviceAccountPath, 'utf8')
-  )
+  for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+      throw new Error(`Missing required environment variable: ${envVar}`)
+    }
+  }
+
+  // Create service account object from environment variables
+  const serviceAccount: admin.ServiceAccount = {
+    projectId: process.env.FIREBASE_PROJECT_ID!,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL!
+  }
 
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
