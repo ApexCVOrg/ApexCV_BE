@@ -89,6 +89,13 @@ export const BRAND_ROUTES = {
   DETAIL: '/:id'
 } as const
 
+// Chat routes
+export const CHAT_ROUTES = {
+  BASE: '/chat',
+  SEND: '/',
+  HISTORY: '/history'
+} as const
+
 // Manager routes
 export const MANAGER_ROUTES = {
   BASE: '/manager',
