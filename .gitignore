@@ -18,3 +18,5 @@ build/
 # Optional IDE files
 .vscode/
 .idea/
+# Firebase credentials
+src/config/*.json
