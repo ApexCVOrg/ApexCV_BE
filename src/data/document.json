@@ -1,0 +1,137 @@
+[
+  {
+    "title": "Tôi muốn mua sản phẩm",
+    "content": "Bạn muốn mua cho Nam, Nữ hay Trẻ em? Chúng tôi có đa dạng sản phẩm cho từng nhóm khách hàng.",
+    "tags": ["mua", "sản phẩm", "nam", "nữ", "trẻ em"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm cho Nam",
+    "content": "Các thương hiệu cho nam: Nike, Adidas, Arsenal, Juventus, Bayern Munich, Real Madrid, Manchester United. Các loại sản phẩm: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["nam", "sản phẩm", "thương hiệu", "loại"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm cho Nữ",
+    "content": "Các thương hiệu cho nữ: Nike, Adidas, Arsenal, Juventus, Bayern Munich, Real Madrid, Manchester United. Các loại sản phẩm: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["nữ", "sản phẩm", "thương hiệu", "loại"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm cho Trẻ em",
+    "content": "Các thương hiệu cho trẻ em: Nike, Adidas, Arsenal, Juventus, Bayern Munich, Real Madrid, Manchester United. Các loại sản phẩm: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["trẻ em", "sản phẩm", "thương hiệu", "loại"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm của Nike",
+    "content": "Nike là thương hiệu thể thao nổi tiếng với slogan 'Just Do It'. Chúng tôi có đầy đủ sản phẩm Nike cho nam, nữ, trẻ em: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["nike", "thương hiệu", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm của Adidas",
+    "content": "Adidas là thương hiệu thể thao nổi tiếng với slogan 'Impossible Is Nothing'. Chúng tôi có đầy đủ sản phẩm Adidas cho nam, nữ, trẻ em: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["adidas", "thương hiệu", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm của Arsenal",
+    "content": "Arsenal là câu lạc bộ bóng đá nổi tiếng. Chúng tôi có các sản phẩm Arsenal: Jersey, Jacket, Hoodie, Sneakers, Tracksuit cho nam, nữ, trẻ em.",
+    "tags": ["arsenal", "bóng đá", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Arsenal nam",
+    "content": "Sản phẩm nổi bật: Arsenal Men's Home Jersey 2024/25, chất liệu cao cấp, thiết kế mới nhất mùa giải 2024/25.",
+    "tags": ["arsenal", "nam", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Arsenal nữ",
+    "content": "Sản phẩm nổi bật: Arsenal Women's Home Jersey 2024/25, thiết kế dành riêng cho nữ, chất liệu thoáng mát.",
+    "tags": ["arsenal", "nữ", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Arsenal trẻ em",
+    "content": "Sản phẩm nổi bật: Arsenal Kids Home Jersey 2024/25, phù hợp cho các bé yêu bóng đá, chất liệu mềm mại.",
+    "tags": ["arsenal", "trẻ em", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Real Madrid nam",
+    "content": "Sản phẩm nổi bật: Real Madrid Men's Home Jersey 2024/25, chất liệu cao cấp, thiết kế mới nhất mùa giải.",
+    "tags": ["real madrid", "nam", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Real Madrid nữ",
+    "content": "Sản phẩm nổi bật: Real Madrid Women's Home Jersey 2024/25, thiết kế dành riêng cho nữ, chất liệu thoáng mát.",
+    "tags": ["real madrid", "nữ", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Real Madrid trẻ em",
+    "content": "Sản phẩm nổi bật: Real Madrid Kids Home Jersey 2024/25, phù hợp cho các bé yêu bóng đá, chất liệu mềm mại.",
+    "tags": ["real madrid", "trẻ em", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua giày thể thao",
+    "content": "Chúng tôi có nhiều mẫu sneakers, boots, training shoes cho nam, nữ, trẻ em từ các thương hiệu Nike, Adidas, Arsenal, Real Madrid, ...",
+    "tags": ["giày", "sneakers", "boots", "training", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua áo khoác thể thao",
+    "content": "Các loại áo khoác (Jacket, Hoodie, Tracksuit) cho nam, nữ, trẻ em từ các thương hiệu Nike, Adidas, Arsenal, Real Madrid, ...",
+    "tags": ["áo khoác", "jacket", "hoodie", "tracksuit", "sản phẩm"]
+  },
+  {
+    "title": "Chính sách đổi trả",
+    "content": "Trong vòng 30 ngày kể từ ngày nhận hàng, bạn có thể đổi trả sản phẩm nếu còn nguyên tem mác, chưa qua sử dụng. Vui lòng liên hệ CSKH để được hỗ trợ.",
+    "tags": ["đổi trả", "chính sách", "hoàn trả"]
+  },
+  {
+    "title": "Hướng dẫn chọn size giày",
+    "content": "Để chọn size giày phù hợp, bạn đo chiều dài bàn chân và đối chiếu với bảng size trên website. Nếu cần tư vấn thêm, hãy liên hệ CSKH.",
+    "tags": ["size", "giày", "hướng dẫn"]
+  },
+  {
+    "title": "Cách đặt hàng",
+    "content": "Bạn có thể đặt hàng trực tiếp trên website, chọn sản phẩm, thêm vào giỏ hàng và tiến hành thanh toán. Nếu cần hỗ trợ, hãy liên hệ CSKH.",
+    "tags": ["đặt hàng", "hướng dẫn", "mua hàng"]
+  },
+  {
+    "title": "Phương thức thanh toán",
+    "content": "Chúng tôi hỗ trợ thanh toán qua COD (nhận hàng trả tiền), chuyển khoản ngân hàng, thẻ tín dụng/ghi nợ.",
+    "tags": ["thanh toán", "hướng dẫn", "COD", "chuyển khoản", "thẻ"]
+  },
+  {
+    "title": "Theo dõi đơn hàng",
+    "content": "Sau khi đặt hàng, bạn có thể theo dõi trạng thái đơn hàng trong tài khoản cá nhân hoặc liên hệ CSKH để được hỗ trợ.",
+    "tags": ["đơn hàng", "theo dõi", "trạng thái"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Nike",
+    "content": "Nike là thương hiệu thể thao hàng đầu thế giới với slogan 'Just Do It'. Sản phẩm Nike nổi bật về chất lượng và thiết kế hiện đại.",
+    "tags": ["nike", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Adidas",
+    "content": "Adidas là thương hiệu thể thao nổi tiếng với slogan 'Impossible Is Nothing'. Sản phẩm Adidas đa dạng, phù hợp nhiều đối tượng.",
+    "tags": ["adidas", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Arsenal",
+    "content": "Arsenal là câu lạc bộ bóng đá nổi tiếng tại Anh, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["arsenal", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Real Madrid",
+    "content": "Real Madrid là câu lạc bộ bóng đá nổi tiếng tại Tây Ban Nha, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["real madrid", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Manchester United",
+    "content": "Manchester United là câu lạc bộ bóng đá nổi tiếng tại Anh, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["manchester united", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Juventus",
+    "content": "Juventus là câu lạc bộ bóng đá nổi tiếng tại Ý, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["juventus", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Bayern Munich",
+    "content": "Bayern Munich là câu lạc bộ bóng đá nổi tiếng tại Đức, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["bayern munich", "thương hiệu", "giới thiệu"]
+  }
+]

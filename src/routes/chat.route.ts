@@ -7,6 +7,7 @@ import { checkAuth } from '../middlewares/chatAuth'
 import { validateMessage } from '../middlewares/chatValidation'
 import { chatMessageLimiter, chatHistoryLimiter } from '../middlewares/chatRateLimit'
 import dotenv from 'dotenv'
+import { DocumentModel } from '../models/Document'
 
 dotenv.config()
 
@@ -97,73 +98,83 @@ router.get('/history',
   }
 })
 
-// POST /chat - Gửi tin nhắn (với validation và rate limit)
+// POST /chat - Tìm kiếm tài liệu
 router.post('/', 
   checkAuth, // Kiểm tra userId từ body
   validateMessage, // Validate nội dung message
   chatMessageLimiter, // Rate limit
   async (req: Request, res: Response) => {
-  try {
-    const { message }: { message: string } = req.body
-    const userId = (req as any).userId // Lấy userId từ middleware checkAuth
+    try {
+      const { message }: { message: string } = req.body
+      const tags = req.query.tags ? (Array.isArray(req.query.tags) ? req.query.tags : [req.query.tags]) : []
+      const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 3
+      const page = req.query.page ? parseInt(req.query.page as string, 10) : 1
+      const skip = (page - 1) * limit
 
-    // Validate input (đã được validateMessage kiểm tra, nhưng double-check)
-    if (!message) {
-      return res.status(400).json({
+      if (!message || !message.trim()) {
+        return res.status(400).json({ success: false, message: 'Message is required' })
+      }
+
+      // 1. Ưu tiên tìm kiếm theo tags nếu có
+      let query: any = { $text: { $search: message } }
+      if (tags.length > 0) {
+        query.tags = { $in: tags }
+      }
+
+      // 2. Tìm kiếm full-text trước
+      let docs = await DocumentModel.find(query, { score: { $meta: 'textScore' }, title: 1, content: 1 })
+        .sort({ score: { $meta: 'textScore' } })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+
+      let total = await DocumentModel.countDocuments(query)
+
+      // 3. Nếu không có kết quả, fallback sang fuzzy search bằng regex
+      if (docs.length === 0) {
+        const regex = new RegExp(message, 'i')
+        let regexQuery: any = {
+          $or: [
+            { title: regex },
+            { content: regex }
+          ]
+        }
+        if (tags.length > 0) {
+          regexQuery.tags = { $in: tags }
+        }
+        docs = await DocumentModel.find(regexQuery, { title: 1, content: 1 })
+          .skip(skip)
+          .limit(limit)
+          .lean()
+        total = await DocumentModel.countDocuments(regexQuery)
+      }
+
+      // 4. Chuẩn hóa kết quả trả về
+      const resultDocs = docs.map((d: any) => ({
+        id: d._id,
+        title: d.title,
+        snippet: d.content.slice(0, 200),
+        ...(d.score && { score: d.score })
+      }))
+
+      const hasMore = (page * limit) < total
+
+      res.json({
+        success: true,
+        data: {
+          docs: resultDocs,
+          hasMore
+        }
+      })
+    } catch (error) {
+      console.error('Chat API Error:', error)
+      res.status(500).json({
         success: false,
-        message: 'Message is required'
+        message: 'Internal server error',
+        error: error instanceof Error ? error.message : 'Unknown error'
       })
     }
-
-    // Call OpenAI Chat Completion API
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'system',
-          content: 'Bạn là trợ lý bán hàng thời trang'
-        },
-        {
-          role: 'user',
-          content: message
-        }
-      ],
-      max_tokens: 500,
-      temperature: 0.7
-    })
-
-    const reply = completion.choices[0]?.message?.content || 'Xin lỗi, tôi không thể trả lời ngay lúc này.'
-
-    // Save to Firestore with Timestamp - CHỈ lưu với userId đã xác thực
-    const chatRecord: ChatRecord = {
-      userId,
-      message: message.trim(), // Đảm bảo message đã được trim
-      reply,
-      createdAt: admin.firestore.Timestamp.now()
-    }
-
-    const docRef = await db.collection('chats').add(chatRecord)
-    const chatId = docRef.id
-
-    // Prepare response with chatId
-    const response: ChatResponse = {
-      reply,
-      chatId
-    }
-
-    res.json({
-      success: true,
-      data: response
-    })
-
-  } catch (error) {
-    console.error('Chat API Error:', error)
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    })
   }
-})
+)
 
 export default router 
