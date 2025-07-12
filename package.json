@@ -78,7 +78,7 @@
     "nodemailer": "^7.0.3",
     "openai": "^5.8.3",
     "reflect-metadata": "^0.2.2",
-    "zod": "^3.25.72"
+    "zod": "^3.25.76"
   },
   "husky": {
     "hooks": {

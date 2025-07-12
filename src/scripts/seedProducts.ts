@@ -874,7 +874,7 @@ const productsData = [
     price: 2899000,
     discountPrice: 2499000,
     categoryPath: ["Men", "Manchester United", "Sneakers"],
-    images: ["MU_shoes.jpg"],
+    images: ["Samba_OG_Shoes_White_IG1025_01_00_standard.avif"],
     sizes: [
       { size: "40", stock: 10 },
       { size: "41", stock: 15 },
