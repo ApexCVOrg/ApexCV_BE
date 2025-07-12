@@ -67,21 +67,6 @@ export const CART_ROUTES = {
   UPDATE_ITEM: '/update'
 } as const
 
-// Conversation routes
-export const CONVERSATION_ROUTES = {
-  BASE: '/conversations',
-  LIST: '/',
-  DETAIL: '/:id',
-  USER: '/user/:userId'
-} as const
-
-// Message routes
-export const MESSAGE_ROUTES = {
-  BASE: '/messages',
-  LIST: '/',
-  CONVERSATION: '/conversation/:conversationId'
-} as const
-
 // Brand routes
 export const BRAND_ROUTES = {
   BASE: '/brands',
@@ -89,11 +74,11 @@ export const BRAND_ROUTES = {
   DETAIL: '/:id'
 } as const
 
-// Chat routes
-export const CHAT_ROUTES = {
-  BASE: '/chat',
-  SEND: '/',
-  HISTORY: '/history'
+// Suggestions routes
+export const SUGGESTIONS_ROUTES = {
+  BASE: '/suggestions',
+  LIST: '/',
+  TREE: '/tree'
 } as const
 
 // Manager routes
@@ -121,6 +106,30 @@ export const FAVORITES_ROUTES = {
   ADD: '/add/:productId',
   REMOVE: '/remove/:productId',
   CHECK: '/check/:productId'
+} as const
+
+// Chat routes
+export const CHAT_ROUTES = {
+  BASE: '/chat',
+  SEND: '/'
+} as const
+
+// Manager Chat routes
+export const MANAGER_CHAT_ROUTES = {
+  BASE: '/manager/chats',
+  LIST: '/',
+  MESSAGES: '/:chatId/messages',
+  SEND_MESSAGE: '/:chatId/messages',
+  CLOSE: '/:chatId/close'
+} as const
+
+// User Chat routes
+export const USER_CHAT_ROUTES = {
+  BASE: '/user/chats',
+  CREATE: '/',
+  LIST: '/',
+  MESSAGES: '/:chatId/messages',
+  SEND_MESSAGE: '/:chatId/messages'
 } as const
 
 export const buildRoute = (base: string, path: string): string => {

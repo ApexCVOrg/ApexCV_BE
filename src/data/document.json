@@ -133,5 +133,70 @@
     "title": "Tôi muốn biết về thương hiệu Bayern Munich",
     "content": "Bayern Munich là câu lạc bộ bóng đá nổi tiếng tại Đức, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
     "tags": ["bayern munich", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Sản phẩm nào bán chạy nhất?",
+    "content": "Các sản phẩm bán chạy nhất hiện nay là áo đấu Arsenal 2024/25, giày thể thao Nike Air Max và áo khoác Adidas Originals. Bạn có thể xem danh mục 'Bán chạy' trên website để cập nhật sản phẩm hot nhất.",
+    "tags": ["bán chạy", "sản phẩm hot", "top", "phổ biến"]
+  },
+  {
+    "title": "Có chương trình khuyến mãi nào không?",
+    "content": "Chúng tôi thường xuyên có các chương trình khuyến mãi vào dịp lễ, cuối tuần hoặc khi ra mắt sản phẩm mới. Hãy theo dõi banner trên trang chủ hoặc đăng ký nhận tin để không bỏ lỡ ưu đãi.",
+    "tags": ["khuyến mãi", "giảm giá", "ưu đãi", "sale"]
+  },
+  {
+    "title": "Làm sao để kiểm tra tình trạng đơn hàng?",
+    "content": "Bạn có thể kiểm tra trạng thái đơn hàng trong mục 'Tài khoản' > 'Đơn hàng của tôi' hoặc nhập mã đơn hàng tại trang 'Theo dõi đơn hàng'. Nếu cần hỗ trợ, hãy liên hệ CSKH.",
+    "tags": ["đơn hàng", "kiểm tra", "trạng thái", "theo dõi"]
+  },
+  {
+    "title": "Phí vận chuyển được tính như thế nào?",
+    "content": "Phí vận chuyển được tính dựa trên địa chỉ nhận hàng và tổng giá trị đơn hàng. Đơn hàng từ 1 triệu đồng sẽ được miễn phí vận chuyển toàn quốc.",
+    "tags": ["vận chuyển", "phí ship", "giao hàng"]
+  },
+  {
+    "title": "Tôi có thể hủy đơn hàng không?",
+    "content": "Bạn có thể hủy đơn hàng trước khi đơn được chuyển sang trạng thái 'Đang giao'. Sau khi đơn đã giao cho đơn vị vận chuyển, bạn vui lòng nhận hàng rồi thực hiện đổi trả nếu không hài lòng.",
+    "tags": ["hủy đơn", "đơn hàng", "đổi trả"]
+  },
+  {
+    "title": "Làm sao để đăng ký tài khoản?",
+    "content": "Bạn nhấn vào biểu tượng tài khoản ở góc phải trên cùng, chọn 'Đăng ký' và điền thông tin theo hướng dẫn. Đăng ký tài khoản giúp bạn theo dõi đơn hàng, nhận ưu đãi và tích điểm.",
+    "tags": ["đăng ký", "tài khoản", "hướng dẫn"]
+  },
+  {
+    "title": "Tôi quên mật khẩu, phải làm sao?",
+    "content": "Tại trang đăng nhập, bạn chọn 'Quên mật khẩu' và làm theo hướng dẫn để đặt lại mật khẩu qua email đã đăng ký.",
+    "tags": ["quên mật khẩu", "tài khoản", "đăng nhập"]
+  },
+  {
+    "title": "Có chương trình tích điểm/thành viên không?",
+    "content": "Khi mua hàng, bạn sẽ được tích điểm vào tài khoản. Điểm có thể đổi lấy mã giảm giá hoặc quà tặng. Tham khảo chi tiết tại mục 'Chính sách thành viên'.",
+    "tags": ["tích điểm", "thành viên", "ưu đãi", "khách hàng thân thiết"]
+  },
+  {
+    "title": "Sản phẩm có bảo hành không?",
+    "content": "Một số sản phẩm như giày thể thao, balo, túi xách được bảo hành chính hãng từ 3-12 tháng tùy loại. Thông tin bảo hành được ghi rõ trên trang chi tiết sản phẩm.",
+    "tags": ["bảo hành", "sản phẩm", "chính hãng"]
+  },
+  {
+    "title": "Sản phẩm có phải chính hãng không?",
+    "content": "Tất cả sản phẩm tại ApexCV đều là hàng chính hãng, có hóa đơn và giấy chứng nhận xuất xứ rõ ràng. Chúng tôi cam kết hoàn tiền 200% nếu phát hiện hàng giả.",
+    "tags": ["chính hãng", "xuất xứ", "giấy tờ", "cam kết"]
+  },
+  {
+    "title": "Làm sao để liên hệ CSKH?",
+    "content": "Bạn có thể liên hệ CSKH qua hotline 1900 1234 (8h-22h), chat trực tuyến trên website hoặc gửi email về support@apexcv.vn. Chúng tôi luôn sẵn sàng hỗ trợ bạn!",
+    "tags": ["liên hệ", "CSKH", "hỗ trợ", "hotline"]
+  },
+  {
+    "title": "Có xuất hóa đơn VAT không?",
+    "content": "Chúng tôi hỗ trợ xuất hóa đơn VAT cho khách hàng doanh nghiệp. Vui lòng điền thông tin xuất hóa đơn khi đặt hàng hoặc liên hệ CSKH để được hướng dẫn chi tiết.",
+    "tags": ["hóa đơn", "VAT", "doanh nghiệp", "xuất hóa đơn"]
+  },
+  {
+    "title": "Có ưu đãi cho sinh nhật/thành viên mới không?",
+    "content": "ApexCV thường xuyên có ưu đãi đặc biệt cho khách hàng mới và quà tặng sinh nhật cho thành viên. Hãy cập nhật thông tin cá nhân để không bỏ lỡ quà tặng hấp dẫn!",
+    "tags": ["ưu đãi", "sinh nhật", "thành viên mới", "quà tặng"]
   }
 ]
