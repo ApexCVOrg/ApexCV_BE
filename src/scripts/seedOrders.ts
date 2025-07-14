@@ -1128,6 +1128,106 @@ const ordersData = [
     paidAt: new Date(), // Today's date
     isDelivered: false,
     orderStatus: 'paid'
+  },
+  // --- Đơn hàng cho user baotuangay@gmail.com ---
+  {
+    userEmail: 'baotuangay@gmail.com',
+    orderItems: [
+      {
+        productName: "Arsenal Men's Home Jersey 2024/25",
+        size: 'M',
+        color: 'Red',
+        quantity: 1,
+        price: 1959000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Huỳnh Phạm Bảo Tuân',
+      street: 'Duy Tân',
+      city: 'Đà Nẵng',
+      state: 'Hải Châu',
+      country: 'Vietnam',
+      addressNumber: 'k26/12',
+      isDefault: true,
+      phone: '0934840520'
+    },
+    paymentMethod: 'COD',
+    taxPrice: 195900,
+    shippingPrice: 50000,
+    totalPrice: 2204900,
+    isPaid: true,
+    paidAt: new Date('2025-07-11T10:00:00Z'),
+    isDelivered: true,
+    deliveredAt: new Date('2025-07-13T15:00:00Z'),
+    orderStatus: 'delivered'
+  },
+  {
+    userEmail: 'baotuangay@gmail.com',
+    orderItems: [
+      {
+        productName: "Real Madrid Men's Home Jersey 2024/25",
+        size: 'L',
+        color: 'White',
+        quantity: 1,
+        price: 1999000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Huỳnh Phạm Bảo Tuân',
+      street: 'Duy Tân',
+      city: 'Đà Nẵng',
+      state: 'Hải Châu',
+      country: 'Vietnam',
+      addressNumber: 'k26/12',
+      isDefault: true,
+      phone: '0934840520'
+    },
+    paymentMethod: 'BANK_TRANSFER',
+    taxPrice: 199900,
+    shippingPrice: 50000,
+    totalPrice: 2248900,
+    isPaid: true,
+    paidAt: new Date('2025-07-15T09:00:00Z'),
+    isDelivered: true,
+    deliveredAt: new Date('2025-07-17T14:00:00Z'),
+    orderStatus: 'delivered'
+  },
+  {
+    userEmail: 'baotuangay@gmail.com',
+    orderItems: [
+      {
+        productName: "Arsenal Women's Training Shoes",
+        size: '38',
+        color: 'Red',
+        quantity: 1,
+        price: 2499000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Huỳnh Phạm Bảo Tuân',
+      street: 'Duy Tân',
+      city: 'Đà Nẵng',
+      state: 'Hải Châu',
+      country: 'Vietnam',
+      addressNumber: 'k26/12',
+      isDefault: true,
+      phone: '0934840520'
+    },
+    paymentMethod: 'CREDIT_CARD',
+    paymentResult: {
+      id: 'pay_tuan_001',
+      status: 'COMPLETED',
+      update_time: '2025-07-20T12:00:00Z',
+      email_address: 'baotuangay@gmail.com'
+    },
+    taxPrice: 249900,
+    shippingPrice: 50000,
+    totalPrice: 2798900,
+    isPaid: true,
+    paidAt: new Date('2025-07-20T12:00:00Z'),
+    isDelivered: true,
+    deliveredAt: new Date('2025-07-22T16:00:00Z'),
+    orderStatus: 'delivered'
   }
 ]
 
