@@ -1185,6 +1185,262 @@ const productsData = [
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
+  },
+  // Gazelle Collection (English)
+  {
+    name: "Gazelle Bold",
+    description: "Adidas Gazelle Bold - Bold design with thick sole, modern style.",
+    price: 2500000,
+    discountPrice: 2200000,
+    categoryPath: ["Shoes", "Adidas", "Gazelle", "Bold"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481668/Gazelle_Bold_Shoes_White_ID7056_01_standard_umjj7p.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Black", "White"],
+    tags: ["shoes", "gazelle", "bold"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Gazelle Bold X Liberty London",
+    description: "Adidas Gazelle Bold X Liberty London - Special collaboration edition.",
+    price: 2700000,
+    discountPrice: 2400000,
+    categoryPath: ["Shoes", "Adidas", "Gazelle", "Bold X Liberty London"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481635/Gazelle_Bold_x_Liberty_London_Shoes_Black_JI2572_01_00_standard_ljphtg.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Black"],
+    tags: ["shoes", "gazelle", "bold", "liberty", "london"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Gazelle Indoor",
+    description: "Adidas Gazelle Indoor - Gum sole, classic retro style.",
+    price: 2400000,
+    discountPrice: 2100000,
+    categoryPath: ["Shoes", "Adidas", "Gazelle", "Indoor"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481663/Gazelle_Indoor_Shoes_Blue_JI2061_01_standard_njgqxv.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Green", "Blue", "Black"],
+    tags: ["shoes", "gazelle", "indoor"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Gazelle Spikeless Golf",
+    description: "Adidas Gazelle Spikeless Golf - Spikeless sole, perfect for golf.",
+    price: 2600000,
+    discountPrice: 2300000,
+    categoryPath: ["Shoes", "Adidas", "Gazelle", "Spikeless Golf"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481658/Gazelle_Spikeless_Golf_Shoes_Yellow_JS1896_01_00_standard_anoj9k.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["White", "Yellow"],
+    tags: ["shoes", "gazelle", "golf", "spikeless"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Gazelle Standard",
+    description: "Adidas Gazelle Standard - Original design, easy to style.",
+    price: 2300000,
+    discountPrice: 2000000,
+    categoryPath: ["Shoes", "Adidas", "Gazelle", "Standard"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481650/Gazelle_Shoes_Burgundy_IF9652_01_standard_khizks.avif"],
+    sizes: [
+      { size: "36", stock: 10 },
+      { size: "37", stock: 15 },
+      { size: "38", stock: 20 },
+      { size: "39", stock: 15 }
+    ],
+    colors: ["Burgundy", "Green", "Blue"],
+    tags: ["shoes", "gazelle", "standard"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // SL 72 Collection (English)
+  {
+    name: "SL 72 OG",
+    description: "Adidas SL 72 OG - Original design, retro style.",
+    price: 2200000,
+    discountPrice: 2000000,
+    categoryPath: ["Shoes", "Adidas", "SL 72", "OG"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481540/SL_72_OG_Shoes_Black_JH7390_01_standard_m9gnjo.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Pink", "Green", "Black", "Navy"],
+    tags: ["shoes", "sl72", "og"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "SL 72 RS",
+    description: "Adidas SL 72 RS - Modern colorways, soft sole.",
+    price: 2300000,
+    discountPrice: 2100000,
+    categoryPath: ["Shoes", "Adidas", "SL 72", "RS"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481540/SL_72_OG_Shoes_Black_JH7390_01_standard_m9gnjo.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Green", "Yellow", "Navy"],
+    tags: ["shoes", "sl72", "rs"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "SL 72 RS Mercedes",
+    description: "Adidas SL 72 RS Mercedes - Special collaboration with Mercedes.",
+    price: 2500000,
+    discountPrice: 2250000,
+    categoryPath: ["Shoes", "Adidas", "SL 72", "RS Mercedes"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481575/SL_72_RS_MERCEDES_SHOES_White_JQ1781_01_00_standard_n3k1ew.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["White", "Black"],
+    tags: ["shoes", "sl72", "rs", "mercedes"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "SL 72 RTN",
+    description: "Adidas SL 72 RTN - New design, dynamic look.",
+    price: 2350000,
+    discountPrice: 2100000,
+    categoryPath: ["Shoes", "Adidas", "SL 72", "RTN"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481559/SL_72_RTN_Shoes_Grey_IH5558_01_standard_btczfy.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Grey", "Black"],
+    tags: ["shoes", "sl72", "rtn"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // Spezial Collection (English)
+  {
+    name: "Handball Spezial",
+    description: "Adidas Handball Spezial - Classic style, outstanding with many colorways.",
+    price: 2100000,
+    discountPrice: 1900000,
+    categoryPath: ["Shoes", "Adidas", "Spezial"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481481/Giay_Handball_Spezial_mau_xanh_la_IG6192_01_standard_jnfcze.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Sky Blue", "Yellow", "Black Sky Blue", "Green", "Orange"],
+    tags: ["shoes", "spezial", "handball"],
+    brand: "Adidas",
+    status: "active"
+  },
+  // Adizero Collection (English)
+  {
+    name: "Adizero Adios 9",
+    description: "Adidas Adizero Adios 9 - Ultra-lightweight running shoes for high performance.",
+    price: 3200000,
+    discountPrice: 2900000,
+    categoryPath: ["Shoes", "Adidas", "Adizero", "Adios 9"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488411/Giay_Chay_Bo_Adizero_Adios_9_Ngoc_lam_JH5243_01_00_standard_y05ir2.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Teal"],
+    tags: ["shoes", "adizero", "adios9"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Adizero Adios Pro 4",
+    description: "Adidas Adizero Adios Pro 4 - Top-tier technology for professional athletes.",
+    price: 5200000,
+    discountPrice: 4800000,
+    categoryPath: ["Shoes", "Adidas", "Adizero", "Adios Pro 4"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488420/Giay_Adizero_Adios_Pro_4_trang_JR1094_01_00_standard_jqbqxe.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["White"],
+    tags: ["shoes", "adizero", "adiospro4"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Adizero Boston 13",
+    description: "Adidas Adizero Boston 13 - Cushioned support for long-distance running.",
+    price: 3500000,
+    discountPrice: 3200000,
+    categoryPath: ["Shoes", "Adidas", "Adizero", "Boston 13"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488420/Giay_Adizero_Adios_Pro_4_trang_JR1094_01_00_standard_jqbqxe.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Golden", "White"],
+    tags: ["shoes", "adizero", "boston13"],
+    brand: "Adidas",
+    status: "active"
+  },
+  {
+    name: "Adizero Evo SL",
+    description: "Adidas Adizero Evo SL - Super lightweight for maximum speed.",
+    price: 4000000,
+    discountPrice: 3700000,
+    categoryPath: ["Shoes", "Adidas", "Adizero", "Evo SL"],
+    images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488489/Giay_Adizero_EVO_SL_DJen_JP7149_01_00_standard_cjuy6a.avif"],
+    sizes: [
+      { size: "40", stock: 10 },
+      { size: "41", stock: 15 },
+      { size: "42", stock: 20 },
+      { size: "43", stock: 15 }
+    ],
+    colors: ["Black"],
+    tags: ["shoes", "adizero", "evosl"],
+    brand: "Adidas",
+    status: "active"
   }
 ]
 
@@ -1313,13 +1569,14 @@ export const seedProducts = async () => {
         const currentImages = existing.images || []
         const newImages = product.images || []
         
+        // Auto-update images if they're different
         if (JSON.stringify(currentImages) !== JSON.stringify(newImages)) {
           await Product.findOneAndUpdate(
             { name: product.name },
             { $set: { images: newImages } },
             { new: true }
           )
-          console.log(`✅ Updated images for: ${product.name}`)
+          console.log(`🔄 Auto-updated images for: ${product.name}`)
           console.log(`   Old: ${currentImages.join(', ')}`)
           console.log(`   New: ${newImages.join(', ')}`)
         }
