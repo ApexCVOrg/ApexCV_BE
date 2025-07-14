@@ -5,3 +5,10 @@ declare module 'express-session' {
     state?: string
   }
 }
+
+declare namespace Express {
+  export interface Request {
+    userId?: string
+    user?: any
+  }
+}
