@@ -332,6 +332,7 @@ export const seedCategories = async () => {
       if (!parent) {
         continue
       }
+      
       for (const sub of cat.subcategories) {
         // Create team category for this parent
         let teamCategory = await Category.findOne({ name: sub.name, parentCategory: parent._id })

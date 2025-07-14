@@ -895,10 +895,10 @@ const productsData = [
     categoryPath: ["Women", "Arsenal", "Sneakers"],
     images: ["Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { size: '36', stock: 10 },
+      { size: '37', stock: 15 },
+      { size: '38', stock: 20 },
+      { size: '39', stock: 15 }
     ],
     colors: ["Red", "White"],
     tags: ["arsenal", "sneakers", "casual", "women"],

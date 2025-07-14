@@ -18,6 +18,8 @@ import conversationRouter from './routes/conversations'
 import messageRouter from './routes/messages'
 import brandRouter from './routes/brands'
 import managerRouter from './routes/admin/manager'
+import checkoutRouter from './routes/checkout'
+
 import chatRouter from './routes/chat.route'
 import favoritesRouter from './routes/favorites'
 import { errorHandler } from './middlewares/errorHandler'
@@ -118,6 +120,8 @@ app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter)
 app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter)
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
 app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
+app.use(API_BASE + '/checkout', checkoutRouter)
+
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 
