@@ -78,24 +78,6 @@ const productsData = [
     status: 'active'
   },
   {
-    name: "Arsenal Women's Training Shoes",
-    description: "Professional training shoes for Arsenal women's collection. Perfect for training sessions and casual wear.",
-    price: 2899000,
-    discountPrice: 2499000,
-    categoryPath: ['Women', 'Arsenal', 'Sneakers'],
-    images: ['Arsenal_Women_Training_Shoes.avif'],
-    sizes: [
-      { size: '36', stock: 10 },
-      { size: '37', stock: 15 },
-      { size: '38', stock: 20 },
-      { size: '39', stock: 15 }
-    ],
-    colors: ['Red', 'White'],
-    tags: ['arsenal', 'sneakers', 'training', 'women'],
-    brand: 'Adidas',
-    status: 'active'
-  },
-  {
     name: 'Arsenal Kids Home Jersey 2024/25',
     description:
       'Official Arsenal FC home jersey for kids, perfect for young fans. Made with comfortable, breathable materials.',
@@ -130,24 +112,6 @@ const productsData = [
     colors: ['Red', 'White'],
     tags: ['arsenal', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
-    status: 'active'
-  },
-  {
-    name: 'Arsenal Kids Football Boots',
-    description: 'Professional football boots for young Arsenal fans. Perfect for training and match play.',
-    price: 1899000,
-    discountPrice: 1599000,
-    categoryPath: ["Kids", "Arsenal", "Sneakers"],
-    images: ["Arsenal_Kids_Boots.avif"],
-    sizes: [
-      { size: '1K', stock: 10 },
-      { size: '2K', stock: 15 },
-      { size: '3K', stock: 20 },
-      { size: '4K', stock: 15 }
-    ],
-    colors: ['Red', 'White'],
-    tags: ['arsenal', 'boots', 'football', 'kids'],
-    brand: 'Nike',
     status: 'active'
   },
   // Real Madrid Products
@@ -977,6 +941,148 @@ const productsData = [
     brand: "Adidas",
     status: "active"
   },
+  // Adidas Shoes - Samba
+  {
+    name: 'Samba OG Shoes',
+    description: 'Adidas Samba OG Shoes - Originals, 14 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752479523/Giay_Samba_OG_trang_B75806_01_00_standard_ts41vx.avif'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Black', 'Grey'],
+    tags: ['originals', 'OG'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba JP Shoes',
+    description: 'Adidas Samba JP Shoes - Originals, 2 colours, New.',
+    price: 3000000,
+    discountPrice: 3000000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481341/Samba_Jp_Shoes_White_JR0964_01_00_standard_j1mljy.avif'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['White', 'Green'],
+    tags: ['originals', 'JP'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba W',
+    description: 'Adidas Samba W - Originals, 3 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481428/Samba_OG_W_Cream_White_ID0478_01_standard_yq6dvh.avif'],
+    sizes: [
+      { size: '36', stock: 10 },
+      { size: '37', stock: 10 },
+      { size: '38', stock: 10 }
+    ],
+    colors: ['Black', 'White', 'Beige'],
+    tags: ['originals', 'W'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba LT Shoes',
+    description: 'Adidas Samba LT Shoes - Originals, 2 colours.',
+    price: 2900000,
+    discountPrice: 2900000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481448/Samba_LT_Shoes_Black_IG2010_01_standard_lftp7l.avif'],
+    sizes: [
+      { size: '40', stock: 10 },
+      { size: '41', stock: 10 },
+      { size: '42', stock: 10 }
+    ],
+    colors: ['Black', 'White'],
+    tags: ['originals', 'LT'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Adidas Superstar Collection
+  {
+    name: 'Superstar 82 Shoes',
+    description: 'Adidas Superstar 82 - Classic design with modern comfort. Iconic shell toe design.',
+    price: 2800000,
+    discountPrice: 2500000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481685/Superstar_82_Shoes_Black_JI2026_01_standard_vk2bpv.avif'],
+    sizes: [
+      { size: '40', stock: 15 },
+      { size: '41', stock: 20 },
+      { size: '42', stock: 25 },
+      { size: '43', stock: 15 }
+    ],
+    colors: ['White', 'Black'],
+    tags: ['shoes', 'superstar', '82'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Vintage Shoes',
+    description: 'Adidas Superstar Vintage - Retro style with premium materials. Classic shell toe design.',
+    price: 2900000,
+    discountPrice: 2600000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481696/Superstar_Vintage_Shoes_White_JQ3254_01_00_standard_fvo24u.avif'],
+    sizes: [
+      { size: '40', stock: 12 },
+      { size: '41', stock: 18 },
+      { size: '42', stock: 22 },
+      { size: '43', stock: 12 }
+    ],
+    colors: ['White', 'Black', 'Navy'],
+    tags: ['shoes', 'superstar', 'vintage'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar II Shoes',
+    description: 'Adidas Superstar II - Enhanced comfort with classic style. Updated shell toe design.',
+    price: 2700000,
+    discountPrice: 2400000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481691/SUPERSTAR_II_Green_JI3076_01_00_standard_hpveet.avif'],
+    sizes: [
+      { size: '40', stock: 14 },
+      { size: '41', stock: 19 },
+      { size: '42', stock: 24 },
+      { size: '43', stock: 14 }
+    ],
+    colors: ['White', 'Black', 'Red'],
+    tags: ['shoes', 'superstar', 'II'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Standard Shoes',
+    description: 'Adidas Superstar Standard - Original design with timeless appeal. Classic shell toe.',
+    price: 2600000,
+    discountPrice: 2300000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481702/Superstar_Shoes_White_IG9367_01_standard_tfdpml.avif'],
+    sizes: [
+      { size: '40', stock: 16 },
+      { size: '41', stock: 21 },
+      { size: '42', stock: 26 },
+      { size: '43', stock: 16 }
+    ],
+    colors: ['White', 'Black', 'Green'],
+    tags: ['shoes', 'superstar', 'standard'],
+    brand: 'Adidas',
+    status: 'active'
+  },
   // Sample Sneakers from FE TestCardsPage
   {
     name: 'Nike Span 2',
@@ -1000,7 +1106,7 @@ const productsData = [
     description: 'Nike Air Force 1 High - iconic high-top sneakers.',
     price: 2500000,
     discountPrice: 2300000,
-    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    categoryPath: ["Shoes", "Nike", "Air Force"],
     images: ['nike-air-force-1-high.png'],
     sizes: [
       { size: '40', stock: 10 },
@@ -1017,7 +1123,7 @@ const productsData = [
     description: 'Nike Air Force - timeless streetwear sneakers.',
     price: 2100000,
     discountPrice: 1900000,
-    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    categoryPath: ["Shoes", "Nike", "Air Force"],
     images: ['nike-air-force.png'],
     sizes: [
       { size: '40', stock: 10 },
@@ -1034,7 +1140,7 @@ const productsData = [
     description: 'Nike Air Max 90 - legendary comfort and style.',
     price: 2200000,
     discountPrice: 2000000,
-    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    categoryPath: ["Shoes", "Nike", "Air Max"],
     images: ['air-max-90.png'],
     sizes: [
       { size: '40', stock: 10 },
@@ -1051,7 +1157,7 @@ const productsData = [
     description: 'Nike Air Max Excee - inspired by the Air Max 90.',
     price: 2000000,
     discountPrice: 1800000,
-    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    categoryPath: ["Shoes", "Nike", "Air Max"],
     images: ['air-max-excee-.png'],
     sizes: [
       { size: '40', stock: 10 },
@@ -1068,7 +1174,7 @@ const productsData = [
     description: 'Nike Air Max 270 - modern cushioning and bold design.',
     price: 2400000,
     discountPrice: 2200000,
-    categoryPath: ['Men', 'Nike', 'Sneakers'],
+    categoryPath: ["Shoes", "Nike", "Air Max"],
     images: ['air-max-270.png'],
     sizes: [
       { size: '40', stock: 10 },
@@ -1122,13 +1228,101 @@ const findCategoryIdsByPath = async (categoryPath: string[]) => {
   return categoryIds
 }
 
+// Function to update product images in MongoDB
+export const updateProductImages = async (productName: string, newImages: string[]) => {
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      { name: productName },
+      { $set: { images: newImages } },
+      { new: true }
+    )
+    
+    if (updatedProduct) {
+      console.log(`✅ Updated images for product: ${productName}`)
+      return updatedProduct
+    } else {
+      console.log(`❌ Product not found: ${productName}`)
+      return null
+    }
+  } catch (error) {
+    console.error(`❌ Error updating images for ${productName}:`, error)
+    throw error
+  }
+}
+
+// Function to update multiple products images
+export const updateMultipleProductImages = async (updates: { name: string; images: string[] }[]) => {
+  try {
+    const results = []
+    
+    for (const update of updates) {
+      const result = await updateProductImages(update.name, update.images)
+      if (result) {
+        results.push(result)
+      }
+    }
+    
+    console.log(`✅ Updated ${results.length} products successfully`)
+    return results
+  } catch (error) {
+    console.error('❌ Error updating multiple products:', error)
+    throw error
+  }
+}
+
+// Function to update all product images from productsData
+export const updateAllProductImages = async () => {
+  try {
+    let updatedCount = 0
+    
+    for (const product of productsData) {
+      const existing = await Product.findOne({ name: product.name })
+      
+      if (existing) {
+        // Check if images have changed
+        if (JSON.stringify(existing.images) !== JSON.stringify(product.images)) {
+          await Product.findOneAndUpdate(
+            { name: product.name },
+            { $set: { images: product.images } },
+            { new: true }
+          )
+          console.log(`✅ Updated images for: ${product.name}`)
+          updatedCount++
+        }
+      }
+    }
+    
+    console.log(`✅ Total products updated: ${updatedCount}`)
+    return updatedCount
+  } catch (error) {
+    console.error('❌ Error updating all product images:', error)
+    throw error
+  }
+}
+
 export const seedProducts = async () => {
   try {
+    console.log('🔄 Starting product seeding and image updates...')
+    
     for (const product of productsData) {
       // Check if product already exists
       const existing = await Product.findOne({ name: product.name })
 
       if (existing) {
+        // Always update existing product images to latest from productsData
+        const currentImages = existing.images || []
+        const newImages = product.images || []
+        
+        if (JSON.stringify(currentImages) !== JSON.stringify(newImages)) {
+          await Product.findOneAndUpdate(
+            { name: product.name },
+            { $set: { images: newImages } },
+            { new: true }
+          )
+          console.log(`✅ Updated images for: ${product.name}`)
+          console.log(`   Old: ${currentImages.join(', ')}`)
+          console.log(`   New: ${newImages.join(', ')}`)
+        }
         continue
       }
 
