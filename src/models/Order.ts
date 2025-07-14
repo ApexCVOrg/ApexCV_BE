@@ -23,7 +23,7 @@ const orderSchema = new Schema({
   paymentMethod: String,
   paymentResult: {
     id: String,
-    status: String,
+    status: String, // trạng thái của cổng thanh toán (ví dụ: 'COMPLETED', 'APPROVED')
     update_time: String,
     email_address: String
   },
@@ -34,7 +34,16 @@ const orderSchema = new Schema({
   paidAt: Date,
   isDelivered: { type: Boolean, default: false },
   deliveredAt: Date,
+  orderStatus: {
+    // trạng thái nghiệp vụ của đơn hàng
+    type: String,
+    enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
+    default: 'pending'
+  },
   createdAt: { type: Date, default: Date.now }
 })
+
+orderSchema.index({ createdAt: 1 })
+orderSchema.index({ orderStatus: 1 })
 
 export const Order = mongoose.model('Order', orderSchema)

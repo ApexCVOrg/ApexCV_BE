@@ -5,6 +5,7 @@ import { Order } from '../models/Order'
 import { User } from '../models/User'
 import { CATEGORY_MESSAGES } from '../constants/categories'
 import { Brand } from '../models/Brand'
+import bcrypt from 'bcryptjs'
 
 /* -------------------------------- Dashboard ------------------------------- */
 export const getDashboard = async (_req: Request, res: Response) => {
@@ -24,8 +25,15 @@ export const getDashboard = async (_req: Request, res: Response) => {
 export const getProducts = async (_req: Request, res: Response) => {
   try {
     const products = await Product.find()
-      .populate('categories', 'name') // chỉ lấy tên category
-      .populate({ path: 'brand', select: 'name', strictPopulate: false })
+      .populate({
+        path: 'categories',
+        populate: {
+          path: 'parentCategory',
+          select: 'name',
+          populate: { path: 'parentCategory', select: 'name' }
+        }
+      })
+      .populate('brand', 'name')
       .sort({ createdAt: -1 })
       .lean()
     res.json(products)
@@ -80,7 +88,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 /* ------------------------------- Categories ------------------------------- */
 export const getCategories = async (_req: Request, res: Response) => {
   try {
-    const categories = await Category.find()
+    const categories = await Category.find().populate('parentCategory', 'name')
     res.json(categories)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -152,7 +160,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
 /* -------------------------------- Orders ---------------------------------- */
 export const getOrders = async (_req: Request, res: Response) => {
   try {
-    const orders = await Order.find().populate('user').populate('items.product').sort({ createdAt: -1 })
+    const orders = await Order.find().populate('user').populate('orderItems.product').sort({ createdAt: -1 })
     res.json(orders)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -161,7 +169,7 @@ export const getOrders = async (_req: Request, res: Response) => {
 
 export const getOrderById = async (req: Request, res: Response) => {
   try {
-    const order = await Order.findById(req.params.id).populate('user').populate('items.product')
+    const order = await Order.findById(req.params.id).populate('user').populate('orderItems.product')
     if (!order) return res.status(404).json({ message: 'Order not found' })
     res.json(order)
   } catch (error) {
@@ -188,42 +196,260 @@ export const deleteOrder = async (req: Request, res: Response) => {
 }
 
 /* ------------------------------- Customers -------------------------------- */
-export const getCustomers = async (_req: Request, res: Response) => {
+export const getCustomers = async (_req: Request, res: Response): Promise<void> => {
   try {
-    const customers = await User.find({ role: 'user' }).select('-passwordHash').sort({ createdAt: -1 })
+    const customers = await User.find({ role: 'user' })
+      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+      .sort({ createdAt: -1 })
     res.json(customers)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
   }
 }
 
-export const getCustomerById = async (req: Request, res: Response) => {
+export const getCustomerById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const customer = await User.findById(req.params.id).select('-passwordHash')
-    if (!customer) return res.status(404).json({ message: 'Customer not found' })
+    const customer = await User.findById(req.params.id)
+      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    if (!customer) {
+      res.status(404).json({ message: 'Customer not found' })
+      return
+    }
     res.json(customer)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
   }
 }
 
-export const updateCustomer = async (req: Request, res: Response) => {
+export const updateCustomer = async (req: Request, res: Response): Promise<void> => {
   try {
-    const updatedCustomer = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
-    }).select('-passwordHash')
+    const updatedCustomer = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-passwordHash')
+    if (!updatedCustomer) {
+      res.status(404).json({ message: 'Customer not found' })
+      return
+    }
     res.json(updatedCustomer)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
   }
 }
 
-export const deleteCustomer = async (req: Request, res: Response) => {
+export const deleteCustomer = async (req: Request, res: Response): Promise<void> => {
   try {
     await User.findByIdAndDelete(req.params.id)
     res.json({ message: 'Customer deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
+  }
+}
+
+/* -------------------------------- Users ---------------------------------- */
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { role, search, page = 1, limit = 10 } = req.query
+    const query: any = {}
+
+    // Filter by role if specified
+    if (role && role !== 'all') {
+      query.role = role
+    }
+
+    // Search by username, email or fullName
+    if (search) {
+      query.$or = [
+        { username: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { fullName: { $regex: search, $options: 'i' } }
+      ]
+    }
+
+    const skip = (Number(page) - 1) * Number(limit)
+
+    const [users, total] = await Promise.all([
+      User.find(query)
+        .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(Number(limit)),
+      User.countDocuments(query)
+    ])
+
+    res.json({
+      data: users,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        pages: Math.ceil(total / Number(limit))
+      }
+    })
+  } catch (error) {
+    console.error('Error fetching users:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching users'
+    })
+  }
+}
+
+export const getUserById = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = await User.findById(req.params.id)
+      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      })
+      return
+    }
+    res.json({
+      success: true,
+      data: user
+    })
+  } catch (error) {
+    console.error('Error fetching user:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching user'
+    })
+  }
+}
+
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const { username, email, password, fullName, phone, role, status, avatar, addresses, isVerified } = req.body
+
+    // Validate required fields
+    if (!username || !email || !password) {
+      res.status(400).json({
+        success: false,
+        message: 'Username, email and password are required'
+      })
+      return
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }]
+    })
+
+    if (existingUser) {
+      res.status(400).json({
+        success: false,
+        message: 'User with this email or username already exists'
+      })
+      return
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10)
+    const passwordHash = await bcrypt.hash(password, salt)
+
+    // Create new user
+    const user = new User({
+      username,
+      email,
+      passwordHash,
+      fullName,
+      phone,
+      role: role || 'user',
+      status: status || 'active',
+      avatar,
+      addresses: addresses || [],
+      isVerified: isVerified !== undefined ? isVerified : true // Manager created users are pre-verified by default
+    })
+
+    const savedUser = await user.save()
+
+    res.status(201).json({
+      success: true,
+      data: {
+        ...savedUser.toObject(),
+        passwordHash: undefined
+      }
+    })
+  } catch (error) {
+    console.error('Error creating user:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Error creating user'
+    })
+  }
+}
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const updateData = req.body
+
+    // Prevent updating sensitive fields
+    delete updateData.passwordHash
+    delete updateData.email
+
+    // If password is provided, hash it
+    if (updateData.password) {
+      const salt = await bcrypt.genSalt(10)
+      updateData.passwordHash = await bcrypt.hash(updateData.password, salt)
+      delete updateData.password
+    }
+
+    const user = await User.findByIdAndUpdate(id, updateData, { new: true }).select('-passwordHash')
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      })
+      return
+    }
+
+    res.json({
+      success: true,
+      data: user
+    })
+  } catch (error) {
+    console.error('Error updating user:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Error updating user'
+    })
+  }
+}
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+
+    // Prevent deleting self
+    if (id === req.user?._id.toString()) {
+      res.status(400).json({
+        success: false,
+        message: 'Cannot delete your own account'
+      })
+      return
+    }
+
+    const user = await User.findByIdAndDelete(id)
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      })
+      return
+    }
+
+    res.json({
+      success: true,
+      message: 'User deleted successfully'
+    })
+  } catch (error) {
+    console.error('Error deleting user:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting user'
+    })
   }
 }
 

@@ -16,8 +16,26 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
       cart = new Cart({ user: userId, cartItems: [] })
       await cart.save()
     }
-    
-    res.json(cart)
+    // Map lại cartItems để trả về stock từng biến thể
+    const cartObj = cart.toObject();
+    const cartItems = cartObj.cartItems.map(item => {
+      let stock = null;
+      // Ensure product is populated and has sizes
+      if (
+        item.product &&
+        typeof item.product === 'object' &&
+        'sizes' in item.product &&
+        Array.isArray(item.product.sizes) &&
+        item.size
+      ) {
+        const matched = item.product.sizes.find(
+          (s: any) => s.size === item.size && (!item.color || s.color === item.color)
+        );
+        stock = matched ? matched.stock : null;
+      }
+      return { ...item, stock };
+    });
+    res.json({ ...cartObj, cartItems });
   } catch (error) {
     res.status(500).json({ message: 'Lỗi khi lấy giỏ hàng: ' + (error as Error).message })
   }
