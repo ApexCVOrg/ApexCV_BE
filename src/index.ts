@@ -6,6 +6,7 @@ import MongoStore from 'connect-mongo'
 import os from 'os'
 import dotenv from 'dotenv'
 import connectDB from './config/db'
+import { suggestionsService } from './services/suggestionsService'
 
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
@@ -14,15 +15,18 @@ import productRouter from './routes/products'
 import reviewRouter from './routes/reviews'
 import orderRouter from './routes/orders'
 import cartRouter from './routes/carts'
-import conversationRouter from './routes/conversations'
-import messageRouter from './routes/messages'
 import brandRouter from './routes/brands'
 import managerRouter from './routes/admin/manager'
+import managerChatsRouter from './routes/managerChats'
+import userChatsRouter from './routes/userChats'
+import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import voucherRouter from './routes/voucher'
 
-import chatRouter from './routes/chat.route'
 import favoritesRouter from './routes/favorites'
+import chatRouter from './routes/chat'
+import adminRouter from './routes/admin/admin'
+import applyCouponRouter from './routes/apply-coupon';
 import { errorHandler } from './middlewares/errorHandler'
 import {
   API_BASE,
@@ -33,16 +37,30 @@ import {
   REVIEW_ROUTES,
   ORDER_ROUTES,
   CART_ROUTES,
-  CONVERSATION_ROUTES,
-  MESSAGE_ROUTES,
   BRAND_ROUTES,
-  CHAT_ROUTES,
+  SUGGESTIONS_ROUTES,
   MANAGER_ROUTES,
-  FAVORITES_ROUTES
+  ADMIN_ROUTES,
+  MANAGER_CHAT_ROUTES,
+  USER_CHAT_ROUTES,
+  FAVORITES_ROUTES,
+  CHAT_ROUTES,
+  APPLY_COUPON_ROUTES
 } from './constants/routes'
 
 dotenv.config()
-connectDB()
+
+// Khởi tạo services
+const initializeServices = async () => {
+  try {
+    await connectDB()
+    suggestionsService.initialize()
+    console.log('✅ All services initialized successfully')
+  } catch (error) {
+    console.error('❌ Error initializing services:', error)
+    process.exit(1)
+  }
+}
 
 const app: Application = express()
 const PORT = Number(process.env.PORT) || 5000
@@ -117,20 +135,25 @@ app.use(API_BASE + PRODUCT_ROUTES.BASE, productRouter)
 app.use(API_BASE + REVIEW_ROUTES.BASE, reviewRouter)
 app.use(API_BASE + ORDER_ROUTES.BASE, orderRouter)
 app.use(API_BASE + CART_ROUTES.BASE, cartRouter)
-app.use(API_BASE + CONVERSATION_ROUTES.BASE, conversationRouter)
-app.use(API_BASE + MESSAGE_ROUTES.BASE, messageRouter)
 app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
 app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
+app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
+app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
+app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
 app.use(API_BASE + '/voucher', voucherRouter)
 
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
+app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
+app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
+app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter);
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
 // Start server và log thêm IP LAN cho debug
-app.listen(PORT, HOST, () => {
+app.listen(PORT, HOST, async () => {
+  await initializeServices()
   console.log(`– Server đang chạy trên: http://${HOST}:${PORT}  (cho web/emulator)`)
   const lanIp = getLocalIp()
   if (lanIp) {

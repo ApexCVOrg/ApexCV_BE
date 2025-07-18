@@ -4,6 +4,8 @@ import { seedCategories } from '../scripts/seedCategories'
 import { seedProducts } from '../scripts/seedProducts'
 import { seedBrands } from '../scripts/seedBrands'
 import { seedOrders } from '../scripts/seedOrders'
+import { seedDocuments } from '../scripts/seedDocuments'
+import { seedChatData } from '../scripts/seedChatData'
 import { seedVouchers } from '../scripts/seedVouchers'
 
 const connectDB = async (): Promise<void> => {
@@ -19,6 +21,8 @@ const connectDB = async (): Promise<void> => {
     await seedBrands()
     await seedProducts()
     await seedOrders()
+    await seedDocuments()
+    await seedChatData()
     await seedVouchers()
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${(error as Error).message}`)
