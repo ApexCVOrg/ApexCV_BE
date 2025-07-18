@@ -22,6 +22,8 @@ import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
+import adminRouter from './routes/admin/admin'
+import applyCouponRouter from './routes/apply-coupon';
 import { errorHandler } from './middlewares/errorHandler'
 import {
   API_BASE,
@@ -35,10 +37,12 @@ import {
   BRAND_ROUTES,
   SUGGESTIONS_ROUTES,
   MANAGER_ROUTES,
+  ADMIN_ROUTES,
   MANAGER_CHAT_ROUTES,
   USER_CHAT_ROUTES,
   FAVORITES_ROUTES,
-  CHAT_ROUTES
+  CHAT_ROUTES,
+  APPLY_COUPON_ROUTES
 } from './constants/routes'
 
 dotenv.config()
@@ -135,6 +139,8 @@ app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
+app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
+app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter);
 
 app.use(errorHandler as express.ErrorRequestHandler)
 

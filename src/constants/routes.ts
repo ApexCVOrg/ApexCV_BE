@@ -98,7 +98,22 @@ export const MANAGER_ROUTES = {
     CUSTOMERS: '/stats/customers'
   }
 } as const
-
+export const ADMIN_ROUTES = {
+  BASE: '/admin',
+  DASHBOARD: '/dashboard',
+  PRODUCTS: '/products',
+  CATEGORIES: '/categories',
+  ORDERS: '/orders',
+  USERS: '/users',
+  CUSTOMERS: '/customers',
+  SETTINGS: '/settings',
+  STATS: {
+    SALES: '/stats/sales',
+    USERS: '/stats/users',
+    ORDERS: '/stats/orders',
+    CUSTOMERS: '/stats/customers'
+  }
+} as const
 // Favorites routes
 export const FAVORITES_ROUTES = {
   BASE: '/favorites',
@@ -131,6 +146,10 @@ export const USER_CHAT_ROUTES = {
   MESSAGES: '/:chatId/messages',
   SEND_MESSAGE: '/:chatId/messages'
 } as const
+
+export const APPLY_COUPON_ROUTES = {
+  BASE: '/apply-coupon'
+} as const;
 
 export const buildRoute = (base: string, path: string): string => {
   return `${API_BASE}${base}${path}`

@@ -6,6 +6,8 @@ import { User } from '../models/User'
 import { CATEGORY_MESSAGES } from '../constants/categories'
 import { Brand } from '../models/Brand'
 import bcrypt from 'bcryptjs'
+import { logAdminAction } from '../utils/logAdminAction';
+import { sendBanUserEmail } from '../services/email.service';
 
 /* -------------------------------- Dashboard ------------------------------- */
 export const getDashboard = async (_req: Request, res: Response) => {
@@ -61,6 +63,13 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const newProduct = new Product(req.body)
     const savedProduct = await newProduct.save()
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'CREATE_PRODUCT',
+      target: savedProduct && savedProduct._id ? String(savedProduct._id) : '',
+      detail: `Created product: ${savedProduct.name}`
+    });
     res.status(201).json(savedProduct)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -70,6 +79,13 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'UPDATE_PRODUCT',
+      target: req.params.id,
+      detail: `Updated product: ${updatedProduct?.name}`
+    });
     res.json(updatedProduct)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -79,6 +95,13 @@ export const updateProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     await Product.findByIdAndDelete(req.params.id)
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'DELETE_PRODUCT',
+      target: req.params.id,
+      detail: `Deleted product: ${req.params.id}`
+    });
     res.json({ message: 'Product deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -193,15 +216,29 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
       updateData,
       { new: true }
     );
-    res.json(updatedOrder);
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'UPDATE_ORDER',
+      target: req.params.id,
+      detail: `Updated order: ${JSON.stringify(updateData)}`
+    });
+    res.json(updatedOrder)
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    res.status(500).json({ message: (error as Error).message })
   }
 }
 
 export const deleteOrder = async (req: Request, res: Response) => {
   try {
     await Order.findByIdAndDelete(req.params.id)
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'DELETE_ORDER',
+      target: req.params.id,
+      detail: `Deleted order: ${req.params.id}`
+    });
     res.json({ message: 'Order deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -374,6 +411,13 @@ export const createUser = async (req: Request, res: Response) => {
     })
 
     const savedUser = await user.save()
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'CREATE_USER',
+      target: savedUser && savedUser._id ? String(savedUser._id) : '',
+      detail: `Created user: ${savedUser.username}`
+    });
 
     res.status(201).json({
       success: true,
@@ -408,6 +452,13 @@ export const updateUser = async (req: Request, res: Response) => {
     }
 
     const user = await User.findByIdAndUpdate(id, updateData, { new: true }).select('-passwordHash')
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'UPDATE_USER',
+      target: id,
+      detail: `Updated user: ${user?.username || id}`
+    });
 
     if (!user) {
       res.status(404).json({
@@ -430,6 +481,34 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 }
 
+export const updateUserStatus = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { status, reason } = req.body;
+    if (!['active', 'locked'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+    if (status === 'locked' && (!reason || reason.trim() === '')) {
+      return res.status(400).json({ message: 'Ban reason is required' });
+    }
+    const user = await User.findByIdAndUpdate(id, { status, banReason: status === 'locked' ? reason : '' }, { new: true }).select('-passwordHash');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: status === 'locked' ? 'LOCK_USER' : 'UNLOCK_USER',
+      target: id,
+      detail: `Set user status to ${status}${reason ? `, reason: ${reason}` : ''}`
+    });
+    // Gửi email thông báo
+    await sendBanUserEmail(user.email, reason || '', req.user?.username || 'admin', status);
+    res.json({ success: true, data: user });
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
+  }
+}
+
 export const deleteUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
@@ -444,6 +523,13 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 
     const user = await User.findByIdAndDelete(id)
+    // Audit log
+    await logAdminAction(req, {
+      adminId: req.user?._id,
+      action: 'DELETE_USER',
+      target: id,
+      detail: `Deleted user: ${user?.username || id}`
+    });
 
     if (!user) {
       res.status(404).json({
