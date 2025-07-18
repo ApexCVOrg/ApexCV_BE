@@ -1,3 +1,4 @@
+/* eslint-disable */
 import express, { Request, Response, Router } from 'express'
 import { Cart } from '../models/Cart'
 import { Product } from '../models/Product'

@@ -22,6 +22,28 @@
     "status": "active"
   },
   {
+    "name": "Test",
+    "description": "Stylish and comfortable sneakers with Manchester United design for women. Perfect for casual wear and everyday activities.",
+    "price": 2699000,
+    "discountPrice": 2299000,
+    "categoryPath": ["Women", "Manchester United", "Sneakers"],
+    "images": ["Gazelle_Manchester_United_Terrace_Icons_Shoes_White_JS3040_HM1.avif"],
+    "sizes": [
+      { "sku": "1234567890", "size": "XS", "stock": 15, "color": "Red" },
+      { "sku": "1234567891", "size": "s", "stock": 25, "color": "Red" },
+      { "sku": "1234567892", "size": "M", "stock": 30, "color": "Red" },
+      { "sku": "1234567893", "size": "L", "stock": 20, "color": "Red" },
+      { "sku": "1234567894", "size": "XS", "stock": 12, "color": "White" },
+      { "sku": "1234567895", "size": "s", "stock": 22, "color": "white" },
+      { "sku": "1234567896", "size": "M", "stock": 32, "color": "white" },
+      { "sku": "1234567897", "size": "L", "stock": 22, "color": "White" }
+    ],
+    "colors": ["Red", "Black"],
+    "tags": ["manchester-united", "sneakers", "casual", "women"],
+    "brand": "Adidas",
+    "status": "active"
+  },
+  {
     "name": "Real Madrid Men's Training Jacket",
     "description": "Professional training jacket with Real Madrid branding. Ideal for training and casual wear.",
     "price": 3299000,
