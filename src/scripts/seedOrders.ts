@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mongoose from 'mongoose'
 import { Order } from '../models/Order'
 import { User } from '../models/User'
@@ -778,7 +779,7 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: "Bayern Munich Kids Home Jersey 2024/25",
         size: '6-7Y',
         color: 'White',
         quantity: 1,
