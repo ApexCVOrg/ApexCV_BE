@@ -20,6 +20,9 @@ import managerRouter from './routes/admin/manager'
 import managerChatsRouter from './routes/managerChats'
 import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
+import checkoutRouter from './routes/checkout'
+import voucherRouter from './routes/voucher'
+
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
 import adminRouter from './routes/admin/admin'
@@ -137,6 +140,10 @@ app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
 app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
 app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
+app.use(API_BASE + '/checkout', checkoutRouter)
+app.use(API_BASE + '/voucher', voucherRouter)
+
+app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
