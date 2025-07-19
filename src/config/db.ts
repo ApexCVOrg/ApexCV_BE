@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { seedCategories } from '../scripts/seedCategories'
 import { seedProducts } from '../scripts/seedProducts'
 import { seedBrands } from '../scripts/seedBrands'
-import { seedOrders } from '../scripts/seedOrders'
+// import { seedOrders } from '../scripts/seedOrders'
 
 const connectDB = async (): Promise<void> => {
   try {
@@ -17,7 +17,7 @@ const connectDB = async (): Promise<void> => {
     await seedCategories() // Gọi seed tại đây
     await seedBrands()
     await seedProducts()
-    await seedOrders()
+    // await seedOrders()
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${(error as Error).message}`)
     process.exit(1)
