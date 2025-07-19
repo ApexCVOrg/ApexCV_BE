@@ -18,11 +18,11 @@ const connectDB = async (): Promise<void> => {
     console.log(`MongoDB connected: ${conn.connection.host}`)
 
     await seedCategories() // Gọi seed tại đây
-    await seedBrands()
-    await seedProducts()
-    await seedOrders()
-    await seedDocuments()
-    await seedChatData()
+    // await seedBrands()
+    // await seedProducts()
+    // await seedOrders()
+    // await seedDocuments()
+    // await seedChatData()
     await seedVouchers()
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${(error as Error).message}`)

@@ -1,11 +1,19 @@
 import mongoose, { Schema } from 'mongoose'
-
+const sizeSchema = new Schema({
+  sku: { type: String, required: true },
+  size: String,
+  stock: Number,
+  color: String,
+})
 const orderItemSchema = new Schema({
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-  size: String,
-  color: String,
+  size: [sizeSchema],
   quantity: { type: Number, required: true, min: 1 },
-  price: Number
+  price: Number,
+  productName: String,
+productImage: String,
+productBrand: String
+
 })
 
 const orderSchema = new Schema({
@@ -20,6 +28,11 @@ const orderSchema = new Schema({
     country: String,
     phone: String
   },
+  userSnapshot: {
+    fullName: String,
+    email: String,
+    phone: String
+  },  
   paymentMethod: String,
   paymentResult: {
     id: String,
