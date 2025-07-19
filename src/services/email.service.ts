@@ -54,10 +54,10 @@ export const sendVerificationEmail = async (email: string, code: string): Promis
     }
 
     const mailOptions = {
-      from: `"ApexCV" <${process.env.GMAIL_USER}>`,
+      from: `"NIDAS" <${process.env.GMAIL_USER}>`,
       to: email,
-      subject: 'ApexCV - Email Verification Code',
-      text: `Your ApexCV verification code is: ${code}. This code will expire in 1 minute.`,
+      subject: 'NIDAS - Email Verification Code',
+      text: `Your NIDAS verification code is: ${code}. This code will expire in 1 minute.`,
       html: generateEmailHTML(code)
     }
 
@@ -87,7 +87,7 @@ export const sendVerificationEmail = async (email: string, code: string): Promis
 const generateEmailHTML = (code: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 30px;">
-      <h1 style="color: #2563eb; margin: 0;">ApexCV</h1>
+      <h1 style="color: #2563eb; margin: 0;">NIDAS</h1>
       <p style="color: #64748b; margin: 5px 0;">Professional CV Builder</p>
     </div>
 
@@ -111,7 +111,7 @@ const generateEmailHTML = (code: string): string => `
         If you didn't request this verification code, please ignore this email.
       </p>
       <p style="color: #64748b; font-size: 12px; margin: 10px 0 0 0;">
-        © 2025 ApexCV. All rights reserved.
+        © 2025 NIDAS. All rights reserved.
       </p>
     </div>
   </div>
@@ -128,10 +128,10 @@ export const sendResetPasswordEmail = async (email: string, otp: string): Promis
     }
 
     const mailOptions = {
-      from: `"ApexCV" <${process.env.GMAIL_USER}>`,
+      from: `"NIDAS" <${process.env.GMAIL_USER}>`,
       to: email,
-      subject: 'ApexCV - Password Reset OTP',
-      text: `Your ApexCV password reset OTP is: ${otp}. This code will expire in 1 minute.`,
+      subject: 'NIDAS - Password Reset OTP',
+      text: `Your NIDAS password reset OTP is: ${otp}. This code will expire in 1 minute.`,
       html: generateResetPasswordEmailHTML(otp)
     }
 
@@ -156,7 +156,7 @@ export const sendResetPasswordEmail = async (email: string, otp: string): Promis
 const generateResetPasswordEmailHTML = (otp: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 30px;">
-      <h1 style="color: #2563eb; margin: 0;">ApexCV</h1>
+      <h1 style="color: #2563eb; margin: 0;">NIDAS</h1>
       <p style="color: #64748b; margin: 5px 0;">Professional CV Builder</p>
     </div>
 
@@ -180,8 +180,78 @@ const generateResetPasswordEmailHTML = (otp: string): string => `
         If you didn't request a password reset, please ignore this email.
       </p>
       <p style="color: #64748b; font-size: 12px; margin: 10px 0 0 0;">
-        © 2025 ApexCV. All rights reserved.
+        © 2025 NIDAS. All rights reserved.
       </p>
     </div>
   </div>
 `
+
+export const sendBanUserEmail = async (email: string, reason: string, admin: string, status: string): Promise<void> => {
+  try {
+    if (!email || !reason) {
+      throw new Error('Email and ban reason are required.')
+    }
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!isEmailValid) {
+      throw new Error('Invalid email format.')
+    }
+    const mailOptions = {
+      from: `"NIDAS" <${process.env.GMAIL_USER}>`,
+      to: email,
+      subject: status === 'locked' ? 'Your account has been banned' : 'Your account has been unbanned',
+      text: status === 'locked'
+        ? `Your account has been banned by admin (${admin}). Reason: ${reason}`
+        : `Your account has been reactivated by admin (${admin}).`,
+      html: status === 'locked'
+        ? generateBanUserEmailHTML(reason, admin)
+        : generateUnbanUserEmailHTML(admin)
+    }
+    console.log(`📤 Sending ban/unban email to: ${email}`)
+    const info = await transporter.sendMail(mailOptions)
+    console.log(`✅ Ban/unban email sent: ${info.messageId}`)
+    console.log(`📨 Response: ${info.response}`)
+  } catch (error) {
+    console.error('❌ Ban/unban email send failed:', error)
+    throw new Error(`Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
+
+const generateBanUserEmailHTML = (reason: string, admin: string): string => `
+  <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h1 style="color: #d32f2f; margin: 0;">NIDAS</h1>
+      <p style="color: #64748b; margin: 5px 0;">Account Banned Notification</p>
+    </div>
+    <div style="background: #fff3e0; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;">
+      <h2 style="color: #d32f2f; margin: 0 0 15px 0;">Your account has been banned</h2>
+      <p style="color: #b71c1c; margin: 0;">Reason: <b>${reason}</b></p>
+      <p style="color: #b71c1c; margin: 0;">By admin: <b>${admin}</b></p>
+    </div>
+    <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0; color: #92400e; font-weight: 500;">If you think this is a mistake, please contact support.</p>
+    </div>
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+      <p style="color: #64748b; font-size: 14px; margin: 0;">
+        © 2025 NIDAS. All rights reserved.
+      </p>
+    </div>
+  </div>
+`;
+
+const generateUnbanUserEmailHTML = (admin: string): string => `
+  <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h1 style="color: #388e3c; margin: 0;">NIDAS</h1>
+      <p style="color: #64748b; margin: 5px 0;">Account Reactivated</p>
+    </div>
+    <div style="background: #e8f5e9; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;">
+      <h2 style="color: #388e3c; margin: 0 0 15px 0;">Your account has been reactivated</h2>
+      <p style="color: #1b5e20; margin: 0;">By admin: <b>${admin}</b></p>
+    </div>
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+      <p style="color: #64748b; font-size: 14px; margin: 0;">
+        © 2025 NIDAS. All rights reserved.
+      </p>
+    </div>
+  </div>
+`;

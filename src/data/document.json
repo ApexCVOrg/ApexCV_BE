@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Tôi muốn mua sản phẩm",
+    "content": "Bạn muốn mua cho Nam, Nữ hay Trẻ em? Chúng tôi có đa dạng sản phẩm cho từng nhóm khách hàng.",
+    "tags": ["mua", "sản phẩm", "nam", "nữ", "trẻ em"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm cho Nam",
+    "content": "Các thương hiệu cho nam: Nike, Adidas, Arsenal, Juventus, Bayern Munich, Real Madrid, Manchester United. Các loại sản phẩm: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["nam", "sản phẩm", "thương hiệu", "loại"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm cho Nữ",
+    "content": "Các thương hiệu cho nữ: Nike, Adidas, Arsenal, Juventus, Bayern Munich, Real Madrid, Manchester United. Các loại sản phẩm: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["nữ", "sản phẩm", "thương hiệu", "loại"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm cho Trẻ em",
+    "content": "Các thương hiệu cho trẻ em: Nike, Adidas, Arsenal, Juventus, Bayern Munich, Real Madrid, Manchester United. Các loại sản phẩm: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["trẻ em", "sản phẩm", "thương hiệu", "loại"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm của Nike",
+    "content": "Nike là thương hiệu thể thao nổi tiếng với slogan 'Just Do It'. Chúng tôi có đầy đủ sản phẩm Nike cho nam, nữ, trẻ em: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["nike", "thương hiệu", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm của Adidas",
+    "content": "Adidas là thương hiệu thể thao nổi tiếng với slogan 'Impossible Is Nothing'. Chúng tôi có đầy đủ sản phẩm Adidas cho nam, nữ, trẻ em: Sneakers, T-Shirts, Shorts, Tracksuits, Jackets, Hoodies, Socks, Bags.",
+    "tags": ["adidas", "thương hiệu", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua sản phẩm của Arsenal",
+    "content": "Arsenal là câu lạc bộ bóng đá nổi tiếng. Chúng tôi có các sản phẩm Arsenal: Jersey, Jacket, Hoodie, Sneakers, Tracksuit cho nam, nữ, trẻ em.",
+    "tags": ["arsenal", "bóng đá", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Arsenal nam",
+    "content": "Sản phẩm nổi bật: Arsenal Men's Home Jersey 2024/25, chất liệu cao cấp, thiết kế mới nhất mùa giải 2024/25.",
+    "tags": ["arsenal", "nam", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Arsenal nữ",
+    "content": "Sản phẩm nổi bật: Arsenal Women's Home Jersey 2024/25, thiết kế dành riêng cho nữ, chất liệu thoáng mát.",
+    "tags": ["arsenal", "nữ", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Arsenal trẻ em",
+    "content": "Sản phẩm nổi bật: Arsenal Kids Home Jersey 2024/25, phù hợp cho các bé yêu bóng đá, chất liệu mềm mại.",
+    "tags": ["arsenal", "trẻ em", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Real Madrid nam",
+    "content": "Sản phẩm nổi bật: Real Madrid Men's Home Jersey 2024/25, chất liệu cao cấp, thiết kế mới nhất mùa giải.",
+    "tags": ["real madrid", "nam", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Real Madrid nữ",
+    "content": "Sản phẩm nổi bật: Real Madrid Women's Home Jersey 2024/25, thiết kế dành riêng cho nữ, chất liệu thoáng mát.",
+    "tags": ["real madrid", "nữ", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua áo đấu Real Madrid trẻ em",
+    "content": "Sản phẩm nổi bật: Real Madrid Kids Home Jersey 2024/25, phù hợp cho các bé yêu bóng đá, chất liệu mềm mại.",
+    "tags": ["real madrid", "trẻ em", "áo đấu", "jersey"]
+  },
+  {
+    "title": "Tôi muốn mua giày thể thao",
+    "content": "Chúng tôi có nhiều mẫu sneakers, boots, training shoes cho nam, nữ, trẻ em từ các thương hiệu Nike, Adidas, Arsenal, Real Madrid, ...",
+    "tags": ["giày", "sneakers", "boots", "training", "sản phẩm"]
+  },
+  {
+    "title": "Tôi muốn mua áo khoác thể thao",
+    "content": "Các loại áo khoác (Jacket, Hoodie, Tracksuit) cho nam, nữ, trẻ em từ các thương hiệu Nike, Adidas, Arsenal, Real Madrid, ...",
+    "tags": ["áo khoác", "jacket", "hoodie", "tracksuit", "sản phẩm"]
+  },
+  {
+    "title": "Chính sách đổi trả",
+    "content": "Trong vòng 30 ngày kể từ ngày nhận hàng, bạn có thể đổi trả sản phẩm nếu còn nguyên tem mác, chưa qua sử dụng. Vui lòng liên hệ CSKH để được hỗ trợ.",
+    "tags": ["đổi trả", "chính sách", "hoàn trả"]
+  },
+  {
+    "title": "Hướng dẫn chọn size giày",
+    "content": "Để chọn size giày phù hợp, bạn đo chiều dài bàn chân và đối chiếu với bảng size trên website. Nếu cần tư vấn thêm, hãy liên hệ CSKH.",
+    "tags": ["size", "giày", "hướng dẫn"]
+  },
+  {
+    "title": "Cách đặt hàng",
+    "content": "Bạn có thể đặt hàng trực tiếp trên website, chọn sản phẩm, thêm vào giỏ hàng và tiến hành thanh toán. Nếu cần hỗ trợ, hãy liên hệ CSKH.",
+    "tags": ["đặt hàng", "hướng dẫn", "mua hàng"]
+  },
+  {
+    "title": "Phương thức thanh toán",
+    "content": "Chúng tôi hỗ trợ thanh toán qua COD (nhận hàng trả tiền), chuyển khoản ngân hàng, thẻ tín dụng/ghi nợ.",
+    "tags": ["thanh toán", "hướng dẫn", "COD", "chuyển khoản", "thẻ"]
+  },
+  {
+    "title": "Theo dõi đơn hàng",
+    "content": "Sau khi đặt hàng, bạn có thể theo dõi trạng thái đơn hàng trong tài khoản cá nhân hoặc liên hệ CSKH để được hỗ trợ.",
+    "tags": ["đơn hàng", "theo dõi", "trạng thái"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Nike",
+    "content": "Nike là thương hiệu thể thao hàng đầu thế giới với slogan 'Just Do It'. Sản phẩm Nike nổi bật về chất lượng và thiết kế hiện đại.",
+    "tags": ["nike", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Adidas",
+    "content": "Adidas là thương hiệu thể thao nổi tiếng với slogan 'Impossible Is Nothing'. Sản phẩm Adidas đa dạng, phù hợp nhiều đối tượng.",
+    "tags": ["adidas", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Arsenal",
+    "content": "Arsenal là câu lạc bộ bóng đá nổi tiếng tại Anh, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["arsenal", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Real Madrid",
+    "content": "Real Madrid là câu lạc bộ bóng đá nổi tiếng tại Tây Ban Nha, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["real madrid", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Manchester United",
+    "content": "Manchester United là câu lạc bộ bóng đá nổi tiếng tại Anh, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["manchester united", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Juventus",
+    "content": "Juventus là câu lạc bộ bóng đá nổi tiếng tại Ý, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["juventus", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Tôi muốn biết về thương hiệu Bayern Munich",
+    "content": "Bayern Munich là câu lạc bộ bóng đá nổi tiếng tại Đức, có nhiều sản phẩm thời trang và phụ kiện dành cho fan.",
+    "tags": ["bayern munich", "thương hiệu", "giới thiệu"]
+  },
+  {
+    "title": "Sản phẩm nào bán chạy nhất?",
+    "content": "Các sản phẩm bán chạy nhất hiện nay là áo đấu Arsenal 2024/25, giày thể thao Nike Air Max và áo khoác Adidas Originals. Bạn có thể xem danh mục 'Bán chạy' trên website để cập nhật sản phẩm hot nhất.",
+    "tags": ["bán chạy", "sản phẩm hot", "top", "phổ biến"]
+  },
+  {
+    "title": "Có chương trình khuyến mãi nào không?",
+    "content": "Chúng tôi thường xuyên có các chương trình khuyến mãi vào dịp lễ, cuối tuần hoặc khi ra mắt sản phẩm mới. Hãy theo dõi banner trên trang chủ hoặc đăng ký nhận tin để không bỏ lỡ ưu đãi.",
+    "tags": ["khuyến mãi", "giảm giá", "ưu đãi", "sale"]
+  },
+  {
+    "title": "Làm sao để kiểm tra tình trạng đơn hàng?",
+    "content": "Bạn có thể kiểm tra trạng thái đơn hàng trong mục 'Tài khoản' > 'Đơn hàng của tôi' hoặc nhập mã đơn hàng tại trang 'Theo dõi đơn hàng'. Nếu cần hỗ trợ, hãy liên hệ CSKH.",
+    "tags": ["đơn hàng", "kiểm tra", "trạng thái", "theo dõi"]
+  },
+  {
+    "title": "Phí vận chuyển được tính như thế nào?",
+    "content": "Phí vận chuyển được tính dựa trên địa chỉ nhận hàng và tổng giá trị đơn hàng. Đơn hàng từ 1 triệu đồng sẽ được miễn phí vận chuyển toàn quốc.",
+    "tags": ["vận chuyển", "phí ship", "giao hàng"]
+  },
+  {
+    "title": "Tôi có thể hủy đơn hàng không?",
+    "content": "Bạn có thể hủy đơn hàng trước khi đơn được chuyển sang trạng thái 'Đang giao'. Sau khi đơn đã giao cho đơn vị vận chuyển, bạn vui lòng nhận hàng rồi thực hiện đổi trả nếu không hài lòng.",
+    "tags": ["hủy đơn", "đơn hàng", "đổi trả"]
+  },
+  {
+    "title": "Làm sao để đăng ký tài khoản?",
+    "content": "Bạn nhấn vào biểu tượng tài khoản ở góc phải trên cùng, chọn 'Đăng ký' và điền thông tin theo hướng dẫn. Đăng ký tài khoản giúp bạn theo dõi đơn hàng, nhận ưu đãi và tích điểm.",
+    "tags": ["đăng ký", "tài khoản", "hướng dẫn"]
+  },
+  {
+    "title": "Tôi quên mật khẩu, phải làm sao?",
+    "content": "Tại trang đăng nhập, bạn chọn 'Quên mật khẩu' và làm theo hướng dẫn để đặt lại mật khẩu qua email đã đăng ký.",
+    "tags": ["quên mật khẩu", "tài khoản", "đăng nhập"]
+  },
+  {
+    "title": "Có chương trình tích điểm/thành viên không?",
+    "content": "Khi mua hàng, bạn sẽ được tích điểm vào tài khoản. Điểm có thể đổi lấy mã giảm giá hoặc quà tặng. Tham khảo chi tiết tại mục 'Chính sách thành viên'.",
+    "tags": ["tích điểm", "thành viên", "ưu đãi", "khách hàng thân thiết"]
+  },
+  {
+    "title": "Sản phẩm có bảo hành không?",
+    "content": "Một số sản phẩm như giày thể thao, balo, túi xách được bảo hành chính hãng từ 3-12 tháng tùy loại. Thông tin bảo hành được ghi rõ trên trang chi tiết sản phẩm.",
+    "tags": ["bảo hành", "sản phẩm", "chính hãng"]
+  },
+  {
+    "title": "Sản phẩm có phải chính hãng không?",
+    "content": "Tất cả sản phẩm tại ApexCV đều là hàng chính hãng, có hóa đơn và giấy chứng nhận xuất xứ rõ ràng. Chúng tôi cam kết hoàn tiền 200% nếu phát hiện hàng giả.",
+    "tags": ["chính hãng", "xuất xứ", "giấy tờ", "cam kết"]
+  },
+  {
+    "title": "Làm sao để liên hệ CSKH?",
+    "content": "Bạn có thể liên hệ CSKH qua hotline 1900 1234 (8h-22h), chat trực tuyến trên website hoặc gửi email về support@apexcv.vn. Chúng tôi luôn sẵn sàng hỗ trợ bạn!",
+    "tags": ["liên hệ", "CSKH", "hỗ trợ", "hotline"]
+  },
+  {
+    "title": "Có xuất hóa đơn VAT không?",
+    "content": "Chúng tôi hỗ trợ xuất hóa đơn VAT cho khách hàng doanh nghiệp. Vui lòng điền thông tin xuất hóa đơn khi đặt hàng hoặc liên hệ CSKH để được hướng dẫn chi tiết.",
+    "tags": ["hóa đơn", "VAT", "doanh nghiệp", "xuất hóa đơn"]
+  },
+  {
+    "title": "Có ưu đãi cho sinh nhật/thành viên mới không?",
+    "content": "ApexCV thường xuyên có ưu đãi đặc biệt cho khách hàng mới và quà tặng sinh nhật cho thành viên. Hãy cập nhật thông tin cá nhân để không bỏ lỡ quà tặng hấp dẫn!",
+    "tags": ["ưu đãi", "sinh nhật", "thành viên mới", "quà tặng"]
+  }
+]

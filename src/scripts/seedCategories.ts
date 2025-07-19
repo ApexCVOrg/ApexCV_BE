@@ -1,3 +1,4 @@
+/* eslint-disable */
 // src/seeds/category.seed.ts
 import mongoose from 'mongoose'
 import { Category, ensureCategoryIndexes } from '../models/Category'
