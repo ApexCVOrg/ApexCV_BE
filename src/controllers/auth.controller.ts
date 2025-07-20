@@ -478,7 +478,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
 
     // Generate refresh token
@@ -595,11 +595,11 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
 
-    // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`)
+    // Redirect to frontend with token and locale
+    res.redirect(`${process.env.FRONTEND_URL}/vi/auth/success?token=${token}`)
   } catch (error) {
     console.error('Google callback error:', error)
     res.redirect(`${process.env.FRONTEND_URL}/auth/error`)
@@ -728,11 +728,11 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
         role: user.role
       },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
 
-    // Redirect về FE
-    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`)
+    // Redirect về FE với locale
+    res.redirect(`${process.env.FRONTEND_URL}/vi/auth/success?token=${token}`)
     return
   } catch (error: any) {
     console.error('Facebook callback error:', error?.response?.data || error.message)
@@ -1054,7 +1054,7 @@ export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
     res.json({ token })
   } catch (error) {

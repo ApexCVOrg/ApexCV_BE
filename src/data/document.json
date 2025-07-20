@@ -1,5 +1,20 @@
 [
   {
+    "title": "Lời chào",
+    "content": "Chào bạn! Bạn đang tìm kiếm điều gì hôm nay?",
+    "tags": ["xin chào", "chào", "mở đầu", "trò chuyện", "bắt đầu", "mua"]
+  },
+  {
+    "title": "Greeting",
+    "content": "Hi there! What are you looking for today?",
+    "tags": ["hello", "hi", "greeting", "start", "chat", "mua"]
+  },
+  {
+    "title": "Lời chào thân thiện",
+    "content": "Rất vui được gặp bạn! Hãy cho tôi biết bạn cần hỗ trợ gì nhé.",
+    "tags": ["xin chào", "trò chuyện", "thân thiện", "mở đầu"]
+  },
+  {
     "title": "Tôi muốn mua sản phẩm",
     "content": "Bạn muốn mua cho Nam, Nữ hay Trẻ em? Chúng tôi có đa dạng sản phẩm cho từng nhóm khách hàng.",
     "tags": ["mua", "sản phẩm", "nam", "nữ", "trẻ em"]
