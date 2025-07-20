@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
 import { Voucher } from '../models/Voucher'
+import { Order } from '../models/Order'
 
 export const applyVoucher = async (req: Request, res: Response) => {
   try {
-    const { voucherCode, productId, price, quantity, isNewCustomer } = req.body
+    const { voucherCode, productId, price, quantity } = req.body
     if (!voucherCode || !productId || typeof price !== 'number' || typeof quantity !== 'number') {
       return res.status(400).json({ success: false, message: 'Thiếu thông tin đầu vào' })
     }
@@ -30,16 +31,28 @@ export const applyVoucher = async (req: Request, res: Response) => {
         return res.status(400).json({ success: false, message: 'Đơn hàng chưa đủ điều kiện áp dụng SALE10' })
       }
     } else if (voucherCode === 'WELCOME20') {
-      if (isNewCustomer) {
+      // Kiểm tra user đã từng đặt đơn chưa
+      if (!req.user || !req.user._id) {
+        return res.status(401).json({ success: false, message: 'Bạn cần đăng nhập để sử dụng mã này' })
+      }
+      const orderCount = await Order.countDocuments({ user: req.user._id })
+      if (orderCount === 0) {
         discountAmount = Math.round(price * 0.2)
         newPrice = price - discountAmount
       } else {
-        return res.status(400).json({ success: false, message: 'Chỉ áp dụng cho khách hàng mới' })
+        return res.status(400).json({ success: false, message: 'Chỉ áp dụng cho khách hàng mới (chưa từng đặt đơn)' })
       }
     } else if (voucherCode === 'FREESHIP') {
       discountAmount = 0
       newPrice = price
       message = 'Áp dụng mã freeship thành công!'
+      return res.json({
+        success: true,
+        discountAmount,
+        newPrice,
+        message,
+        freeShipping: true
+      })
     } else {
       return res.status(400).json({ success: false, message: 'Voucher không hợp lệ hoặc đã hết hạn' })
     }
