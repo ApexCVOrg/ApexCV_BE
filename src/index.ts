@@ -5,8 +5,11 @@ import cookieParser from 'cookie-parser'
 import MongoStore from 'connect-mongo'
 import os from 'os'
 import dotenv from 'dotenv'
+import { createServer } from 'http'
+import path from 'path'
 import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
+import ChatWebSocketServer from './websocket/chatServer'
 
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
@@ -27,6 +30,7 @@ import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
 import adminRouter from './routes/admin/admin'
 import applyCouponRouter from './routes/apply-coupon';
+import uploadRouter from './routes/upload';
 import { errorHandler } from './middlewares/errorHandler'
 import {
   API_BASE,
@@ -106,6 +110,9 @@ app.options(/.*/, cors());
 
 app.use(express.json())
 app.use(cookieParser())
+
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
@@ -148,15 +155,24 @@ app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
 app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter);
+app.use(API_BASE + '/upload', uploadRouter);
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
+// Create HTTP server
+const server = createServer(app);
+
+// Initialize WebSocket server
+const chatWebSocketServer = new ChatWebSocketServer(server);
+
 // Start server và log thêm IP LAN cho debug
-app.listen(PORT, HOST, async () => {
+server.listen(PORT, HOST, async () => {
   await initializeServices()
   console.log(`– Server đang chạy trên: http://${HOST}:${PORT}  (cho web/emulator)`)
+  console.log(`– WebSocket server: ws://${HOST}:${PORT}`)
   const lanIp = getLocalIp()
   if (lanIp) {
     console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
+    console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
   }
 })
