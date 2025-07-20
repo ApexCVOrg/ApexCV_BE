@@ -1,64 +1,142 @@
 import { Request, Response } from 'express'
-import { Voucher } from '../models/Voucher'
+import { Coupon } from '../models/Coupon'
 
-export const applyVoucher = async (req: Request, res: Response) => {
+export const applyCoupon = async (req: Request, res: Response) => {
   try {
-    const { voucherCode, productId, price, quantity, isNewCustomer } = req.body
-    if (!voucherCode || !productId || typeof price !== 'number' || typeof quantity !== 'number') {
-      return res.status(400).json({ success: false, message: 'Thiếu thông tin đầu vào' })
+    const { couponCode, productId, price, quantity, isNewCustomer } = req.body
+    console.log('Received request:', { couponCode, productId, price, quantity, isNewCustomer })
+    console.log('Request body:', req.body)
+    
+    // Validation chi tiết
+    const errors = []
+    
+    if (!couponCode) {
+      errors.push('Mã coupon không được để trống')
+    }
+    
+    if (!productId) {
+      errors.push('ID sản phẩm không được để trống')
+    }
+    
+    // Chuyển đổi price và quantity thành number
+    const numericPrice = Number(price)
+    const numericQuantity = Number(quantity)
+    
+    if (isNaN(numericPrice) || numericPrice <= 0) {
+      errors.push('Giá sản phẩm không hợp lệ')
+    }
+    
+    if (isNaN(numericQuantity) || numericQuantity <= 0) {
+      errors.push('Số lượng sản phẩm không hợp lệ')
+    }
+    
+    if (errors.length > 0) {
+      console.log('Validation errors:', errors)
+      return res.status(400).json({ 
+        success: false, 
+        message: errors.join('. '),
+        errors: errors
+      })
     }
 
-    // Tìm voucher
-    const voucher = await Voucher.findOne({ code: voucherCode })
-    if (!voucher) {
-      return res.status(400).json({ success: false, message: 'Voucher không hợp lệ hoặc đã hết hạn' })
+    // Tìm coupon
+    console.log('Searching for coupon with code:', couponCode)
+    const coupon = await Coupon.findOne({ code: couponCode, isActive: true })
+    console.log('Found coupon:', coupon)
+    
+    if (!coupon) {
+      // Kiểm tra xem có coupon nào trong database không
+      const allCoupons = await Coupon.find({})
+      console.log('All coupons in database:', allCoupons.map(c => ({ code: c.code, isActive: c.isActive })))
+      return res.status(400).json({ 
+        success: false, 
+        message: `Mã coupon "${couponCode}" không tồn tại hoặc đã bị vô hiệu hóa`,
+        errorType: 'COUPON_NOT_FOUND'
+      })
     }
+    
     // Kiểm tra hạn sử dụng
-    if (voucher.expiry < new Date()) {
-      return res.status(400).json({ success: false, message: 'Voucher không hợp lệ hoặc đã hết hạn' })
+    if (coupon.expiresAt < new Date()) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Coupon "${couponCode}" đã hết hạn vào ${coupon.expiresAt.toLocaleDateString('vi-VN')}`,
+        errorType: 'COUPON_EXPIRED'
+      })
+    }
+
+    // Kiểm tra số lần sử dụng
+    if (coupon.used >= coupon.maxUsage) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Coupon "${couponCode}" đã hết lượt sử dụng (${coupon.used}/${coupon.maxUsage})`,
+        errorType: 'COUPON_USAGE_LIMIT'
+      })
+    }
+
+    // Kiểm tra giá trị đơn hàng tối thiểu
+    const orderValue = numericPrice * numericQuantity
+    console.log('Order validation:', { 
+      orderValue, 
+      minOrderValue: coupon.minOrderValue, 
+      price: numericPrice, 
+      quantity: numericQuantity,
+      isValid: orderValue >= coupon.minOrderValue 
+    })
+    
+    if (orderValue < coupon.minOrderValue) {
+      const remaining = coupon.minOrderValue - orderValue
+      return res.status(400).json({ 
+        success: false, 
+        message: `Đơn hàng chưa đủ điều kiện áp dụng coupon "${couponCode}". Cần thêm ${remaining.toLocaleString()}đ nữa (tối thiểu ${coupon.minOrderValue.toLocaleString()}đ)`,
+        errorType: 'MIN_ORDER_VALUE',
+        currentValue: orderValue,
+        requiredValue: coupon.minOrderValue,
+        remaining: remaining
+      })
     }
 
     let discountAmount = 0
-    let newPrice = price
+    let newPrice = numericPrice
     let message = 'Áp dụng thành công!'
 
-    if (voucherCode === 'SALE10') {
-      if (price * quantity >= 500000) {
-        discountAmount = Math.round(price * 0.1)
-        newPrice = price - discountAmount
-      } else {
-        return res.status(400).json({ success: false, message: 'Đơn hàng chưa đủ điều kiện áp dụng SALE10' })
-      }
-    } else if (voucherCode === 'WELCOME20') {
-      if (isNewCustomer) {
-        discountAmount = Math.round(price * 0.2)
-        newPrice = price - discountAmount
-      } else {
-        return res.status(400).json({ success: false, message: 'Chỉ áp dụng cho khách hàng mới' })
-      }
-    } else if (voucherCode === 'FREESHIP') {
-      discountAmount = 0
-      newPrice = price
-      message = 'Áp dụng mã freeship thành công!'
-    } else {
-      return res.status(400).json({ success: false, message: 'Voucher không hợp lệ hoặc đã hết hạn' })
+    // Tính toán giảm giá
+    if (coupon.type === 'percentage') {
+      discountAmount = Math.round(numericPrice * (coupon.value / 100))
+      newPrice = numericPrice - discountAmount
+      message = `Giảm ${coupon.value}% - Tiết kiệm ${discountAmount.toLocaleString()}đ`
+    } else if (coupon.type === 'fixed') {
+      discountAmount = coupon.value
+      newPrice = numericPrice - discountAmount
+      if (newPrice < 0) newPrice = 0
+      message = `Giảm ${discountAmount.toLocaleString()}đ`
     }
 
     return res.json({
       success: true,
       discountAmount,
       newPrice,
-      message
+      message,
+      coupon: {
+        code: coupon.code,
+        type: coupon.type,
+        value: coupon.value,
+        remainingUsage: coupon.maxUsage - coupon.used
+      }
     })
   } catch (error) {
-    return res.status(500).json({ success: false, message: 'Lỗi server' })
+    console.error('Error in applyCoupon:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Lỗi server. Vui lòng thử lại sau.',
+      errorType: 'SERVER_ERROR'
+    })
   }
 }
 
-export const getAllVouchers = async (req: Request, res: Response) => {
+export const getAllCoupons = async (req: Request, res: Response) => {
   try {
-    const vouchers = await Voucher.find().sort({ expiry: 1 });
-    res.json({ success: true, data: vouchers });
+    const coupons = await Coupon.find({ isActive: true }).sort({ expiresAt: 1 });
+    res.json({ success: true, data: coupons });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Lỗi server' });
   }

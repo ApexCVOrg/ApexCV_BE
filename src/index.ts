@@ -25,7 +25,7 @@ import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay';
-import voucherRouter from './routes/voucher'
+import couponRouter from './routes/voucher'
 
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
@@ -149,7 +149,7 @@ app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
 app.use('/api/payment', paymentVnpayRoutes);
-app.use(API_BASE + '/voucher', voucherRouter)
+app.use(API_BASE + '/coupon', couponRouter)
 
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)

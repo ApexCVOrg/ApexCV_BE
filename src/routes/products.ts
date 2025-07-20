@@ -146,6 +146,12 @@ router.delete('/:id', async (req: Request<{ id: string }>, res: Response) => {
   }
 })
 
+// Top-selling products
+router.get('/top-selling', (req, res, next) => getTopSellingProducts(req, res));
+
+// Public Top-selling products
+router.get('/public-top-selling', getPublicTopSellingProducts);
+
 // Get product by ID
 router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
   try {
@@ -183,11 +189,5 @@ router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
     })
   }
 })
-
-// Top-selling products
-router.get('/top-selling', (req, res, next) => getTopSellingProducts(req, res));
-
-// Public Top-selling products
-router.get('/public-top-selling', getPublicTopSellingProducts);
 
 export default router
