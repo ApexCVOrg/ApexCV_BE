@@ -19,7 +19,7 @@ const connectDB = async (): Promise<void> => {
 
     await seedCategories() // Gọi seed tại đây
     // await seedBrands()
-    // await seedProducts()
+    await seedProducts()
     // await seedOrders()
     // await seedDocuments()
     // await seedChatData()

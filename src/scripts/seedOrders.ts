@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mongoose from 'mongoose'
 import { Order } from '../models/Order'
 import { User } from '../models/User'

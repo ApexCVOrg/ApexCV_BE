@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface AuthRequest extends Request {
   user?: {
+    _id: string;
     id: string;
     email: string;
     role: string;
@@ -43,9 +44,10 @@ export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextF
       return;
     }
 
-    // Add user info to request
+    // Add user info to request - bao gồm cả _id và id
     req.user = {
-      id: decoded.id,
+      _id: decoded.id || decoded._id, // MongoDB ObjectId
+      id: decoded.id || decoded._id, // String ID
       email: decoded.email,
       role: decoded.role
     };
