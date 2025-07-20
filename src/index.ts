@@ -21,6 +21,7 @@ import managerChatsRouter from './routes/managerChats'
 import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
+import paymentVnpayRoutes from './routes/payment-vnpay';
 import voucherRouter from './routes/voucher'
 
 import favoritesRouter from './routes/favorites'
@@ -103,7 +104,6 @@ app.use(cors({
 // Đúng: bắt mọi preflight request
 // ✅ Bắt mọi preflight request cho tất cả routes
 app.options(/.*/, cors());
-
 app.use(express.json())
 app.use(cookieParser())
 app.use(session({
@@ -141,6 +141,7 @@ app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
 app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
+app.use('/api/payment', paymentVnpayRoutes);
 app.use(API_BASE + '/voucher', voucherRouter)
 
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)

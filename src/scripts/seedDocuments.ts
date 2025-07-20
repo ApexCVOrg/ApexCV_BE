@@ -1,6 +1,7 @@
 // src/scripts/seedDocuments.ts
 import fs from 'fs';
 import path from 'path';
+import mongoose from 'mongoose';
 import { DocumentModel } from '../models/Document';
 
 export const seedDocuments = async () => {
@@ -36,9 +37,18 @@ export const seedDocuments = async () => {
 
 // Nếu chạy trực tiếp file này thì seed luôn (giống seedCategories)
 if (require.main === module) {
-  import('../config/db').then(async ({ default: connectDB }) => {
-    await connectDB();
-    await seedDocuments();
-    process.exit(0);
-  });
+  (async () => {
+    try {
+      await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      } as mongoose.ConnectOptions);
+      console.log('MongoDB connected for seeding documents');
+      await seedDocuments();
+      process.exit(0);
+    } catch (error) {
+      console.error('Error:', error);
+      process.exit(1);
+    }
+  })();
 }
