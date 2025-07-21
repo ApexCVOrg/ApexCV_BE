@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import { Order } from '../models/Order';
-import { User } from '../models/User';
-import { Product } from '../models/Product';
+import { Order } from '../models/Order'
+import { User } from '../models/User'
+import { Product } from '../models/Product'
 
 const ordersData = [
   {
@@ -12,8 +11,8 @@ const ordersData = [
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 1959000,
-      },
+        price: 1959000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van A',
@@ -22,7 +21,7 @@ const ordersData = [
       state: 'Thua Thien Hue',
       postalCode: '53000',
       country: 'Vietnam',
-      phone: '0901000001',
+      phone: '0901000001'
     },
     paymentMethod: 'COD',
     taxPrice: 195900,
@@ -32,7 +31,7 @@ const ordersData = [
     paidAt: new Date('2024-11-15T10:30:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2024-11-18T14:20:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user02@example.com',
@@ -42,15 +41,15 @@ const ordersData = [
         size: 'L',
         color: 'White',
         quantity: 1,
-        price: 1999000,
+        price: 1999000
       },
       {
         productName: "Real Madrid Men's Training Jacket",
         size: 'XL',
         color: 'Black',
         quantity: 1,
-        price: 2799000,
-      },
+        price: 2799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi B',
@@ -59,7 +58,7 @@ const ordersData = [
       state: 'Quang Nam',
       postalCode: '56000',
       country: 'Vietnam',
-      phone: '0901000002',
+      phone: '0901000002'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 479800,
@@ -68,7 +67,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2024-11-20T09:15:00Z'),
     isDelivered: false,
-    orderStatus: 'shipped',
+    orderStatus: 'shipped'
   },
   {
     userEmail: 'user03@example.com',
@@ -78,8 +77,8 @@ const ordersData = [
         size: 'S',
         color: 'Red',
         quantity: 2,
-        price: 1799000,
-      },
+        price: 1799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Minh C',
@@ -88,14 +87,14 @@ const ordersData = [
       state: 'Da Nang',
       postalCode: '55000',
       country: 'Vietnam',
-      phone: '0901000003',
+      phone: '0901000003'
     },
     paymentMethod: 'COD',
     taxPrice: 359800,
     shippingPrice: 50000,
     totalPrice: 3658800,
     isPaid: false,
-    orderStatus: 'pending',
+    orderStatus: 'pending'
   },
   {
     userEmail: 'user04@example.com',
@@ -105,15 +104,15 @@ const ordersData = [
         size: '6-7Y',
         color: 'Red',
         quantity: 1,
-        price: 1399000,
+        price: 1399000
       },
       {
         productName: 'Arsenal Kids Tracksuit',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
-        price: 1599000,
-      },
+        price: 1599000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi D',
@@ -122,14 +121,14 @@ const ordersData = [
       state: 'Binh Dinh',
       postalCode: '59000',
       country: 'Vietnam',
-      phone: '0901000004',
+      phone: '0901000004'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_123456789',
       status: 'COMPLETED',
       update_time: '2024-12-25T16:45:00Z',
-      email_address: 'user04@example.com',
+      email_address: 'user04@example.com'
     },
     taxPrice: 299800,
     shippingPrice: 50000,
@@ -137,7 +136,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2024-12-25T16:45:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user05@example.com',
@@ -147,8 +146,8 @@ const ordersData = [
         size: 'M',
         color: 'White',
         quantity: 1,
-        price: 1899000,
-      },
+        price: 1899000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van E',
@@ -157,14 +156,14 @@ const ordersData = [
       state: 'Da Nang',
       postalCode: '55000',
       country: 'Vietnam',
-      phone: '0901000005',
+      phone: '0901000005'
     },
     paymentMethod: 'COD',
     taxPrice: 189900,
     shippingPrice: 50000,
     totalPrice: 2138900,
     isPaid: false,
-    orderStatus: 'cancelled',
+    orderStatus: 'cancelled'
   },
   {
     userEmail: 'user06@example.com',
@@ -174,15 +173,15 @@ const ordersData = [
         size: 'L',
         color: 'Black',
         quantity: 1,
-        price: 2694000,
+        price: 2694000
       },
       {
         productName: "Arsenal Women's Training Hoodie",
         size: 'M',
         color: 'Black',
         quantity: 1,
-        price: 1599000,
-      },
+        price: 1599000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi F',
@@ -191,7 +190,7 @@ const ordersData = [
       state: 'Khanh Hoa',
       postalCode: '65000',
       country: 'Vietnam',
-      phone: '0901000006',
+      phone: '0901000006'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 429300,
@@ -201,7 +200,7 @@ const ordersData = [
     paidAt: new Date('2024-12-30T11:20:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-01-02T15:30:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user07@example.com',
@@ -211,15 +210,15 @@ const ordersData = [
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 1999000,
+        price: 1999000
       },
       {
         productName: "Bayern Munich Men's Home Shorts 2024/25",
         size: 'L',
         color: 'Red',
         quantity: 1,
-        price: 979000,
-      },
+        price: 979000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van G',
@@ -228,7 +227,7 @@ const ordersData = [
       state: 'Lam Dong',
       postalCode: '67000',
       country: 'Vietnam',
-      phone: '0901000007',
+      phone: '0901000007'
     },
     paymentMethod: 'COD',
     taxPrice: 297800,
@@ -237,7 +236,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-01-05T14:30:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user08@example.com',
@@ -247,8 +246,8 @@ const ordersData = [
         size: 'XL',
         color: 'Black',
         quantity: 1,
-        price: 1999000,
-      },
+        price: 1999000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi H',
@@ -257,14 +256,14 @@ const ordersData = [
       state: 'Ba Ria - Vung Tau',
       postalCode: '78000',
       country: 'Vietnam',
-      phone: '0901000008',
+      phone: '0901000008'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_987654321',
       status: 'COMPLETED',
       update_time: '2025-01-10T09:15:00Z',
-      email_address: 'user08@example.com',
+      email_address: 'user08@example.com'
     },
     taxPrice: 199900,
     shippingPrice: 50000,
@@ -273,7 +272,7 @@ const ordersData = [
     paidAt: new Date('2025-01-10T09:15:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-01-13T16:45:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user09@example.com',
@@ -283,22 +282,22 @@ const ordersData = [
         size: 'S',
         color: 'Red',
         quantity: 1,
-        price: 1999000,
+        price: 1999000
       },
       {
         productName: "Manchester United Men's Training Jacket",
         size: 'M',
         color: 'Black',
         quantity: 1,
-        price: 2799000,
+        price: 2799000
       },
       {
         productName: "Manchester United Men's Home Shorts 2024/25",
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 979000,
-      },
+        price: 979000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van I',
@@ -307,7 +306,7 @@ const ordersData = [
       state: 'Can Tho',
       postalCode: '90000',
       country: 'Vietnam',
-      phone: '0901000009',
+      phone: '0901000009'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 577700,
@@ -316,7 +315,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-01-15T11:00:00Z'),
     isDelivered: false,
-    orderStatus: 'shipped',
+    orderStatus: 'shipped'
   },
   {
     userEmail: 'user10@example.com',
@@ -326,8 +325,8 @@ const ordersData = [
         size: '38',
         color: 'Black',
         quantity: 1,
-        price: 2799000,
-      },
+        price: 2799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van J',
@@ -336,14 +335,14 @@ const ordersData = [
       state: 'Hai Phong',
       postalCode: '31000',
       country: 'Vietnam',
-      phone: '0901000010',
+      phone: '0901000010'
     },
     paymentMethod: 'COD',
     taxPrice: 279900,
     shippingPrice: 50000,
     totalPrice: 3128900,
     isPaid: false,
-    orderStatus: 'pending',
+    orderStatus: 'pending'
   },
   {
     userEmail: 'user11@example.com',
@@ -353,8 +352,8 @@ const ordersData = [
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 1899000,
-      },
+        price: 1899000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi K',
@@ -363,14 +362,14 @@ const ordersData = [
       state: 'Thanh Hoa',
       postalCode: '44000',
       country: 'Vietnam',
-      phone: '0901000011',
+      phone: '0901000011'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_111222333',
       status: 'COMPLETED',
       update_time: '2025-01-20T14:20:00Z',
-      email_address: 'user11@example.com',
+      email_address: 'user11@example.com'
     },
     taxPrice: 189900,
     shippingPrice: 50000,
@@ -379,7 +378,7 @@ const ordersData = [
     paidAt: new Date('2025-01-20T14:20:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-01-23T10:30:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user12@example.com',
@@ -389,15 +388,15 @@ const ordersData = [
         size: 'L',
         color: 'Black',
         quantity: 1,
-        price: 1699000,
+        price: 1699000
       },
       {
         productName: "Juventus Women's Training Shorts",
         size: 'M',
         color: 'Black',
         quantity: 1,
-        price: 1399000,
-      },
+        price: 1399000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van L',
@@ -406,7 +405,7 @@ const ordersData = [
       state: 'Thai Nguyen',
       postalCode: '25000',
       country: 'Vietnam',
-      phone: '0901000012',
+      phone: '0901000012'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 309800,
@@ -415,7 +414,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-01-25T16:45:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user13@example.com',
@@ -425,8 +424,8 @@ const ordersData = [
         size: 'S',
         color: 'Red',
         quantity: 1,
-        price: 1899000,
-      },
+        price: 1899000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi M',
@@ -435,7 +434,7 @@ const ordersData = [
       state: 'Quang Ngai',
       postalCode: '57000',
       country: 'Vietnam',
-      phone: '0901000013',
+      phone: '0901000013'
     },
     paymentMethod: 'COD',
     taxPrice: 189900,
@@ -444,7 +443,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-01-30T09:30:00Z'),
     isDelivered: false,
-    orderStatus: 'shipped',
+    orderStatus: 'shipped'
   },
   {
     userEmail: 'user14@example.com',
@@ -454,8 +453,8 @@ const ordersData = [
         size: '6-7Y',
         color: 'White',
         quantity: 1,
-        price: 1499000,
-      },
+        price: 1499000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van N',
@@ -464,7 +463,7 @@ const ordersData = [
       state: 'Lam Dong',
       postalCode: '67000',
       country: 'Vietnam',
-      phone: '0901000014',
+      phone: '0901000014'
     },
     paymentMethod: 'COD',
     taxPrice: 149900,
@@ -474,7 +473,7 @@ const ordersData = [
     paidAt: new Date('2025-02-05T11:15:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-02-08T14:20:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user15@example.com',
@@ -484,15 +483,15 @@ const ordersData = [
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
-        price: 1599000,
+        price: 1599000
       },
       {
         productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '10-11Y',
         color: 'Red',
         quantity: 1,
-        price: 1499000,
-      },
+        price: 1499000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi O',
@@ -501,14 +500,14 @@ const ordersData = [
       state: 'Bac Ninh',
       postalCode: '22000',
       country: 'Vietnam',
-      phone: '0901000015',
+      phone: '0901000015'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_444555666',
       status: 'COMPLETED',
       update_time: '2025-02-10T11:15:00Z',
-      email_address: 'user15@example.com',
+      email_address: 'user15@example.com'
     },
     taxPrice: 309800,
     shippingPrice: 50000,
@@ -517,7 +516,7 @@ const ordersData = [
     paidAt: new Date('2025-02-10T11:15:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-02-13T14:20:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user16@example.com',
@@ -527,8 +526,8 @@ const ordersData = [
         size: 'L',
         color: 'Black',
         quantity: 2,
-        price: 2799000,
-      },
+        price: 2799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van P',
@@ -537,14 +536,14 @@ const ordersData = [
       state: 'Nghe An',
       postalCode: '46000',
       country: 'Vietnam',
-      phone: '0901000016',
+      phone: '0901000016'
     },
     paymentMethod: 'BANK_TRANSFER',
     paymentResult: {
       id: 'pay_1616161616',
       status: 'APPROVED',
       update_time: '2025-02-15T10:00:00Z',
-      email_address: 'user16@example.com',
+      email_address: 'user16@example.com'
     },
     taxPrice: 559800,
     shippingPrice: 50000,
@@ -552,7 +551,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-02-15T10:00:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user17@example.com',
@@ -562,15 +561,15 @@ const ordersData = [
         size: 'M',
         color: 'Black',
         quantity: 1,
-        price: 1699000,
+        price: 1699000
       },
       {
         productName: "Juventus Women's Training Shorts",
         size: 'L',
         color: 'Black',
         quantity: 1,
-        price: 1399000,
-      },
+        price: 1399000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi Q',
@@ -579,14 +578,14 @@ const ordersData = [
       state: 'Quang Binh',
       postalCode: '48000',
       country: 'Vietnam',
-      phone: '0901000017',
+      phone: '0901000017'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_1717171717',
       status: 'COMPLETED',
       update_time: '2025-02-20T14:30:00Z',
-      email_address: 'user17@example.com',
+      email_address: 'user17@example.com'
     },
     taxPrice: 309800,
     shippingPrice: 50000,
@@ -595,7 +594,7 @@ const ordersData = [
     paidAt: new Date('2025-02-20T14:30:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-02-23T12:00:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user18@example.com',
@@ -605,15 +604,15 @@ const ordersData = [
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 979000,
+        price: 979000
       },
       {
         productName: "Bayern Munich Men's Training Jacket",
         size: 'XL',
         color: 'Black',
         quantity: 1,
-        price: 2799000,
-      },
+        price: 2799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van R',
@@ -622,7 +621,7 @@ const ordersData = [
       state: 'Khanh Hoa',
       postalCode: '65000',
       country: 'Vietnam',
-      phone: '0901000018',
+      phone: '0901000018'
     },
     paymentMethod: 'COD',
     taxPrice: 377800,
@@ -631,7 +630,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-02-25T11:15:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user19@example.com',
@@ -641,8 +640,8 @@ const ordersData = [
         size: 'L',
         color: 'Red',
         quantity: 2,
-        price: 1999000,
-      },
+        price: 1999000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi S',
@@ -651,14 +650,14 @@ const ordersData = [
       state: 'Gia Lai',
       postalCode: '59000',
       country: 'Vietnam',
-      phone: '0901000019',
+      phone: '0901000019'
     },
     paymentMethod: 'BANK_TRANSFER',
     paymentResult: {
       id: 'pay_1919191919',
       status: 'COMPLETED',
       update_time: '2025-03-01T09:00:00Z',
-      email_address: 'user19@example.com',
+      email_address: 'user19@example.com'
     },
     taxPrice: 399800,
     shippingPrice: 50000,
@@ -667,7 +666,7 @@ const ordersData = [
     paidAt: new Date('2025-03-01T09:00:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-03-04T10:30:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'thihtktk03@gmail.com',
@@ -677,8 +676,8 @@ const ordersData = [
         size: 'M',
         color: 'White',
         quantity: 1,
-        price: 1799000,
-      },
+        price: 1799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Đình Thi',
@@ -687,14 +686,14 @@ const ordersData = [
       state: 'Đà Nẵng',
       postalCode: '55000',
       country: 'Vietnam',
-      phone: '0359731884',
+      phone: '0359731884'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_3300330033',
       status: 'APPROVED',
       update_time: '2025-03-05T13:00:00Z',
-      email_address: 'thihtktk@gmail.com',
+      email_address: 'thihtktk@gmail.com'
     },
     taxPrice: 179900,
     shippingPrice: 50000,
@@ -702,7 +701,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-03-05T13:00:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user01@example.com',
@@ -712,8 +711,8 @@ const ordersData = [
         size: '6-7Y',
         color: 'Red',
         quantity: 1,
-        price: 1399000,
-      },
+        price: 1399000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van A',
@@ -722,14 +721,14 @@ const ordersData = [
       state: 'Thua Thien Hue',
       postalCode: '53000',
       country: 'Vietnam',
-      phone: '0901000001',
+      phone: '0901000001'
     },
     paymentMethod: 'COD',
     taxPrice: 139900,
     shippingPrice: 50000,
     totalPrice: 1598900,
     isPaid: false,
-    orderStatus: 'pending',
+    orderStatus: 'pending'
   },
   {
     userEmail: 'user02@example.com',
@@ -739,15 +738,15 @@ const ordersData = [
         size: 'S',
         color: 'Black',
         quantity: 1,
-        price: 1699000,
+        price: 1699000
       },
       {
         productName: "Real Madrid Women's Training Shorts",
         size: 'M',
         color: 'White',
         quantity: 1,
-        price: 1399000,
-      },
+        price: 1399000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi B',
@@ -756,14 +755,14 @@ const ordersData = [
       state: 'Quang Nam',
       postalCode: '56000',
       country: 'Vietnam',
-      phone: '0901000002',
+      phone: '0901000002'
     },
     paymentMethod: 'BANK_TRANSFER',
     paymentResult: {
       id: 'pay_2020202020',
       status: 'COMPLETED',
       update_time: '2025-03-10T15:30:00Z',
-      email_address: 'user02@example.com',
+      email_address: 'user02@example.com'
     },
     taxPrice: 309800,
     shippingPrice: 50000,
@@ -772,7 +771,7 @@ const ordersData = [
     paidAt: new Date('2025-03-10T15:30:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-03-13T12:45:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user03@example.com',
@@ -782,8 +781,8 @@ const ordersData = [
         size: '6-7Y',
         color: 'White',
         quantity: 1,
-        price: 1599000,
-      },
+        price: 1599000
+      }
     ],
     shippingAddress: {
       recipientName: 'Minh C',
@@ -792,14 +791,14 @@ const ordersData = [
       state: 'Da Nang',
       postalCode: '55000',
       country: 'Vietnam',
-      phone: '0901000003',
+      phone: '0901000003'
     },
     paymentMethod: 'COD',
     taxPrice: 159900,
     shippingPrice: 50000,
     totalPrice: 1808900,
     isPaid: false,
-    orderStatus: 'cancelled',
+    orderStatus: 'cancelled'
   },
   {
     userEmail: 'user04@example.com',
@@ -809,8 +808,8 @@ const ordersData = [
         size: '10-11Y',
         color: 'Red',
         quantity: 2,
-        price: 1599000,
-      },
+        price: 1599000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi D',
@@ -819,14 +818,14 @@ const ordersData = [
       state: 'Binh Dinh',
       postalCode: '59000',
       country: 'Vietnam',
-      phone: '0901000004',
+      phone: '0901000004'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_2424242424',
       status: 'COMPLETED',
       update_time: '2025-03-15T10:20:00Z',
-      email_address: 'user04@example.com',
+      email_address: 'user04@example.com'
     },
     taxPrice: 319800,
     shippingPrice: 50000,
@@ -834,7 +833,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-03-15T10:20:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user05@example.com',
@@ -844,8 +843,8 @@ const ordersData = [
         size: '39',
         color: 'Black',
         quantity: 1,
-        price: 2799000,
-      },
+        price: 2799000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van E',
@@ -854,14 +853,14 @@ const ordersData = [
       state: 'Da Nang',
       postalCode: '55000',
       country: 'Vietnam',
-      phone: '0901000005',
+      phone: '0901000005'
     },
     paymentMethod: 'COD',
     taxPrice: 279900,
     shippingPrice: 50000,
     totalPrice: 3128900,
     isPaid: false,
-    orderStatus: 'pending',
+    orderStatus: 'pending'
   },
   {
     userEmail: 'user06@example.com',
@@ -871,15 +870,15 @@ const ordersData = [
         size: 'L',
         color: 'White',
         quantity: 1,
-        price: 979000,
+        price: 979000
       },
       {
         productName: 'Juventus Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Black',
         quantity: 1,
-        price: 1499000,
-      },
+        price: 1499000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi F',
@@ -888,7 +887,7 @@ const ordersData = [
       state: 'Khanh Hoa',
       postalCode: '65000',
       country: 'Vietnam',
-      phone: '0901000006',
+      phone: '0901000006'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 247800,
@@ -898,7 +897,7 @@ const ordersData = [
     paidAt: new Date('2025-03-20T08:45:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-03-23T11:30:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user07@example.com',
@@ -908,8 +907,8 @@ const ordersData = [
         size: 'M',
         color: 'Black',
         quantity: 2,
-        price: 979000,
-      },
+        price: 979000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van G',
@@ -918,7 +917,7 @@ const ordersData = [
       state: 'Lam Dong',
       postalCode: '67000',
       country: 'Vietnam',
-      phone: '0901000007',
+      phone: '0901000007'
     },
     paymentMethod: 'COD',
     taxPrice: 195800,
@@ -927,7 +926,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-03-25T12:00:00Z'),
     isDelivered: false,
-    orderStatus: 'shipped',
+    orderStatus: 'shipped'
   },
   {
     userEmail: 'user08@example.com',
@@ -937,8 +936,8 @@ const ordersData = [
         size: 'XS',
         color: 'White',
         quantity: 1,
-        price: 1899000,
-      },
+        price: 1899000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi H',
@@ -947,14 +946,14 @@ const ordersData = [
       state: 'Ba Ria - Vung Tau',
       postalCode: '78000',
       country: 'Vietnam',
-      phone: '0901000008',
+      phone: '0901000008'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_2828282828',
       status: 'COMPLETED',
       update_time: '2025-03-30T14:00:00Z',
-      email_address: 'user08@example.com',
+      email_address: 'user08@example.com'
     },
     taxPrice: 189900,
     shippingPrice: 50000,
@@ -963,7 +962,7 @@ const ordersData = [
     paidAt: new Date('2025-03-30T14:00:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-04-02T16:00:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'user09@example.com',
@@ -973,15 +972,15 @@ const ordersData = [
         size: 'L',
         color: 'Red',
         quantity: 1,
-        price: 979000,
+        price: 979000
       },
       {
         productName: "Arsenal Men's Home Jersey 2024/25",
         size: 'M',
         color: 'White',
         quantity: 1,
-        price: 1959000,
-      },
+        price: 1959000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van I',
@@ -990,7 +989,7 @@ const ordersData = [
       state: 'Can Tho',
       postalCode: '90000',
       country: 'Vietnam',
-      phone: '0901000009',
+      phone: '0901000009'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 293800,
@@ -999,7 +998,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date('2025-04-05T09:00:00Z'),
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   // TODAY'S ORDERS - For testing Today's Sales
   {
@@ -1010,8 +1009,8 @@ const ordersData = [
         size: 'L',
         color: 'Red',
         quantity: 1,
-        price: 1959000,
-      },
+        price: 1959000
+      }
     ],
     shippingAddress: {
       recipientName: 'Van A',
@@ -1020,14 +1019,14 @@ const ordersData = [
       state: 'Thua Thien Hue',
       postalCode: '53000',
       country: 'Vietnam',
-      phone: '0901000001',
+      phone: '0901000001'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_today_001',
       status: 'COMPLETED',
       update_time: new Date().toISOString(),
-      email_address: 'user01@example.com',
+      email_address: 'user01@example.com'
     },
     taxPrice: 195900,
     shippingPrice: 50000,
@@ -1035,7 +1034,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date(), // Today's date
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user02@example.com',
@@ -1045,8 +1044,8 @@ const ordersData = [
         size: 'M',
         color: 'Black',
         quantity: 1,
-        price: 1699000,
-      },
+        price: 1699000
+      }
     ],
     shippingAddress: {
       recipientName: 'Thi B',
@@ -1055,7 +1054,7 @@ const ordersData = [
       state: 'Quang Nam',
       postalCode: '56000',
       country: 'Vietnam',
-      phone: '0901000002',
+      phone: '0901000002'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 169900,
@@ -1064,7 +1063,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date(), // Today's date
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   {
     userEmail: 'user03@example.com',
@@ -1074,15 +1073,15 @@ const ordersData = [
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
-        price: 1499000,
+        price: 1499000
       },
       {
         productName: 'Bayern Munich Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 1,
-        price: 1599000,
-      },
+        price: 1599000
+      }
     ],
     shippingAddress: {
       recipientName: 'Minh C',
@@ -1091,7 +1090,7 @@ const ordersData = [
       state: 'Da Nang',
       postalCode: '55000',
       country: 'Vietnam',
-      phone: '0901000003',
+      phone: '0901000003'
     },
     paymentMethod: 'COD',
     taxPrice: 309800,
@@ -1100,7 +1099,7 @@ const ordersData = [
     isPaid: true,
     paidAt: new Date(), // Today's date
     isDelivered: false,
-    orderStatus: 'paid',
+    orderStatus: 'paid'
   },
   // --- Đơn hàng cho user baotuangay@gmail.com ---
   {
@@ -1111,8 +1110,8 @@ const ordersData = [
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 1959000,
-      },
+        price: 1959000
+      }
     ],
     shippingAddress: {
       recipientName: 'Huỳnh Phạm Bảo Tuân',
@@ -1122,7 +1121,7 @@ const ordersData = [
       country: 'Vietnam',
       addressNumber: 'k26/12',
       isDefault: true,
-      phone: '0934840520',
+      phone: '0934840520'
     },
     paymentMethod: 'COD',
     taxPrice: 195900,
@@ -1132,7 +1131,7 @@ const ordersData = [
     paidAt: new Date('2025-07-11T10:00:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-07-13T15:00:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'baotuangay@gmail.com',
@@ -1142,8 +1141,8 @@ const ordersData = [
         size: 'L',
         color: 'White',
         quantity: 1,
-        price: 1999000,
-      },
+        price: 1999000
+      }
     ],
     shippingAddress: {
       recipientName: 'Huỳnh Phạm Bảo Tuân',
@@ -1153,7 +1152,7 @@ const ordersData = [
       country: 'Vietnam',
       addressNumber: 'k26/12',
       isDefault: true,
-      phone: '0934840520',
+      phone: '0934840520'
     },
     paymentMethod: 'BANK_TRANSFER',
     taxPrice: 199900,
@@ -1163,7 +1162,7 @@ const ordersData = [
     paidAt: new Date('2025-07-15T09:00:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-07-17T14:00:00Z'),
-    orderStatus: 'delivered',
+    orderStatus: 'delivered'
   },
   {
     userEmail: 'baotuangay@gmail.com',
@@ -1173,8 +1172,8 @@ const ordersData = [
         size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 1599000,
-      },
+        price: 1599000
+      }
     ],
     shippingAddress: {
       recipientName: 'Huỳnh Phạm Bảo Tuân',
@@ -1184,14 +1183,14 @@ const ordersData = [
       country: 'Vietnam',
       addressNumber: 'k26/12',
       isDefault: true,
-      phone: '0934840520',
+      phone: '0934840520'
     },
     paymentMethod: 'CREDIT_CARD',
     paymentResult: {
       id: 'pay_tuan_001',
       status: 'COMPLETED',
       update_time: '2025-07-20T12:00:00Z',
-      email_address: 'baotuangay@gmail.com',
+      email_address: 'baotuangay@gmail.com'
     },
     taxPrice: 159900,
     shippingPrice: 50000,
@@ -1200,109 +1199,105 @@ const ordersData = [
     paidAt: new Date('2025-07-20T12:00:00Z'),
     isDelivered: true,
     deliveredAt: new Date('2025-07-22T16:00:00Z'),
-    orderStatus: 'delivered',
-  },
-];
+    orderStatus: 'delivered'
+  }
+]
 
 const findUserByEmail = async (email: string) => {
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email })
   if (!user) {
-    throw new Error(`User with email ${email} not found`);
+    throw new Error(`User with email ${email} not found`)
   }
-  return user._id;
-};
+  return user._id
+}
 
 const findProductByName = async (productName: string) => {
-  console.log(`🔍 Looking for product: ${productName}`);
-  const product = await Product.findOne({ name: productName });
+  console.log(`🔍 Looking for product: ${productName}`)
+  const product = await Product.findOne({ name: productName })
   if (!product) {
     // Log all available products for debugging
-    const allProducts = await Product.find({}, 'name');
-    console.log(`❌ Product with name ${productName} not found`);
+    const allProducts = await Product.find({}, 'name')
+    console.log(`❌ Product with name ${productName} not found`)
     console.log(
       `Available products:`,
-      allProducts.map((p) => p.name),
-    );
-    throw new Error(`Product with name ${productName} not found`);
+      allProducts.map((p) => p.name)
+    )
+    throw new Error(`Product with name ${productName} not found`)
   }
-  console.log(`✅ Found product: ${product.name}`);
-  return product._id;
-};
+  console.log(`✅ Found product: ${product.name}`)
+  return product._id
+}
 
 export const seedOrders = async () => {
-  try {
-    console.log('🔄 Starting order seeding...');
+  console.log('🔄 Starting order seeding...')
 
-    // Check if products exist
-    const productCount = await Product.countDocuments();
-    console.log(`📊 Total products in database: ${productCount}`);
+  // Check if products exist
+  const productCount = await Product.countDocuments()
+  console.log(`📊 Total products in database: ${productCount}`)
 
-    if (productCount === 0) {
-      console.log('❌ No products found in database. Skipping order seeding.');
-      return [];
-    }
-
-    const createdOrders = [];
-
-    for (const orderData of ordersData) {
-      // Check if order already exists by checking user, orderItems, and totalPrice
-      const userId = await findUserByEmail(orderData.userEmail);
-
-      const orderItems = [];
-      for (const item of orderData.orderItems) {
-        const productId = await findProductByName(item.productName);
-        orderItems.push({
-          product: productId,
-          size: [
-            {
-              sku: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-              size: item.size,
-              stock: item.quantity,
-              color: item.color,
-            },
-          ],
-          quantity: item.quantity,
-          price: item.price,
-        });
-      }
-
-      // Check if order with same user, similar items, and totalPrice already exists
-      const existingOrder = await Order.findOne({
-        user: userId,
-        totalPrice: orderData.totalPrice,
-        'orderItems.0.product': orderItems[0].product,
-      });
-
-      if (existingOrder) {
-        continue;
-      }
-
-      const order = new Order({
-        user: userId,
-        orderItems,
-        shippingAddress: orderData.shippingAddress,
-        paymentMethod: orderData.paymentMethod,
-        paymentResult: orderData.paymentResult,
-        taxPrice: orderData.taxPrice,
-        shippingPrice: orderData.shippingPrice,
-        totalPrice: orderData.totalPrice,
-        isPaid: orderData.isPaid,
-        paidAt: orderData.paidAt,
-        isDelivered: orderData.isDelivered,
-        deliveredAt: orderData.deliveredAt,
-        orderStatus: orderData.orderStatus,
-      });
-
-      const savedOrder = await order.save();
-      createdOrders.push(savedOrder);
-      console.log(`✅ Created order for user: ${orderData.userEmail}`);
-    }
-
-    console.log(`\n📊 Order seeding summary:`);
-    console.log(`   Created: ${createdOrders.length} orders`);
-
-    return createdOrders;
-  } catch (error) {
-    throw error;
+  if (productCount === 0) {
+    console.log('❌ No products found in database. Skipping order seeding.')
+    return []
   }
-};
+
+  const createdOrders = []
+
+  for (const orderData of ordersData) {
+    // Check if order already exists by checking user, orderItems, and totalPrice
+    const userId = await findUserByEmail(orderData.userEmail)
+
+    const orderItems = []
+    for (const item of orderData.orderItems) {
+      const productId = await findProductByName(item.productName)
+      orderItems.push({
+        product: productId,
+        size: [
+          {
+            sku: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            size: item.size,
+            stock: item.quantity,
+            color: item.color
+          }
+        ],
+        quantity: item.quantity,
+        price: item.price
+      })
+    }
+
+    // Check if order with same user, similar items, and totalPrice already exists
+    const existingOrder = await Order.findOne({
+      user: userId,
+      totalPrice: orderData.totalPrice,
+      'orderItems.0.product': orderItems[0].product
+    })
+
+    if (existingOrder) {
+      continue
+    }
+
+    const order = new Order({
+      user: userId,
+      orderItems,
+      shippingAddress: orderData.shippingAddress,
+      paymentMethod: orderData.paymentMethod,
+      paymentResult: orderData.paymentResult,
+      taxPrice: orderData.taxPrice,
+      shippingPrice: orderData.shippingPrice,
+      totalPrice: orderData.totalPrice,
+      isPaid: orderData.isPaid,
+      paidAt: orderData.paidAt,
+      isDelivered: orderData.isDelivered,
+      deliveredAt: orderData.deliveredAt,
+      orderStatus: orderData.orderStatus
+    })
+
+    const savedOrder = await order.save()
+    createdOrders.push(savedOrder)
+    console.log(`✅ Created order for user: ${orderData.userEmail}`)
+  }
+
+  console.log(`\n📊 Order seeding summary:`)
+  console.log(`   Created: ${createdOrders.length} orders`)
+
+  return createdOrders
+}

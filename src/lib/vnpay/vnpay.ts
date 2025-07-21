@@ -4,13 +4,13 @@ import {
   QUERY_DR_REFUND_ENDPOINT,
   VNPAY_GATEWAY_SANDBOX_HOST,
   VNP_DEFAULT_COMMAND,
-  VNP_VERSION,
-} from './constants';
-import { HashAlgorithm, ProductCode, VnpCurrCode, VnpLocale } from './enums';
-import { LoggerService } from './services/logger.service';
-import { PaymentService } from './services/payment.service';
-import { QueryService } from './services/query.service';
-import { VerificationService } from './services/verification.service';
+  VNP_VERSION
+} from './constants'
+import { HashAlgorithm, ProductCode, VnpCurrCode, VnpLocale } from './enums'
+import { LoggerService } from './services/logger.service'
+import { PaymentService } from './services/payment.service'
+import { QueryService } from './services/query.service'
+import { VerificationService } from './services/verification.service'
 import type {
   Bank,
   BuildPaymentUrl,
@@ -34,9 +34,9 @@ import type {
   VerifyIpnCallOptions,
   VerifyReturnUrl,
   VerifyReturnUrlLogger,
-  VerifyReturnUrlOptions,
-} from './types';
-import { resolveUrlString } from './utils/common';
+  VerifyReturnUrlOptions
+} from './types'
+import { resolveUrlString } from './utils/common'
 
 /**
  * Lớp hỗ trợ thanh toán qua VNPay
@@ -71,14 +71,14 @@ import { resolveUrlString } from './utils/common';
  *
  */
 export class VNPay {
-  private readonly globalConfig: GlobalConfig;
-  private readonly hashAlgorithm: HashAlgorithm;
+  private readonly globalConfig: GlobalConfig
+  private readonly hashAlgorithm: HashAlgorithm
 
   // Service instances
-  private readonly loggerService: LoggerService;
-  private readonly paymentService: PaymentService;
-  private readonly verificationService: VerificationService;
-  private readonly queryService: QueryService;
+  private readonly loggerService: LoggerService
+  private readonly paymentService: PaymentService
+  private readonly verificationService: VerificationService
+  private readonly queryService: QueryService
 
   /**
    * Khởi tạo đối tượng VNPay
@@ -98,18 +98,18 @@ export class VNPay {
     ...config
   }: VNPayConfig) {
     if (testMode) {
-      vnpayHost = VNPAY_GATEWAY_SANDBOX_HOST;
-      queryDrAndRefundHost = VNPAY_GATEWAY_SANDBOX_HOST;
+      vnpayHost = VNPAY_GATEWAY_SANDBOX_HOST
+      queryDrAndRefundHost = VNPAY_GATEWAY_SANDBOX_HOST
     }
 
-    this.hashAlgorithm = config?.hashAlgorithm ?? HashAlgorithm.SHA512;
+    this.hashAlgorithm = config?.hashAlgorithm ?? HashAlgorithm.SHA512
 
     // Initialize endpoints with defaults and overrides
     const initializedEndpoints: EndpointConfig = {
       paymentEndpoint: endpoints.paymentEndpoint || paymentEndpoint,
       queryDrRefundEndpoint: endpoints.queryDrRefundEndpoint || QUERY_DR_REFUND_ENDPOINT,
-      getBankListEndpoint: endpoints.getBankListEndpoint || GET_BANK_LIST_ENDPOINT,
-    };
+      getBankListEndpoint: endpoints.getBankListEndpoint || GET_BANK_LIST_ENDPOINT
+    }
 
     this.globalConfig = {
       vnpayHost,
@@ -121,24 +121,16 @@ export class VNPay {
       paymentEndpoint: initializedEndpoints.paymentEndpoint as string,
       endpoints: initializedEndpoints,
       queryDrAndRefundHost,
-      ...config,
-    };
+      ...config
+    }
 
-    this.loggerService = new LoggerService(config?.enableLog ?? false, config?.loggerFn);
+    this.loggerService = new LoggerService(config?.enableLog ?? false, config?.loggerFn)
 
-    this.paymentService = new PaymentService(
-      this.globalConfig,
-      this.loggerService,
-      this.hashAlgorithm,
-    );
+    this.paymentService = new PaymentService(this.globalConfig, this.loggerService, this.hashAlgorithm)
 
-    this.verificationService = new VerificationService(
-      this.globalConfig,
-      this.loggerService,
-      this.hashAlgorithm,
-    );
+    this.verificationService = new VerificationService(this.globalConfig, this.loggerService, this.hashAlgorithm)
 
-    this.queryService = new QueryService(this.globalConfig, this.loggerService, this.hashAlgorithm);
+    this.queryService = new QueryService(this.globalConfig, this.loggerService, this.hashAlgorithm)
   }
 
   /**
@@ -155,8 +147,8 @@ export class VNPay {
       vnp_CurrCode: this.globalConfig.vnp_CurrCode,
       vnp_Locale: this.globalConfig.vnp_Locale,
       vnp_Command: this.globalConfig.vnp_Command,
-      vnp_OrderType: this.globalConfig.vnp_OrderType,
-    };
+      vnp_OrderType: this.globalConfig.vnp_OrderType
+    }
   }
 
   /**
@@ -170,27 +162,27 @@ export class VNPay {
     const response = await fetch(
       resolveUrlString(
         this.globalConfig.vnpayHost ?? VNPAY_GATEWAY_SANDBOX_HOST,
-        this.globalConfig.endpoints.getBankListEndpoint as string,
+        this.globalConfig.endpoints.getBankListEndpoint as string
       ),
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `tmn_code=${this.globalConfig.tmnCode}`,
-      },
-    );
+        body: `tmn_code=${this.globalConfig.tmnCode}`
+      }
+    )
 
-    const bankList = (await response.json()) as Bank[];
+    const bankList = (await response.json()) as Bank[]
 
     for (const bank of bankList) {
       bank.logo_link = resolveUrlString(
         this.globalConfig.vnpayHost ?? VNPAY_GATEWAY_SANDBOX_HOST,
-        bank.logo_link.slice(1),
-      );
+        bank.logo_link.slice(1)
+      )
     }
 
-    return bankList;
+    return bankList
   }
 
   /**
@@ -209,9 +201,9 @@ export class VNPay {
    */
   public buildPaymentUrl<LoggerFields extends keyof BuildPaymentUrlLogger>(
     data: BuildPaymentUrl,
-    options?: BuildPaymentUrlOptions<LoggerFields>,
+    options?: BuildPaymentUrlOptions<LoggerFields>
   ): string {
-    return this.paymentService.buildPaymentUrl(data, options);
+    return this.paymentService.buildPaymentUrl(data, options)
   }
 
   /**
@@ -230,9 +222,9 @@ export class VNPay {
    */
   public verifyReturnUrl<LoggerFields extends keyof VerifyReturnUrlLogger>(
     query: ReturnQueryFromVNPay,
-    options?: VerifyReturnUrlOptions<LoggerFields>,
+    options?: VerifyReturnUrlOptions<LoggerFields>
   ): VerifyReturnUrl {
-    return this.verificationService.verifyReturnUrl(query, options);
+    return this.verificationService.verifyReturnUrl(query, options)
   }
 
   /**
@@ -262,9 +254,9 @@ export class VNPay {
    */
   public verifyIpnCall<LoggerFields extends keyof VerifyIpnCallLogger>(
     query: ReturnQueryFromVNPay,
-    options?: VerifyIpnCallOptions<LoggerFields>,
+    options?: VerifyIpnCallOptions<LoggerFields>
   ): VerifyIpnCall {
-    return this.verificationService.verifyIpnCall(query, options);
+    return this.verificationService.verifyIpnCall(query, options)
   }
 
   /**
@@ -283,9 +275,9 @@ export class VNPay {
    */
   public async queryDr<LoggerFields extends keyof QueryDrResponseLogger>(
     query: QueryDr,
-    options?: QueryDrResponseOptions<LoggerFields>,
+    options?: QueryDrResponseOptions<LoggerFields>
   ): Promise<QueryDrResponse> {
-    return this.queryService.queryDr(query, options);
+    return this.queryService.queryDr(query, options)
   }
 
   /**
@@ -304,8 +296,8 @@ export class VNPay {
    */
   public async refund<LoggerFields extends keyof RefundResponseLogger>(
     data: Refund,
-    options?: RefundOptions<LoggerFields>,
+    options?: RefundOptions<LoggerFields>
   ): Promise<RefundResponse> {
-    return this.queryService.refund(data, options);
+    return this.queryService.refund(data, options)
   }
 }

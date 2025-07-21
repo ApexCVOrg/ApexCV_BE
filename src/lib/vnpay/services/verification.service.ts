@@ -1,5 +1,5 @@
-import { WRONG_CHECKSUM_KEY, numberRegex } from '../constants';
-import type { HashAlgorithm } from '../enums';
+import { numberRegex } from '../constants'
+import type { HashAlgorithm } from '../enums'
 import type {
   GlobalConfig,
   ReturnQueryFromVNPay,
@@ -8,21 +8,21 @@ import type {
   VerifyIpnCallOptions,
   VerifyReturnUrl,
   VerifyReturnUrlLogger,
-  VerifyReturnUrlOptions,
-} from '../types';
-import { ignoreLogger } from '../utils';
-import { getResponseByStatusCode } from '../utils/common';
-import { buildPaymentUrlSearchParams, verifySecureHash } from '../utils/payment.util';
-import type { LoggerService } from './logger.service';
+  VerifyReturnUrlOptions
+} from '../types'
+import { ignoreLogger } from '../utils'
+import { getResponseByStatusCode } from '../utils/common'
+import { buildPaymentUrlSearchParams, verifySecureHash } from '../utils/payment.util'
+import type { LoggerService } from './logger.service'
 
 /**
  * Dịch vụ xác thực dữ liệu từ VNPay
  * @en Verification service for VNPay data
  */
 export class VerificationService {
-  private readonly config: GlobalConfig;
-  private readonly logger: LoggerService;
-  private readonly hashAlgorithm: HashAlgorithm;
+  private readonly config: GlobalConfig
+  private readonly logger: LoggerService
+  private readonly hashAlgorithm: HashAlgorithm
 
   /**
    * Khởi tạo dịch vụ xác thực
@@ -38,9 +38,9 @@ export class VerificationService {
    * @en @param hashAlgorithm - Hash algorithm
    */
   constructor(config: GlobalConfig, logger: LoggerService, hashAlgorithm: HashAlgorithm) {
-    this.config = config;
-    this.logger = logger;
-    this.hashAlgorithm = hashAlgorithm;
+    this.config = config
+    this.logger = logger
+    this.hashAlgorithm = hashAlgorithm
   }
 
   /**
@@ -58,58 +58,55 @@ export class VerificationService {
    */
   public verifyReturnUrl<LoggerFields extends keyof VerifyReturnUrlLogger>(
     query: ReturnQueryFromVNPay,
-    options?: VerifyReturnUrlOptions<LoggerFields>,
+    options?: VerifyReturnUrlOptions<LoggerFields>
   ): VerifyReturnUrl {
-    const { vnp_SecureHash = '', vnp_SecureHashType, ...cloneQuery } = query;
+    const { vnp_SecureHash = '', ...cloneQuery } = query
 
     if (typeof cloneQuery?.vnp_Amount !== 'number') {
-      const isValidAmount = numberRegex.test(cloneQuery?.vnp_Amount ?? '');
+      const isValidAmount = numberRegex.test(cloneQuery?.vnp_Amount ?? '')
       if (!isValidAmount) {
-        throw new Error('Invalid amount');
+        throw new Error('Invalid amount')
       }
-      cloneQuery.vnp_Amount = Number(cloneQuery.vnp_Amount);
+      cloneQuery.vnp_Amount = Number(cloneQuery.vnp_Amount)
     }
 
-    const searchParams = buildPaymentUrlSearchParams(cloneQuery);
+    const searchParams = buildPaymentUrlSearchParams(cloneQuery)
     const isVerified = verifySecureHash({
       secureSecret: this.config.secureSecret,
       data: searchParams.toString(),
       hashAlgorithm: this.hashAlgorithm,
-      receivedHash: vnp_SecureHash,
-    });
+      receivedHash: vnp_SecureHash
+    })
 
     let outputResults = {
       isVerified,
       isSuccess: cloneQuery.vnp_ResponseCode === '00',
-      message: getResponseByStatusCode(
-        cloneQuery.vnp_ResponseCode?.toString() ?? '',
-        this.config.vnp_Locale,
-      ),
-    };
+      message: getResponseByStatusCode(cloneQuery.vnp_ResponseCode?.toString() ?? '', this.config.vnp_Locale)
+    }
 
     if (!isVerified) {
       outputResults = {
         ...outputResults,
-        message: 'Wrong checksum',
-      };
+        message: 'Wrong checksum'
+      }
     }
 
     const result = {
       ...cloneQuery,
       ...outputResults,
-      vnp_Amount: cloneQuery.vnp_Amount / 100,
-    };
+      vnp_Amount: cloneQuery.vnp_Amount / 100
+    }
 
     const data2Log: VerifyReturnUrlLogger = {
       createdAt: new Date(),
       method: 'verifyReturnUrl',
       ...result,
-      vnp_SecureHash: options?.withHash ? vnp_SecureHash : undefined,
-    };
+      vnp_SecureHash: options?.withHash ? vnp_SecureHash : undefined
+    }
 
-    this.logger.log(data2Log, options, 'verifyReturnUrl');
+    this.logger.log(data2Log, options, 'verifyReturnUrl')
 
-    return result;
+    return result
   }
 
   /**
@@ -134,27 +131,24 @@ export class VerificationService {
    */
   public verifyIpnCall<LoggerFields extends keyof VerifyIpnCallLogger>(
     query: ReturnQueryFromVNPay,
-    options?: VerifyIpnCallOptions<LoggerFields>,
+    options?: VerifyIpnCallOptions<LoggerFields>
   ): VerifyIpnCall {
-    const hash = query.vnp_SecureHash;
+    const hash = query.vnp_SecureHash
 
     // Use silent logger to avoid double logging
-    const silentOptions = { logger: { loggerFn: ignoreLogger } };
+    const silentOptions = { logger: { loggerFn: ignoreLogger } }
     // Fix the 'any' type issue by using a more specific type
-    const result = this.verifyReturnUrl(
-      query,
-      silentOptions as VerifyReturnUrlOptions<keyof VerifyReturnUrlLogger>,
-    );
+    const result = this.verifyReturnUrl(query, silentOptions as VerifyReturnUrlOptions<keyof VerifyReturnUrlLogger>)
 
     const data2Log: VerifyIpnCallLogger = {
       createdAt: new Date(),
       method: 'verifyIpnCall',
       ...result,
-      ...(options?.withHash ? { vnp_SecureHash: hash } : {}),
-    };
+      ...(options?.withHash ? { vnp_SecureHash: hash } : {})
+    }
 
-    this.logger.log(data2Log, options, 'verifyIpnCall');
+    this.logger.log(data2Log, options, 'verifyIpnCall')
 
-    return result;
+    return result
   }
 }

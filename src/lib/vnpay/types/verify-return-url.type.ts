@@ -1,5 +1,5 @@
-import type { LoggerData, LoggerOptions } from './logger.type';
-import type { ReturnQueryFromVNPay } from './return-from-vnpay.type';
+import type { LoggerData, LoggerOptions } from './logger.type'
+import type { ReturnQueryFromVNPay } from './return-from-vnpay.type'
 
 export type VerifyReturnUrl = {
   /**
@@ -7,7 +7,7 @@ export type VerifyReturnUrl = {
    * @en Transaction status
    * @example true
    */
-  isSuccess: boolean;
+  isSuccess: boolean
 
   /**
    * Trạng thái xác nhận tính đúng đắn, toàn vẹn khi nhận dữ liệu từ VNPay
@@ -15,22 +15,22 @@ export type VerifyReturnUrl = {
    * @en Verification status, true when data from VNPay is correct and verified
    * @example true
    */
-  isVerified: boolean;
+  isVerified: boolean
 
   /**
    * Thông báo lỗi
    * @en Error message
    * @example 'Giao dịch thành công'
    */
-  message: string;
-} & ReturnQueryFromVNPay;
+  message: string
+} & ReturnQueryFromVNPay
 
 export type VerifyReturnUrlLogger = LoggerData<
   {
-    createdAt: Date;
+    createdAt: Date
   } & VerifyReturnUrl
->;
+>
 
 export type VerifyReturnUrlOptions<Fields extends keyof VerifyReturnUrlLogger> = {
-  withHash?: boolean;
-} & LoggerOptions<VerifyReturnUrlLogger, Fields>;
+  withHash?: boolean
+} & LoggerOptions<VerifyReturnUrlLogger, Fields>

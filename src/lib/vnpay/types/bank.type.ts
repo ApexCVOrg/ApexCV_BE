@@ -4,22 +4,22 @@ export type Bank = {
    *
    * @en Bank code
    */
-  bank_code: string;
+  bank_code: string
 
   /**
    * Tên ngân hàng
    *
    * @en Bank name
    */
-  bank_name: string;
+  bank_name: string
 
   /**
    * Đường dẫn logo của ngân hàng
    *
    * @en Logo link
    */
-  logo_link: string;
+  logo_link: string
 
-  bank_type: number;
-  display_order: number;
-};
+  bank_type: number
+  display_order: number
+}

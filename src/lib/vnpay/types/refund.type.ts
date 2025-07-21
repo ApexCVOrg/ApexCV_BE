@@ -1,8 +1,8 @@
-import type { RefundTransactionType } from '../enums';
-import type { BuildPaymentUrl } from './build-payment-url.type';
-import type { ResultVerified } from './common.type';
-import type { LoggerData, LoggerOptions } from './logger.type';
-import type { QueryDr, QueryDrResponseFromVNPay } from './query-dr.type';
+import type { RefundTransactionType } from '../enums'
+import type { BuildPaymentUrl } from './build-payment-url.type'
+import type { ResultVerified } from './common.type'
+import type { LoggerData, LoggerOptions } from './logger.type'
+import type { QueryDr, QueryDrResponseFromVNPay } from './query-dr.type'
 
 export type Refund = Partial<Pick<QueryDr, 'vnp_TransactionNo'>> &
   Pick<QueryDr, 'vnp_RequestId' | 'vnp_TransactionDate' | 'vnp_IpAddr'> &
@@ -18,7 +18,7 @@ export type Refund = Partial<Pick<QueryDr, 'vnp_TransactionNo'>> &
      * - `02`: Full refund
      * - `03`: Partial refund
      */
-    vnp_TransactionType: RefundTransactionType | string;
+    vnp_TransactionType: RefundTransactionType | string
 
     /**
      * Người khởi tạo hoàn tiền. Có thể là tên user thực hiện hoàn tiền của merchant.
@@ -26,15 +26,15 @@ export type Refund = Partial<Pick<QueryDr, 'vnp_TransactionNo'>> &
      * @en
      * The name of user who create the refund transaction of merchant.
      */
-    vnp_CreateBy: string;
+    vnp_CreateBy: string
 
     /**
      * Thời gian phát sinh yêu cầu hoàn tiền (GMT +7)
      *
      * @en Time of refund request (GMT +7)
      */
-    vnp_CreateDate: number;
-  };
+    vnp_CreateDate: number
+  }
 
 export type RefundResponseFromVNPay = Pick<
   QueryDrResponseFromVNPay,
@@ -58,37 +58,34 @@ export type RefundResponseFromVNPay = Pick<
    * The system code is unique for each refund transaction request.
    * Not duplicated in a day.
    */
-  vnp_ResponseId: string;
+  vnp_ResponseId: string
 
   /**
    * Mã API sử dụng, mã cho giao dịch thanh toán là "refund"
    *
    * @en API code used for payment, the transaction code is "refund"
    */
-  vnp_Command: string;
+  vnp_Command: string
 
   /**
    * Mã hệ thống VNPAY
    */
-  vnp_TmnCode: string;
+  vnp_TmnCode: string
 
   /**
    * Nội dung của yêu cầu hoàn tiền
    *
    * @en Content of the refund request
    */
-  vnp_OrderInfo: string;
-};
+  vnp_OrderInfo: string
+}
 
-export type RefundResponse = ResultVerified & RefundResponseFromVNPay;
+export type RefundResponse = ResultVerified & RefundResponseFromVNPay
 
 export type RefundResponseLogger = LoggerData<
   {
-    createdAt: Date;
+    createdAt: Date
   } & RefundResponse
->;
+>
 
-export type RefundOptions<Fields extends keyof RefundResponseLogger> = LoggerOptions<
-  RefundResponseLogger,
-  Fields
->;
+export type RefundOptions<Fields extends keyof RefundResponseLogger> = LoggerOptions<RefundResponseLogger, Fields>

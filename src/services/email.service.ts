@@ -1,41 +1,41 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 // Create transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-});
+    pass: process.env.GMAIL_PASS
+  }
+})
 
 /**
  * Verifies the SMTP transporter configuration.
  */
 const verifyTransporter = async (): Promise<boolean> => {
   try {
-    await transporter.verify();
-    console.log('✅ SMTP transporter is configured correctly.');
-    return true;
+    await transporter.verify()
+    console.log('✅ SMTP transporter is configured correctly.')
+    return true
   } catch (error) {
-    console.error('❌ SMTP verification failed:', error);
+    console.error('❌ SMTP verification failed:', error)
 
     if (error instanceof Error) {
       if (error.message.includes('Invalid login')) {
-        console.error('🔧 Use a Gmail App Password instead of your regular password.');
+        console.error('🔧 Use a Gmail App Password instead of your regular password.')
       } else if (error.message.includes('Missing credentials')) {
-        console.error('🔧 Ensure GMAIL_USER and GMAIL_PASS are defined in .env.');
+        console.error('🔧 Ensure GMAIL_USER and GMAIL_PASS are defined in .env.')
       }
     }
 
-    throw error;
+    throw error
   }
-};
+}
 
-verifyTransporter().catch(console.error);
+verifyTransporter().catch(console.error)
 
 /**
  * Sends a verification email with a code to the specified email address.
@@ -45,12 +45,12 @@ verifyTransporter().catch(console.error);
 export const sendVerificationEmail = async (email: string, code: string): Promise<void> => {
   try {
     if (!email || !code) {
-      throw new Error('Email and verification code are required.');
+      throw new Error('Email and verification code are required.')
     }
 
-    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     if (!isEmailValid) {
-      throw new Error('Invalid email format.');
+      throw new Error('Invalid email format.')
     }
 
     const mailOptions = {
@@ -58,29 +58,27 @@ export const sendVerificationEmail = async (email: string, code: string): Promis
       to: email,
       subject: 'NIDAS - Email Verification Code',
       text: `Your NIDAS verification code is: ${code}. This code will expire in 1 minute.`,
-      html: generateEmailHTML(code),
-    };
+      html: generateEmailHTML(code)
+    }
 
-    console.log(`📤 Sending email to: ${email}`);
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Email sent: ${info.messageId}`);
-    console.log(`📨 Response: ${info.response}`);
+    console.log(`📤 Sending email to: ${email}`)
+    const info = await transporter.sendMail(mailOptions)
+    console.log(`✅ Email sent: ${info.messageId}`)
+    console.log(`📨 Response: ${info.response}`)
   } catch (error) {
-    console.error('❌ Email send failed:', error);
+    console.error('❌ Email send failed:', error)
 
     if (error instanceof Error) {
       if (error.message.includes('Invalid login')) {
-        console.error('🔧 Use Gmail App Password, not your Gmail password.');
+        console.error('🔧 Use Gmail App Password, not your Gmail password.')
       } else if (error.message.includes('Authentication failed')) {
-        console.error('🔧 Check credentials and make sure 2FA is setup with App Password.');
+        console.error('🔧 Check credentials and make sure 2FA is setup with App Password.')
       }
     }
 
-    throw new Error(
-      `Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    );
+    throw new Error(`Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
-};
+}
 
 /**
  * Generates HTML content for the verification email.
@@ -117,16 +115,16 @@ const generateEmailHTML = (code: string): string => `
       </p>
     </div>
   </div>
-`;
+`
 export const sendResetPasswordEmail = async (email: string, otp: string): Promise<void> => {
   try {
     if (!email || !otp) {
-      throw new Error('Email and OTP code are required.');
+      throw new Error('Email and OTP code are required.')
     }
 
-    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     if (!isEmailValid) {
-      throw new Error('Invalid email format.');
+      throw new Error('Invalid email format.')
     }
 
     const mailOptions = {
@@ -134,29 +132,27 @@ export const sendResetPasswordEmail = async (email: string, otp: string): Promis
       to: email,
       subject: 'NIDAS - Password Reset OTP',
       text: `Your NIDAS password reset OTP is: ${otp}. This code will expire in 1 minute.`,
-      html: generateResetPasswordEmailHTML(otp),
-    };
+      html: generateResetPasswordEmailHTML(otp)
+    }
 
-    console.log(`📤 Sending password reset email to: ${email}`);
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Password reset email sent: ${info.messageId}`);
-    console.log(`📨 Response: ${info.response}`);
+    console.log(`📤 Sending password reset email to: ${email}`)
+    const info = await transporter.sendMail(mailOptions)
+    console.log(`✅ Password reset email sent: ${info.messageId}`)
+    console.log(`📨 Response: ${info.response}`)
   } catch (error) {
-    console.error('❌ Password reset email send failed:', error);
+    console.error('❌ Password reset email send failed:', error)
 
     if (error instanceof Error) {
       if (error.message.includes('Invalid login')) {
-        console.error('🔧 Use Gmail App Password, not your Gmail password.');
+        console.error('🔧 Use Gmail App Password, not your Gmail password.')
       } else if (error.message.includes('Authentication failed')) {
-        console.error('🔧 Check credentials and make sure 2FA is setup with App Password.');
+        console.error('🔧 Check credentials and make sure 2FA is setup with App Password.')
       }
     }
 
-    throw new Error(
-      `Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    );
+    throw new Error(`Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
-};
+}
 const generateResetPasswordEmailHTML = (otp: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 30px;">
@@ -188,47 +184,36 @@ const generateResetPasswordEmailHTML = (otp: string): string => `
       </p>
     </div>
   </div>
-`;
+`
 
-export const sendBanUserEmail = async (
-  email: string,
-  reason: string,
-  admin: string,
-  status: string,
-): Promise<void> => {
+export const sendBanUserEmail = async (email: string, reason: string, admin: string, status: string): Promise<void> => {
   try {
     if (!email || !reason) {
-      throw new Error('Email and ban reason are required.');
+      throw new Error('Email and ban reason are required.')
     }
-    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     if (!isEmailValid) {
-      throw new Error('Invalid email format.');
+      throw new Error('Invalid email format.')
     }
     const mailOptions = {
       from: `"NIDAS" <${process.env.GMAIL_USER}>`,
       to: email,
-      subject:
-        status === 'locked' ? 'Your account has been banned' : 'Your account has been unbanned',
+      subject: status === 'locked' ? 'Your account has been banned' : 'Your account has been unbanned',
       text:
         status === 'locked'
           ? `Your account has been banned by admin (${admin}). Reason: ${reason}`
           : `Your account has been reactivated by admin (${admin}).`,
-      html:
-        status === 'locked'
-          ? generateBanUserEmailHTML(reason, admin)
-          : generateUnbanUserEmailHTML(admin),
-    };
-    console.log(`📤 Sending ban/unban email to: ${email}`);
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Ban/unban email sent: ${info.messageId}`);
-    console.log(`📨 Response: ${info.response}`);
+      html: status === 'locked' ? generateBanUserEmailHTML(reason, admin) : generateUnbanUserEmailHTML(admin)
+    }
+    console.log(`📤 Sending ban/unban email to: ${email}`)
+    const info = await transporter.sendMail(mailOptions)
+    console.log(`✅ Ban/unban email sent: ${info.messageId}`)
+    console.log(`📨 Response: ${info.response}`)
   } catch (error) {
-    console.error('❌ Ban/unban email send failed:', error);
-    throw new Error(
-      `Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    );
+    console.error('❌ Ban/unban email send failed:', error)
+    throw new Error(`Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
-};
+}
 
 const generateBanUserEmailHTML = (reason: string, admin: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -250,7 +235,7 @@ const generateBanUserEmailHTML = (reason: string, admin: string): string => `
       </p>
     </div>
   </div>
-`;
+`
 
 const generateUnbanUserEmailHTML = (admin: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -268,4 +253,4 @@ const generateUnbanUserEmailHTML = (admin: string): string => `
       </p>
     </div>
   </div>
-`;
+`

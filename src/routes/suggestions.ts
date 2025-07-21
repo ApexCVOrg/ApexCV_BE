@@ -1,7 +1,7 @@
-import { Router, Request, Response } from 'express';
-import { suggestionsService } from '../services/suggestionsService';
+import { Router, Request, Response } from 'express'
+import { suggestionsService } from '../services/suggestionsService'
 
-const router = Router();
+const router = Router()
 
 /**
  * GET /api/suggestions
@@ -15,39 +15,39 @@ const router = Router();
  */
 router.get('/', (req: Request, res: Response) => {
   try {
-    const { path = '' } = req.query;
+    const { path = '' } = req.query
 
     // Validate path parameter
     if (typeof path !== 'string') {
       return res.status(400).json({
         success: false,
-        message: 'Path parameter must be a string',
-      });
+        message: 'Path parameter must be a string'
+      })
     }
 
     // Lấy suggestions từ service
-    const result = suggestionsService.getSuggestions(path);
+    const result = suggestionsService.getSuggestions(path)
 
     res.json({
       success: true,
-      data: result,
-    });
+      data: result
+    })
   } catch (error) {
     if (error instanceof Error && error.message === 'Path not found') {
       return res.status(404).json({
         success: false,
-        message: 'Path not found',
-      });
+        message: 'Path not found'
+      })
     }
 
-    console.error('Suggestions API Error:', error);
+    console.error('Suggestions API Error:', error)
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
   }
-});
+})
 
 /**
  * GET /api/suggestions/tree (debug endpoint)
@@ -55,22 +55,22 @@ router.get('/', (req: Request, res: Response) => {
  */
 router.get('/tree', (_req: Request, res: Response) => {
   try {
-    const tree = suggestionsService.getTree();
+    const tree = suggestionsService.getTree()
     res.json({
       success: true,
       data: {
         tree,
-        totalNodes: tree.length,
-      },
-    });
+        totalNodes: tree.length
+      }
+    })
   } catch (error) {
-    console.error('Tree API Error:', error);
+    console.error('Tree API Error:', error)
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
+      error: error instanceof Error ? error.message : 'Unknown error'
+    })
   }
-});
+})
 
-export default router;
+export default router

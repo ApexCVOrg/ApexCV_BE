@@ -1,13 +1,13 @@
-import type { LoggerOptions } from '../types/logger.type';
-import { consoleLogger, ignoreLogger } from '../utils';
+import type { LoggerOptions } from '../types/logger.type'
+import { consoleLogger, ignoreLogger } from '../utils'
 
 /**
  * Lớp dịch vụ xử lý log cho VNPay
  * @en Logger service class for VNPay
  */
 export class LoggerService {
-  private isEnabled = false;
-  private readonly loggerFn: (data: unknown) => void = ignoreLogger;
+  private isEnabled = false
+  private readonly loggerFn: (data: unknown) => void = ignoreLogger
 
   /**
    * Khởi tạo dịch vụ logger
@@ -20,8 +20,8 @@ export class LoggerService {
    * @en @param customLoggerFn - Custom logger function
    */
   constructor(isEnabled = false, customLoggerFn?: (data: unknown) => void) {
-    this.isEnabled = isEnabled;
-    this.loggerFn = customLoggerFn || (isEnabled ? consoleLogger : ignoreLogger);
+    this.isEnabled = isEnabled
+    this.loggerFn = customLoggerFn || (isEnabled ? consoleLogger : ignoreLogger)
   }
 
   /**
@@ -40,31 +40,28 @@ export class LoggerService {
   public log<T extends object, LoggerFields extends keyof T>(
     data: T,
     options?: LoggerOptions<T, LoggerFields>,
-    methodName?: string,
+    methodName?: string
   ): void {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled) return
 
-    const logData = { ...data };
+    const logData = { ...data }
 
     if (methodName) {
-      Object.assign(logData, { method: methodName, createdAt: new Date() });
+      Object.assign(logData, { method: methodName, createdAt: new Date() })
     }
 
     if (options?.logger && 'fields' in options.logger) {
-      const { type, fields } = options.logger;
+      const { type, fields } = options.logger
 
       for (const key of Object.keys(logData)) {
-        const keyAssert = key as unknown as LoggerFields;
-        if (
-          (type === 'omit' && fields.includes(keyAssert)) ||
-          (type === 'pick' && !fields.includes(keyAssert))
-        ) {
-          delete logData[keyAssert];
+        const keyAssert = key as unknown as LoggerFields
+        if ((type === 'omit' && fields.includes(keyAssert)) || (type === 'pick' && !fields.includes(keyAssert))) {
+          delete logData[keyAssert]
         }
       }
     }
 
     // Execute logger function
-    (options?.logger?.loggerFn || this.loggerFn)(logData);
+    ;(options?.logger?.loggerFn || this.loggerFn)(logData)
   }
 }

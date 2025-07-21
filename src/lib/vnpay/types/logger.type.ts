@@ -2,7 +2,7 @@
  * Type representing a logger function.
  * @template T - The type of data the logger function accepts.
  */
-type LoggerFn<T> = (data: T) => void;
+type LoggerFn<T> = (data: T) => void
 
 /**
  * Type representing logger data.
@@ -12,8 +12,8 @@ export type LoggerData<T extends object> = T & {
   /**
    * The method used for logging.
    */
-  method: string;
-};
+  method: string
+}
 
 /**
  * Type representing logger options.
@@ -29,26 +29,26 @@ export type LoggerOptions<T, Fields extends keyof T> = {
    */
   logger:
     | {
-        type?: 'all';
+        type?: 'all'
         /**
          * An optional custom logger function for logging all fields.
          */
-        loggerFn?: LoggerFn<T>;
+        loggerFn?: LoggerFn<T>
       }
     | {
-        type: 'omit';
-        fields: Fields[];
+        type: 'omit'
+        fields: Fields[]
         /**
          * An optional custom logger function for logging all fields except those specified.
          */
-        loggerFn?: LoggerFn<Omit<T, Fields>>;
+        loggerFn?: LoggerFn<Omit<T, Fields>>
       }
     | {
-        type: 'pick';
-        fields: Fields[];
+        type: 'pick'
+        fields: Fields[]
         /**
          * An optional custom logger function for logging only the specified fields.
          */
-        loggerFn?: LoggerFn<Pick<T, Fields>>;
-      };
-};
+        loggerFn?: LoggerFn<Pick<T, Fields>>
+      }
+}

@@ -1,13 +1,10 @@
-import type { VnpLocale } from '../enums';
-import type { GlobalConfig } from './vnpay-config.type';
+import type { VnpLocale } from '../enums'
+import type { GlobalConfig } from './vnpay-config.type'
 
-export type DefaultConfig = Pick<
-  GlobalConfig,
-  'vnp_Version' | 'vnp_CurrCode' | 'vnp_Command' | 'vnp_OrderType'
-> & {
-  vnp_TmnCode: string;
-  vnp_Locale: VnpLocale;
-};
+export type DefaultConfig = Pick<GlobalConfig, 'vnp_Version' | 'vnp_CurrCode' | 'vnp_Command' | 'vnp_OrderType'> & {
+  vnp_TmnCode: string
+  vnp_Locale: VnpLocale
+}
 
 export type ResultVerified = {
   /**
@@ -16,7 +13,7 @@ export type ResultVerified = {
    * @en Transaction status
    * @example true
    */
-  isSuccess: boolean;
+  isSuccess: boolean
 
   /**
    * Trạng thái xác nhận tính đúng đắn, toàn vẹn khi nhận dữ liệu từ VNPay
@@ -24,7 +21,7 @@ export type ResultVerified = {
    * @en Verification status, true when data from VNPay is correct and verified
    * @example true
    */
-  isVerified: boolean;
+  isVerified: boolean
 
   /**
    * Tin nhắn thông báo
@@ -32,5 +29,5 @@ export type ResultVerified = {
    * @en Error message
    * @example 'Giao dịch thành công'
    */
-  message: string;
-};
+  message: string
+}

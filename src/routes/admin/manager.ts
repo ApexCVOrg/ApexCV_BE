@@ -1,7 +1,7 @@
 // Đây là phần CRUD mở rộng cho các router quản trị
 
-import express from 'express';
-import type { Request, Response, NextFunction } from 'express';
+import express from 'express'
+import type { Request, Response, NextFunction } from 'express'
 import {
   getDashboard,
   getProducts,
@@ -22,8 +22,6 @@ import {
   getCustomerById,
   updateCustomer,
   deleteCustomer,
-  getSettings,
-  updateSettings,
   getSalesStats,
   getUserStats,
   getOrderStats,
@@ -33,93 +31,93 @@ import {
   getUserById,
   createUser,
   updateUser,
-  deleteUser,
-} from '../../controllers/managerController';
-import { authenticateToken, isManager } from '../../middlewares/auth';
+  deleteUser
+} from '../../controllers/managerController'
+import { authenticateToken, isManager } from '../../middlewares/auth'
 import {
   getDashboardSummary,
   getLowStockProducts,
   getTodaySales,
   getOrderStats as getDashboardOrderStats,
   getTopSellingProducts,
-  getSalesChart,
-} from '../../controllers/dashboardController';
-import settingsRouter from './settings';
+  getSalesChart
+} from '../../controllers/dashboardController'
+import settingsRouter from './settings'
 
-const router = express.Router();
+const router = express.Router()
 
 // Đảm bảo middleware có đúng chữ ký (req, res, next)
 const secureRoute = [
   authenticateToken as (req: Request, res: Response, next: NextFunction) => void,
-  isManager as (req: Request, res: Response, next: NextFunction) => void,
-];
-router.use(...secureRoute);
+  isManager as (req: Request, res: Response, next: NextFunction) => void
+]
+router.use(...secureRoute)
 
-router.get('/dashboard', getDashboard);
+router.get('/dashboard', getDashboard)
 
 // Products CRUD
-router.get('/products', getProducts);
+router.get('/products', getProducts)
 router.get('/products/:id', (req, res, next) => {
-  Promise.resolve(getProductById(req, res)).catch(next);
-});
-router.post('/products', createProduct);
-router.put('/products/:id', updateProduct);
-router.delete('/products/:id', deleteProduct);
+  Promise.resolve(getProductById(req, res)).catch(next)
+})
+router.post('/products', createProduct)
+router.put('/products/:id', updateProduct)
+router.delete('/products/:id', deleteProduct)
 
 // Categories CRUD
-router.get('/categories', getCategories);
+router.get('/categories', getCategories)
 router.get('/categories/:id', (req, res, next) => {
-  Promise.resolve(getCategoryById(req, res)).catch(next);
-});
-router.post('/categories', createCategory);
+  Promise.resolve(getCategoryById(req, res)).catch(next)
+})
+router.post('/categories', createCategory)
 router.put('/categories/:id', (req, res, next) => {
-  Promise.resolve(updateCategory(req, res)).catch(next);
-});
-router.delete('/categories/:id', deleteCategory);
+  Promise.resolve(updateCategory(req, res)).catch(next)
+})
+router.delete('/categories/:id', deleteCategory)
 
 // Orders CRUD (chủ yếu update trạng thái)
-router.get('/orders', getOrders);
+router.get('/orders', getOrders)
 router.get('/orders/:id', (req, res, next) => {
-  Promise.resolve(getOrderById(req, res)).catch(next);
-});
-router.put('/orders/:id', updateOrderStatus);
-router.delete('/orders/:id', deleteOrder);
+  Promise.resolve(getOrderById(req, res)).catch(next)
+})
+router.put('/orders/:id', updateOrderStatus)
+router.delete('/orders/:id', deleteOrder)
 
 // Users CRUD
-router.get('/users', getUsers);
+router.get('/users', getUsers)
 router.get('/users/:id', (req, res, next) => {
-  Promise.resolve(getUserById(req, res)).catch(next);
-});
-router.post('/users', createUser);
-router.put('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+  Promise.resolve(getUserById(req, res)).catch(next)
+})
+router.post('/users', createUser)
+router.put('/users/:id', updateUser)
+router.delete('/users/:id', deleteUser)
 
 // Customers CRUD
-router.get('/customers', getCustomers);
+router.get('/customers', getCustomers)
 router.get('/customers/:id', (req, res, next) => {
-  Promise.resolve(getCustomerById(req, res)).catch(next);
-});
-router.put('/customers/:id', updateCustomer);
-router.delete('/customers/:id', deleteCustomer);
+  Promise.resolve(getCustomerById(req, res)).catch(next)
+})
+router.put('/customers/:id', updateCustomer)
+router.delete('/customers/:id', deleteCustomer)
 
 // Settings
-router.use('/settings', settingsRouter);
+router.use('/settings', settingsRouter)
 
 // Stats
-router.get('/stats/sales', getSalesStats);
-router.get('/stats/users', getUserStats);
-router.get('/stats/orders', getOrderStats);
-router.get('/stats/customers', getCustomerStats);
+router.get('/stats/sales', getSalesStats)
+router.get('/stats/users', getUserStats)
+router.get('/stats/orders', getOrderStats)
+router.get('/stats/customers', getCustomerStats)
 
 //Brands
-router.get('/brands', getBrands);
+router.get('/brands', getBrands)
 
 // Dashboard endpoints
-router.get('/dashboard/summary', getDashboardSummary);
-router.get('/dashboard/low-stock', getLowStockProducts);
-router.get('/dashboard/today-sales', getTodaySales);
-router.get('/dashboard/order-stats', getDashboardOrderStats);
-router.get('/dashboard/top-products', getTopSellingProducts);
-router.get('/dashboard/sales-chart', getSalesChart);
+router.get('/dashboard/summary', getDashboardSummary)
+router.get('/dashboard/low-stock', getLowStockProducts)
+router.get('/dashboard/today-sales', getTodaySales)
+router.get('/dashboard/order-stats', getDashboardOrderStats)
+router.get('/dashboard/top-products', getTopSellingProducts)
+router.get('/dashboard/sales-chart', getSalesChart)
 
-export default router;
+export default router

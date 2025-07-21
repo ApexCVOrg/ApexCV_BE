@@ -8,7 +8,7 @@ export type ProductLabel =
   | 'exclusive'
   | 'bestseller'
   | 'trend'
-  | 'restock';
+  | 'restock'
 
 export const PRODUCT_LABELS: { value: ProductLabel; label: string }[] = [
   { value: 'new', label: 'New' },
@@ -20,5 +20,5 @@ export const PRODUCT_LABELS: { value: ProductLabel; label: string }[] = [
   { value: 'exclusive', label: 'Exclusive' },
   { value: 'bestseller', label: 'Bestseller' },
   { value: 'trend', label: 'Trend' },
-  { value: 'restock', label: 'Restock' },
-];
+  { value: 'restock', label: 'Restock' }
+]

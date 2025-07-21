@@ -3,9 +3,9 @@ import {
   QUERY_DR_RESPONSE_MAP,
   REFUND_RESPONSE_MAP,
   VNP_VERSION,
-  WRONG_CHECKSUM_KEY,
-} from '../constants';
-import type { HashAlgorithm } from '../enums';
+  WRONG_CHECKSUM_KEY
+} from '../constants'
+import type { HashAlgorithm } from '../enums'
 import type {
   GlobalConfig,
   QueryDr,
@@ -15,23 +15,23 @@ import type {
   Refund,
   RefundOptions,
   RefundResponse,
-  RefundResponseLogger,
-} from '../types';
+  RefundResponseLogger
+} from '../types'
 // Import specific types from their files to fix linter errors
-import type { BodyRequestQueryDr, QueryDrResponseFromVNPay } from '../types/query-dr.type';
-import type { RefundResponseFromVNPay } from '../types/refund.type';
-import { getResponseByStatusCode, hash, resolveUrlString } from '../utils/common';
-import type { LoggerService } from './logger.service';
+import type { BodyRequestQueryDr, QueryDrResponseFromVNPay } from '../types/query-dr.type'
+import type { RefundResponseFromVNPay } from '../types/refund.type'
+import { getResponseByStatusCode, hash, resolveUrlString } from '../utils/common'
+import type { LoggerService } from './logger.service'
 
 /**
  * Dịch vụ truy vấn kết quả và hoàn tiền VNPay
  * @en Query and refund service for VNPay
  */
 export class QueryService {
-  private readonly config: GlobalConfig;
-  private readonly logger: LoggerService;
-  private readonly hashAlgorithm: HashAlgorithm;
-  private readonly bufferEncode: BufferEncoding = 'utf-8';
+  private readonly config: GlobalConfig
+  private readonly logger: LoggerService
+  private readonly hashAlgorithm: HashAlgorithm
+  private readonly bufferEncode: BufferEncoding = 'utf-8'
 
   /**
    * Khởi tạo dịch vụ truy vấn
@@ -47,9 +47,9 @@ export class QueryService {
    * @en @param hashAlgorithm - Hash algorithm
    */
   constructor(config: GlobalConfig, logger: LoggerService, hashAlgorithm: HashAlgorithm) {
-    this.config = config;
-    this.logger = logger;
-    this.hashAlgorithm = hashAlgorithm;
+    this.config = config
+    this.logger = logger
+    this.hashAlgorithm = hashAlgorithm
   }
 
   /**
@@ -67,18 +67,16 @@ export class QueryService {
    */
   public async queryDr<LoggerFields extends keyof QueryDrResponseLogger>(
     query: QueryDr,
-    options?: QueryDrResponseOptions<LoggerFields>,
+    options?: QueryDrResponseOptions<LoggerFields>
   ): Promise<QueryDrResponse> {
-    const command = 'querydr';
+    const command = 'querydr'
     const dataQuery = {
       vnp_Version: this.config.vnp_Version ?? VNP_VERSION,
-      ...query,
-    };
+      ...query
+    }
 
-    const queryEndpoint = this.config.endpoints.queryDrRefundEndpoint || QUERY_DR_REFUND_ENDPOINT;
-    const url = new URL(
-      resolveUrlString(this.config.queryDrAndRefundHost || this.config.vnpayHost, queryEndpoint),
-    );
+    const queryEndpoint = this.config.endpoints.queryDrRefundEndpoint || QUERY_DR_REFUND_ENDPOINT
+    const url = new URL(resolveUrlString(this.config.queryDrAndRefundHost || this.config.vnpayHost, queryEndpoint))
 
     const stringToCreateHash = [
       dataQuery.vnp_RequestId,
@@ -89,52 +87,52 @@ export class QueryService {
       dataQuery.vnp_TransactionDate,
       dataQuery.vnp_CreateDate,
       dataQuery.vnp_IpAddr,
-      dataQuery.vnp_OrderInfo,
+      dataQuery.vnp_OrderInfo
     ]
       .map(String)
       .join('|')
-      .replace(/undefined/g, '');
+      .replace(/undefined/g, '')
 
     const requestHashed = hash(
       this.config.secureSecret,
       Buffer.from(stringToCreateHash, this.bufferEncode),
-      this.hashAlgorithm,
-    );
+      this.hashAlgorithm
+    )
 
     const body: BodyRequestQueryDr = {
       ...dataQuery,
       vnp_Command: command,
       vnp_TmnCode: this.config.tmnCode,
-      vnp_SecureHash: requestHashed,
-    };
+      vnp_SecureHash: requestHashed
+    }
 
     const response = await fetch(url.toString(), {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body),
-    });
+      body: JSON.stringify(body)
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const responseData = (await response.json()) as QueryDrResponseFromVNPay;
+    const responseData = (await response.json()) as QueryDrResponseFromVNPay
 
     const message = getResponseByStatusCode(
       responseData.vnp_ResponseCode?.toString() ?? '',
       this.config.vnp_Locale,
-      QUERY_DR_RESPONSE_MAP,
-    );
+      QUERY_DR_RESPONSE_MAP
+    )
 
     let outputResults = {
       isVerified: true,
       isSuccess: responseData.vnp_ResponseCode === '00' || responseData.vnp_ResponseCode === 0,
       message,
       ...responseData,
-      vnp_Message: message,
-    };
+      vnp_Message: message
+    }
 
     const stringToCreateHashOfResponse = [
       responseData.vnp_ResponseId,
@@ -151,39 +149,35 @@ export class QueryService {
       responseData.vnp_TransactionStatus,
       responseData.vnp_OrderInfo,
       responseData.vnp_PromotionCode,
-      responseData.vnp_PromotionAmount,
+      responseData.vnp_PromotionAmount
     ]
       .map(String)
       .join('|')
-      .replace(/undefined/g, '');
+      .replace(/undefined/g, '')
 
     const responseHashed = hash(
       this.config.secureSecret,
       Buffer.from(stringToCreateHashOfResponse, this.bufferEncode),
-      this.hashAlgorithm,
-    );
+      this.hashAlgorithm
+    )
 
     if (responseData?.vnp_SecureHash && responseHashed !== responseData.vnp_SecureHash) {
       outputResults = {
         ...outputResults,
         isVerified: false,
-        message: getResponseByStatusCode(
-          WRONG_CHECKSUM_KEY,
-          this.config.vnp_Locale,
-          QUERY_DR_RESPONSE_MAP,
-        ),
-      };
+        message: getResponseByStatusCode(WRONG_CHECKSUM_KEY, this.config.vnp_Locale, QUERY_DR_RESPONSE_MAP)
+      }
     }
 
     const data2Log: QueryDrResponseLogger = {
       createdAt: new Date(),
       method: 'queryDr',
-      ...outputResults,
-    };
+      ...outputResults
+    }
 
-    this.logger.log(data2Log, options, 'queryDr');
+    this.logger.log(data2Log, options, 'queryDr')
 
-    return outputResults;
+    return outputResults
   }
 
   /**
@@ -201,18 +195,18 @@ export class QueryService {
    */
   public async refund<LoggerFields extends keyof RefundResponseLogger>(
     data: Refund,
-    options?: RefundOptions<LoggerFields>,
+    options?: RefundOptions<LoggerFields>
   ): Promise<RefundResponse> {
-    const vnp_Command = 'refund';
-    const DEFAULT_TRANSACTION_NO_IF_NOT_EXIST = '0';
+    const vnp_Command = 'refund'
+    const DEFAULT_TRANSACTION_NO_IF_NOT_EXIST = '0'
 
     const dataQuery = {
       ...data,
       vnp_Command,
       vnp_Version: this.config.vnp_Version ?? VNP_VERSION,
       vnp_TmnCode: this.config.tmnCode,
-      vnp_Amount: data.vnp_Amount * 100,
-    };
+      vnp_Amount: data.vnp_Amount * 100
+    }
 
     const {
       vnp_Version,
@@ -225,14 +219,12 @@ export class QueryService {
       vnp_CreateBy,
       vnp_CreateDate,
       vnp_IpAddr,
-      vnp_OrderInfo,
-    } = dataQuery;
+      vnp_OrderInfo
+    } = dataQuery
 
     // Use custom endpoint if configured
-    const refundEndpoint = this.config.endpoints.queryDrRefundEndpoint || QUERY_DR_REFUND_ENDPOINT;
-    const url = new URL(
-      resolveUrlString(this.config.queryDrAndRefundHost || this.config.vnpayHost, refundEndpoint),
-    );
+    const refundEndpoint = this.config.endpoints.queryDrRefundEndpoint || QUERY_DR_REFUND_ENDPOINT
+    const url = new URL(resolveUrlString(this.config.queryDrAndRefundHost || this.config.vnpayHost, refundEndpoint))
 
     const stringToHashOfRequest = [
       vnp_RequestId,
@@ -247,60 +239,57 @@ export class QueryService {
       vnp_CreateBy,
       vnp_CreateDate,
       vnp_IpAddr,
-      vnp_OrderInfo,
+      vnp_OrderInfo
     ]
       .map(String)
       .join('|')
-      .replace(/undefined/g, '');
+      .replace(/undefined/g, '')
 
     const requestHashed = hash(
       this.config.secureSecret,
       Buffer.from(stringToHashOfRequest, this.bufferEncode),
-      this.hashAlgorithm,
-    );
+      this.hashAlgorithm
+    )
 
     const body = {
       ...dataQuery,
-      vnp_SecureHash: requestHashed,
-    };
+      vnp_SecureHash: requestHashed
+    }
 
     const response = await fetch(url.toString(), {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body),
-    });
+      body: JSON.stringify(body)
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const responseData = (await response.json()) as RefundResponseFromVNPay;
+    const responseData = (await response.json()) as RefundResponseFromVNPay
 
     if (responseData?.vnp_Amount) {
-      responseData.vnp_Amount = responseData.vnp_Amount / 100;
+      responseData.vnp_Amount = responseData.vnp_Amount / 100
     }
 
     const message = getResponseByStatusCode(
       responseData.vnp_ResponseCode?.toString() ?? '',
       data?.vnp_Locale ?? this.config.vnp_Locale,
-      REFUND_RESPONSE_MAP,
-    );
+      REFUND_RESPONSE_MAP
+    )
 
     let outputResults = {
       isVerified: true,
       isSuccess: responseData.vnp_ResponseCode === '00' || responseData.vnp_ResponseCode === 0,
       message,
       ...responseData,
-      vnp_Message: message,
-    };
+      vnp_Message: message
+    }
 
     // Only check signed hash when request is not error
-    if (
-      Number(responseData.vnp_ResponseCode) <= 90 &&
-      Number(responseData.vnp_ResponseCode) >= 99
-    ) {
+    if (Number(responseData.vnp_ResponseCode) <= 90 && Number(responseData.vnp_ResponseCode) >= 99) {
       const stringToCreateHashOfResponse = [
         responseData.vnp_ResponseId,
         responseData.vnp_Command,
@@ -314,39 +303,35 @@ export class QueryService {
         responseData.vnp_TransactionNo,
         responseData.vnp_TransactionType,
         responseData.vnp_TransactionStatus,
-        responseData.vnp_OrderInfo,
+        responseData.vnp_OrderInfo
       ]
         .map(String)
         .join('|')
-        .replace(/undefined/g, '');
+        .replace(/undefined/g, '')
 
       const responseHashed = hash(
         this.config.secureSecret,
         Buffer.from(stringToCreateHashOfResponse, this.bufferEncode),
-        this.hashAlgorithm,
-      );
+        this.hashAlgorithm
+      )
 
       if (responseData?.vnp_SecureHash && responseHashed !== responseData.vnp_SecureHash) {
         outputResults = {
           ...outputResults,
           isVerified: false,
-          message: getResponseByStatusCode(
-            WRONG_CHECKSUM_KEY,
-            this.config.vnp_Locale,
-            REFUND_RESPONSE_MAP,
-          ),
-        };
+          message: getResponseByStatusCode(WRONG_CHECKSUM_KEY, this.config.vnp_Locale, REFUND_RESPONSE_MAP)
+        }
       }
     }
 
     const data2Log: RefundResponseLogger = {
       createdAt: new Date(),
       method: 'refund',
-      ...outputResults,
-    };
+      ...outputResults
+    }
 
-    this.logger.log(data2Log, options, 'refund');
+    this.logger.log(data2Log, options, 'refund')
 
-    return outputResults;
+    return outputResults
   }
 }

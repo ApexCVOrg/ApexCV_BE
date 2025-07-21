@@ -1,16 +1,18 @@
-import { Request, Response, NextFunction } from 'express';
-import { ZodError } from 'zod';
+import { Request, Response } from 'express'
+import { ZodError } from 'zod'
 
-export function errorHandler(err: any, _req: Request, res: Response, _next: NextFunction) {
+export function errorHandler(err: unknown, _req: Request, res: Response) {
   if (err instanceof ZodError) {
     return res.status(400).json({
       error: 'ValidationError',
-      details: err.errors.map((e) => ({ path: e.path, message: e.message })),
-    });
+      details: err.errors.map((e) => ({ path: e.path, message: e.message }))
+    })
   }
-  const status = err.status || 500;
+
+  const error = err as { status?: number; name?: string; message?: string }
+  const status = error.status || 500
   res.status(status).json({
-    error: err.name || 'InternalServerError',
-    message: err.message || 'An unexpected error occurred.',
-  });
+    error: error.name || 'InternalServerError',
+    message: error.message || 'An unexpected error occurred.'
+  })
 }

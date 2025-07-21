@@ -1,4 +1,4 @@
-import type { HashAlgorithm, ProductCode, VnpCurrCode, VnpLocale } from '../enums';
+import type { HashAlgorithm, ProductCode, VnpCurrCode, VnpLocale } from '../enums'
 
 /**
  * Endpoints configuration for VNPay API
@@ -8,17 +8,17 @@ export interface EndpointConfig {
   /**
    * Payment endpoint path - defaults to 'paymentv2/vpcpay.html'
    */
-  paymentEndpoint?: string;
+  paymentEndpoint?: string
 
   /**
    * Query DR and Refund endpoint - defaults to 'merchant_webapi/api/transaction'
    */
-  queryDrRefundEndpoint?: string;
+  queryDrRefundEndpoint?: string
 
   /**
    * Get bank list endpoint - defaults to 'qrpayauth/api/merchant/get_bank_list'
    */
-  getBankListEndpoint?: string;
+  getBankListEndpoint?: string
 }
 
 /**
@@ -28,89 +28,89 @@ export interface VNPayConfig {
   /**
    * VNPay host URL - defaults to sandbox if not provided
    */
-  vnpayHost?: string;
+  vnpayHost?: string
 
   /**
    * queryDr and refund host URL - defaults to sandbox if not provided
    */
-  queryDrAndRefundHost?: string;
+  queryDrAndRefundHost?: string
 
   /**
    * TMN Code provided by VNPay
    */
-  tmnCode: string;
+  tmnCode: string
 
   /**
    * Secure secret provided by VNPay
    */
-  secureSecret: string;
+  secureSecret: string
 
   /**
    * VNPay API version - defaults to 2.1.0
    */
-  vnp_Version?: string;
+  vnp_Version?: string
 
   /**
    * Currency code - defaults to VND
    */
-  vnp_CurrCode?: VnpCurrCode;
+  vnp_CurrCode?: VnpCurrCode
 
   /**
    * Locale for messages - defaults to Vietnamese
    */
-  vnp_Locale?: VnpLocale;
+  vnp_Locale?: VnpLocale
 
   /**
    * Enable test mode (uses sandbox URL)
    */
-  testMode?: boolean;
+  testMode?: boolean
 
   /**
    * Hash algorithm to use - defaults to SHA512
    */
-  hashAlgorithm?: HashAlgorithm;
+  hashAlgorithm?: HashAlgorithm
 
   /**
    * Enable logging
    */
-  enableLog?: boolean;
+  enableLog?: boolean
 
   /**
    * Custom logger function
    */
-  loggerFn?: (data: unknown) => void;
+  loggerFn?: (data: unknown) => void
 
   /**
    * Default order type - defaults to "other"
    */
-  vnp_OrderType?: ProductCode;
+  vnp_OrderType?: ProductCode
 
   /**
    * Default command - defaults to "pay"
    */
-  vnp_Command?: string;
+  vnp_Command?: string
 
   /**
    * Payment endpoint path - defaults to standard VNPay endpoint
    * @deprecated Use endpoints.paymentEndpoint instead
    */
-  paymentEndpoint?: string;
+  paymentEndpoint?: string
 
   /**
    * Custom endpoint configuration
    * Use this to override individual endpoints when the VNPay API changes
    */
-  endpoints?: EndpointConfig;
+  endpoints?: EndpointConfig
 }
 
 export interface GlobalConfig extends VNPayConfig {
-  vnpayHost: string;
-  queryDrAndRefundHost: string;
-  vnp_Version: string;
-  vnp_CurrCode: VnpCurrCode;
-  vnp_Locale: VnpLocale;
-  vnp_OrderType: ProductCode;
-  vnp_Command: string;
-  paymentEndpoint: string;
-  endpoints: EndpointConfig;
+  vnpayHost: string
+  queryDrAndRefundHost: string
+  vnp_Version: string
+  vnp_CurrCode: VnpCurrCode
+  vnp_Locale: VnpLocale
+  vnp_OrderType: ProductCode
+  vnp_Command: string
+  paymentEndpoint: string
+  endpoints: EndpointConfig
 }
