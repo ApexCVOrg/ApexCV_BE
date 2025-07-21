@@ -13,4 +13,8 @@ const cartSchema = new Schema({
   updatedAt: { type: Date, default: Date.now }
 })
 
+// Add indexes for better performance
+cartSchema.index({ user: 1 });
+cartSchema.index({ 'cartItems.product': 1 });
+
 export const Cart = mongoose.model('Cart', cartSchema)

@@ -13,12 +13,18 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
     const userId = (req as any).user.id;
     console.log('User ID:', userId);
     
-    // Add timeout protection
+    // Add timeout protection - increased to 30 seconds
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Request timeout')), 10000); // 10 second timeout
+      setTimeout(() => reject(new Error('Request timeout')), 30000); // 30 second timeout
     });
     
-    const cartPromise = Cart.findOne({ user: userId }).populate('cartItems.product');
+    // Add query optimization
+    const cartPromise = Cart.findOne({ user: userId })
+      .populate({
+        path: 'cartItems.product',
+        select: 'name price images sizes brand categories'
+      })
+      .lean(); // Use lean() for better performance
     
     let cart = await Promise.race([cartPromise, timeoutPromise]) as any;
     console.log('Cart found:', cart ? 'Yes' : 'No');
@@ -27,10 +33,11 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
       // Tạo giỏ hàng mới nếu chưa có
       cart = new Cart({ user: userId, cartItems: [] });
       await cart.save();
+      cart = cart.toObject();
     }
+    
     // Map lại cartItems để trả về stock từng biến thể
-    const cartObj = cart.toObject();
-    const cartItems = cartObj.cartItems.map((item: any) => {
+    const cartItems = cart.cartItems.map((item: any) => {
       let stock = null;
       // Ensure product is populated and has sizes
       if (
@@ -47,11 +54,12 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
       }
       return { ...item, stock };
     });
-    res.json({ ...cartObj, cartItems });
+    
+    res.json({ ...cart, cartItems });
   } catch (error) {
     console.error('Cart API Error:', error);
     if (error instanceof Error && error.message === 'Request timeout') {
-      res.status(408).json({ message: 'Request timeout - server is busy' });
+      res.status(408).json({ message: 'Request timeout - server is busy, please try again' });
     } else {
       res.status(500).json({ message: 'Lỗi khi lấy giỏ hàng: ' + (error as Error).message });
     }
