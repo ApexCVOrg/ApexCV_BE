@@ -103,7 +103,15 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true)
-      if (allowedOrigins.includes(origin)) return callback(null, true)
+      
+      // Cho phép tất cả các URL của Vercel
+      if (origin.includes('nidas-fe.vercel.app') || 
+          origin.includes('nidas-projects-e8bff2a3.vercel.app') ||
+          allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+      
+      console.log('Blocked origin:', origin)
       return callback(new Error(`Origin ${origin} không được phép`))
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
