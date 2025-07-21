@@ -10,8 +10,7 @@ import { seedCoupons } from '../scripts/seedVouchers'
 
 const connectDB = async (): Promise<void> => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
-    } as mongoose.ConnectOptions)
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'MONGO_URI=mongodb://nidasorgweb:Thithithi%400305@ac-tlhygsz-shard-00-00.mrltlak.mongodb.net:27017,ac-tlhygsz-shard-00-01.mrltlak.mongodb.net:27017,ac-tlhygsz-shard-00-02.mrltlak.mongodb.net:27017/nidas?ssl=true&replicaSet=atlas-jj1cus-shard-0&authSource=admin&retryWrites=true&w=majority&appName=NIDAS')
 
     console.log(`MongoDB connected: ${conn.connection.host}`)
 
