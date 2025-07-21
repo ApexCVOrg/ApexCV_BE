@@ -131,7 +131,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       const existingOrder = await Order.findOne({ 'paymentResult.id': vnpTransactionNo })
       if (existingOrder) {
         console.log('[VNPAY Return] Order already exists:', existingOrder._id)
-        return res.json({
+        res.json({
           status: 'success',
           message: 'Cảm ơn bạn đã tin tưởng chúng tôi',
           order: {
@@ -164,6 +164,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
           },
           result: { isSuccess: true, message: 'Order already processed' }
         })
+        return;
       }
     }
 
@@ -289,21 +290,23 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     // Nếu không có session và không có token user, không thể tạo order
     if (!orderData && !userId) {
       console.log('[VNPAY Return] No session and no user token found')
-      return res.status(400).json({
+      res.status(400).json({
         status: 'fail',
         message: 'Không tìm thấy thông tin đơn hàng và người dùng. Vui lòng thực hiện lại quá trình thanh toán.',
         result: { isSuccess: false, message: 'Session and user information required' }
       })
+      return;
     }
 
     // Nếu có session nhưng không có user, không thể tạo order
     if (req.session.pendingOrder && !userId) {
       console.log('[VNPAY Return] Session exists but no user found')
-      return res.status(400).json({
+      res.status(400).json({
         status: 'fail',
         message: 'Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.',
         result: { isSuccess: false, message: 'User information required' }
       })
+      return;
     }
 
     // Tìm user thực từ userId
@@ -316,20 +319,22 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     // Nếu không tìm thấy user, không thể tạo order
     if (!user) {
       console.log('[VNPAY Return] User not found, cannot create order')
-      return res.status(400).json({
+      res.status(400).json({
         status: 'fail',
         message: 'Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.'
       })
+      return;
     }
 
     // Nếu không có orderData từ session hoặc backup, không thể tạo order
     if (!orderData) {
       console.log('[VNPAY Return] No order data from session or backup, cannot create order')
-      return res.status(400).json({
+      res.status(400).json({
         status: 'fail',
         message: 'Không tìm thấy thông tin đơn hàng. Vui lòng thực hiện lại quá trình thanh toán.',
         result: { isSuccess: false, message: 'Order data required' }
       })
+      return;
     }
 
     // Sử dụng userId thực
@@ -554,7 +559,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     }
 
     console.log('[VNPAY Return] Sending success response:', JSON.stringify(successResponse, null, 2));
-    res.json(successResponse);
+
 
     // Sending success response
     res.json(successResponse)

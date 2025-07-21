@@ -35,7 +35,6 @@ import applyCouponRouter from './routes/apply-coupon'
 import uploadRouter from './routes/upload'
 import { errorHandler } from './middlewares/errorHandler'
 import {
-  API_BASE,
   AUTH_ROUTES,
   USER_ROUTES,
   CATEGORY_ROUTES,
@@ -74,15 +73,16 @@ const initializeServices = async () => {
 const app: Application = express()
 const PORT = Number(process.env.PORT) || 5000
 const HOST = process.env.HOST || '0.0.0.0'
-const FRONTEND_URL = process.env.FRONTEND_URL || 'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app'
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://nidas-fe.vercel.app'
 const EXTRA_ORIGINS = process.env.EXTRA_ORIGINS?.split(',') || []
 
 // Danh sách origin được phép
 const allowedOrigins = [
   FRONTEND_URL,
-  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app',
-  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app/en',
-  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app/vi',
+  'https://nidas-fe.vercel.app',
+  'https://nidas-fe.vercel.app/en',
+  'https://nidas-fe.vercel.app/vi',
+  'http://localhost:3000',
   ...EXTRA_ORIGINS
 ]
 
@@ -103,7 +103,15 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true)
-      if (allowedOrigins.includes(origin)) return callback(null, true)
+      
+      // Cho phép tất cả các URL của Vercel
+      if (origin.includes('nidas-fe.vercel.app') || 
+          origin.includes('nidas-projects-e8bff2a3.vercel.app') ||
+          allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+      
+      console.log('Blocked origin:', origin)
       return callback(new Error(`Origin ${origin} không được phép`))
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -145,28 +153,28 @@ app.get('/', (_req: Request, res: Response) => {
 })
 
 // Register routes
-app.use(API_BASE + AUTH_ROUTES.BASE, authRouter)
-app.use(API_BASE + USER_ROUTES.BASE, userRouter)
-app.use(API_BASE + CATEGORY_ROUTES.BASE, categoryRouter)
-app.use(API_BASE + PRODUCT_ROUTES.BASE, productRouter)
-app.use(API_BASE + REVIEW_ROUTES.BASE, reviewRouter)
-app.use(API_BASE + ORDER_ROUTES.BASE, orderRouter)
-app.use(API_BASE + CART_ROUTES.BASE, cartRouter)
-app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
-app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
-app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
-app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
-app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
-app.use(API_BASE + '/checkout', checkoutRouter)
-app.use('/api/payment', paymentVnpayRoutes)
-app.use(API_BASE + '/coupons', couponRouter)
+app.use(AUTH_ROUTES.BASE, authRouter)
+app.use(USER_ROUTES.BASE, userRouter)
+app.use(CATEGORY_ROUTES.BASE, categoryRouter)
+app.use(PRODUCT_ROUTES.BASE, productRouter)
+app.use(REVIEW_ROUTES.BASE, reviewRouter)
+app.use(ORDER_ROUTES.BASE, orderRouter)
+app.use(CART_ROUTES.BASE, cartRouter)
+app.use(BRAND_ROUTES.BASE, brandRouter)
+app.use(MANAGER_ROUTES.BASE, managerRouter)
+app.use(MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
+app.use(USER_CHAT_ROUTES.BASE, userChatsRouter)
+app.use(SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
+app.use('/checkout', checkoutRouter)
+app.use('/payment', paymentVnpayRoutes)
+app.use('/coupons', couponRouter)
 
-app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
-app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
-app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
-app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
-app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
-app.use(API_BASE + '/upload', uploadRouter)
+app.use(CHAT_ROUTES.BASE, chatRouter)
+app.use(FAVORITES_ROUTES.BASE, favoritesRouter)
+app.use(CHAT_ROUTES.BASE, chatRouter)
+app.use(ADMIN_ROUTES.BASE, adminRouter)
+app.use(APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
+app.use('/upload', uploadRouter)
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
