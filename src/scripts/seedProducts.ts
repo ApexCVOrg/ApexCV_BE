@@ -2127,44 +2127,44 @@ const findCategoryIdsByPath = async (categoryPath: string[]) => {
   try {
     console.log(`Finding categories for path: ${categoryPath.join(' > ')}`)
 
-    // Find parent category
+  // Find parent category
     const parentCategory = await Category.findOne({
-      name: categoryPath[0],
-      parentCategory: null
+    name: categoryPath[0],
+    parentCategory: null
     })
 
-    if (!parentCategory) {
-      throw new Error(`Parent category not found: ${categoryPath[0]}`)
-    }
+  if (!parentCategory) {
+    throw new Error(`Parent category not found: ${categoryPath[0]}`)
+  }
     console.log(`Found parent category: ${parentCategory.name} (${parentCategory._id})`)
     categoryIds.push(parentCategory._id as mongoose.Types.ObjectId)
 
-    // Find team category
+  // Find team category
     const teamCategory = await Category.findOne({
-      name: categoryPath[1],
-      parentCategory: parentCategory._id
+    name: categoryPath[1],
+    parentCategory: parentCategory._id
     })
 
-    if (!teamCategory) {
-      throw new Error(`Team category not found: ${categoryPath[1]}`)
-    }
+  if (!teamCategory) {
+    throw new Error(`Team category not found: ${categoryPath[1]}`)
+  }
     console.log(`Found team category: ${teamCategory.name} (${teamCategory._id})`)
     categoryIds.push(teamCategory._id as mongoose.Types.ObjectId)
 
-    // Find product type category
+  // Find product type category
     const productTypeCategory = await Category.findOne({
-      name: categoryPath[2],
-      parentCategory: teamCategory._id
+    name: categoryPath[2],
+    parentCategory: teamCategory._id
     })
 
-    if (!productTypeCategory) {
-      throw new Error(`Product type category not found: ${categoryPath[2]}`)
-    }
+  if (!productTypeCategory) {
+    throw new Error(`Product type category not found: ${categoryPath[2]}`)
+  }
     console.log(`Found product type category: ${productTypeCategory.name} (${productTypeCategory._id})`)
     categoryIds.push(productTypeCategory._id as mongoose.Types.ObjectId)
 
     console.log(`All category IDs found: ${categoryIds.map(id => id.toString())}`)
-    return categoryIds
+  return categoryIds
   } catch (error) {
     console.error(`Error finding categories for path ${categoryPath.join(' > ')}:`, error)
     throw error
