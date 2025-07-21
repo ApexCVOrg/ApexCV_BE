@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs'
 
 /**
  * Truyền vào `loggerFn` để bỏ qua logger
@@ -15,9 +15,9 @@ export function ignoreLogger(): void {}
  * @param data - Data to be logged
  */
 export function consoleLogger(data: unknown, symbol: keyof Console = 'log'): void {
-    if (typeof console[symbol] === 'function') {
-        (console[symbol] as (...data: unknown[]) => void)(data);
-    }
+  if (typeof console[symbol] === 'function') {
+    ;(console[symbol] as (...data: unknown[]) => void)(data)
+  }
 }
 
 /**
@@ -29,15 +29,15 @@ export function consoleLogger(data: unknown, symbol: keyof Console = 'log'): voi
  * @param errorCallback Error callback function
  */
 export function fileLogger(data: unknown, filePath: string, errorCallback?: unknown): void {
-    const dataString = typeof data === 'object' ? JSON.stringify(data) : String(data);
-    fs.appendFile(filePath, `${dataString}\n`, (err) => {
-        if (err && typeof errorCallback === 'function') {
-            return errorCallback(err);
-        }
+  const dataString = typeof data === 'object' ? JSON.stringify(data) : String(data)
+  fs.appendFile(filePath, `${dataString}\n`, (err) => {
+    if (err && typeof errorCallback === 'function') {
+      return errorCallback(err)
+    }
 
-        if (err) {
-            console.error('Failed to write to file:', err);
-            throw err;
-        }
-    });
+    if (err) {
+      console.error('Failed to write to file:', err)
+      throw err
+    }
+  })
 }

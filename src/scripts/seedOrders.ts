@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose'
 import { Order } from '../models/Order'
 import { User } from '../models/User'
@@ -320,6 +319,33 @@ const ordersData = [
     orderStatus: 'shipped'
   },
   {
+    userEmail: 'user10@example.com',
+    orderItems: [
+      {
+        productName: "Arsenal Women's Training Hoodie",
+        size: '38',
+        color: 'Black',
+        quantity: 1,
+        price: 2799000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Van J',
+      street: 'Nguyen Trai',
+      city: 'Hai Phong',
+      state: 'Hai Phong',
+      postalCode: '31000',
+      country: 'Vietnam',
+      phone: '0901000010'
+    },
+    paymentMethod: 'COD',
+    taxPrice: 279900,
+    shippingPrice: 50000,
+    totalPrice: 3128900,
+    isPaid: false,
+    orderStatus: 'pending'
+  },
+  {
     userEmail: 'user11@example.com',
     orderItems: [
       {
@@ -454,7 +480,7 @@ const ordersData = [
     userEmail: 'user15@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: 'Bayern Munich Kids Tracksuit',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
@@ -679,6 +705,33 @@ const ordersData = [
     orderStatus: 'paid'
   },
   {
+    userEmail: 'user01@example.com',
+    orderItems: [
+      {
+        productName: 'Arsenal Kids Home Jersey 2024/25',
+        size: '6-7Y',
+        color: 'Red',
+        quantity: 1,
+        price: 1399000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Van A',
+      street: 'Le Loi',
+      city: 'Hue',
+      state: 'Thua Thien Hue',
+      postalCode: '53000',
+      country: 'Vietnam',
+      phone: '0901000001'
+    },
+    paymentMethod: 'COD',
+    taxPrice: 139900,
+    shippingPrice: 50000,
+    totalPrice: 1598900,
+    isPaid: false,
+    orderStatus: 'pending'
+  },
+  {
     userEmail: 'user02@example.com',
     orderItems: [
       {
@@ -725,7 +778,7 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Home Jersey 2024/25",
+        productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '6-7Y',
         color: 'White',
         quantity: 1,
@@ -752,7 +805,7 @@ const ordersData = [
     userEmail: 'user04@example.com',
     orderItems: [
       {
-        productName: "Manchester United Kids Tracksuit",
+        productName: 'Manchester United Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 2,
@@ -784,6 +837,33 @@ const ordersData = [
     orderStatus: 'paid'
   },
   {
+    userEmail: 'user05@example.com',
+    orderItems: [
+      {
+        productName: "Arsenal Women's Training Hoodie",
+        size: '39',
+        color: 'Black',
+        quantity: 1,
+        price: 2799000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Van E',
+      street: 'Pham Van Dong',
+      city: 'Da Nang',
+      state: 'Da Nang',
+      postalCode: '55000',
+      country: 'Vietnam',
+      phone: '0901000005'
+    },
+    paymentMethod: 'COD',
+    taxPrice: 279900,
+    shippingPrice: 50000,
+    totalPrice: 3128900,
+    isPaid: false,
+    orderStatus: 'pending'
+  },
+  {
     userEmail: 'user06@example.com',
     orderItems: [
       {
@@ -794,7 +874,7 @@ const ordersData = [
         price: 979000
       },
       {
-        productName: "Juventus Kids Home Jersey 2024/25",
+        productName: 'Juventus Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Black',
         quantity: 1,
@@ -990,14 +1070,14 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Home Jersey 2024/25",
+        productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
         price: 1499000
       },
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: 'Bayern Munich Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 1,
@@ -1089,11 +1169,11 @@ const ordersData = [
     userEmail: 'baotuangay@gmail.com',
     orderItems: [
       {
-        productName: "Arsenal Women's Training Shoes",
-        size: '38',
+        productName: "Arsenal Women's Training Hoodie",
+        size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 2499000
+        price: 1599000
       }
     ],
     shippingAddress: {
@@ -1113,9 +1193,9 @@ const ordersData = [
       update_time: '2025-07-20T12:00:00Z',
       email_address: 'baotuangay@gmail.com'
     },
-    taxPrice: 249900,
+    taxPrice: 159900,
     shippingPrice: 50000,
-    totalPrice: 2798900,
+    totalPrice: 1808900,
     isPaid: true,
     paidAt: new Date('2025-07-20T12:00:00Z'),
     isDelivered: true,
@@ -1133,40 +1213,49 @@ const findUserByEmail = async (email: string) => {
 }
 
 const findProductByName = async (productName: string) => {
+  console.log(`🔍 Looking for product: ${productName}`)
   const product = await Product.findOne({ name: productName })
   if (!product) {
+    // Log all available products for debugging
+    const allProducts = await Product.find({}, 'name')
+    console.log(`❌ Product with name ${productName} not found`)
+    console.log(
+      `Available products:`,
+      allProducts.map((p) => p.name)
+    )
     throw new Error(`Product with name ${productName} not found`)
   }
+      // Found product
   return product._id
 }
 
 export const seedOrders = async () => {
-  const createdOrders = []
+    const createdOrders = []
 
-  for (const orderData of ordersData) {
-    // Check if order already exists by checking user, orderItems, and totalPrice
-    const userId = await findUserByEmail(orderData.userEmail)
-    
-    const orderItems = []
-    for (const item of orderData.orderItems) {
-      const productId = await findProductByName(item.productName)
-      orderItems.push({
-        product: productId,
-        size: item.size,
-        color: item.color,
-        quantity: item.quantity,
-        price: item.price
+    for (const orderData of ordersData) {
+      // Check if order already exists by checking user, orderItems, and totalPrice
+      const userId = await findUserByEmail(orderData.userEmail)
+      
+      const orderItems = []
+      for (const item of orderData.orderItems) {
+        const productId = await findProductByName(item.productName)
+        orderItems.push({
+          product: productId,
+          size: item.size,
+          color: item.color,
+          quantity: item.quantity,
+          price: item.price
+        })
+      }
+
+      // Check if order with same user, similar items, and totalPrice already exists
+      const existingOrder = await Order.findOne({
+        user: userId,
+        totalPrice: orderData.totalPrice,
+        'orderItems.0.product': orderItems[0].product,
+        'orderItems.0.size': orderItems[0].size,
+        'orderItems.0.color': orderItems[0].color
       })
-    }
-
-    // Check if order with same user, similar items, and totalPrice already exists
-    const existingOrder = await Order.findOne({
-      user: userId,
-      totalPrice: orderData.totalPrice,
-      'orderItems.0.product': orderItems[0].product,
-      'orderItems.0.size': orderItems[0].size,
-      'orderItems.0.color': orderItems[0].color
-    })
 
     if (existingOrder) {
       continue
@@ -1188,9 +1277,9 @@ export const seedOrders = async () => {
       orderStatus: orderData.orderStatus
     })
 
-    const savedOrder = await order.save()
-    createdOrders.push(savedOrder)
-  }
+      const savedOrder = await order.save()
+      createdOrders.push(savedOrder)
+    }
 
-  return createdOrders
+    return createdOrders
 } 

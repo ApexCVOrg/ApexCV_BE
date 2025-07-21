@@ -35,4 +35,4 @@ router.put('/notifications', settingsController.updateNotifications)
 router.get('/integrations', settingsController.getIntegrations)
 router.put('/integrations', settingsController.updateIntegrations)
 
-export default router 
+export default router

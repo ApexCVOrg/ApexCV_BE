@@ -22,8 +22,6 @@ import {
   getCustomerById,
   updateCustomer,
   deleteCustomer,
-  getSettings,
-  updateSettings,
   getSalesStats,
   getUserStats,
   getOrderStats,
@@ -46,9 +44,9 @@ import {
   getSalesChart
 } from '../../controllers/dashboardController'
 import settingsRouter from './settings'
-import couponsRouter from './coupons';
-import AuditLog from '../../models/AuditLog';
-import { User } from '../../models/User';
+import couponsRouter from './coupons'
+import AuditLog from '../../models/AuditLog'
+import { User } from '../../models/User'
 
 const router = express.Router()
 
@@ -97,7 +95,7 @@ router.get('/users/:id', (req, res, next) => {
 router.post('/users', createUser)
 router.put('/users/:id', updateUser)
 router.delete('/users/:id', deleteUser)
-router.patch('/users/:id/status', updateUserStatus);
+router.patch('/users/:id/status', updateUserStatus)
 
 // Customers CRUD
 router.get('/customers', getCustomers)
@@ -109,7 +107,7 @@ router.delete('/customers/:id', deleteCustomer)
 
 // Settings
 router.use('/settings', settingsRouter)
-router.use('/coupons', couponsRouter);
+router.use('/coupons', couponsRouter)
 
 // Stats
 router.get('/stats/sales', getSalesStats)
@@ -131,12 +129,12 @@ router.get('/dashboard/sales-chart', getSalesChart)
 // Lấy danh sách audit log (phân trang, lọc)
 router.get('/logs', async (req, res) => {
   try {
-    const { page = 1, limit = 20, action, adminId, target } = req.query;
-    const query: Record<string, any> = {};
-    if (action) query['action'] = action;
-    if (adminId) query['adminId'] = adminId;
-    if (target) query['target'] = target;
-    const skip = (Number(page) - 1) * Number(limit);
+    const { page = 1, limit = 20, action, adminId, target } = req.query
+    const query: Record<string, string> = {}
+    if (action) query['action'] = String(action)
+    if (adminId) query['adminId'] = String(adminId)
+    if (target) query['target'] = String(target)
+    const skip = (Number(page) - 1) * Number(limit)
     const [logs, total] = await Promise.all([
       AuditLog.find(query)
         .sort({ createdAt: -1 })
@@ -144,7 +142,7 @@ router.get('/logs', async (req, res) => {
         .limit(Number(limit))
         .populate('adminId', 'username email'),
       AuditLog.countDocuments(query)
-    ]);
+    ])
     res.json({
       success: true,
       data: logs,
@@ -154,20 +152,20 @@ router.get('/logs', async (req, res) => {
         limit: Number(limit),
         pages: Math.ceil(total / Number(limit))
       }
-    });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Error fetching audit logs', error: err });
+    })
+  } catch {
+    res.status(500).json({ success: false, message: 'Error fetching audit logs' })
   }
-});
+})
 
 // Lấy danh sách admin (role: 'admin') cho filter FE
 router.get('/admins', async (req, res) => {
   try {
-    const admins = await User.find({ role: 'admin' }).select('_id username email');
-    res.json({ success: true, data: admins });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Error fetching admins' });
+    const admins = await User.find({ role: 'admin' }).select('_id username email')
+    res.json({ success: true, data: admins })
+  } catch {
+    res.status(500).json({ success: false, message: 'Error fetching admins' })
   }
-});
+})
 
 export default router

@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 const verifyTransporter = async (): Promise<boolean> => {
   try {
     await transporter.verify()
-    console.log('✅ SMTP transporter is configured correctly.')
+    // SMTP transporter configured
     return true
   } catch (error) {
     console.error('❌ SMTP verification failed:', error)
@@ -63,7 +63,7 @@ export const sendVerificationEmail = async (email: string, code: string): Promis
 
     console.log(`📤 Sending email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
-    console.log(`✅ Email sent: ${info.messageId}`)
+    // Email sent
     console.log(`📨 Response: ${info.response}`)
   } catch (error) {
     console.error('❌ Email send failed:', error)
@@ -137,7 +137,7 @@ export const sendResetPasswordEmail = async (email: string, otp: string): Promis
 
     console.log(`📤 Sending password reset email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
-    console.log(`✅ Password reset email sent: ${info.messageId}`)
+    // Password reset email sent
     console.log(`📨 Response: ${info.response}`)
   } catch (error) {
     console.error('❌ Password reset email send failed:', error)
@@ -199,16 +199,15 @@ export const sendBanUserEmail = async (email: string, reason: string, admin: str
       from: `"NIDAS" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: status === 'locked' ? 'Your account has been banned' : 'Your account has been unbanned',
-      text: status === 'locked'
-        ? `Your account has been banned by admin (${admin}). Reason: ${reason}`
-        : `Your account has been reactivated by admin (${admin}).`,
-      html: status === 'locked'
-        ? generateBanUserEmailHTML(reason, admin)
-        : generateUnbanUserEmailHTML(admin)
+      text:
+        status === 'locked'
+          ? `Your account has been banned by admin (${admin}). Reason: ${reason}`
+          : `Your account has been reactivated by admin (${admin}).`,
+      html: status === 'locked' ? generateBanUserEmailHTML(reason, admin) : generateUnbanUserEmailHTML(admin)
     }
     console.log(`📤 Sending ban/unban email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
-    console.log(`✅ Ban/unban email sent: ${info.messageId}`)
+    // Ban/unban email sent
     console.log(`📨 Response: ${info.response}`)
   } catch (error) {
     console.error('❌ Ban/unban email send failed:', error)
@@ -236,7 +235,7 @@ const generateBanUserEmailHTML = (reason: string, admin: string): string => `
       </p>
     </div>
   </div>
-`;
+`
 
 const generateUnbanUserEmailHTML = (admin: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -254,4 +253,4 @@ const generateUnbanUserEmailHTML = (admin: string): string => `
       </p>
     </div>
   </div>
-`;
+`

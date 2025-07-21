@@ -17,7 +17,14 @@ export interface DashboardData {
   completionRate: number
   cancelledOrders: number
   salesChart: { month: string; revenue: number; orders: number }[]
-  topProducts: { _id: string; name: string; category: string; image: string; totalSold: number; revenue: number }[]
+  topProducts: {
+    _id: string
+    name: string
+    category: string
+    image: string
+    totalSold: number
+    revenue: number
+  }[]
   orderStats: { status: string; count: number; percent: number; color: string }[]
 }
 

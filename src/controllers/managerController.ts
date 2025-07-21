@@ -37,10 +37,10 @@ export const getProducts = async (_req: Request, res: Response) => {
       .sort({ createdAt: -1 })
       .lean()
     res.json(products)
-  } catch (error: any) {
+  } catch (error: unknown) {
     res.status(500).json({
       message: 'Error fetching products',
-      error: error?.message || 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error'
     })
   }
 }
@@ -116,9 +116,9 @@ export const createCategory = async (req: Request, res: Response) => {
     })
     const saved = await category.save()
     res.status(201).json({ ...saved.toObject(), message: CATEGORY_MESSAGES.CREATE_SUCCESS })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating category:', error)
-    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 }
 
@@ -180,22 +180,18 @@ export const getOrderById = async (req: Request, res: Response) => {
 export const updateOrderStatus = async (req: Request, res: Response) => {
   try {
     // Chỉ update các trường hợp lệ
-    const updateData: any = {};
-    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus;
-    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid;
-    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered;
-    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice;
-    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice;
+    const updateData: any = {}
+    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus
+    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid
+    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered
+    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice
+    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice
     // Có thể bổ sung các trường khác nếu cần
 
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
-    res.json(updatedOrder);
+    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, updateData, { new: true })
+    res.json(updatedOrder)
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    res.status(500).json({ message: (error as Error).message })
   }
 }
 
@@ -222,8 +218,9 @@ export const getCustomers = async (_req: Request, res: Response): Promise<void> 
 
 export const getCustomerById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const customer = await User.findById(req.params.id)
-      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    const customer = await User.findById(req.params.id).select(
+      'username email fullName phone role isVerified addresses createdAt status updatedAt avatar'
+    )
     if (!customer) {
       res.status(404).json({ message: 'Customer not found' })
       return
@@ -236,7 +233,9 @@ export const getCustomerById = async (req: Request, res: Response): Promise<void
 
 export const updateCustomer = async (req: Request, res: Response): Promise<void> => {
   try {
-    const updatedCustomer = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-passwordHash')
+    const updatedCustomer = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    }).select('-passwordHash')
     if (!updatedCustomer) {
       res.status(404).json({ message: 'Customer not found' })
       return
@@ -307,8 +306,9 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const user = await User.findById(req.params.id)
-      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    const user = await User.findById(req.params.id).select(
+      'username email fullName phone role isVerified addresses createdAt status updatedAt avatar'
+    )
     if (!user) {
       res.status(404).json({
         success: false,

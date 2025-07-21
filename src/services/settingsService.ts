@@ -46,26 +46,54 @@ class SettingsService {
   }
 
   // Section-specific helpers
-  getGeneral() { return this.getSection('general') }
-  updateGeneral(data: unknown) { return this.updateSection('general', data, GeneralSettingsSchema) }
+  getGeneral() {
+    return this.getSection('general')
+  }
+  updateGeneral(data: unknown) {
+    return this.updateSection('general', data, GeneralSettingsSchema)
+  }
 
-  getAccount() { return this.getSection('account') }
-  updateAccount(data: unknown) { return this.updateSection('account', data, AccountSettingsSchema) }
+  getAccount() {
+    return this.getSection('account')
+  }
+  updateAccount(data: unknown) {
+    return this.updateSection('account', data, AccountSettingsSchema)
+  }
 
-  getUserManagement() { return this.getSection('userManagement') }
-  updateUserManagement(data: unknown) { return this.updateSection('userManagement', data, UserManagementSettingsSchema) }
+  getUserManagement() {
+    return this.getSection('userManagement')
+  }
+  updateUserManagement(data: unknown) {
+    return this.updateSection('userManagement', data, UserManagementSettingsSchema)
+  }
 
-  getInventory() { return this.getSection('inventory') }
-  updateInventory(data: unknown) { return this.updateSection('inventory', data, InventoryOrderRulesSettingsSchema) }
+  getInventory() {
+    return this.getSection('inventory')
+  }
+  updateInventory(data: unknown) {
+    return this.updateSection('inventory', data, InventoryOrderRulesSettingsSchema)
+  }
 
-  getLocalization() { return this.getSection('localization') }
-  updateLocalization(data: unknown) { return this.updateSection('localization', data, LocalizationSettingsSchema) }
+  getLocalization() {
+    return this.getSection('localization')
+  }
+  updateLocalization(data: unknown) {
+    return this.updateSection('localization', data, LocalizationSettingsSchema)
+  }
 
-  getNotifications() { return this.getSection('notifications') }
-  updateNotifications(data: unknown) { return this.updateSection('notifications', data, NotificationSettingsSchema) }
+  getNotifications() {
+    return this.getSection('notifications')
+  }
+  updateNotifications(data: unknown) {
+    return this.updateSection('notifications', data, NotificationSettingsSchema)
+  }
 
-  getIntegrations() { return this.getSection('integrations') }
-  updateIntegrations(data: unknown) { return this.updateSection('integrations', data, IntegrationSettingsSchema) }
+  getIntegrations() {
+    return this.getSection('integrations')
+  }
+  updateIntegrations(data: unknown) {
+    return this.updateSection('integrations', data, IntegrationSettingsSchema)
+  }
 }
 
-export const settingsService = new SettingsService() 
+export const settingsService = new SettingsService()

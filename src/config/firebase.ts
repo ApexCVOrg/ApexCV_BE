@@ -6,11 +6,7 @@ dotenv.config()
 
 if (!admin.apps.length) {
   // Validate required environment variables
-  const requiredEnvVars = [
-    'FIREBASE_PROJECT_ID',
-    'FIREBASE_PRIVATE_KEY',
-    'FIREBASE_CLIENT_EMAIL'
-  ]
+  const requiredEnvVars = ['FIREBASE_PROJECT_ID', 'FIREBASE_PRIVATE_KEY', 'FIREBASE_CLIENT_EMAIL']
 
   for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {

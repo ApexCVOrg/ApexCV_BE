@@ -33,13 +33,13 @@ const userSchema = new Schema({
 })
 
 // Update updatedAt on save
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   this.updatedAt = new Date()
   next()
 })
 
 // Update updatedAt on update operations
-userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function(next) {
+userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function (next) {
   this.set({ updatedAt: new Date() })
   next()
 })
@@ -50,7 +50,15 @@ interface IUser extends Document {
   passwordHash?: string
   fullName?: string
   phone?: string
-  addresses: any[]
+  addresses: Array<{
+    recipientName?: string
+    street?: string
+    city?: string
+    state?: string
+    country?: string
+    addressNumber?: string
+    isDefault?: boolean
+  }>
   favorites: mongoose.Types.ObjectId[]
   role: string
   status: string

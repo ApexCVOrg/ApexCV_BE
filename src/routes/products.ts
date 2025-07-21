@@ -1,9 +1,8 @@
 import express from 'express'
-import type { Request, Response, NextFunction, RequestHandler } from 'express'
+import type { Request, Response, RequestHandler } from 'express'
 import mongoose from 'mongoose'
 import { Product } from '../models/Product'
 import { Category } from '../models/Category'
-import { CATEGORY_MESSAGES } from '../constants/categories'
 import { getTopSellingProducts, getPublicTopSellingProducts } from '../controllers/dashboardController'
 
 const router = express.Router()
@@ -111,7 +110,7 @@ const getAllProducts: RequestHandler = async (req, res, next) => {
       count: products.length,
       data: products
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     next(error)
   }
 }
@@ -121,8 +120,7 @@ router.get('/', getAllProducts)
 // Create product
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags, label, status } =
-      req.body
+    const { name, description, price, discountPrice, categories, brand, images, sizes, colors, tags } = req.body
     const product = new Product({
       name,
       description,
@@ -141,8 +139,10 @@ router.post('/', async (req: Request, res: Response) => {
       { path: 'brand', select: 'name' }
     ])
     res.status(201).json({ ...populated.toObject(), message: 'Product created successfully!' })
-  } catch (error: any) {
-    res.status(400).json({ message: 'Error creating product', error: error?.message || 'Unknown error' })
+  } catch (error: unknown) {
+    res
+      .status(400)
+      .json({ message: 'Error creating product', error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
@@ -159,8 +159,10 @@ router.put('/:id', async (req: Request<{ id: string }>, res: Response) => {
       return
     }
     res.json({ ...updated.toObject(), message: 'Product updated successfully!' })
-  } catch (error: any) {
-    res.status(400).json({ message: 'Error updating product', error: error?.message || 'Unknown error' })
+  } catch (error: unknown) {
+    res
+      .status(400)
+      .json({ message: 'Error updating product', error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
@@ -174,39 +176,38 @@ router.delete('/:id', async (req: Request<{ id: string }>, res: Response) => {
       return
     }
     res.json({ message: 'Product deleted successfully!' })
-  } catch (error: any) {
-    res.status(500).json({ message: 'Error deleting product', error: error?.message || 'Unknown error' })
+  } catch (error: unknown) {
+    res
+      .status(500)
+      .json({ message: 'Error deleting product', error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
 // Top-selling products
-router.get('/top-selling', (req, res, next) => getTopSellingProducts(req, res));
+router.get('/top-selling', (req, res) => getTopSellingProducts(req, res))
 
 // Public Top-selling products
-router.get('/public-top-selling', getPublicTopSellingProducts);
+router.get('/public-top-selling', getPublicTopSellingProducts)
 
 // Get product by ID
 router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
   try {
     const { id } = req.params
-    
+
     // Validate ObjectId
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Invalid product ID format' 
+        message: 'Invalid product ID format'
       })
     }
 
-    const product = await Product.findById(id)
-      .populate('categories', 'name')
-      .populate('brand', 'name')
-      .lean()
+    const product = await Product.findById(id).populate('categories', 'name').populate('brand', 'name').lean()
 
     if (!product) {
-      return res.status(404).json({ 
+      return res.status(404).json({
         success: false,
-        message: 'Product not found' 
+        message: 'Product not found'
       })
     }
 
@@ -214,11 +215,11 @@ router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
       success: true,
       data: product
     })
-  } catch (error: any) {
-    res.status(500).json({ 
+  } catch (error: unknown) {
+    res.status(500).json({
       success: false,
-      message: 'Error fetching product', 
-      error: error?.message || 'Unknown error' 
+      message: 'Error fetching product',
+      error: error instanceof Error ? error.message : 'Unknown error'
     })
   }
 })

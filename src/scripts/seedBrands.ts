@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { Brand } from '../models/Brand'
 
 const brandsData = [
@@ -17,18 +16,14 @@ const brandsData = [
 ]
 
 export const seedBrands = async () => {
-  try {
-    // Create or update brands
-    for (const brandData of brandsData) {
-      const existingBrand = await Brand.findOne({ name: brandData.name })
+  // Create or update brands
+  for (const brandData of brandsData) {
+    const existingBrand = await Brand.findOne({ name: brandData.name })
 
-      if (existingBrand) {
-        continue
-      }
-
-      await new Brand(brandData).save()
+    if (existingBrand) {
+      continue
     }
-  } catch (error) {
-    throw error
+
+    await new Brand(brandData).save()
   }
 }

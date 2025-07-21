@@ -12,6 +12,7 @@ import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
 import ChatWebSocketServer from './websocket/chatServer'
 
+
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
 import categoryRouter from './routes/categories'
@@ -25,13 +26,13 @@ import managerChatsRouter from './routes/managerChats'
 import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
-import paymentVnpayRoutes from './routes/payment-vnpay';
+import paymentVnpayRoutes from './routes/payment-vnpay'
 import couponRouter from './routes/voucher'
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
 import adminRouter from './routes/admin/admin'
-import applyCouponRouter from './routes/apply-coupon';
-import uploadRouter from './routes/upload';
+import applyCouponRouter from './routes/apply-coupon'
+import uploadRouter from './routes/upload'
 import { errorHandler } from './middlewares/errorHandler'
 import {
   API_BASE,
@@ -59,8 +60,11 @@ dotenv.config()
 const initializeServices = async () => {
   try {
     await connectDB()
+    
+
+    
     suggestionsService.initialize()
-    console.log('✅ All services initialized successfully')
+    // Services initialized
   } catch (error) {
     console.error('❌ Error initializing services:', error)
     process.exit(1)
@@ -70,14 +74,15 @@ const initializeServices = async () => {
 const app: Application = express()
 const PORT = Number(process.env.PORT) || 5000
 const HOST = process.env.HOST || '0.0.0.0'
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app'
 const EXTRA_ORIGINS = process.env.EXTRA_ORIGINS?.split(',') || []
 
 // Danh sách origin được phép
 const allowedOrigins = [
   FRONTEND_URL,
-  'http://10.0.2.2:5000',      // Android emulator
-  'http://10.0.3.2:5000',      // Genymotion
+  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app',
+  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app/en',
+  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app/vi',
   ...EXTRA_ORIGINS
 ]
 
@@ -94,40 +99,45 @@ function getLocalIp(): string | undefined {
 }
 
 // Middleware
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true)
-    if (allowedOrigins.includes(origin)) return callback(null, true)
-    return callback(new Error(`Origin ${origin} không được phép`))
-  },
-  methods: ['GET','POST','PUT','DELETE','PATCH','OPTIONS'],
-  credentials: true,
-  allowedHeaders: ['Content-Type','Authorization','Accept','Origin','X-Requested-With'],
-  optionsSuccessStatus: 204
-}))
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true)
+      if (allowedOrigins.includes(origin)) return callback(null, true)
+      return callback(new Error(`Origin ${origin} không được phép`))
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    optionsSuccessStatus: 204
+  })
+)
 // Đúng: bắt mọi preflight request
 // ✅ Bắt mọi preflight request cho tất cả routes
-app.options(/.*/, cors());
+app.options(/.*/, cors())
 app.use(express.json())
 app.use(cookieParser())
 
 // Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
-    ttl: 10 * 60,        // 10 minutes
-    autoRemove: 'native'
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 10 * 60 * 1000  // 10 minutes
-  }
-}))
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority',
+      ttl: 10 * 60, // 10 minutes
+      autoRemove: 'native'
+    }),
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 10 * 60 * 1000, // 10 minutes
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    }
+  })
+)
 
 // Health-check route
 app.get('/', (_req: Request, res: Response) => {
@@ -148,31 +158,41 @@ app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
 app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
-app.use('/api/payment', paymentVnpayRoutes);
-app.use(API_BASE + '/coupon', couponRouter)
+app.use('/api/payment', paymentVnpayRoutes)
+app.use(API_BASE + '/coupons', couponRouter)
+
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
-app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter);
-app.use(API_BASE + '/upload', uploadRouter);
+app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
+app.use(API_BASE + '/upload', uploadRouter)
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
 // Create HTTP server
-const server = createServer(app);
+const server = createServer(app)
 
 // Initialize WebSocket server
-const chatWebSocketServer = new ChatWebSocketServer(server);
+new ChatWebSocketServer(server)
 
 // Start server và log thêm IP LAN cho debug
-server.listen(PORT, HOST, async () => {
-  await initializeServices()
-  console.log(`– Server đang chạy trên: http://${HOST}:${PORT}  (cho web/emulator)`)
-  console.log(`– WebSocket server: ws://${HOST}:${PORT}`)
-  const lanIp = getLocalIp()
-  if (lanIp) {
-    console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
-    console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+const startServer = async () => {
+  try {
+    await initializeServices()
+    server.listen(PORT, HOST, () => {
+      console.log(`– Server đang chạy trên: https://nidas-be.onrender.com  (production)`)
+      console.log(`– WebSocket server: wss://nidas-be.onrender.com`)
+      const lanIp = getLocalIp()
+      if (lanIp) {
+        console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
+        console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+      }
+    })
+  } catch (error) {
+    console.error('❌ Failed to start server:', error)
+    process.exit(1)
   }
-})
+}
+
+startServer()

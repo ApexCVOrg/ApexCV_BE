@@ -1,5 +1,4 @@
 import { Category } from '../models/Category'
-import { Types } from 'mongoose'
 import { CATEGORY_STATUS } from '../constants/categories'
 
 interface ICategory {

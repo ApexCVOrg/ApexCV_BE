@@ -45,11 +45,11 @@ export const ensureCategoryIndexes = async () => {
   try {
     // Drop all existing indexes
     await Category.collection.dropIndexes()
-    console.log('✅ Dropped all existing category indexes')
+    // Dropped all existing category indexes
 
     // Create new compound index
     await Category.collection.createIndex({ name: 1, parentCategory: 1 }, { unique: true })
-    console.log('✅ Created new category compound index')
+    // Created new category compound index
   } catch (error) {
     console.error('❌ Error setting up category indexes:', error)
     throw error
