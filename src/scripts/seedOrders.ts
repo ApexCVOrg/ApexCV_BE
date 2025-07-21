@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import mongoose from 'mongoose'
 import { Order } from '../models/Order'
 import { User } from '../models/User'
@@ -1141,60 +1141,56 @@ const findProductByName = async (productName: string) => {
 }
 
 export const seedOrders = async () => {
-  try {
-    const createdOrders = []
+  const createdOrders = []
 
-    for (const orderData of ordersData) {
-      // Check if order already exists by checking user, orderItems, and totalPrice
-      const userId = await findUserByEmail(orderData.userEmail)
-      
-      const orderItems = []
-      for (const item of orderData.orderItems) {
-        const productId = await findProductByName(item.productName)
-        orderItems.push({
-          product: productId,
-          size: item.size,
-          color: item.color,
-          quantity: item.quantity,
-          price: item.price
-        })
-      }
-
-      // Check if order with same user, similar items, and totalPrice already exists
-      const existingOrder = await Order.findOne({
-        user: userId,
-        totalPrice: orderData.totalPrice,
-        'orderItems.0.product': orderItems[0].product,
-        'orderItems.0.size': orderItems[0].size,
-        'orderItems.0.color': orderItems[0].color
+  for (const orderData of ordersData) {
+    // Check if order already exists by checking user, orderItems, and totalPrice
+    const userId = await findUserByEmail(orderData.userEmail)
+    
+    const orderItems = []
+    for (const item of orderData.orderItems) {
+      const productId = await findProductByName(item.productName)
+      orderItems.push({
+        product: productId,
+        size: item.size,
+        color: item.color,
+        quantity: item.quantity,
+        price: item.price
       })
-
-      if (existingOrder) {
-        continue
-      }
-
-      const order = new Order({
-        user: userId,
-        orderItems,
-        shippingAddress: orderData.shippingAddress,
-        paymentMethod: orderData.paymentMethod,
-        paymentResult: orderData.paymentResult,
-        taxPrice: orderData.taxPrice,
-        shippingPrice: orderData.shippingPrice,
-        totalPrice: orderData.totalPrice,
-        isPaid: orderData.isPaid,
-        paidAt: orderData.paidAt,
-        isDelivered: orderData.isDelivered,
-        deliveredAt: orderData.deliveredAt,
-        orderStatus: orderData.orderStatus
-      })
-
-      const savedOrder = await order.save()
-      createdOrders.push(savedOrder)
     }
 
-    return createdOrders
-  } catch (error) {
-    throw error
+    // Check if order with same user, similar items, and totalPrice already exists
+    const existingOrder = await Order.findOne({
+      user: userId,
+      totalPrice: orderData.totalPrice,
+      'orderItems.0.product': orderItems[0].product,
+      'orderItems.0.size': orderItems[0].size,
+      'orderItems.0.color': orderItems[0].color
+    })
+
+    if (existingOrder) {
+      continue
+    }
+
+    const order = new Order({
+      user: userId,
+      orderItems,
+      shippingAddress: orderData.shippingAddress,
+      paymentMethod: orderData.paymentMethod,
+      paymentResult: orderData.paymentResult,
+      taxPrice: orderData.taxPrice,
+      shippingPrice: orderData.shippingPrice,
+      totalPrice: orderData.totalPrice,
+      isPaid: orderData.isPaid,
+      paidAt: orderData.paidAt,
+      isDelivered: orderData.isDelivered,
+      deliveredAt: orderData.deliveredAt,
+      orderStatus: orderData.orderStatus
+    })
+
+    const savedOrder = await order.save()
+    createdOrders.push(savedOrder)
   }
+
+  return createdOrders
 } 

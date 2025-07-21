@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import express from 'express';
 import { createCheckoutSession } from '../controllers/checkout.controller';
 

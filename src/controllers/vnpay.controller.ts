@@ -578,7 +578,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         transactionId: vnpTransactionNo,
         responseCode: vnpResponseCode
       }
-    };
+    }
 
     console.log('[VNPAY Return] Sending success response:', JSON.stringify(successResponse, null, 2));
     res.json(successResponse);
@@ -589,7 +589,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       status: 'error', 
       message: 'Có lỗi xảy ra khi xử lý thanh toán', 
       detail: (err as any)?.message 
-    });
+    })
   }
 };
 

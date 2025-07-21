@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 // src/seeds/category.seed.ts
 import mongoose from 'mongoose'
 import { Category, ensureCategoryIndexes } from '../models/Category'
@@ -297,7 +297,7 @@ export const seedCategories = async () => {
         }
         // Create product type subcategories for this team
         for (const productType of sub.subcategories) {
-          let productTypeCat = await Category.findOne({ name: productType, parentCategory: teamCategory._id })
+          const productTypeCat = await Category.findOne({ name: productType, parentCategory: teamCategory._id })
           if (!productTypeCat) {
             await new Category({
               name: productType,
@@ -344,7 +344,7 @@ export const fixCategoryStructure = async () => {
       }
       for (const productType of sub.subcategories) {
         // Kiểm tra product type
-        let prod = await Category.findOne({ name: productType, parentCategory: team._id })
+        const prod = await Category.findOne({ name: productType, parentCategory: team._id })
         // Nếu có product type trùng tên nhưng parentCategory sai, xóa đi
         const wrongProds = await Category.find({ name: productType, parentCategory: { $ne: team._id } })
         for (const wrong of wrongProds) {

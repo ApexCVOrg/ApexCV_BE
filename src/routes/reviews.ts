@@ -1,5 +1,6 @@
-/* eslint-disable */
+
 import express, { Request, Response, Router } from 'express'
+import mongoose from 'mongoose'
 import { Review } from '../models/Review'
 import { authenticateToken } from '../middlewares/auth'
 import { Order } from '../models/Order'
@@ -95,7 +96,7 @@ router.get('/average/:productId', async (req: Request, res: Response): Promise<v
   try {
     const productId = req.params.productId
     const result = await Review.aggregate([
-      { $match: { product: new (require('mongoose')).Types.ObjectId(productId) } },
+      { $match: { product: new mongoose.Types.ObjectId(productId) } },
       { $group: { _id: '$product', average: { $avg: '$rating' }, count: { $sum: 1 } } }
     ])
     if (result.length === 0) {

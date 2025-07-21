@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
 

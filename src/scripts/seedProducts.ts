@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import mongoose from 'mongoose'
 import { Product } from '../models/Product'
 import { Category } from '../models/Category'
