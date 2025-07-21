@@ -87,7 +87,10 @@
     "openai": "^5.8.3",
     "reflect-metadata": "^0.2.2",
     "stripe": "^18.3.0",
+<<<<<<< HEAD
+=======
     "ws": "^8.18.3",
+>>>>>>> 4a33d3fb876bbd9075a7cf6686c8ffb429d8b20c
     "zod": "^3.25.76"
   },
   "husky": {

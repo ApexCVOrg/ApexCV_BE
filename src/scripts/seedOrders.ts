@@ -1001,33 +1001,6 @@ const ordersData = [
     isDelivered: false,
     orderStatus: 'paid'
   },
-  {
-    userEmail: 'user10@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Kids Football Boots",
-        size: '30',
-        color: 'Red',
-        quantity: 1,
-        price: 2199000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van J',
-      street: 'Nguyen Trai',
-      city: 'Hai Phong',
-      state: 'Hai Phong',
-      postalCode: '31000',
-      country: 'Vietnam',
-      phone: '0901000010'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 219900,
-    shippingPrice: 50000,
-    totalPrice: 2468900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
   // TODAY'S ORDERS - For testing Today's Sales
   {
     userEmail: 'user01@example.com',

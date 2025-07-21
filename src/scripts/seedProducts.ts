@@ -1260,6 +1260,186 @@ const productsData = [
     brand: 'Adidas',
     status: 'active'
   },
+  // Adidas Shoes - Samba
+  {
+    name: 'Samba OG Shoes',
+    description: 'Adidas Samba OG Shoes - Originals, 14 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752479523/Giay_Samba_OG_trang_B75806_01_00_standard_ts41vx.avif'],
+    sizes: [
+      { sku: '1234568282', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568283', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568284', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568285', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568286', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568287', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568288', size: '40', stock: 10, color: 'Grey' },
+      { sku: '1234568289', size: '41', stock: 10, color: 'Grey' },
+      { sku: '1234568290', size: '42', stock: 10, color: 'Grey' }
+    ],
+    tags: ['originals', 'OG'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba JP Shoes',
+    description: 'Adidas Samba JP Shoes - Originals, 2 colours, New.',
+    price: 3000000,
+    discountPrice: 3000000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481341/Samba_Jp_Shoes_White_JR0964_01_00_standard_j1mljy.avif'],
+    sizes: [
+      { sku: '1234568291', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568292', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568293', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568294', size: '40', stock: 10, color: 'Green' },
+      { sku: '1234568295', size: '41', stock: 10, color: 'Green' },
+      { sku: '1234568296', size: '42', stock: 10, color: 'Green' }
+    ],
+    tags: ['originals', 'JP'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba W',
+    description: 'Adidas Samba W - Originals, 3 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481428/Samba_OG_W_Cream_White_ID0478_01_standard_yq6dvh.avif'],
+    sizes: [
+      { sku: '1234568297', size: '36', stock: 10, color: 'Black' },
+      { sku: '1234568298', size: '37', stock: 10, color: 'Black' },
+      { sku: '1234568299', size: '38', stock: 10, color: 'Black' },
+      { sku: '1234568300', size: '36', stock: 10, color: 'White' },
+      { sku: '1234568301', size: '37', stock: 10, color: 'White' },
+      { sku: '1234568302', size: '38', stock: 10, color: 'White' },
+      { sku: '1234568303', size: '36', stock: 10, color: 'Beige' },
+      { sku: '1234568304', size: '37', stock: 10, color: 'Beige' },
+      { sku: '1234568305', size: '38', stock: 10, color: 'Beige' }
+    ],
+    tags: ['originals', 'W'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba LT Shoes',
+    description: 'Adidas Samba LT Shoes - Originals, 2 colours.',
+    price: 2900000,
+    discountPrice: 2900000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481448/Samba_LT_Shoes_Black_IG2010_01_standard_lftp7l.avif'],
+    sizes: [
+      { sku: '1234568306', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568307', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568308', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568309', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568310', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568311', size: '42', stock: 10, color: 'White' }
+    ],
+    tags: ['originals', 'LT'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Adidas Superstar Collection
+  {
+    name: 'Superstar 82 Shoes',
+    description: 'Adidas Superstar 82 - Classic design with modern comfort. Iconic shell toe design.',
+    price: 2800000,
+    discountPrice: 2500000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481685/Superstar_82_Shoes_Black_JI2026_01_standard_vk2bpv.avif'],
+    sizes: [
+      { sku: '1234568312', size: '40', stock: 15, color: 'White' },
+      { sku: '1234568313', size: '41', stock: 20, color: 'White' },
+      { sku: '1234568314', size: '42', stock: 25, color: 'White' },
+      { sku: '1234568315', size: '43', stock: 15, color: 'White' },
+      { sku: '1234568316', size: '40', stock: 15, color: 'Black' },
+      { sku: '1234568317', size: '41', stock: 20, color: 'Black' },
+      { sku: '1234568318', size: '42', stock: 25, color: 'Black' },
+      { sku: '1234568319', size: '43', stock: 15, color: 'Black' }
+    ],
+    tags: ['shoes', 'superstar', '82'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Vintage Shoes',
+    description: 'Adidas Superstar Vintage - Retro style with premium materials. Classic shell toe design.',
+    price: 2900000,
+    discountPrice: 2600000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481696/Superstar_Vintage_Shoes_White_JQ3254_01_00_standard_fvo24u.avif'],
+    sizes: [
+      { sku: '1234568320', size: '40', stock: 12, color: 'White' },
+      { sku: '1234568321', size: '41', stock: 18, color: 'White' },
+      { sku: '1234568322', size: '42', stock: 22, color: 'White' },
+      { sku: '1234568323', size: '43', stock: 12, color: 'White' },
+      { sku: '1234568324', size: '40', stock: 12, color: 'Black' },
+      { sku: '1234568325', size: '41', stock: 18, color: 'Black' },
+      { sku: '1234568326', size: '42', stock: 22, color: 'Black' },
+      { sku: '1234568327', size: '43', stock: 12, color: 'Black' },
+      { sku: '1234568328', size: '40', stock: 12, color: 'Navy' },
+      { sku: '1234568329', size: '41', stock: 18, color: 'Navy' },
+      { sku: '1234568330', size: '42', stock: 22, color: 'Navy' },
+      { sku: '1234568331', size: '43', stock: 12, color: 'Navy' }
+    ],
+    tags: ['shoes', 'superstar', 'vintage'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar II Shoes',
+    description: 'Adidas Superstar II - Enhanced comfort with classic style. Updated shell toe design.',
+    price: 2700000,
+    discountPrice: 2400000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481691/SUPERSTAR_II_Green_JI3076_01_00_standard_hpveet.avif'],
+    sizes: [
+      { sku: '1234568332', size: '40', stock: 14, color: 'White' },
+      { sku: '1234568333', size: '41', stock: 19, color: 'White' },
+      { sku: '1234568334', size: '42', stock: 24, color: 'White' },
+      { sku: '1234568335', size: '43', stock: 14, color: 'White' },
+      { sku: '1234568336', size: '40', stock: 14, color: 'Black' },
+      { sku: '1234568337', size: '41', stock: 19, color: 'Black' },
+      { sku: '1234568338', size: '42', stock: 24, color: 'Black' },
+      { sku: '1234568339', size: '43', stock: 14, color: 'Black' },
+      { sku: '1234568340', size: '40', stock: 14, color: 'Red' },
+      { sku: '1234568341', size: '41', stock: 19, color: 'Red' },
+      { sku: '1234568342', size: '42', stock: 24, color: 'Red' },
+      { sku: '1234568343', size: '43', stock: 14, color: 'Red' }
+    ],
+    tags: ['shoes', 'superstar', 'II'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Standard Shoes',
+    description: 'Adidas Superstar Standard - Original design with timeless appeal. Classic shell toe.',
+    price: 2600000,
+    discountPrice: 2300000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481702/Superstar_Shoes_White_IG9367_01_standard_tfdpml.avif'],
+    sizes: [
+      { sku: '1234568344', size: '40', stock: 16, color: 'White' },
+      { sku: '1234568345', size: '41', stock: 21, color: 'White' },
+      { sku: '1234568346', size: '42', stock: 26, color: 'White' },
+      { sku: '1234568347', size: '43', stock: 16, color: 'White' },
+      { sku: '1234568348', size: '40', stock: 16, color: 'Black' },
+      { sku: '1234568349', size: '41', stock: 21, color: 'Black' },
+      { sku: '1234568350', size: '42', stock: 26, color: 'Black' },
+      { sku: '1234568351', size: '43', stock: 16, color: 'Black' },
+      { sku: '1234568352', size: '40', stock: 16, color: 'Green' },
+      { sku: '1234568353', size: '41', stock: 21, color: 'Green' },
+      { sku: '1234568354', size: '42', stock: 26, color: 'Green' },
+      { sku: '1234568355', size: '43', stock: 16, color: 'Green' }
+    ],
+    tags: ['shoes', 'superstar', 'standard'],
+    brand: 'Adidas',
+    status: 'active'
+  },
   // Sample Sneakers from FE TestCardsPage
   {
     name: 'Nike Span 2',
@@ -1703,27 +1883,240 @@ const productsData = [
     brand: "Adidas",
     status: "active"
   },
+  // Hoodie Products
   {
-    name: "Test",
-    description: "Stylish and comfortable sneakers with Manchester United design for women. Perfect for casual wear and everyday activities.",
-    price: 2699000,
-    discountPrice: 2299000,
-    categoryPath: ["Women", "Manchester United", "Sneakers"],
-    images: ["Gazelle_Manchester_United_Terrace_Icons_Shoes_White_JS3040_HM1.avif"],
+    name: "Future Icons 3 Bar Logo Hoodie",
+    description: "Premium hoodie featuring the iconic 3 Bar Logo design. Made with high-quality materials for ultimate comfort and style.",
+    price: 2899000,
+    discountPrice: 2599000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591255/Future_Icons_3_Bar_Logo_Hoodie_Brown_JW7168_21_model_bj1cn7.avif'],
     sizes: [
-      { sku: "1234567890", size: "XS", stock: 15, color: "Red" },
-      { sku: "1234567891", size: "s", stock: 25, color: "Red" },
-      { sku: "1234567892", size: "M", stock: 30, color: "Red" },
-      { sku: "1234567893", size: "L", stock: 20, color: "Red" },
-      { sku: "1234567894", size: "XS", stock: 12, color: "White" },
-      { sku: "1234567895", size: "s", stock: 22, color: "white" },
-      { sku: "1234567896", size: "M", stock: 32, color: "white" },
-      { sku: "1234567897", size: "L", stock: 22, color: "White" }
+      { sku: '1234568534', size: 'S', stock: 20, color: 'Brown' },
+      { sku: '1234568535', size: 'M', stock: 25, color: 'Brown' },
+      { sku: '1234568536', size: 'L', stock: 20, color: 'Brown' },
+      { sku: '1234568537', size: 'XL', stock: 15, color: 'Brown' }
     ],
-    colors: ["Red", "Black"],
-    tags: ["manchester-united", "sneakers", "casual", "women"],
-    brand: "Adidas",
-    status: "active"
+    tags: ['hoodie', 'adidas', 'future-icons', '3-bar-logo', 'brown'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Essentials 3-Stripes French Terry Full-Zip Hoodie",
+    description: "Classic essentials hoodie with 3-stripes design. French terry construction for superior comfort and durability.",
+    price: 2699000,
+    discountPrice: 2399000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591255/Essentials_3-Stripes_French_Terry_Full-Zip_Hoodie_Grey_JE6338_21_model_pfnakv.avif'],
+    sizes: [
+      { sku: '1234568538', size: 'S', stock: 15, color: 'Grey' },
+      { sku: '1234568539', size: 'M', stock: 20, color: 'Grey' },
+      { sku: '1234568540', size: 'L', stock: 18, color: 'Grey' },
+      { sku: '1234568541', size: 'XL', stock: 12, color: 'Grey' },
+      { sku: '1234568542', size: 'S', stock: 15, color: 'Black' },
+      { sku: '1234568543', size: 'M', stock: 20, color: 'Black' },
+      { sku: '1234568544', size: 'L', stock: 18, color: 'Black' },
+      { sku: '1234568545', size: 'XL', stock: 12, color: 'Black' }
+    ],
+    tags: ['hoodie', 'adidas', 'essentials', '3-stripes', 'french-terry', 'full-zip', 'grey', 'black'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Elevated ALL SZN Terry Loop Hoodie",
+    description: "Elevated comfort hoodie with terry loop construction. Perfect for all seasons with premium materials and modern design.",
+    price: 2999000,
+    discountPrice: 2699000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591255/Elevated_ALL_SZN_Terry_Loop_Hoodie_Black_IV5212_21_model_wtlnh6.avif'],
+    sizes: [
+      { sku: '1234568546', size: 'S', stock: 18, color: 'Black' },
+      { sku: '1234568547', size: 'M', stock: 22, color: 'Black' },
+      { sku: '1234568548', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568549', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568550', size: 'S', stock: 18, color: 'Grey' },
+      { sku: '1234568551', size: 'M', stock: 22, color: 'Grey' },
+      { sku: '1234568552', size: 'L', stock: 20, color: 'Grey' },
+      { sku: '1234568553', size: 'XL', stock: 15, color: 'Grey' },
+      { sku: '1234568554', size: 'S', stock: 18, color: 'White' },
+      { sku: '1234568555', size: 'M', stock: 22, color: 'White' },
+      { sku: '1234568556', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234568557', size: 'XL', stock: 15, color: 'White' }
+    ],
+    tags: ['hoodie', 'adidas', 'elevated', 'terry-loop', 'all-season', 'black', 'grey', 'white'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Z.N.E. Full-Zip Hoodie",
+    description: "Zero Negative Energy hoodie with full-zip design. Premium comfort and style for active lifestyle.",
+    price: 2799000,
+    discountPrice: 2499000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591254/Z.N.E._Full-Zip_Hoodie_White_JF2443_21_model_r1cpxj.avif'],
+    sizes: [
+      { sku: '1234568558', size: 'S', stock: 16, color: 'White' },
+      { sku: '1234568559', size: 'M', stock: 21, color: 'White' },
+      { sku: '1234568560', size: 'L', stock: 19, color: 'White' },
+      { sku: '1234568561', size: 'XL', stock: 14, color: 'White' },
+      { sku: '1234568562', size: 'S', stock: 16, color: 'Green' },
+      { sku: '1234568563', size: 'M', stock: 21, color: 'Green' },
+      { sku: '1234568564', size: 'L', stock: 19, color: 'Green' },
+      { sku: '1234568565', size: 'XL', stock: 14, color: 'Green' },
+      { sku: '1234568566', size: 'S', stock: 16, color: 'Black' },
+      { sku: '1234568567', size: 'M', stock: 21, color: 'Black' },
+      { sku: '1234568568', size: 'L', stock: 19, color: 'Black' },
+      { sku: '1234568569', size: 'XL', stock: 14, color: 'Black' }
+    ],
+    tags: ['hoodie', 'adidas', 'z.n.e', 'full-zip', 'white', 'green', 'black'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Women Jacket/Vest Products
+  {
+    name: "Clot Crochet Vest by Edison Chen",
+    description: "Exclusive collaboration vest by Edison Chen featuring unique crochet design. Premium comfort and stylish appearance.",
+    price: 3299000,
+    discountPrice: 2999000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594828/Clot_Crochet_Vest_by_Edison_Chen_Green_JP1606_21_model_xkn8fc.avif'],
+    sizes: [
+      { sku: '1234568570', size: 'XS', stock: 12, color: 'Green' },
+      { sku: '1234568571', size: 'S', stock: 18, color: 'Green' },
+      { sku: '1234568572', size: 'M', stock: 22, color: 'Green' },
+      { sku: '1234568573', size: 'L', stock: 16, color: 'Green' }
+    ],
+    tags: ['vest', 'adidas', 'clot', 'edison-chen', 'crochet', 'green', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "City Escape Lightweight Windbreaker",
+    description: "Lightweight windbreaker perfect for city adventures. Breathable and stylish design for active women.",
+    price: 2899000,
+    discountPrice: 2599000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594830/City_Escape_Lightweight_Windbreaker_Grey_JF3403_21_model_fmvniw.avif'],
+    sizes: [
+      { sku: '1234568574', size: 'XS', stock: 15, color: 'Grey' },
+      { sku: '1234568575', size: 'S', stock: 20, color: 'Grey' },
+      { sku: '1234568576', size: 'M', stock: 25, color: 'Grey' },
+      { sku: '1234568577', size: 'L', stock: 18, color: 'Grey' }
+    ],
+    tags: ['windbreaker', 'adidas', 'city-escape', 'lightweight', 'grey', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Own The Run Spray Dye Vest",
+    description: "Unique spray dye vest for runners. Eye-catching design with premium comfort for active lifestyle.",
+    price: 2699000,
+    discountPrice: 2399000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594831/Own_The_Run_Spray_Dye_Vest_Grey_JL8726_21_model_pccabo.avif'],
+    sizes: [
+      { sku: '1234568578', size: 'XS', stock: 14, color: 'Grey' },
+      { sku: '1234568579', size: 'S', stock: 19, color: 'Grey' },
+      { sku: '1234568580', size: 'M', stock: 23, color: 'Grey' },
+      { sku: '1234568581', size: 'L', stock: 17, color: 'Grey' }
+    ],
+    tags: ['vest', 'adidas', 'own-the-run', 'spray-dye', 'grey', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "WIND.RDY Hyperglam Windbreaker",
+    description: "Hyperglam windbreaker with WIND.RDY technology. Stylish and functional for all weather conditions.",
+    price: 3099000,
+    discountPrice: 2799000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594828/WIND.RDY_Hyperglam_Windbreaker_Purple_IX3213_21_model_rbwfv0.avif'],
+    sizes: [
+      { sku: '1234568582', size: 'XS', stock: 13, color: 'Purple' },
+      { sku: '1234568583', size: 'S', stock: 18, color: 'Purple' },
+      { sku: '1234568584', size: 'M', stock: 22, color: 'Purple' },
+      { sku: '1234568585', size: 'L', stock: 16, color: 'Purple' },
+      { sku: '1234568586', size: 'XS', stock: 13, color: 'Green' },
+      { sku: '1234568587', size: 'S', stock: 18, color: 'Green' },
+      { sku: '1234568588', size: 'M', stock: 22, color: 'Green' },
+      { sku: '1234568589', size: 'L', stock: 16, color: 'Green' },
+      { sku: '1234568590', size: 'XS', stock: 13, color: 'Black' },
+      { sku: '1234568591', size: 'S', stock: 18, color: 'Black' },
+      { sku: '1234568592', size: 'M', stock: 22, color: 'Black' },
+      { sku: '1234568593', size: 'L', stock: 16, color: 'Black' }
+    ],
+    tags: ['windbreaker', 'adidas', 'wind-rdy', 'hyperglam', 'purple', 'green', 'black', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Kids Products
+  {
+    name: "Smiley World Cap Kids",
+    description: "Fun and colorful cap featuring the iconic Smiley World design. Perfect for kids who love to express their personality.",
+    price: 899000,
+    discountPrice: 799000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595934/Smiley_World_Cap_Kids_Blue_JG5803_01_00_standard_qnqeqw.avif'],
+    sizes: [
+      { sku: '1234568594', size: '4-5Y', stock: 25, color: 'Blue' },
+      { sku: '1234568595', size: '6-7Y', stock: 30, color: 'Blue' },
+      { sku: '1234568596', size: '8-9Y', stock: 25, color: 'Blue' },
+      { sku: '1234568597', size: '10-11Y', stock: 20, color: 'Blue' }
+    ],
+    tags: ['cap', 'adidas', 'smiley-world', 'kids', 'blue'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Advantage 2.0 Shoes",
+    description: "Comfortable and durable shoes perfect for active kids. Lightweight design with excellent support for daily activities.",
+    price: 1599000,
+    discountPrice: 1399000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595930/Advantage_2.0_Shoes_White_IH6251_01_00_standard_xxp8ce.avif'],
+    sizes: [
+      { sku: '1234568598', size: '4-5Y', stock: 20, color: 'White' },
+      { sku: '1234568599', size: '6-7Y', stock: 25, color: 'White' },
+      { sku: '1234568600', size: '8-9Y', stock: 22, color: 'White' },
+      { sku: '1234568601', size: '10-11Y', stock: 18, color: 'White' }
+    ],
+    tags: ['shoes', 'adidas', 'advantage', 'kids', 'white'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "adidas Originals x Smiley Kids Backpack",
+    description: "Collaboration backpack featuring the iconic Smiley design. Spacious and comfortable for school and outdoor activities.",
+    price: 1299000,
+    discountPrice: 1099000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595932/adidas_Originals_x_Smiley_Kids_Backpack_Black_JC8521_01_00_standard_lvyt9s.avif'],
+    sizes: [
+      { sku: '1234568602', size: '4-5Y', stock: 15, color: 'Black' },
+      { sku: '1234568603', size: '6-7Y', stock: 20, color: 'Black' },
+      { sku: '1234568604', size: '8-9Y', stock: 18, color: 'Black' },
+      { sku: '1234568605', size: '10-11Y', stock: 15, color: 'Black' }
+    ],
+    tags: ['backpack', 'adidas', 'originals', 'smiley', 'kids', 'black'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Smiley World Backpack Kids",
+    description: "Vibrant and fun backpack with Smiley World design. Perfect size for kids with comfortable straps and multiple compartments.",
+    price: 1199000,
+    discountPrice: 999000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595931/Smiley_World_Backpack_Kids_Multicolor_JH3417_01_00_standard_ig9ouc.avif'],
+    sizes: [
+      { sku: '1234568606', size: '4-5Y', stock: 18, color: 'Blue' },
+      { sku: '1234568607', size: '6-7Y', stock: 22, color: 'Blue' },
+      { sku: '1234568608', size: '8-9Y', stock: 20, color: 'Blue' },
+      { sku: '1234568609', size: '10-11Y', stock: 16, color: 'Blue' }
+    ],
+    tags: ['backpack', 'adidas', 'smiley-world', 'kids', 'blue', 'multicolor'],
+    brand: 'Adidas',
+    status: 'active'
   }
 ]
 
@@ -1850,8 +2243,6 @@ export const updateAllProductImages = async () => {
   }
 }
 
-
-
 export const seedProducts = async () => {
   try {
     console.log('🔄 Starting product seeding and image updates...')
@@ -1859,6 +2250,8 @@ export const seedProducts = async () => {
     
     let createdCount = 0
     let updatedCount = 0
+    
+    console.log('🔄 Starting product seeding and image updates...')
     
     for (const product of productsData) {
       // Check if product already exists
@@ -1917,7 +2310,7 @@ export const seedProducts = async () => {
           categories: categoryIds,
           images: product.images || [],
           sizes: product.sizes || [],
-          colors: product.colors || [],
+          // colors: product.colors || [],
           tags: product.tags || [],
           brand: brand._id,
           status: product.status || 'active'
