@@ -184,7 +184,7 @@ const startServer = async () => {
   try {
     await initializeServices()
     server.listen(PORT, HOST, () => {
-      console.log(`– Server đang chạy trên: https://apexcv-be.onrender.com  (production)`)
+      console.log(`– Server đang chạy trên: https://nidas-be.onrender.com  (production)`)
       console.log(`– WebSocket server: wss://apexcv-be.onrender.com`)
       const lanIp = getLocalIp()
       if (lanIp) {

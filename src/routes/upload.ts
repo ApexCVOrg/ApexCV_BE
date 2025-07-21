@@ -72,7 +72,7 @@ router.post('/chat-files', upload.array('files', 5), async (req: Request, res: R
       originalName: file.originalname,
       mimetype: file.mimetype,
       size: file.size,
-              url: `${process.env.API_BASE_URL || 'https://apexcv-be.onrender.com'}/uploads/${file.filename}`
+              url: `${process.env.API_BASE_URL || 'https://nidas-be.onrender.com'}/uploads/${file.filename}`
     }))
 
     res.json({
