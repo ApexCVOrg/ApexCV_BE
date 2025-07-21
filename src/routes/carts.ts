@@ -12,7 +12,15 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
     console.log('GET /carts/user - Request received');
     const userId = (req as any).user.id;
     console.log('User ID:', userId);
-    let cart = await Cart.findOne({ user: userId }).populate('cartItems.product');
+    
+    // Add timeout protection
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Request timeout')), 10000); // 10 second timeout
+    });
+    
+    const cartPromise = Cart.findOne({ user: userId }).populate('cartItems.product');
+    
+    let cart = await Promise.race([cartPromise, timeoutPromise]) as any;
     console.log('Cart found:', cart ? 'Yes' : 'No');
 
     if (!cart) {
@@ -22,7 +30,7 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
     }
     // Map lại cartItems để trả về stock từng biến thể
     const cartObj = cart.toObject();
-    const cartItems = cartObj.cartItems.map((item) => {
+    const cartItems = cartObj.cartItems.map((item: any) => {
       let stock = null;
       // Ensure product is populated and has sizes
       if (
@@ -41,7 +49,12 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
     });
     res.json({ ...cartObj, cartItems });
   } catch (error) {
-    res.status(500).json({ message: 'Lỗi khi lấy giỏ hàng: ' + (error as Error).message });
+    console.error('Cart API Error:', error);
+    if (error instanceof Error && error.message === 'Request timeout') {
+      res.status(408).json({ message: 'Request timeout - server is busy' });
+    } else {
+      res.status(500).json({ message: 'Lỗi khi lấy giỏ hàng: ' + (error as Error).message });
+    }
   }
 });
 
