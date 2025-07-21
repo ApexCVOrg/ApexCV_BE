@@ -11,7 +11,7 @@ import { seedCoupons } from '../scripts/seedVouchers'
 const connectDB = async (): Promise<void> => {
   try {
     // Kiểm tra và sửa format của MONGO_URI
-    let mongoUri = process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority&ssl=true&tls=true&tlsInsecure=true'
+    let mongoUri = process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority&appName=NIDAS'
     
     // Nếu MONGO_URI bắt đầu với "MONGO_URI=" thì loại bỏ prefix
     if (mongoUri.startsWith('MONGO_URI=')) {
