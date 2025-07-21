@@ -9,13 +9,18 @@ const router = express.Router()
 
 interface ProductQuery {
   gender?: string
+  brand?: string
+  category?: string
+  minPrice?: string
+  maxPrice?: string
+  search?: string
 }
 
 // Get all products
 const getAllProducts: RequestHandler = async (req, res, next) => {
   try {
     console.log('GET /products - Query params:', req.query)
-    const { gender } = req.query as ProductQuery
+    const { gender, brand, category, minPrice, maxPrice, search } = req.query as ProductQuery
 
     // Validate gender parameter
     if (gender && !['men', 'women', 'kids'].includes(gender.toString().toLowerCase())) {
@@ -86,6 +91,43 @@ const getAllProducts: RequestHandler = async (req, res, next) => {
           console.log('No team categories found, returning all products')
         }
       }
+    }
+
+    // Handle brand filtering
+    if (brand) {
+      console.log('Filtering by brand:', brand)
+      const brandIds = brand.split(',').map(id => id.trim())
+      // Validate brand IDs are valid ObjectIds
+      const validBrandIds = brandIds.filter(id => /^[0-9a-fA-F]{24}$/.test(id))
+      if (validBrandIds.length > 0) {
+        query = query.where('brand').in(validBrandIds)
+      }
+    }
+
+    // Handle category filtering
+    if (category) {
+      console.log('Filtering by category:', category)
+      const categoryIds = category.split(',').map(id => id.trim())
+      // Validate category IDs are valid ObjectIds
+      const validCategoryIds = categoryIds.filter(id => /^[0-9a-fA-F]{24}$/.test(id))
+      if (validCategoryIds.length > 0) {
+        query = query.where('categories').in(validCategoryIds)
+      }
+    }
+
+    // Handle price filtering
+    if (minPrice || maxPrice) {
+      console.log('Filtering by price range:', minPrice, '-', maxPrice)
+      const priceFilter: any = {}
+      if (minPrice) priceFilter.$gte = parseFloat(minPrice)
+      if (maxPrice) priceFilter.$lte = parseFloat(maxPrice)
+      query = query.where('price', priceFilter)
+    }
+
+    // Handle search filtering
+    if (search) {
+      console.log('Filtering by search:', search)
+      query = query.where('name', { $regex: search, $options: 'i' })
     }
 
     const products = await query.populate('categories', 'name').populate('brand', 'name').sort({ createdAt: -1 }).lean()
