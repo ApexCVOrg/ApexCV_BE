@@ -319,33 +319,6 @@ const ordersData = [
     orderStatus: 'shipped'
   },
   {
-    userEmail: 'user10@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Women's Training Shoes",
-        size: '38',
-        color: 'Black',
-        quantity: 1,
-        price: 2799000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van J',
-      street: 'Nguyen Trai',
-      city: 'Hai Phong',
-      state: 'Hai Phong',
-      postalCode: '31000',
-      country: 'Vietnam',
-      phone: '0901000010'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 279900,
-    shippingPrice: 50000,
-    totalPrice: 3128900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
-  {
     userEmail: 'user11@example.com',
     orderItems: [
       {
@@ -705,33 +678,6 @@ const ordersData = [
     orderStatus: 'paid'
   },
   {
-    userEmail: 'user01@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Kids Football Boots",
-        size: '29',
-        color: 'Red',
-        quantity: 1,
-        price: 2199000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van A',
-      street: 'Le Loi',
-      city: 'Hue',
-      state: 'Thua Thien Hue',
-      postalCode: '53000',
-      country: 'Vietnam',
-      phone: '0901000001'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 219900,
-    shippingPrice: 50000,
-    totalPrice: 2468900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
-  {
     userEmail: 'user02@example.com',
     orderItems: [
       {
@@ -835,33 +781,6 @@ const ordersData = [
     paidAt: new Date('2025-03-15T10:20:00Z'),
     isDelivered: false,
     orderStatus: 'paid'
-  },
-  {
-    userEmail: 'user05@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Women's Training Shoes",
-        size: '39',
-        color: 'Black',
-        quantity: 1,
-        price: 2799000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van E',
-      street: 'Pham Van Dong',
-      city: 'Da Nang',
-      state: 'Da Nang',
-      postalCode: '55000',
-      country: 'Vietnam',
-      phone: '0901000005'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 279900,
-    shippingPrice: 50000,
-    totalPrice: 3128900,
-    isPaid: false,
-    orderStatus: 'pending'
   },
   {
     userEmail: 'user06@example.com',
@@ -1000,33 +919,6 @@ const ordersData = [
     paidAt: new Date('2025-04-05T09:00:00Z'),
     isDelivered: false,
     orderStatus: 'paid'
-  },
-  {
-    userEmail: 'user10@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Kids Football Boots",
-        size: '30',
-        color: 'Red',
-        quantity: 1,
-        price: 2199000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van J',
-      street: 'Nguyen Trai',
-      city: 'Hai Phong',
-      state: 'Hai Phong',
-      postalCode: '31000',
-      country: 'Vietnam',
-      phone: '0901000010'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 219900,
-    shippingPrice: 50000,
-    totalPrice: 2468900,
-    isPaid: false,
-    orderStatus: 'pending'
   },
   // TODAY'S ORDERS - For testing Today's Sales
   {
