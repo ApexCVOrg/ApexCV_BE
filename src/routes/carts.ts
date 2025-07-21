@@ -9,8 +9,11 @@ const router: Router = express.Router();
 // Lấy giỏ hàng của user hiện tại
 router.get('/user', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
+    console.log('GET /carts/user - Request received');
     const userId = (req as any).user.id;
+    console.log('User ID:', userId);
     let cart = await Cart.findOne({ user: userId }).populate('cartItems.product');
+    console.log('Cart found:', cart ? 'Yes' : 'No');
 
     if (!cart) {
       // Tạo giỏ hàng mới nếu chưa có
