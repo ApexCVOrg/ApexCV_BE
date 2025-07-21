@@ -21,8 +21,8 @@ const connectDB = async (): Promise<void> => {
     await seedBrands()
     await seedProducts()
     // await seedOrders()
-    // await seedDocuments()
-    // await seedChatData()
+    await seedDocuments()
+    await seedChatData()
     await seedCoupons()
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${(error as Error).message}`)
