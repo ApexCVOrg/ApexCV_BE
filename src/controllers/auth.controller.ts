@@ -484,14 +484,17 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       { expiresIn: '24h' },
     );
 
-    // Generate refresh token
-    const refreshToken = jwt.sign(
-      { id: user._id, username: user.username, role: user.role },
-      process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
-      { expiresIn: '30d' },
-    );
-    user.refreshToken = refreshToken;
-    await user.save();
+    // Chỉ tạo refresh token mới nếu chưa có hoặc đã hết hạn
+    let refreshToken = user.refreshToken;
+    if (!refreshToken) {
+      refreshToken = jwt.sign(
+        { id: user._id, username: user.username, role: user.role },
+        process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key',
+        { expiresIn: '30d' },
+      );
+      user.refreshToken = refreshToken;
+      await user.save();
+    }
 
     // Return success response
     res.status(200).json({
@@ -1069,11 +1072,14 @@ export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
       res.status(401).json({ message: 'Invalid refresh token' });
       return;
     }
+    
+    // Generate new access token without updating database
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' },
     );
+    
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: 'Error refreshing token' });

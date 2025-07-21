@@ -43,7 +43,7 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
       setTimeout(() => reject(new Error('Request timeout')), 30000); // 30 second timeout
     });
     
-    // Add query optimization
+    // Add query optimization with better caching
     const cartPromise = Cart.findOne({ user: userId })
       .populate({
         path: 'cartItems.product',
@@ -90,10 +90,13 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
     });
     
     const result = { ...cart, cartItems };
-    res.json(result);
     
-    // Clean up cache after successful response
-    requestCache.delete(cacheKey);
+    // Cache the result for 5 seconds to reduce database calls
+    setTimeout(() => {
+      requestCache.delete(cacheKey);
+    }, 5000);
+    
+    res.json(result);
   } catch (error) {
     console.error('Cart API Error:', error);
     

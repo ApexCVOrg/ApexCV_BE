@@ -27,8 +27,11 @@ export const checkInactivity = (req: Request, res: Response, next: NextFunction)
     return
   }
 
-  // Nếu có hoạt động thì reset lại thời gian
-  userActivity.set(userId, now)
+  // Chỉ update activity time nếu đã qua 1 phút từ lần update cuối
+  const timeSinceLastUpdate = now - (userActivity.get(userId) || 0)
+  if (timeSinceLastUpdate > 60000) { // 1 phút
+    userActivity.set(userId, now)
+  }
   next()
 }
 
