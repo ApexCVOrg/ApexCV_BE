@@ -8,7 +8,7 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({
       success: false,
       message: 'Validation failed',
-      errors: errors.array()
+      errors: errors.array(),
     });
   }
   next();
@@ -16,10 +16,7 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
 
 // Validation rules for GET /api/manager/chats
 export const validateGetChats = [
-  query('page')
-    .optional()
-    .isInt({ min: 1 })
-    .withMessage('Page must be a positive integer'),
+  query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
   query('limit')
     .optional()
     .isInt({ min: 1, max: 100 })
@@ -28,7 +25,7 @@ export const validateGetChats = [
     .optional()
     .isIn(['open', 'closed'])
     .withMessage('Status must be either "open" or "closed"'),
-  validate
+  validate,
 ];
 
 // Validation rules for GET /api/manager/chats/:chatId/messages
@@ -38,7 +35,7 @@ export const validateGetMessages = [
     .withMessage('Chat ID is required')
     .isString()
     .withMessage('Chat ID must be a string'),
-  validate
+  validate,
 ];
 
 // Validation rules for POST /api/manager/chats/:chatId/messages
@@ -56,7 +53,7 @@ export const validateSendMessage = [
     .isLength({ min: 1, max: 1000 })
     .withMessage('Content must be between 1 and 1000 characters')
     .trim(),
-  validate
+  validate,
 ];
 
 // Validation rules for PATCH /api/manager/chats/:chatId/close
@@ -72,5 +69,5 @@ export const validateCloseSession = [
     .withMessage('Note must be a string')
     .isLength({ max: 500 })
     .withMessage('Note must not exceed 500 characters'),
-  validate
-]; 
+  validate,
+];

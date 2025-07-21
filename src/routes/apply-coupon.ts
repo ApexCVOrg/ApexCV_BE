@@ -20,13 +20,17 @@ router.post('/', async (req, res) => {
         coupon.isActive = false;
         await coupon.save();
       }
-      return res.status(400).json({ success: false, message: 'Coupon expired or max usage reached' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Coupon expired or max usage reached' });
     }
     if (!coupon.isActive) {
       return res.status(400).json({ success: false, message: 'Coupon is not active' });
     }
     if (orderValue < coupon.minOrderValue) {
-      return res.status(400).json({ success: false, message: 'Order value too low for this coupon' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Order value too low for this coupon' });
     }
     // Hợp lệ
     res.json({ success: true, data: coupon });
@@ -35,4 +39,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-export default router; 
+export default router;

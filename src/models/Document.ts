@@ -14,10 +14,13 @@ const DocumentSchema = new Schema<IDocument>(
     content: { type: String, required: true },
     tags: { type: [String], default: [] },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Tạo text index cho title và content
 DocumentSchema.index({ title: 'text', content: 'text' });
 
-export const DocumentModel: Model<IDocument> = mongoose.model<IDocument>('Document', DocumentSchema); 
+export const DocumentModel: Model<IDocument> = mongoose.model<IDocument>(
+  'Document',
+  DocumentSchema,
+);

@@ -29,7 +29,7 @@ class SuggestionsService {
         title: doc.title,
         content: doc.content,
         tags: doc.tags,
-        children: []
+        children: [],
       };
 
       // Lưu node vào map để tìm kiếm nhanh
@@ -46,7 +46,7 @@ class SuggestionsService {
         while (stack.length > 0 && !this.isChildOf(doc.title, stack[stack.length - 1].title)) {
           stack.pop();
         }
-        
+
         if (stack.length > 0) {
           stack[stack.length - 1].children!.push(node);
           stack.push(node);
@@ -67,32 +67,51 @@ class SuggestionsService {
    */
   private isChildOf(title: string, parentTitle: string): boolean {
     // Nếu parent là "Tôi muốn mua sản phẩm" và title bắt đầu bằng parent + " cho"
-    if (parentTitle === "Tôi muốn mua sản phẩm" && title.startsWith(parentTitle + " cho")) {
+    if (parentTitle === 'Tôi muốn mua sản phẩm' && title.startsWith(parentTitle + ' cho')) {
       return true;
     }
-    
+
     // Nếu parent là "Tôi muốn mua sản phẩm cho Nam" và title bắt đầu bằng "Tôi muốn mua sản phẩm của"
-    if (parentTitle === "Tôi muốn mua sản phẩm cho Nam" && title.startsWith("Tôi muốn mua sản phẩm của")) {
+    if (
+      parentTitle === 'Tôi muốn mua sản phẩm cho Nam' &&
+      title.startsWith('Tôi muốn mua sản phẩm của')
+    ) {
       return true;
     }
-    
-    if (parentTitle === "Tôi muốn mua sản phẩm cho Nữ" && title.startsWith("Tôi muốn mua sản phẩm của")) {
+
+    if (
+      parentTitle === 'Tôi muốn mua sản phẩm cho Nữ' &&
+      title.startsWith('Tôi muốn mua sản phẩm của')
+    ) {
       return true;
     }
-    
-    if (parentTitle === "Tôi muốn mua sản phẩm cho Trẻ em" && title.startsWith("Tôi muốn mua sản phẩm của")) {
+
+    if (
+      parentTitle === 'Tôi muốn mua sản phẩm cho Trẻ em' &&
+      title.startsWith('Tôi muốn mua sản phẩm của')
+    ) {
       return true;
     }
 
     // Nếu parent là "Tôi muốn mua sản phẩm của Arsenal" và title bắt đầu bằng "Tôi muốn mua áo đấu Arsenal"
-    if (parentTitle.includes("Tôi muốn mua sản phẩm của") && title.startsWith("Tôi muốn mua áo đấu")) {
+    if (
+      parentTitle.includes('Tôi muốn mua sản phẩm của') &&
+      title.startsWith('Tôi muốn mua áo đấu')
+    ) {
       return true;
     }
 
     // Các trường hợp khác: chính sách, hướng dẫn, thông tin thương hiệu
-    if (parentTitle === "Tôi muốn mua sản phẩm") {
-      const policyKeywords = ["Chính sách", "Hướng dẫn", "Cách", "Phương thức", "Theo dõi", "Tôi muốn biết về"];
-      return policyKeywords.some(keyword => title.startsWith(keyword));
+    if (parentTitle === 'Tôi muốn mua sản phẩm') {
+      const policyKeywords = [
+        'Chính sách',
+        'Hướng dẫn',
+        'Cách',
+        'Phương thức',
+        'Theo dõi',
+        'Tôi muốn biết về',
+      ];
+      return policyKeywords.some((keyword) => title.startsWith(keyword));
     }
 
     return false;
@@ -126,17 +145,17 @@ class SuggestionsService {
     }
 
     let currentLevel = this.tree;
-    
+
     for (const title of pathArray) {
-      const found = currentLevel.find(node => node.title === title);
+      const found = currentLevel.find((node) => node.title === title);
       if (!found) {
         return null;
       }
-      
+
       if (pathArray[pathArray.length - 1] === title) {
         return found; // Đây là node cuối cùng trong path
       }
-      
+
       currentLevel = found.children || [];
     }
 
@@ -146,15 +165,15 @@ class SuggestionsService {
   /**
    * Lấy suggestions theo path
    */
-  public getSuggestions(pathString: string = ""): SuggestionsResponse {
+  public getSuggestions(pathString: string = ''): SuggestionsResponse {
     const pathArray = pathString ? pathString.split('|') : [];
-    
+
     if (pathArray.length === 0) {
       // Trả về các node cấp 1
-      const suggestions = this.tree.map(node => node.title);
+      const suggestions = this.tree.map((node) => node.title);
       return {
         suggestions,
-        path: ""
+        path: '',
       };
     }
 
@@ -165,10 +184,10 @@ class SuggestionsService {
     }
 
     // Trả về children của node
-    const suggestions = (node.children || []).map(child => child.title);
+    const suggestions = (node.children || []).map((child) => child.title);
     return {
       suggestions,
-      path: pathString
+      path: pathString,
     };
   }
 
@@ -181,4 +200,4 @@ class SuggestionsService {
 }
 
 // Export singleton instance
-export const suggestionsService = new SuggestionsService(); 
+export const suggestionsService = new SuggestionsService();

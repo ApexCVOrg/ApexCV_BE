@@ -8,7 +8,10 @@ interface LogOptions {
   adminId: string; // Bắt buộc truyền vào để đảm bảo đúng admin
 }
 
-export async function logAdminAction(req: Request, { action, target, detail, adminId }: LogOptions) {
+export async function logAdminAction(
+  req: Request,
+  { action, target, detail, adminId }: LogOptions,
+) {
   try {
     const ip = req.headers['x-forwarded-for']?.toString() || req.socket.remoteAddress || '';
     const userAgent = req.headers['user-agent'] || '';
@@ -30,4 +33,4 @@ export async function logAdminAction(req: Request, { action, target, detail, adm
     // Không throw lỗi để không ảnh hưởng flow chính
     console.error('Audit log error:', err);
   }
-} 
+}

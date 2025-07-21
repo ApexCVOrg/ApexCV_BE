@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { chatService } from '../services/chatService';
 import { checkManagerAuth } from '../middlewares/checkManagerAuth';
-import { 
-  validateGetChats, 
-  validateGetMessages, 
-  validateSendMessage, 
-  validateCloseSession 
+import {
+  validateGetChats,
+  validateGetMessages,
+  validateSendMessage,
+  validateCloseSession,
 } from '../validations/chatValidation';
 
 interface AuthRequest extends Request {
@@ -41,14 +41,14 @@ router.get('/', validateGetChats, async (req: Request, res: Response) => {
     res.json({
       success: true,
       data: result.data,
-      pagination: result.pagination
+      pagination: result.pagination,
     });
   } catch (error) {
     console.error('Get chats error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -66,15 +66,15 @@ router.get('/:chatId/join-status', async (req: Request, res: Response) => {
       success: true,
       data: {
         isJoined,
-        chatId
-      }
+        chatId,
+      },
     });
   } catch (error) {
     console.error('Check join status error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -91,22 +91,22 @@ router.get('/:chatId/messages', validateGetMessages, async (req: Request, res: R
 
     res.json({
       success: true,
-      data: messages
+      data: messages,
     });
   } catch (error) {
     console.error('Get messages error:', error);
-    
+
     if (error instanceof Error && error.message.includes('not found')) {
       return res.status(404).json({
         success: false,
-        message: 'Chat session not found'
+        message: 'Chat session not found',
       });
     }
 
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -124,7 +124,7 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
     if (!managerId) {
       return res.status(401).json({
         success: false,
-        message: 'Manager ID not found'
+        message: 'Manager ID not found',
       });
     }
 
@@ -139,23 +139,23 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
         role: message.role,
         attachments: message.attachments,
         messageType: message.messageType,
-        createdAt: message.createdAt
-      }
+        createdAt: message.createdAt,
+      },
     });
   } catch (error) {
     console.error('Send message error:', error);
-    
+
     if (error instanceof Error) {
       if (error.message.includes('not found')) {
         return res.status(404).json({
           success: false,
-          message: 'Chat session not found'
+          message: 'Chat session not found',
         });
       }
       if (error.message.includes('closed')) {
         return res.status(400).json({
           success: false,
-          message: 'Cannot send message to closed session'
+          message: 'Cannot send message to closed session',
         });
       }
     }
@@ -163,7 +163,7 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
@@ -181,7 +181,7 @@ router.patch('/:chatId/close', validateCloseSession, async (req: AuthRequest, re
     if (!managerId) {
       return res.status(401).json({
         success: false,
-        message: 'Manager ID not found'
+        message: 'Manager ID not found',
       });
     }
 
@@ -189,24 +189,24 @@ router.patch('/:chatId/close', validateCloseSession, async (req: AuthRequest, re
 
     res.json({
       success: true,
-      message: 'Chat session closed successfully'
+      message: 'Chat session closed successfully',
     });
   } catch (error) {
     console.error('Close session error:', error);
-    
+
     if (error instanceof Error && error.message.includes('not found')) {
       return res.status(404).json({
         success: false,
-        message: 'Chat session not found'
+        message: 'Chat session not found',
       });
     }
 
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
 
-export default router; 
+export default router;

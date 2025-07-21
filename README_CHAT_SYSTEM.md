@@ -5,37 +5,42 @@ Hệ thống chat cho phép manager tương tác với khách hàng thông qua c
 ## Cấu trúc Database
 
 ### Collection: ChatSession
+
 ```typescript
 {
-  chatId: string;        // Unique identifier cho session
-  userId: string;        // ID của user
-  status: 'open' | 'closed';  // Trạng thái session
-  updatedAt: Date;       // Thời gian cập nhật cuối
-  createdAt: Date;       // Thời gian tạo
+  chatId: string; // Unique identifier cho session
+  userId: string; // ID của user
+  status: 'open' | 'closed'; // Trạng thái session
+  updatedAt: Date; // Thời gian cập nhật cuối
+  createdAt: Date; // Thời gian tạo
 }
 ```
 
 ### Collection: ChatMessage
+
 ```typescript
 {
-  chatId: string;        // Reference đến ChatSession
-  role: 'user' | 'manager';  // Người gửi tin nhắn
-  content: string;       // Nội dung tin nhắn (max 1000 chars)
-  createdAt: Date;       // Thời gian gửi
+  chatId: string; // Reference đến ChatSession
+  role: 'user' | 'manager'; // Người gửi tin nhắn
+  content: string; // Nội dung tin nhắn (max 1000 chars)
+  createdAt: Date; // Thời gian gửi
 }
 ```
 
 ## API Endpoints
 
 ### 1. GET /api/manager/chats
+
 Lấy danh sách chat sessions với phân trang và filter.
 
 **Query Parameters:**
+
 - `page` (optional): Số trang (default: 1)
 - `limit` (optional): Số lượng per page (default: 10, max: 100)
 - `status` (optional): Filter theo status ('open' | 'closed')
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -63,9 +68,11 @@ Lấy danh sách chat sessions với phân trang và filter.
 ```
 
 ### 2. GET /api/manager/chats/:chatId/messages
+
 Lấy toàn bộ tin nhắn của một chat session.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -87,9 +94,11 @@ Lấy toàn bộ tin nhắn của một chat session.
 ```
 
 ### 3. POST /api/manager/chats/:chatId/messages
+
 Gửi tin nhắn từ manager.
 
 **Request Body:**
+
 ```json
 {
   "content": "Nội dung tin nhắn"
@@ -97,6 +106,7 @@ Gửi tin nhắn từ manager.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -111,9 +121,11 @@ Gửi tin nhắn từ manager.
 ```
 
 ### 4. PATCH /api/manager/chats/:chatId/close
+
 Đóng chat session.
 
 **Request Body:**
+
 ```json
 {
   "note": "Ghi chú khi đóng session (optional)"
@@ -121,6 +133,7 @@ Gửi tin nhắn từ manager.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -131,10 +144,12 @@ Gửi tin nhắn từ manager.
 ## Authentication & Authorization
 
 Tất cả endpoints yêu cầu:
+
 - **Authorization Header**: `Bearer <token>`
 - **Role**: `manager`
 
 ### Middleware: checkManagerAuth
+
 - Verify JWT token
 - Kiểm tra role = 'manager'
 - Thêm user info vào request
@@ -142,6 +157,7 @@ Tất cả endpoints yêu cầu:
 ## Validation
 
 ### Input Validation
+
 - `page`: Integer >= 1
 - `limit`: Integer 1-100
 - `status`: Enum ['open', 'closed']
@@ -150,6 +166,7 @@ Tất cả endpoints yêu cầu:
 - `note`: Optional string, max 500 characters
 
 ### Error Responses
+
 - **400**: Validation failed
 - **401**: Unauthorized (missing/invalid token)
 - **403**: Forbidden (wrong role)
@@ -159,6 +176,7 @@ Tất cả endpoints yêu cầu:
 ## Service Layer
 
 ### ChatService Methods
+
 - `getSessions(page, limit, filter?)`: Lấy danh sách sessions
 - `getMessages(chatId)`: Lấy tin nhắn của session
 - `sendManagerMessage(chatId, managerId, content)`: Gửi tin nhắn
@@ -169,12 +187,14 @@ Tất cả endpoints yêu cầu:
 ## Usage Examples
 
 ### 1. Lấy danh sách chat sessions đang mở
+
 ```bash
 GET /api/manager/chats?status=open&page=1&limit=20
 Authorization: Bearer <manager_token>
 ```
 
 ### 2. Gửi tin nhắn
+
 ```bash
 POST /api/manager/chats/chat_1703123456789_abc123/messages
 Authorization: Bearer <manager_token>
@@ -186,6 +206,7 @@ Content-Type: application/json
 ```
 
 ### 3. Đóng session với ghi chú
+
 ```bash
 PATCH /api/manager/chats/chat_1703123456789_abc123/close
 Authorization: Bearer <manager_token>
@@ -199,12 +220,15 @@ Content-Type: application/json
 ## Testing
 
 ### Seed Data
+
 Script `seedChatData.ts` tạo dữ liệu mẫu:
+
 - 3 chat sessions (2 open, 1 closed)
 - 10 tin nhắn mẫu với nội dung thực tế
 - Timestamps hợp lý cho testing
 
 ### Test Cases
+
 1. **Authentication**: Test với token không hợp lệ
 2. **Authorization**: Test với role không phải manager
 3. **Validation**: Test với input không hợp lệ
@@ -217,4 +241,4 @@ Script `seedChatData.ts` tạo dữ liệu mẫu:
 2. **Role-based Access**: Chỉ manager mới có quyền truy cập
 3. **Input Validation**: Validate tất cả input từ client
 4. **Rate Limiting**: Có thể thêm rate limiting cho API
-5. **Data Sanitization**: Sanitize content trước khi lưu database 
+5. **Data Sanitization**: Sanitize content trước khi lưu database

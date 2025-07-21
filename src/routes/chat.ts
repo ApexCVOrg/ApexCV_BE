@@ -15,17 +15,17 @@ router.post('/', async (req: Request, res: Response) => {
     if (!message || typeof message !== 'string') {
       return res.status(400).json({
         success: false,
-        message: 'Message is required and must be a string'
+        message: 'Message is required and must be a string',
       });
     }
 
     // Tìm kiếm trong documents dựa trên message
     const searchQuery = {
-      $text: { $search: message }
+      $text: { $search: message },
     };
 
-    const documents = await DocumentModel.find(searchQuery, { score: { $meta: "textScore" } })
-      .sort({ score: { $meta: "textScore" } })
+    const documents = await DocumentModel.find(searchQuery, { score: { $meta: 'textScore' } })
+      .sort({ score: { $meta: 'textScore' } })
       .limit(3);
 
     let reply = '';
@@ -42,14 +42,15 @@ router.post('/', async (req: Request, res: Response) => {
       }
     } else {
       // Fallback response khi không tìm thấy
-      reply = 'Xin lỗi, tôi không hiểu câu hỏi của bạn. Bạn có thể thử hỏi về sản phẩm, danh mục, hoặc chính sách của chúng tôi.';
-      
+      reply =
+        'Xin lỗi, tôi không hiểu câu hỏi của bạn. Bạn có thể thử hỏi về sản phẩm, danh mục, hoặc chính sách của chúng tôi.';
+
       // Gợi ý các chủ đề chung
       suggestions = [
         'Tôi muốn mua sản phẩm',
         'Chính sách đổi trả',
         'Phương thức thanh toán',
-        'Thông tin vận chuyển'
+        'Thông tin vận chuyển',
       ];
     }
 
@@ -57,18 +58,17 @@ router.post('/', async (req: Request, res: Response) => {
       success: true,
       data: {
         reply,
-        suggestions
-      }
+        suggestions,
+      },
     });
-
   } catch (error) {
     console.error('Chat API Error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 });
 
-export default router; 
+export default router;

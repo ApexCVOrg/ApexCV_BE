@@ -8,20 +8,20 @@ import { resolveUrlString } from './common';
  * @en Function to build payment URL search parameters
  */
 export function buildPaymentUrlSearchParams(data: Record<string, unknown>): URLSearchParams {
-    const params = new URLSearchParams();
+  const params = new URLSearchParams();
 
-    // Sort keys
-    const sortedKeys = Object.keys(data).sort();
+  // Sort keys
+  const sortedKeys = Object.keys(data).sort();
 
-    // Add sorted parameters
-    for (const key of sortedKeys) {
-        if (data[key] !== undefined && data[key] !== null && data[key] !== '') {
-            // Encode the key and value to ensure they are URL-safe
-            params.append(key, String(data[key]));
-        }
+  // Add sorted parameters
+  for (const key of sortedKeys) {
+    if (data[key] !== undefined && data[key] !== null && data[key] !== '') {
+      // Encode the key and value to ensure they are URL-safe
+      params.append(key, String(data[key]));
     }
+  }
 
-    return params;
+  return params;
 }
 
 /**
@@ -29,21 +29,21 @@ export function buildPaymentUrlSearchParams(data: Record<string, unknown>): URLS
  * @en Function to create payment URL based on config and data
  */
 export function createPaymentUrl({
-    config,
-    data,
+  config,
+  data,
 }: {
-    config: GlobalConfig;
-    data: Record<string, unknown>;
+  config: GlobalConfig;
+  data: Record<string, unknown>;
 }): URL {
-    // Use the endpoints.paymentEndpoint if available, or fall back to config.paymentEndpoint for backward compatibility
-    const paymentEndpoint = config.endpoints?.paymentEndpoint || config.paymentEndpoint;
+  // Use the endpoints.paymentEndpoint if available, or fall back to config.paymentEndpoint for backward compatibility
+  const paymentEndpoint = config.endpoints?.paymentEndpoint || config.paymentEndpoint;
 
-    const redirectUrl = new URL(resolveUrlString(config.vnpayHost, paymentEndpoint as string));
+  const redirectUrl = new URL(resolveUrlString(config.vnpayHost, paymentEndpoint as string));
 
-    const searchParams = buildPaymentUrlSearchParams(data);
-    redirectUrl.search = searchParams.toString();
+  const searchParams = buildPaymentUrlSearchParams(data);
+  redirectUrl.search = searchParams.toString();
 
-    return redirectUrl;
+  return redirectUrl;
 }
 
 /**
@@ -51,20 +51,20 @@ export function createPaymentUrl({
  * @en Function to calculate secure hash
  */
 export function calculateSecureHash({
-    secureSecret,
-    data,
-    hashAlgorithm,
-    bufferEncode,
+  secureSecret,
+  data,
+  hashAlgorithm,
+  bufferEncode,
 }: {
-    secureSecret: string;
-    data: string;
-    hashAlgorithm: HashAlgorithm;
-    bufferEncode: BufferEncoding;
+  secureSecret: string;
+  data: string;
+  hashAlgorithm: HashAlgorithm;
+  bufferEncode: BufferEncoding;
 }): string {
-    return crypto
-        .createHmac(hashAlgorithm, secureSecret)
-        .update(Buffer.from(data, bufferEncode))
-        .digest('hex');
+  return crypto
+    .createHmac(hashAlgorithm, secureSecret)
+    .update(Buffer.from(data, bufferEncode))
+    .digest('hex');
 }
 
 /**
@@ -72,20 +72,20 @@ export function calculateSecureHash({
  * @en Function to verify secure hash
  */
 export function verifySecureHash({
-    secureSecret,
-    data,
-    hashAlgorithm,
-    receivedHash,
+  secureSecret,
+  data,
+  hashAlgorithm,
+  receivedHash,
 }: {
-    secureSecret: string;
-    data: string;
-    hashAlgorithm: HashAlgorithm;
-    receivedHash: string;
+  secureSecret: string;
+  data: string;
+  hashAlgorithm: HashAlgorithm;
+  receivedHash: string;
 }): boolean {
-    const calculatedHash = crypto
-        .createHmac(hashAlgorithm, secureSecret)
-        .update(Buffer.from(data, 'utf-8'))
-        .digest('hex');
+  const calculatedHash = crypto
+    .createHmac(hashAlgorithm, secureSecret)
+    .update(Buffer.from(data, 'utf-8'))
+    .digest('hex');
 
-    return calculatedHash === receivedHash;
+  return calculatedHash === receivedHash;
 }

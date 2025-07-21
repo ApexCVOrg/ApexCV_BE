@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose';
 
 const addressSchema = new Schema({
   recipientName: String,
@@ -7,8 +7,8 @@ const addressSchema = new Schema({
   state: String,
   country: String,
   addressNumber: String,
-  isDefault: { type: Boolean, default: false }
-})
+  isDefault: { type: Boolean, default: false },
+});
 
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -29,41 +29,41 @@ const userSchema = new Schema({
   verificationCodeExpires: Date,
   refreshToken: { type: String },
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-})
+  updatedAt: { type: Date, default: Date.now },
+});
 
 // Update updatedAt on save
-userSchema.pre('save', function(next) {
-  this.updatedAt = new Date()
-  next()
-})
+userSchema.pre('save', function (next) {
+  this.updatedAt = new Date();
+  next();
+});
 
 // Update updatedAt on update operations
-userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function(next) {
-  this.set({ updatedAt: new Date() })
-  next()
-})
+userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function (next) {
+  this.set({ updatedAt: new Date() });
+  next();
+});
 
 interface IUser extends Document {
-  username: string
-  email: string
-  passwordHash?: string
-  fullName?: string
-  phone?: string
-  addresses: any[]
-  favorites: mongoose.Types.ObjectId[]
-  role: string
-  status: string
-  banReason?: string
-  isVerified: boolean
-  verificationCode?: string
-  verificationCodeExpires?: Date
-  googleId?: string
-  facebookId?: string
-  avatar?: string
-  refreshToken?: string
-  createdAt: Date
-  updatedAt: Date
+  username: string;
+  email: string;
+  passwordHash?: string;
+  fullName?: string;
+  phone?: string;
+  addresses: any[];
+  favorites: mongoose.Types.ObjectId[];
+  role: string;
+  status: string;
+  banReason?: string;
+  isVerified: boolean;
+  verificationCode?: string;
+  verificationCodeExpires?: Date;
+  googleId?: string;
+  facebookId?: string;
+  avatar?: string;
+  refreshToken?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export const User = mongoose.model<IUser>('User', userSchema)
+export const User = mongoose.model<IUser>('User', userSchema);

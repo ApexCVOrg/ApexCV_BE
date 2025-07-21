@@ -8,7 +8,7 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({
       success: false,
       message: 'Validation failed',
-      errors: errors.array()
+      errors: errors.array(),
     });
   }
   next();
@@ -17,7 +17,7 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
 // Validation rules for POST /api/user/chats (create session)
 export const validateCreateSession = [
   // No body validation needed for creating session
-  validate
+  validate,
 ];
 
 // Validation rules for POST /api/user/chats/:chatId/messages
@@ -35,15 +35,9 @@ export const validateSendUserMessage = [
     .isLength({ min: 1, max: 1000 })
     .withMessage('Content must be between 1 and 1000 characters')
     .trim(),
-  body('role')
-    .optional()
-    .isIn(['user', 'bot'])
-    .withMessage('Role must be either "user" or "bot"'),
-  body('isBotMessage')
-    .optional()
-    .isBoolean()
-    .withMessage('isBotMessage must be a boolean'),
-  validate
+  body('role').optional().isIn(['user', 'bot']).withMessage('Role must be either "user" or "bot"'),
+  body('isBotMessage').optional().isBoolean().withMessage('isBotMessage must be a boolean'),
+  validate,
 ];
 
 // Validation rules for GET /api/user/chats/:chatId/messages
@@ -53,5 +47,5 @@ export const validateGetUserMessages = [
     .withMessage('Chat ID is required')
     .isString()
     .withMessage('Chat ID must be a string'),
-  validate
-]; 
+  validate,
+];

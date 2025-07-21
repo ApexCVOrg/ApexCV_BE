@@ -5,7 +5,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier', // đảm bảo ESLint không tranh chấp với Prettier
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   plugins: ['@typescript-eslint', 'prettier', 'sort-class-members'],
   rules: {
@@ -17,18 +17,24 @@ module.exports = {
     'sort-class-members/sort-class-members': [
       'error',
       {
-        order: ['[static-properties]', '[static-methods]', 'constructor', '[properties]', '[methods]'],
-        accessorPairPositioning: 'getThenSet'
-      }
-    ]
+        order: [
+          '[static-properties]',
+          '[static-methods]',
+          'constructor',
+          '[properties]',
+          '[methods]',
+        ],
+        accessorPairPositioning: 'getThenSet',
+      },
+    ],
   },
   overrides: [
     {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
         // indent TypeScript theo 2 spaces
-        '@typescript-eslint/indent': ['error', 2]
-      }
-    }
-  ]
-}
+        '@typescript-eslint/indent': ['error', 2],
+      },
+    },
+  ],
+};

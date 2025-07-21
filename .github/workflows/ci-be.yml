@@ -2,9 +2,9 @@ name: CI - Backend
 
 on:
   push:
-    branches: [ "master", "dev" ]  # Thêm nhánh bạn dùng
+    branches: ['master', 'dev'] # Thêm nhánh bạn dùng
   pull_request:
-    branches: [ "master", "dev" ]
+    branches: ['master', 'dev']
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: .  # Nếu backend nằm thư mục gốc repo, giữ nguyên
+        working-directory: . # Nếu backend nằm thư mục gốc repo, giữ nguyên
 
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Node version tương thích với devDependencies @types/node ^22.x
+          node-version: '18' # Node version tương thích với devDependencies @types/node ^22.x
 
       - name: Install dependencies
         run: npm install

@@ -1,30 +1,30 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose';
 
 interface ICategory {
-  _id: mongoose.Types.ObjectId
-  name: string
+  _id: mongoose.Types.ObjectId;
+  name: string;
 }
 
 interface IBrand {
-  _id: mongoose.Types.ObjectId
-  name: string
+  _id: mongoose.Types.ObjectId;
+  name: string;
 }
 
 interface IProduct extends Document {
-  name: string
-  description?: string
-  price: number
-  discountPrice?: number
-  categories: mongoose.Types.ObjectId[] | ICategory[]
-  brand: mongoose.Types.ObjectId | IBrand
-  images: string[]
-  sizes: { size: string; stock: number }[]
-  colors: string[]
-  tags: string[]
-  status: 'active' | 'inactive' | 'out_of_stock' | 'discontinued'
-  ratingsAverage: number
-  ratingsQuantity: number
-  createdAt: Date
+  name: string;
+  description?: string;
+  price: number;
+  discountPrice?: number;
+  categories: mongoose.Types.ObjectId[] | ICategory[];
+  brand: mongoose.Types.ObjectId | IBrand;
+  images: string[];
+  sizes: { size: string; stock: number }[];
+  colors: string[];
+  tags: string[];
+  status: 'active' | 'inactive' | 'out_of_stock' | 'discontinued';
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  createdAt: Date;
 }
 
 const sizeSchema = new Schema({
@@ -32,7 +32,7 @@ const sizeSchema = new Schema({
   size: String,
   stock: Number,
   color: String,
-})
+});
 
 const productSchema = new Schema({
   name: { type: String, required: true },
@@ -49,34 +49,34 @@ const productSchema = new Schema({
   status: {
     type: String,
     enum: ['active', 'inactive', 'out_of_stock', 'discontinued'],
-    default: 'active'
+    default: 'active',
   },
   ratingsAverage: { type: Number, default: 0 },
   ratingsQuantity: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now }
-})
+  createdAt: { type: Date, default: Date.now },
+});
 
 // Add virtual for brand name
 productSchema.virtual('brandName').get(function (this: IProduct) {
-  const brand = this.brand as IBrand
-  return brand?.name || 'Unknown Brand'
-})
+  const brand = this.brand as IBrand;
+  return brand?.name || 'Unknown Brand';
+});
 
 // Add virtual for formatted categories
 productSchema.virtual('formattedCategories').get(function (this: IProduct) {
-  const categories = this.categories as ICategory[]
+  const categories = this.categories as ICategory[];
   return categories
     ? categories.map((cat) => ({
         _id: cat._id,
-        name: cat.name
+        name: cat.name,
       }))
-    : []
-})
+    : [];
+});
 
 // Ensure virtuals are included when converting to JSON
-productSchema.set('toJSON', { virtuals: true })
-productSchema.set('toObject', { virtuals: true })
+productSchema.set('toJSON', { virtuals: true });
+productSchema.set('toObject', { virtuals: true });
 
-productSchema.index({ 'sizes.stock': 1 })
+productSchema.index({ 'sizes.stock': 1 });
 
-export const Product = mongoose.model<IProduct>('Product', productSchema)
+export const Product = mongoose.model<IProduct>('Product', productSchema);

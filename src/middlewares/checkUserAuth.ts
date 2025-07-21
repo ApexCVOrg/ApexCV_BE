@@ -10,14 +10,18 @@ interface AuthRequest extends Request {
   };
 }
 
-export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+export const checkUserAuth = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     // Get token from header
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       res.status(401).json({
         success: false,
-        message: 'Access token is required'
+        message: 'Access token is required',
       });
       return;
     }
@@ -26,11 +30,11 @@ export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextF
 
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
-    
+
     if (!decoded) {
       res.status(401).json({
         success: false,
-        message: 'Invalid token'
+        message: 'Invalid token',
       });
       return;
     }
@@ -39,7 +43,7 @@ export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextF
     if (!['user', 'manager', 'admin'].includes(decoded.role)) {
       res.status(403).json({
         success: false,
-        message: 'Access denied. Invalid user role'
+        message: 'Access denied. Invalid user role',
       });
       return;
     }
@@ -49,7 +53,7 @@ export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextF
       _id: decoded.id || decoded._id, // MongoDB ObjectId
       id: decoded.id || decoded._id, // String ID
       email: decoded.email,
-      role: decoded.role
+      role: decoded.role,
     };
 
     next();
@@ -57,19 +61,19 @@ export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextF
     if (error instanceof jwt.JsonWebTokenError) {
       res.status(401).json({
         success: false,
-        message: 'Invalid token'
+        message: 'Invalid token',
       });
     } else if (error instanceof jwt.TokenExpiredError) {
       res.status(401).json({
         success: false,
-        message: 'Token expired'
+        message: 'Token expired',
       });
     } else {
       console.error('Auth middleware error:', error);
       res.status(500).json({
         success: false,
-        message: 'Internal server error'
+        message: 'Internal server error',
       });
     }
   }
-}; 
+};

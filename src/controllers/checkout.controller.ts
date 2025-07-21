@@ -2,7 +2,6 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
 
-
 interface CheckoutItem {
   priceId: string;
   quantity: number;
@@ -20,7 +19,7 @@ export const createCheckoutSession = async (req: Request, res: Response): Promis
     if (!items || !Array.isArray(items) || items.length === 0) {
       res.status(400).json({
         success: false,
-        message: 'Items array is required and cannot be empty'
+        message: 'Items array is required and cannot be empty',
       });
       return;
     }
@@ -30,14 +29,14 @@ export const createCheckoutSession = async (req: Request, res: Response): Promis
       if (!item.priceId || typeof item.priceId !== 'string') {
         res.status(400).json({
           success: false,
-          message: 'Each item must have a valid priceId'
+          message: 'Each item must have a valid priceId',
         });
         return;
       }
       if (!item.quantity || typeof item.quantity !== 'number' || item.quantity <= 0) {
         res.status(400).json({
           success: false,
-          message: 'Each item must have a valid quantity greater than 0'
+          message: 'Each item must have a valid quantity greater than 0',
         });
         return;
       }
@@ -46,7 +45,7 @@ export const createCheckoutSession = async (req: Request, res: Response): Promis
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: items.map(item => ({
+      line_items: items.map((item) => ({
         price: item.priceId,
         quantity: item.quantity,
       })),
@@ -59,25 +58,24 @@ export const createCheckoutSession = async (req: Request, res: Response): Promis
       success: true,
       message: 'Checkout session created successfully',
       data: {
-        url: session.url
-      }
+        url: session.url,
+      },
     });
-
   } catch (error) {
     console.error('Error creating checkout session:', error);
-    
+
     if (error instanceof Stripe.errors.StripeError) {
       res.status(400).json({
         success: false,
         message: 'Stripe error occurred',
-        error: error.message
+        error: error.message,
       });
     } else {
       res.status(500).json({
         success: false,
         message: 'Internal server error',
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
   }
-}; 
+};

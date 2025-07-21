@@ -22,11 +22,11 @@ export function createVnpayPayment(data: BuildPaymentUrl) {
     testMode: true,
   });
   console.log('[VNPAY Service] Payment data:', JSON.stringify(data, null, 2));
-  
+
   try {
     // Import dateFormat utility
     const { dateFormat } = require('../lib/vnpay/utils/common');
-    
+
     // Chỉ lấy các trường cần thiết cho VNPAY, loại bỏ các trường không cần thiết
     const vnpayData = {
       vnp_Amount: data.vnp_Amount,
@@ -39,12 +39,14 @@ export function createVnpayPayment(data: BuildPaymentUrl) {
       vnp_Locale: VnpLocale.VN,
       vnp_OrderType: ProductCode.Other,
       // Format date đúng cho VNPAY
-      vnp_ExpireDate: data.vnp_ExpireDate ? dateFormat(new Date(data.vnp_ExpireDate * 1000)) : undefined,
+      vnp_ExpireDate: data.vnp_ExpireDate
+        ? dateFormat(new Date(data.vnp_ExpireDate * 1000))
+        : undefined,
       vnp_CreateDate: dateFormat(new Date()),
     };
-    
+
     console.log('[VNPAY Service] Cleaned VNPAY data:', JSON.stringify(vnpayData, null, 2));
-    
+
     const url = vnpay.buildPaymentUrl(vnpayData);
     console.log('[VNPAY Service] Generated URL:', url);
     return url;
@@ -64,7 +66,7 @@ export function verifyVnpayReturn(query: ReturnQueryFromVNPay) {
     tmnCode: process.env.VNP_TMNCODE || 'ROJ5KGHQ',
     secureSecret: process.env.VNP_SECRET ? '***' : 'NOT_SET',
   });
-  
+
   try {
     const result = vnpay.verifyReturnUrl(query);
     console.log('[VNPAY Service] Verification result:', JSON.stringify(result, null, 2));
@@ -80,4 +82,4 @@ export function verifyVnpayReturn(query: ReturnQueryFromVNPay) {
  */
 export function verifyVnpayIpn(query: ReturnQueryFromVNPay) {
   return vnpay.verifyIpnCall(query);
-} 
+}
