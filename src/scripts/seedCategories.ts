@@ -1,7 +1,7 @@
 /* eslint-disable */
 // src/seeds/category.seed.ts
 import mongoose from 'mongoose';
-import { Category, ensureCategoryIndexes } from '../models/Category';
+import { Category } from '../models/Category';
 
 const categoriesData = [
   {
@@ -120,9 +120,6 @@ const categoriesData = [
 
 export const seedCategories = async () => {
   try {
-    // Ensure indexes are properly set up
-    await ensureCategoryIndexes();
-
     // Kiểm tra xem đã có dữ liệu categories chưa
     const existingCategoriesCount = await Category.countDocuments();
     if (existingCategoriesCount > 0) {

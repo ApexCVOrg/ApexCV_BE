@@ -13,8 +13,7 @@ const cartSchema = new Schema({
   updatedAt: { type: Date, default: Date.now }
 })
 
-// Add indexes for better performance
-cartSchema.index({ user: 1 });
+// Add index for cartItems.product only (user already has unique constraint)
 cartSchema.index({ 'cartItems.product': 1 });
 
 export const Cart = mongoose.model('Cart', cartSchema)
