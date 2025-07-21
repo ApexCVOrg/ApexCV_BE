@@ -322,7 +322,7 @@ const ordersData = [
     userEmail: 'user10@example.com',
     orderItems: [
       {
-        productName: "Arsenal Women's Training Shoes",
+        productName: "Arsenal Women's Training Hoodie",
         size: '38',
         color: 'Black',
         quantity: 1,
@@ -840,7 +840,7 @@ const ordersData = [
     userEmail: 'user05@example.com',
     orderItems: [
       {
-        productName: "Arsenal Women's Training Shoes",
+        productName: "Arsenal Women's Training Hoodie",
         size: '39',
         color: 'Black',
         quantity: 1,
