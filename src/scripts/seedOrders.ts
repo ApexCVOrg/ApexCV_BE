@@ -319,33 +319,6 @@ const ordersData = [
     orderStatus: 'shipped'
   },
   {
-    userEmail: 'user10@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Women's Training Shoes",
-        size: '38',
-        color: 'Black',
-        quantity: 1,
-        price: 2799000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van J',
-      street: 'Nguyen Trai',
-      city: 'Hai Phong',
-      state: 'Hai Phong',
-      postalCode: '31000',
-      country: 'Vietnam',
-      phone: '0901000010'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 279900,
-    shippingPrice: 50000,
-    totalPrice: 3128900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
-  {
     userEmail: 'user11@example.com',
     orderItems: [
       {
@@ -705,33 +678,6 @@ const ordersData = [
     orderStatus: 'paid'
   },
   {
-    userEmail: 'user01@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Kids Football Boots",
-        size: '29',
-        color: 'Red',
-        quantity: 1,
-        price: 2199000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van A',
-      street: 'Le Loi',
-      city: 'Hue',
-      state: 'Thua Thien Hue',
-      postalCode: '53000',
-      country: 'Vietnam',
-      phone: '0901000001'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 219900,
-    shippingPrice: 50000,
-    totalPrice: 2468900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
-  {
     userEmail: 'user02@example.com',
     orderItems: [
       {
@@ -778,7 +724,7 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: "Bayern Munich Kids Home Jersey 2024/25",
         size: '6-7Y',
         color: 'White',
         quantity: 1,
@@ -835,33 +781,6 @@ const ordersData = [
     paidAt: new Date('2025-03-15T10:20:00Z'),
     isDelivered: false,
     orderStatus: 'paid'
-  },
-  {
-    userEmail: 'user05@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Women's Training Shoes",
-        size: '39',
-        color: 'Black',
-        quantity: 1,
-        price: 2799000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van E',
-      street: 'Pham Van Dong',
-      city: 'Da Nang',
-      state: 'Da Nang',
-      postalCode: '55000',
-      country: 'Vietnam',
-      phone: '0901000005'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 279900,
-    shippingPrice: 50000,
-    totalPrice: 3128900,
-    isPaid: false,
-    orderStatus: 'pending'
   },
   {
     userEmail: 'user06@example.com',
@@ -1001,33 +920,6 @@ const ordersData = [
     isDelivered: false,
     orderStatus: 'paid'
   },
-  {
-    userEmail: 'user10@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Kids Football Boots",
-        size: '30',
-        color: 'Red',
-        quantity: 1,
-        price: 2199000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van J',
-      street: 'Nguyen Trai',
-      city: 'Hai Phong',
-      state: 'Hai Phong',
-      postalCode: '31000',
-      country: 'Vietnam',
-      phone: '0901000010'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 219900,
-    shippingPrice: 50000,
-    totalPrice: 2468900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
   // TODAY'S ORDERS - For testing Today's Sales
   {
     userEmail: 'user01@example.com',
@@ -1128,6 +1020,106 @@ const ordersData = [
     paidAt: new Date(), // Today's date
     isDelivered: false,
     orderStatus: 'paid'
+  },
+  // --- Đơn hàng cho user baotuangay@gmail.com ---
+  {
+    userEmail: 'baotuangay@gmail.com',
+    orderItems: [
+      {
+        productName: "Arsenal Men's Home Jersey 2024/25",
+        size: 'M',
+        color: 'Red',
+        quantity: 1,
+        price: 1959000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Huỳnh Phạm Bảo Tuân',
+      street: 'Duy Tân',
+      city: 'Đà Nẵng',
+      state: 'Hải Châu',
+      country: 'Vietnam',
+      addressNumber: 'k26/12',
+      isDefault: true,
+      phone: '0934840520'
+    },
+    paymentMethod: 'COD',
+    taxPrice: 195900,
+    shippingPrice: 50000,
+    totalPrice: 2204900,
+    isPaid: true,
+    paidAt: new Date('2025-07-11T10:00:00Z'),
+    isDelivered: true,
+    deliveredAt: new Date('2025-07-13T15:00:00Z'),
+    orderStatus: 'delivered'
+  },
+  {
+    userEmail: 'baotuangay@gmail.com',
+    orderItems: [
+      {
+        productName: "Real Madrid Men's Home Jersey 2024/25",
+        size: 'L',
+        color: 'White',
+        quantity: 1,
+        price: 1999000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Huỳnh Phạm Bảo Tuân',
+      street: 'Duy Tân',
+      city: 'Đà Nẵng',
+      state: 'Hải Châu',
+      country: 'Vietnam',
+      addressNumber: 'k26/12',
+      isDefault: true,
+      phone: '0934840520'
+    },
+    paymentMethod: 'BANK_TRANSFER',
+    taxPrice: 199900,
+    shippingPrice: 50000,
+    totalPrice: 2248900,
+    isPaid: true,
+    paidAt: new Date('2025-07-15T09:00:00Z'),
+    isDelivered: true,
+    deliveredAt: new Date('2025-07-17T14:00:00Z'),
+    orderStatus: 'delivered'
+  },
+  {
+    userEmail: 'baotuangay@gmail.com',
+    orderItems: [
+      {
+        productName: "Arsenal Women's Training Shoes",
+        size: '38',
+        color: 'Red',
+        quantity: 1,
+        price: 2499000
+      }
+    ],
+    shippingAddress: {
+      recipientName: 'Huỳnh Phạm Bảo Tuân',
+      street: 'Duy Tân',
+      city: 'Đà Nẵng',
+      state: 'Hải Châu',
+      country: 'Vietnam',
+      addressNumber: 'k26/12',
+      isDefault: true,
+      phone: '0934840520'
+    },
+    paymentMethod: 'CREDIT_CARD',
+    paymentResult: {
+      id: 'pay_tuan_001',
+      status: 'COMPLETED',
+      update_time: '2025-07-20T12:00:00Z',
+      email_address: 'baotuangay@gmail.com'
+    },
+    taxPrice: 249900,
+    shippingPrice: 50000,
+    totalPrice: 2798900,
+    isPaid: true,
+    paidAt: new Date('2025-07-20T12:00:00Z'),
+    isDelivered: true,
+    deliveredAt: new Date('2025-07-22T16:00:00Z'),
+    orderStatus: 'delivered'
   }
 ]
 

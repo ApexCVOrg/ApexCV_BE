@@ -67,26 +67,18 @@ export const CART_ROUTES = {
   UPDATE_ITEM: '/update'
 } as const
 
-// Conversation routes
-export const CONVERSATION_ROUTES = {
-  BASE: '/conversations',
-  LIST: '/',
-  DETAIL: '/:id',
-  USER: '/user/:userId'
-} as const
-
-// Message routes
-export const MESSAGE_ROUTES = {
-  BASE: '/messages',
-  LIST: '/',
-  CONVERSATION: '/conversation/:conversationId'
-} as const
-
 // Brand routes
 export const BRAND_ROUTES = {
   BASE: '/brands',
   LIST: '/',
   DETAIL: '/:id'
+} as const
+
+// Suggestions routes
+export const SUGGESTIONS_ROUTES = {
+  BASE: '/suggestions',
+  LIST: '/',
+  TREE: '/tree'
 } as const
 
 // Manager routes
@@ -96,6 +88,7 @@ export const MANAGER_ROUTES = {
   PRODUCTS: '/products',
   CATEGORIES: '/categories',
   ORDERS: '/orders',
+  USERS: '/users',
   CUSTOMERS: '/customers',
   SETTINGS: '/settings',
   STATS: {
@@ -105,7 +98,22 @@ export const MANAGER_ROUTES = {
     CUSTOMERS: '/stats/customers'
   }
 } as const
-
+export const ADMIN_ROUTES = {
+  BASE: '/admin',
+  DASHBOARD: '/dashboard',
+  PRODUCTS: '/products',
+  CATEGORIES: '/categories',
+  ORDERS: '/orders',
+  USERS: '/users',
+  CUSTOMERS: '/customers',
+  SETTINGS: '/settings',
+  STATS: {
+    SALES: '/stats/sales',
+    USERS: '/stats/users',
+    ORDERS: '/stats/orders',
+    CUSTOMERS: '/stats/customers'
+  }
+} as const
 // Favorites routes
 export const FAVORITES_ROUTES = {
   BASE: '/favorites',
@@ -114,6 +122,34 @@ export const FAVORITES_ROUTES = {
   REMOVE: '/remove/:productId',
   CHECK: '/check/:productId'
 } as const
+
+// Chat routes
+export const CHAT_ROUTES = {
+  BASE: '/chat',
+  SEND: '/'
+} as const
+
+// Manager Chat routes
+export const MANAGER_CHAT_ROUTES = {
+  BASE: '/manager/chats',
+  LIST: '/',
+  MESSAGES: '/:chatId/messages',
+  SEND_MESSAGE: '/:chatId/messages',
+  CLOSE: '/:chatId/close'
+} as const
+
+// User Chat routes
+export const USER_CHAT_ROUTES = {
+  BASE: '/user/chats',
+  CREATE: '/',
+  LIST: '/',
+  MESSAGES: '/:chatId/messages',
+  SEND_MESSAGE: '/:chatId/messages'
+} as const
+
+export const APPLY_COUPON_ROUTES = {
+  BASE: '/apply-coupon'
+} as const;
 
 export const buildRoute = (base: string, path: string): string => {
   return `${API_BASE}${base}${path}`

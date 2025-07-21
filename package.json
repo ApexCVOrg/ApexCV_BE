@@ -10,7 +10,8 @@
     "format": "prettier --write \"src/**/*.{js,ts,tsx,json,md}\"",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "ts-node": "npx tsx"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "@types/express": "^5.0.2",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^22.15.21",
+    "@types/stripe": "^8.0.416",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",
@@ -47,6 +49,8 @@
     "typescript-eslint": "^8.32.1"
   },
   "dependencies": {
+    "@google-cloud/aiplatform": "^4.3.0",
+    "@google/generative-ai": "^0.24.1",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/connect-mongo": "^3.1.2",
@@ -54,7 +58,9 @@
     "@types/helmet": "^0.0.48",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
     "@types/nodemailer": "^6.4.17",
+    "@types/ws": "^8.18.1",
     "apexcv-be": "file:",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
@@ -64,16 +70,28 @@
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
     "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "firebase-admin": "^13.4.0",
     "google-auth-library": "^9.15.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
     "morgan": "^1.10.0",
+    "multer": "^2.0.2",
     "nodemailer": "^7.0.3",
-    "reflect-metadata": "^0.2.2"
+    "openai": "^5.8.3",
+    "reflect-metadata": "^0.2.2",
+    "stripe": "^18.3.0",
+<<<<<<< HEAD
+=======
+    "ws": "^8.18.3",
+>>>>>>> 4a33d3fb876bbd9075a7cf6686c8ffb429d8b20c
+    "zod": "^3.25.76"
   },
   "husky": {
     "hooks": {
