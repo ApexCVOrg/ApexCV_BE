@@ -10,9 +10,38 @@ import { seedCoupons } from '../scripts/seedVouchers'
 
 const connectDB = async (): Promise<void> => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'MONGO_URI=mongodb://nidasorgweb:Thithithi%400305@ac-tlhygsz-shard-00-00.mrltlak.mongodb.net:27017,ac-tlhygsz-shard-00-01.mrltlak.mongodb.net:27017,ac-tlhygsz-shard-00-02.mrltlak.mongodb.net:27017/nidas?ssl=true&replicaSet=atlas-jj1cus-shard-0&authSource=admin&retryWrites=true&w=majority&appName=NIDAS')
-
-    console.log(`MongoDB connected: ${conn.connection.host}`)
+    // Kiểm tra và sửa format của MONGO_URI
+    let mongoUri = process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority'
+    
+    // Nếu MONGO_URI bắt đầu với "MONGO_URI=" thì loại bỏ prefix
+    if (mongoUri.startsWith('MONGO_URI=')) {
+      mongoUri = mongoUri.substring(10)
+    }
+    
+    console.log('Connecting to MongoDB...')
+    console.log('MongoDB URI format check:', mongoUri.startsWith('mongodb://') || mongoUri.startsWith('mongodb+srv://'))
+    
+    if (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://')) {
+      console.error('Invalid MongoDB URI format:', mongoUri.substring(0, 100))
+      throw new Error('Invalid MongoDB connection string format')
+    }
+    
+    // Thử kết nối với retry logic
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        const conn = await mongoose.connect(mongoUri)
+        console.log(`MongoDB connected: ${conn.connection.host}`)
+        break;
+      } catch (error) {
+        retries--;
+        console.log(`MongoDB connection attempt failed, retries left: ${retries}`)
+        if (retries === 0) {
+          throw error;
+        }
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+      }
+    }
 
     try {
       await seedCategories() // Gọi seed tại đây
