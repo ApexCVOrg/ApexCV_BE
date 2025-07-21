@@ -1,10 +1,10 @@
 import { ChatSessionModel, IChatSession } from '../models/ChatSession';
 import { ChatMessageModel, IChatMessage } from '../models/ChatMessage';
 
-export interface ChatSessionWithLastMessage extends IChatSession {
+export interface ChatSessionWithLastMessage extends Omit<IChatSession, 'lastMessage'> {
   lastMessage?: {
     content: string;
-    role: 'user' | 'manager';
+    role: 'user' | 'manager' | 'bot';
     createdAt: Date;
   };
 }
@@ -26,7 +26,7 @@ export interface ChatFilter {
 
 class ChatService {
   /**
-   * Lấy danh sách chat sessions với phân trang và filter
+   * Lấy danh sách chat sessions với phân trang và filter, sắp xếp theo tin nhắn mới nhất
    */
   async getSessions(
     page: number = 1, 
@@ -45,10 +45,10 @@ class ChatService {
         queryFilter.userId = filter.userId;
       }
 
-      // Get sessions with pagination
+      // Get sessions with pagination, sorted by lastMessageAt (newest first)
       const [sessions, total] = await Promise.all([
         ChatSessionModel.find(queryFilter)
-          .sort({ updatedAt: -1 })
+          .sort({ lastMessageAt: -1, updatedAt: -1 })
           .skip(skip)
           .limit(limit)
           .lean(),
@@ -114,7 +114,7 @@ class ChatService {
   /**
    * Gửi tin nhắn từ manager
    */
-  async sendManagerMessage(chatId: string, managerId: string, content: string): Promise<IChatMessage> {
+  async sendManagerMessage(chatId: string, managerId: string, content: string, attachments?: any[]): Promise<IChatMessage> {
     try {
       // Verify session exists and is open
       const session = await ChatSessionModel.findOne({ chatId });
@@ -125,24 +125,151 @@ class ChatService {
         throw new Error('Cannot send message to closed session');
       }
 
+      // Determine message type
+      const messageType = attachments && attachments.length > 0 ? 
+        (attachments.some(att => att.mimetype.startsWith('image/')) ? 'image' : 'file') : 'text';
+
       // Create new message
       const message = new ChatMessageModel({
         chatId,
         role: 'manager',
-        content
+        content,
+        isRead: false,
+        attachments,
+        messageType
       });
 
       await message.save();
 
-      // Update session updatedAt
+      // Update session with last message info and increment unread count
+      const lastMessageText = attachments && attachments.length > 0 ? 
+        `📎 ${attachments.length} file(s)` : 
+        (content.length > 100 ? content.substring(0, 100) + '...' : content);
+
       await ChatSessionModel.updateOne(
         { chatId },
-        { updatedAt: new Date() }
+        { 
+          updatedAt: new Date(),
+          lastMessage: lastMessageText,
+          lastMessageAt: new Date(),
+          $inc: { unreadCount: 1 }
+        }
       );
 
       return message;
     } catch (error) {
       throw new Error(`Failed to send manager message: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Gửi tin nhắn từ user
+   */
+  async sendUserMessage(chatId: string, content: string, role: 'user' | 'bot' = 'user', isBotMessage: boolean = false, attachments?: any[]): Promise<IChatMessage> {
+    try {
+      // Verify session exists and is open
+      const session = await ChatSessionModel.findOne({ chatId });
+      if (!session) {
+        throw new Error('Chat session not found');
+      }
+      if (session.status === 'closed') {
+        throw new Error('Cannot send message to closed session');
+      }
+
+      // Determine message type
+      const messageType = attachments && attachments.length > 0 ? 
+        (attachments.some(att => att.mimetype.startsWith('image/')) ? 'image' : 'file') : 'text';
+
+      // Create new message
+      const message = new ChatMessageModel({
+        chatId,
+        role,
+        content,
+        isBotMessage,
+        isRead: false,
+        attachments,
+        messageType
+      });
+
+      await message.save();
+
+      // Update session with last message info and increment unread count
+      const lastMessageText = attachments && attachments.length > 0 ? 
+        `📎 ${attachments.length} file(s)` : 
+        (content.length > 100 ? content.substring(0, 100) + '...' : content);
+
+      await ChatSessionModel.updateOne(
+        { chatId },
+        { 
+          updatedAt: new Date(),
+          lastMessage: lastMessageText,
+          lastMessageAt: new Date(),
+          $inc: { unreadCount: 1 }
+        }
+      );
+
+      return message;
+    } catch (error) {
+      throw new Error(`Failed to send user message: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Đánh dấu tin nhắn đã đọc
+   */
+  async markMessagesAsRead(chatId: string, userId: string): Promise<void> {
+    try {
+      // Verify session exists
+      const session = await ChatSessionModel.findOne({ chatId });
+      if (!session) {
+        throw new Error('Chat session not found');
+      }
+
+      // Mark all unread messages as read
+      await ChatMessageModel.updateMany(
+        { chatId, isRead: false },
+        { isRead: true }
+      );
+
+      // Reset unread count
+      await ChatSessionModel.updateOne(
+        { chatId },
+        { unreadCount: 0 }
+      );
+    } catch (error) {
+      throw new Error(`Failed to mark messages as read: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Lấy số tin nhắn chưa đọc cho user
+   */
+  async getUnreadCount(userId: string): Promise<number> {
+    try {
+      const result = await ChatSessionModel.aggregate([
+        { $match: { userId } },
+        { $group: { _id: null, totalUnread: { $sum: '$unreadCount' } } }
+      ]);
+
+      return result.length > 0 ? result[0].totalUnread : 0;
+    } catch (error) {
+      throw new Error(`Failed to get unread count: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Lấy số tin nhắn chưa đọc cho manager
+   */
+  async getManagerUnreadCount(): Promise<number> {
+    try {
+      const result = await ChatSessionModel.aggregate([
+        { $match: { status: { $in: ['open', 'manager_joined'] } } },
+        { $group: { _id: null, totalUnread: { $sum: '$unreadCount' } } }
+      ]);
+
+      return result.length > 0 ? result[0].totalUnread : 0;
+    } catch (error) {
+      throw new Error(`Failed to get manager unread count: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -197,7 +324,8 @@ class ChatService {
       const session = new ChatSessionModel({
         chatId,
         userId,
-        status: 'open'
+        status: 'open',
+        unreadCount: 0
       });
 
       await session.save();
@@ -208,37 +336,58 @@ class ChatService {
   }
 
   /**
-   * Gửi tin nhắn từ user
+   * Manager tham gia chat session
    */
-  async sendUserMessage(chatId: string, content: string): Promise<IChatMessage> {
+  async joinSession(chatId: string, managerId: string): Promise<IChatSession> {
     try {
-      // Verify session exists and is open
+      // Verify session exists
       const session = await ChatSessionModel.findOne({ chatId });
       if (!session) {
         throw new Error('Chat session not found');
       }
-      if (session.status === 'closed') {
-        throw new Error('Cannot send message to closed session');
-      }
 
-      // Create new message
-      const message = new ChatMessageModel({
-        chatId,
-        role: 'user',
-        content
-      });
-
-      await message.save();
-
-      // Update session updatedAt
-      await ChatSessionModel.updateOne(
+      // Update session with manager
+      const updatedSession = await ChatSessionModel.findOneAndUpdate(
         { chatId },
-        { updatedAt: new Date() }
+        { 
+          managerId,
+          status: 'manager_joined',
+          updatedAt: new Date()
+        },
+        { new: true }
       );
 
-      return message;
+      if (!updatedSession) {
+        throw new Error('Failed to join session');
+      }
+
+      return updatedSession;
     } catch (error) {
-      throw new Error(`Failed to send user message: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(`Failed to join session: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Kiểm tra xem manager đã tham gia chat chưa
+   */
+  async isManagerJoined(chatId: string): Promise<boolean> {
+    try {
+      const session = await ChatSessionModel.findOne({ chatId });
+      return session?.status === 'manager_joined';
+    } catch (error) {
+      throw new Error(`Failed to check manager join status: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  /**
+   * Lấy manager ID của session
+   */
+  async getSessionManager(chatId: string): Promise<string | null> {
+    try {
+      const session = await ChatSessionModel.findOne({ chatId });
+      return session?.managerId || null;
+    } catch (error) {
+      throw new Error(`Failed to get session manager: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 }

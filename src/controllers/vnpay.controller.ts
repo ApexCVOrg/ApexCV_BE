@@ -128,6 +128,145 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       });
     }
     
+    // Kiểm tra response code từ VNPay trước tiên
+    const vnpResponseCode = req.query['vnp_ResponseCode'];
+    const vnpTransactionNo = req.query['vnp_TransactionNo'];
+    const vnpTxnRef = req.query['vnp_TxnRef'];
+    const vnpAmount = req.query['vnp_Amount'];
+    
+    console.log('[VNPAY Return] VNPay Response Code:', vnpResponseCode);
+    console.log('[VNPAY Return] VNPay Transaction No:', vnpTransactionNo);
+    console.log('[VNPAY Return] VNPay TxnRef:', vnpTxnRef);
+    console.log('[VNPAY Return] VNPay Amount:', vnpAmount);
+    
+    // Kiểm tra xem transaction này đã được xử lý chưa
+    if (vnpTransactionNo) {
+      const existingOrder = await Order.findOne({ 'paymentResult.id': vnpTransactionNo });
+      if (existingOrder) {
+        console.log('[VNPAY Return] Order already exists:', existingOrder._id);
+        return res.json({ 
+          status: 'success', 
+          message: 'Cảm ơn bạn đã tin tưởng chúng tôi', 
+          order: {
+            _id: existingOrder._id,
+            orderNumber: existingOrder._id,
+            totalItems: existingOrder.orderItems.length,
+            totalPrice: existingOrder.totalPrice,
+            orderStatus: existingOrder.orderStatus,
+            paymentStatus: existingOrder.isPaid ? 'Paid' : 'Pending',
+            items: existingOrder.orderItems.map((item: any, index: number) => ({
+              index: index + 1,
+              productName: item.productName || item.name,
+              quantity: item.quantity,
+              size: item.size[0]?.size || 'N/A',
+              color: item.size[0]?.color || 'N/A',
+              price: item.price,
+              totalItemPrice: item.price * item.quantity
+            })),
+            shippingAddress: {
+              fullName: existingOrder.shippingAddress?.recipientName || 'N/A',
+              street: existingOrder.shippingAddress?.street || 'N/A',
+              city: existingOrder.shippingAddress?.city || 'N/A',
+              state: existingOrder.shippingAddress?.state || 'N/A',
+              postalCode: existingOrder.shippingAddress?.postalCode || 'N/A',
+              country: existingOrder.shippingAddress?.country || 'N/A',
+              phone: existingOrder.shippingAddress?.phone || 'N/A',
+            },
+            paymentMethod: existingOrder.paymentMethod,
+            createdAt: existingOrder.createdAt
+          },
+          result: { isSuccess: true, message: 'Order already processed' }
+        });
+      }
+    }
+    
+    // Xác thực response từ VNPay
+    let verificationResult;
+    try {
+      verificationResult = verifyVnpayReturn(req.query as any);
+      console.log('[VNPAY Return] Verification result:', JSON.stringify(verificationResult, null, 2));
+    } catch (verifyError) {
+      console.error('[VNPAY Return] Verification error:', verifyError);
+      verificationResult = { isSuccess: false, message: 'Verification failed' };
+    }
+    
+    // Kiểm tra các điều kiện để xác định thanh toán thành công
+    const isPaymentSuccess = 
+      vnpResponseCode === '00' && // Response code thành công
+      verificationResult.isSuccess && // Verification thành công
+      vnpTransactionNo && // Có transaction number
+      vnpAmount; // Có amount
+    
+    console.log('[VNPAY Return] Payment success check:', {
+      responseCode: vnpResponseCode,
+      verificationSuccess: verificationResult.isSuccess,
+      hasTransactionNo: !!vnpTransactionNo,
+      hasAmount: !!vnpAmount,
+      isPaymentSuccess
+    });
+    
+    // Nếu thanh toán không thành công, chỉ log và return thông báo
+    if (!isPaymentSuccess) {
+      console.log('[VNPAY Return] Payment failed or cancelled. Response code:', vnpResponseCode);
+      
+      // Xóa session và backup data nếu có
+      if (req.session.pendingOrder) {
+        delete req.session.pendingOrder;
+        req.session.save();
+      }
+      
+      // Xóa backup data từ database
+      if (vnpTxnRef) {
+        try {
+          await PendingOrder.deleteMany({ 'orderData.sessionId': vnpTxnRef });
+          console.log('[VNPAY Return] Cleaned up backup data for failed payment');
+        } catch (cleanupError) {
+          console.error('[VNPAY Return] Error cleaning up backup data:', cleanupError);
+        }
+      }
+      
+      // Return thông báo phù hợp với từng trường hợp
+      let errorMessage = 'Thanh toán không thành công';
+      if (vnpResponseCode === '24') {
+        errorMessage = 'Khách hàng hủy giao dịch';
+      } else if (vnpResponseCode === '07') {
+        errorMessage = 'Giao dịch bị nghi ngờ gian lận';
+      } else if (vnpResponseCode === '09') {
+        errorMessage = 'Giao dịch không thành công do: Thẻ/Tài khoản bị khóa';
+      } else if (vnpResponseCode === '10') {
+        errorMessage = 'Giao dịch không thành công do: Khách hàng chưa kích hoạt thẻ';
+      } else if (vnpResponseCode === '11') {
+        errorMessage = 'Giao dịch không thành công do: Thẻ/Tài khoản chưa đăng ký dịch vụ';
+      } else if (vnpResponseCode === '12') {
+        errorMessage = 'Giao dịch không thành công do: Thẻ/Tài khoản bị khóa';
+      } else if (vnpResponseCode === '13') {
+        errorMessage = 'Giao dịch không thành công do: Nhập sai mật khẩu xác thực giao dịch';
+      } else if (vnpResponseCode === '51') {
+        errorMessage = 'Giao dịch không thành công do: Tài khoản của quý khách không đủ số dư';
+      } else if (vnpResponseCode === '65') {
+        errorMessage = 'Giao dịch không thành công do: Tài khoản của quý khách đã vượt quá hạn mức cho phép';
+      } else if (vnpResponseCode === '75') {
+        errorMessage = 'Giao dịch không thành công do: Ngân hàng thanh toán đang bảo trì';
+      } else if (vnpResponseCode === '79') {
+        errorMessage = 'Giao dịch không thành công do: Khách hàng nhập sai mật khẩu thanh toán quá số lần quy định';
+      } else if (vnpResponseCode === '99') {
+        errorMessage = 'Giao dịch không thành công do: Lỗi khác';
+      }
+      
+      return res.json({
+        status: 'fail',
+        message: errorMessage,
+        result: { 
+          isSuccess: false, 
+          message: `Payment failed with response code: ${vnpResponseCode}`,
+          responseCode: vnpResponseCode
+        }
+      });
+    }
+    
+    // Nếu thanh toán thành công, tiếp tục xử lý tạo order
+    console.log('[VNPAY Return] Payment successful, proceeding to create order');
+    
     // Lấy userId từ session hoặc từ token
     let userId = req.session.pendingOrder?.user;
     let orderData = req.session.pendingOrder;
@@ -243,10 +382,20 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     // Tạo snapshot cho mỗi order item
     const populatedOrderItems = await Promise.all(
       orderData.orderItems.map(async (item: any, index: number) => {
-        console.log(`[VNPAY Return] Processing item ${index + 1}:`, item.product, item.name);
+        console.log(`[VNPAY Return] Processing item ${index + 1}:`, {
+          product: item.product,
+          name: item.name,
+          quantity: item.quantity,
+          size: item.size,
+          price: item.price
+        });
         
         const product = await Product.findById(item.product).populate('brand');
-        console.log(`[VNPAY Return] Found product for item ${index + 1}:`, product ? product.name : 'not found');
+        console.log(`[VNPAY Return] Found product for item ${index + 1}:`, product ? {
+          id: product._id,
+          name: product.name,
+          brand: (product.brand as any)?.name
+        } : 'not found');
         
         // Tạo sku từ size và color nếu không có
         const sizeWithSku = item.size.map((sizeItem: any) => ({
@@ -257,7 +406,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         const populatedItem = {
           ...item,
           size: sizeWithSku,
-          productName: product?.name || '',
+          productName: product?.name || item.name || '',
           productImage: product?.images?.[0] || '',
           productBrand: (product?.brand as any)?.name || '',
         };
@@ -265,8 +414,8 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         console.log(`[VNPAY Return] Populated item ${index + 1}:`, {
           productName: populatedItem.productName,
           quantity: populatedItem.quantity,
-          size: populatedItem.size[0].size,
-          color: populatedItem.size[0].color,
+          size: populatedItem.size[0]?.size,
+          color: populatedItem.size[0]?.color,
           price: populatedItem.price
         });
         
@@ -275,6 +424,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     );
 
     console.log('[VNPAY Return] All items populated successfully, creating order...');
+    console.log('[VNPAY Return] Final populated items:', JSON.stringify(populatedOrderItems, null, 2));
 
     // Tạo đơn hàng mới với thông tin user thực
     const order = new Order({
@@ -285,7 +435,15 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         phone: user.phone,
       },
       orderItems: populatedOrderItems,
-      shippingAddress: orderData.shippingAddress,
+      shippingAddress: {
+        recipientName: orderData.shippingAddress.fullName || 'N/A',
+        street: orderData.shippingAddress.street,
+        city: orderData.shippingAddress.city,
+        state: orderData.shippingAddress.state,
+        postalCode: orderData.shippingAddress.postalCode,
+        country: orderData.shippingAddress.country,
+        phone: orderData.shippingAddress.phone || user.phone,
+      },
       paymentMethod: orderData.paymentMethod,
       taxPrice: orderData.taxPrice || 0,
       shippingPrice: orderData.shippingPrice || 0,
@@ -294,7 +452,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       paidAt: new Date(),
       orderStatus: 'paid',
       paymentResult: {
-        id: req.query['vnp_TransactionNo'],
+        id: vnpTransactionNo,
         status: 'COMPLETED',
         update_time: new Date().toISOString(),
         email_address: user.email,
@@ -307,12 +465,25 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     console.log('[VNPAY Return] Order total price:', savedOrder.totalPrice);
     console.log('[VNPAY Return] Order items summary:', savedOrder.orderItems.map((item: any, index: number) => ({
       index: index + 1,
-      productName: item.productName,
+      productName: item.productName || item.name,
       quantity: item.quantity,
-      size: item.size[0].size,
-      color: item.size[0].color,
+      size: item.size[0]?.size || 'N/A',
+      color: item.size[0]?.color || 'N/A',
       price: item.price
     })));
+    
+    // Log chi tiết từng item trong saved order
+    console.log('[VNPAY Return] Detailed saved order items:');
+    savedOrder.orderItems.forEach((item: any, index: number) => {
+      console.log(`[VNPAY Return] Item ${index + 1}:`, {
+        product: item.product,
+        productName: item.productName,
+        name: item.name,
+        quantity: item.quantity,
+        size: item.size,
+        price: item.price
+      });
+    });
 
     // Xóa sản phẩm khỏi giỏ hàng sau khi thanh toán thành công
     try {
@@ -358,15 +529,19 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         console.log('[VNPAY Return] Cart cleanup completed successfully');
       }
     } catch (cartError) {
-      console.error('[VNPAY Return] Lỗi khi xóa giỏ hàng:', cartError);
-      // Không throw error vì order đã tạo thành công
+      console.error('[VNPAY Return] Error cleaning up cart:', cartError);
+      // Không throw error vì order đã được tạo thành công
     }
 
-    // Xoá session pendingOrder
+    // Xóa session sau khi tạo order thành công
+    if (req.session.pendingOrder) {
     delete req.session.pendingOrder;
+      req.session.save();
+      console.log('[VNPAY Return] Session cleaned up after successful order creation');
+    }
 
-    // Tạo response chi tiết với thông tin order
-    const orderResponse = {
+    // Tạo response thành công
+    const successResponse = {
       status: 'success',
       message: `Đặt hàng và thanh toán thành công với ${savedOrder.orderItems.length} sản phẩm`,
       order: {
@@ -378,30 +553,43 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         paymentStatus: savedOrder.isPaid ? 'Paid' : 'Pending',
         items: savedOrder.orderItems.map((item: any, index: number) => ({
           index: index + 1,
-          productName: item.productName,
+          productName: item.productName || item.name,
           quantity: item.quantity,
-          size: item.size[0].size,
-          color: item.size[0].color,
+          size: item.size[0]?.size || 'N/A',
+          color: item.size[0]?.color || 'N/A',
           price: item.price,
           totalItemPrice: item.price * item.quantity
         })),
-        shippingAddress: savedOrder.shippingAddress,
+        shippingAddress: {
+          fullName: savedOrder.shippingAddress?.recipientName || 'N/A',
+          street: savedOrder.shippingAddress?.street || 'N/A',
+          city: savedOrder.shippingAddress?.city || 'N/A',
+          state: savedOrder.shippingAddress?.state || 'N/A',
+          postalCode: savedOrder.shippingAddress?.postalCode || 'N/A',
+          country: savedOrder.shippingAddress?.country || 'N/A',
+          phone: savedOrder.shippingAddress?.phone || 'N/A',
+        },
         paymentMethod: savedOrder.paymentMethod,
         createdAt: savedOrder.createdAt
       },
       result: { 
         isSuccess: true, 
         message: `Order created successfully with ${savedOrder.orderItems.length} items`,
-        transactionId: req.query['vnp_TransactionNo']
+        transactionId: vnpTransactionNo,
+        responseCode: vnpResponseCode
       }
     };
 
-    console.log('[VNPAY Return] Sending success response:', JSON.stringify(orderResponse, null, 2));
+    console.log('[VNPAY Return] Sending success response:', JSON.stringify(successResponse, null, 2));
+    res.json(successResponse);
 
-    res.json(orderResponse);
   } catch (err) {
-    console.error('Lỗi xử lý returnUrl:', err);
-    res.status(400).json({ error: 'Xác thực returnUrl thất bại', detail: (err as any)?.message });
+    console.error('[VNPAY Return] Error processing return URL:', err);
+    res.status(500).json({ 
+      status: 'error', 
+      message: 'Có lỗi xảy ra khi xử lý thanh toán', 
+      detail: (err as any)?.message 
+    });
   }
 };
 
@@ -415,13 +603,97 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
     const vnpTxnRef = req.query['vnp_TxnRef'] as string;
     const vnpTransactionNo = req.query['vnp_TransactionNo'] as string;
     const vnpOrderInfo = req.query['vnp_OrderInfo'] as string;
+    const vnpResponseCode = req.query['vnp_ResponseCode'] as string;
     
     console.log('[VNPAY Return] Attempting to create order from VNPAY data:', {
       amount: vnpAmount,
       txnRef: vnpTxnRef,
       transactionNo: vnpTransactionNo,
-      orderInfo: vnpOrderInfo
+      orderInfo: vnpOrderInfo,
+      responseCode: vnpResponseCode
     });
+    
+    // Kiểm tra response code trước tiên
+    if (vnpResponseCode !== '00') {
+      console.log('[VNPAY Return] Payment failed with response code:', vnpResponseCode);
+      let errorMessage = 'Thanh toán không thành công';
+      if (vnpResponseCode === '24') {
+        errorMessage = 'Khách hàng hủy giao dịch';
+      } else if (vnpResponseCode === '07') {
+        errorMessage = 'Giao dịch bị nghi ngờ gian lận';
+      } else if (vnpResponseCode === '09') {
+        errorMessage = 'Giao dịch không thành công do: Thẻ/Tài khoản bị khóa';
+      } else if (vnpResponseCode === '10') {
+        errorMessage = 'Giao dịch không thành công do: Khách hàng chưa kích hoạt thẻ';
+      } else if (vnpResponseCode === '11') {
+        errorMessage = 'Giao dịch không thành công do: Thẻ/Tài khoản chưa đăng ký dịch vụ';
+      } else if (vnpResponseCode === '12') {
+        errorMessage = 'Giao dịch không thành công do: Thẻ/Tài khoản bị khóa';
+      } else if (vnpResponseCode === '13') {
+        errorMessage = 'Giao dịch không thành công do: Nhập sai mật khẩu xác thực giao dịch';
+      } else if (vnpResponseCode === '51') {
+        errorMessage = 'Giao dịch không thành công do: Tài khoản của quý khách không đủ số dư';
+      } else if (vnpResponseCode === '65') {
+        errorMessage = 'Giao dịch không thành công do: Tài khoản của quý khách đã vượt quá hạn mức cho phép';
+      } else if (vnpResponseCode === '75') {
+        errorMessage = 'Giao dịch không thành công do: Ngân hàng thanh toán đang bảo trì';
+      } else if (vnpResponseCode === '79') {
+        errorMessage = 'Giao dịch không thành công do: Khách hàng nhập sai mật khẩu thanh toán quá số lần quy định';
+      } else if (vnpResponseCode === '99') {
+        errorMessage = 'Giao dịch không thành công do: Lỗi khác';
+      }
+      
+      return res.status(400).json({
+        status: 'fail',
+        message: errorMessage,
+        result: { 
+          isSuccess: false, 
+          message: `Payment failed with response code: ${vnpResponseCode}`,
+          responseCode: vnpResponseCode
+        }
+      });
+    }
+    
+    // Kiểm tra xem transaction này đã được xử lý chưa
+    if (vnpTransactionNo) {
+      const existingOrder = await Order.findOne({ 'paymentResult.id': vnpTransactionNo });
+      if (existingOrder) {
+        console.log('[VNPAY Return] Order already exists:', existingOrder._id);
+        return res.json({ 
+          status: 'success', 
+          message: 'Cảm ơn bạn đã tin tưởng chúng tôi', 
+          order: {
+            _id: existingOrder._id,
+            orderNumber: existingOrder._id,
+            totalItems: existingOrder.orderItems.length,
+            totalPrice: existingOrder.totalPrice,
+            orderStatus: existingOrder.orderStatus,
+            paymentStatus: existingOrder.isPaid ? 'Paid' : 'Pending',
+            items: existingOrder.orderItems.map((item: any, index: number) => ({
+              index: index + 1,
+              productName: item.productName || item.name,
+              quantity: item.quantity,
+              size: item.size[0]?.size || 'N/A',
+              color: item.size[0]?.color || 'N/A',
+              price: item.price,
+              totalItemPrice: item.price * item.quantity
+            })),
+            shippingAddress: {
+              fullName: existingOrder.shippingAddress?.recipientName || 'N/A',
+              street: existingOrder.shippingAddress?.street || 'N/A',
+              city: existingOrder.shippingAddress?.city || 'N/A',
+              state: existingOrder.shippingAddress?.state || 'N/A',
+              postalCode: existingOrder.shippingAddress?.postalCode || 'N/A',
+              country: existingOrder.shippingAddress?.country || 'N/A',
+              phone: existingOrder.shippingAddress?.phone || 'N/A',
+            },
+            paymentMethod: existingOrder.paymentMethod,
+            createdAt: existingOrder.createdAt
+          },
+          result: { isSuccess: true, message: 'Order already processed' }
+        });
+      }
+    }
     
     // Tìm user từ token - BẮT BUỘC phải có user
     let user = null;
@@ -533,19 +805,19 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
     const order = new Order({
       user: user._id,
       userSnapshot: {
-        fullName: user.fullName,
+        fullName: user.username,
         email: user.email,
         phone: user.phone,
       },
       orderItems: orderItems,
-      shippingAddress: orderData?.shippingAddress || {
-        fullName: user.fullName || 'Khách hàng',
-        phone: user.phone || '0123456789',
-        street: 'Địa chỉ giao hàng',
-        city: 'Hà Nội',
-        state: 'Quận 1',
-        postalCode: '100000',
-        country: 'Việt Nam',
+      shippingAddress: {
+        recipientName: orderData?.shippingAddress?.recipientName || orderData?.shippingAddress?.fullName || user.fullName || 'N/A',
+        street: orderData?.shippingAddress?.street,
+        city: orderData?.shippingAddress?.city,
+        state: orderData?.shippingAddress?.state,
+        postalCode: orderData?.shippingAddress?.postalCode,
+        country: orderData?.shippingAddress?.country,
+        phone: orderData?.shippingAddress?.phone || user.phone,
       },
       paymentMethod: 'VNPAY',
       taxPrice: orderData?.taxPrice || 0,
@@ -579,21 +851,30 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
         paymentStatus: savedOrder.isPaid ? 'Paid' : 'Pending',
         items: savedOrder.orderItems.map((item: any, index: number) => ({
           index: index + 1,
-          productName: item.productName,
+          productName: item.productName || item.name,
           quantity: item.quantity,
-          size: item.size[0].size,
-          color: item.size[0].color,
+          size: item.size[0]?.size || 'N/A',
+          color: item.size[0]?.color || 'N/A',
           price: item.price,
           totalItemPrice: item.price * item.quantity
         })),
-        shippingAddress: savedOrder.shippingAddress,
+        shippingAddress: {
+          fullName: savedOrder.shippingAddress?.recipientName || 'N/A',
+          street: savedOrder.shippingAddress?.street || 'N/A',
+          city: savedOrder.shippingAddress?.city || 'N/A',
+          state: savedOrder.shippingAddress?.state || 'N/A',
+          postalCode: savedOrder.shippingAddress?.postalCode || 'N/A',
+          country: savedOrder.shippingAddress?.country || 'N/A',
+          phone: savedOrder.shippingAddress?.phone || 'N/A',
+        },
         paymentMethod: savedOrder.paymentMethod,
         createdAt: savedOrder.createdAt
       },
       result: { 
         isSuccess: true, 
         message: `Order created from VNPAY data with ${savedOrder.orderItems.length} items`,
-        transactionId: vnpTransactionNo
+        transactionId: vnpTransactionNo,
+        responseCode: vnpResponseCode
       }
     };
     
@@ -614,10 +895,90 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
  */
 export const handleIpn = (req: Request, res: Response) => {
   try {
-    const result = verifyVnpayIpn(req.query as any);
-    // TODO: Cập nhật trạng thái đơn hàng ở đây nếu cần
-    res.json({ status: result.isSuccess ? 'success' : 'fail', result });
+    console.log('[VNPAY IPN] Bắt đầu xử lý IPN');
+    console.log('[VNPAY IPN] Query params:', JSON.stringify(req.query, null, 2));
+    
+    const vnpResponseCode = req.query['vnp_ResponseCode'];
+    const vnpTransactionNo = req.query['vnp_TransactionNo'];
+    const vnpTxnRef = req.query['vnp_TxnRef'];
+    
+    console.log('[VNPAY IPN] VNPay Response Code:', vnpResponseCode);
+    console.log('[VNPAY IPN] VNPay Transaction No:', vnpTransactionNo);
+    console.log('[VNPAY IPN] VNPay TxnRef:', vnpTxnRef);
+    
+    // Xác thực IPN từ VNPay
+    let verificationResult;
+    try {
+      verificationResult = verifyVnpayIpn(req.query as any);
+      console.log('[VNPAY IPN] Verification result:', JSON.stringify(verificationResult, null, 2));
+    } catch (verifyError) {
+      console.error('[VNPAY IPN] Verification error:', verifyError);
+      verificationResult = { isSuccess: false, message: 'Verification failed' };
+    }
+    
+    // Kiểm tra các điều kiện để xác định thanh toán thành công
+    const isPaymentSuccess = 
+      vnpResponseCode === '00' && // Response code thành công
+      verificationResult.isSuccess && // Verification thành công
+      vnpTransactionNo; // Có transaction number
+    
+    console.log('[VNPAY IPN] Payment success check:', {
+      responseCode: vnpResponseCode,
+      verificationSuccess: verificationResult.isSuccess,
+      hasTransactionNo: !!vnpTransactionNo,
+      isPaymentSuccess
+    });
+    
+    // Nếu thanh toán không thành công, chỉ log và return
+    if (!isPaymentSuccess) {
+      console.log('[VNPAY IPN] Payment failed or cancelled. Response code:', vnpResponseCode);
+      
+      // Xóa backup data nếu có
+      if (vnpTxnRef) {
+        try {
+          PendingOrder.deleteMany({ 'orderData.sessionId': vnpTxnRef }).then(() => {
+            console.log('[VNPAY IPN] Cleaned up backup data for failed payment');
+          }).catch((cleanupError) => {
+            console.error('[VNPAY IPN] Error cleaning up backup data:', cleanupError);
+          });
+        } catch (cleanupError) {
+          console.error('[VNPAY IPN] Error cleaning up backup data:', cleanupError);
+        }
+      }
+      
+      return res.json({ 
+        status: 'fail', 
+        message: `Payment failed with response code: ${vnpResponseCode}`,
+        result: { 
+          isSuccess: false, 
+          message: `Payment failed with response code: ${vnpResponseCode}`,
+          responseCode: vnpResponseCode
+        }
+      });
+    }
+    
+    // Nếu thanh toán thành công, có thể cập nhật trạng thái order nếu cần
+    console.log('[VNPAY IPN] Payment successful, order should be created via return URL');
+    
+    // TODO: Có thể thêm logic cập nhật trạng thái order ở đây nếu cần
+    // Ví dụ: cập nhật trạng thái từ 'pending' sang 'paid' nếu order đã tồn tại
+    
+    res.json({ 
+      status: 'success', 
+      message: 'IPN processed successfully',
+      result: { 
+        isSuccess: true, 
+        message: 'IPN processed successfully',
+        responseCode: vnpResponseCode,
+        transactionId: vnpTransactionNo
+      }
+    });
   } catch (err) {
-    res.status(400).json({ error: 'Xác thực IPN thất bại', detail: (err as any)?.message });
+    console.error('[VNPAY IPN] Error processing IPN:', err);
+    res.status(400).json({ 
+      status: 'error',
+      message: 'Xác thực IPN thất bại', 
+      detail: (err as any)?.message 
+    });
   }
 }; 

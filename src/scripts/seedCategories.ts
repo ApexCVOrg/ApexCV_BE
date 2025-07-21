@@ -5,6 +5,29 @@ import { Category, ensureCategoryIndexes } from '../models/Category'
 
 const categoriesData = [
     {
+      name: "Shoes",
+      subcategories: [
+        {
+          name: "Nike",
+          subcategories: [
+            "Air Force",
+            "Air Max"
+          ],
+        },
+        {
+          name: "Adidas",
+          subcategories: [
+            "Samba",
+            "SL 72",
+            "Superstar",
+            "Spezial",
+            "Gazelle",
+            "Adizero",
+          ],
+        },
+      ],
+    },
+    {
       name: "Men",
       subcategories: [
         {

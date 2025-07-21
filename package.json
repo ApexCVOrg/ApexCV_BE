@@ -10,7 +10,8 @@
     "format": "prettier --write \"src/**/*.{js,ts,tsx,json,md}\"",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "ts-node": "npx tsx"
   },
   "repository": {
     "type": "git",
@@ -57,7 +58,9 @@
     "@types/helmet": "^0.0.48",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
     "@types/nodemailer": "^6.4.17",
+    "@types/ws": "^8.18.1",
     "apexcv-be": "file:",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
@@ -79,10 +82,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
     "morgan": "^1.10.0",
+    "multer": "^2.0.2",
     "nodemailer": "^7.0.3",
     "openai": "^5.8.3",
     "reflect-metadata": "^0.2.2",
     "stripe": "^18.3.0",
+    "ws": "^8.18.3",
     "zod": "^3.25.76"
   },
   "husky": {

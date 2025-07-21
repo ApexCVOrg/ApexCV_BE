@@ -22,8 +22,6 @@ interface IProduct extends Document {
   colors: string[]
   tags: string[]
   status: 'active' | 'inactive' | 'out_of_stock' | 'discontinued'
-  ratingsAverage: number
-  ratingsQuantity: number
   createdAt: Date
 }
 
@@ -51,8 +49,6 @@ const productSchema = new Schema({
     enum: ['active', 'inactive', 'out_of_stock', 'discontinued'],
     default: 'active'
   },
-  ratingsAverage: { type: Number, default: 0 },
-  ratingsQuantity: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
 })
 

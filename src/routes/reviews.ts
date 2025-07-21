@@ -108,4 +108,15 @@ router.get('/average/:productId', async (req: Request, res: Response): Promise<v
   }
 })
 
+// Lấy tất cả reviews của 1 sản phẩm
+router.get('/product/:productId', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { productId } = req.params;
+    const reviews = await Review.find({ product: productId }).populate('user', 'fullName avatar');
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi lấy danh sách đánh giá: ' + (error as Error).message });
+  }
+});
+
 export default router

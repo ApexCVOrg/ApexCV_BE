@@ -1,0 +1,12 @@
+
+
+
+Estimated Points:
+- Narrative Charter: 10/13
+- WBS: 10/10
+- Sequence: 5/5
+- Schedule: 5/5
+- Budget: 5/5
+- RAM: 3/3
+- Risks: 7/7
+→ Total: 45/48 → Passed

@@ -54,6 +54,32 @@ router.get('/', validateGetChats, async (req: Request, res: Response) => {
 });
 
 /**
+ * GET /api/manager/chats/:chatId/join-status
+ * Check if manager has joined a specific chat
+ */
+router.get('/:chatId/join-status', async (req: Request, res: Response) => {
+  try {
+    const { chatId } = req.params;
+    const isJoined = await chatService.isManagerJoined(chatId);
+
+    res.json({
+      success: true,
+      data: {
+        isJoined,
+        chatId
+      }
+    });
+  } catch (error) {
+    console.error('Check join status error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+/**
  * GET /api/manager/chats/:chatId/messages
  * Get all messages for a specific chat session
  */
@@ -92,7 +118,7 @@ router.get('/:chatId/messages', validateGetMessages, async (req: Request, res: R
 router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, res: Response) => {
   try {
     const { chatId } = req.params;
-    const { content } = req.body;
+    const { content, attachments } = req.body;
     const managerId = req.user?.id;
 
     if (!managerId) {
@@ -102,7 +128,7 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
       });
     }
 
-    const message = await chatService.sendManagerMessage(chatId, managerId, content);
+    const message = await chatService.sendManagerMessage(chatId, managerId, content, attachments);
 
     res.json({
       success: true,
@@ -111,6 +137,8 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
         messageId: message._id,
         content: message.content,
         role: message.role,
+        attachments: message.attachments,
+        messageType: message.messageType,
         createdAt: message.createdAt
       }
     });

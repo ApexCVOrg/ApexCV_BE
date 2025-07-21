@@ -1,34 +1,59 @@
 import mongoose from 'mongoose'
-import { Voucher } from '../models/Voucher'
+import { Coupon } from '../models/Coupon'
 
-const vouchersData = [
+const couponsData = [
   {
     code: 'SALE10',
-    description: 'Giảm 10% cho đơn hàng từ 500K',
-    expiry: new Date('2025-12-31')
+    type: 'percentage',
+    value: 10,
+    minOrderValue: 500000,
+    maxUsage: 1000,
+    used: 0,
+    expiresAt: new Date('2025-12-31'),
+    isActive: true
   },
   {
     code: 'FREESHIP',
-    description: 'Miễn phí vận chuyển cho đơn từ 300K',
-    expiry: new Date('2025-10-01')
+    type: 'fixed',
+    value: 50000,
+    minOrderValue: 300000,
+    maxUsage: 500,
+    used: 0,
+    expiresAt: new Date('2025-10-01'),
+    isActive: true
   },
   {
     code: 'WELCOME20',
-    description: 'Giảm 20% cho khách hàng mới',
-    expiry: new Date('2025-09-30')
+    type: 'percentage',
+    value: 20,
+    minOrderValue: 200000,
+    maxUsage: 300,
+    used: 0,
+    expiresAt: new Date('2025-09-30'),
+    isActive: true
+  },
+  {
+    code: 'NEWCUSTOMER',
+    type: 'percentage',
+    value: 15,
+    minOrderValue: 300000,
+    maxUsage: 200,
+    used: 0,
+    expiresAt: new Date('2025-12-31'),
+    isActive: true
   }
 ]
 
-export const seedVouchers = async () => {
+export const seedCoupons = async () => {
   try {
-    for (const voucherData of vouchersData) {
-      const existing = await Voucher.findOne({ code: voucherData.code })
+    for (const couponData of couponsData) {
+      const existing = await Coupon.findOne({ code: couponData.code })
       if (existing) continue
-      await new Voucher(voucherData).save()
+      await new Coupon(couponData).save()
     }
-    console.log('Seed vouchers thành công!')
+    console.log('Seed coupons thành công!')
   } catch (error) {
-    console.error('Lỗi khi seed vouchers:', error)
+    console.error('Lỗi khi seed coupons:', error)
     throw error
   }
 }
@@ -37,7 +62,7 @@ export const seedVouchers = async () => {
 if (require.main === module) {
   mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas')
     .then(async () => {
-      await seedVouchers()
+      await seedCoupons()
       process.exit(0)
     })
     .catch((err) => {

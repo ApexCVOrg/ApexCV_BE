@@ -35,6 +35,14 @@ export const validateSendUserMessage = [
     .isLength({ min: 1, max: 1000 })
     .withMessage('Content must be between 1 and 1000 characters')
     .trim(),
+  body('role')
+    .optional()
+    .isIn(['user', 'bot'])
+    .withMessage('Role must be either "user" or "bot"'),
+  body('isBotMessage')
+    .optional()
+    .isBoolean()
+    .withMessage('isBotMessage must be a boolean'),
   validate
 ];
 
