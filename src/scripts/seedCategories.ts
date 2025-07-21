@@ -28,6 +28,29 @@ const categoriesData = [
       ],
     },
     {
+      name: "Accessories",
+      subcategories: [
+        {
+          name: "Men",
+          subcategories: [
+            "Bags",
+            "Hats",
+            "Socks",
+            "Eyewear",
+          ],
+        },
+        {
+          name: "Women",
+          subcategories: [
+            "Bags",
+            "Hats",
+            "Socks",
+            "Eyewear",
+          ],
+        },
+      ]
+    },
+    {
       name: "Men",
       subcategories: [
         {

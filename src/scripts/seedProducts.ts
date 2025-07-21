@@ -1440,6 +1440,186 @@ const productsData = [
     brand: 'Adidas',
     status: 'active'
   },
+  // Adidas Shoes - Samba
+  {
+    name: 'Samba OG Shoes',
+    description: 'Adidas Samba OG Shoes - Originals, 14 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752479523/Giay_Samba_OG_trang_B75806_01_00_standard_ts41vx.avif'],
+    sizes: [
+      { sku: '1234568282', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568283', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568284', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568285', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568286', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568287', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568288', size: '40', stock: 10, color: 'Grey' },
+      { sku: '1234568289', size: '41', stock: 10, color: 'Grey' },
+      { sku: '1234568290', size: '42', stock: 10, color: 'Grey' }
+    ],
+    tags: ['originals', 'OG'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba JP Shoes',
+    description: 'Adidas Samba JP Shoes - Originals, 2 colours, New.',
+    price: 3000000,
+    discountPrice: 3000000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481341/Samba_Jp_Shoes_White_JR0964_01_00_standard_j1mljy.avif'],
+    sizes: [
+      { sku: '1234568291', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568292', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568293', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568294', size: '40', stock: 10, color: 'Green' },
+      { sku: '1234568295', size: '41', stock: 10, color: 'Green' },
+      { sku: '1234568296', size: '42', stock: 10, color: 'Green' }
+    ],
+    tags: ['originals', 'JP'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba W',
+    description: 'Adidas Samba W - Originals, 3 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481428/Samba_OG_W_Cream_White_ID0478_01_standard_yq6dvh.avif'],
+    sizes: [
+      { sku: '1234568297', size: '36', stock: 10, color: 'Black' },
+      { sku: '1234568298', size: '37', stock: 10, color: 'Black' },
+      { sku: '1234568299', size: '38', stock: 10, color: 'Black' },
+      { sku: '1234568300', size: '36', stock: 10, color: 'White' },
+      { sku: '1234568301', size: '37', stock: 10, color: 'White' },
+      { sku: '1234568302', size: '38', stock: 10, color: 'White' },
+      { sku: '1234568303', size: '36', stock: 10, color: 'Beige' },
+      { sku: '1234568304', size: '37', stock: 10, color: 'Beige' },
+      { sku: '1234568305', size: '38', stock: 10, color: 'Beige' }
+    ],
+    tags: ['originals', 'W'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba LT Shoes',
+    description: 'Adidas Samba LT Shoes - Originals, 2 colours.',
+    price: 2900000,
+    discountPrice: 2900000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481448/Samba_LT_Shoes_Black_IG2010_01_standard_lftp7l.avif'],
+    sizes: [
+      { sku: '1234568306', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568307', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568308', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568309', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568310', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568311', size: '42', stock: 10, color: 'White' }
+    ],
+    tags: ['originals', 'LT'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Adidas Superstar Collection
+  {
+    name: 'Superstar 82 Shoes',
+    description: 'Adidas Superstar 82 - Classic design with modern comfort. Iconic shell toe design.',
+    price: 2800000,
+    discountPrice: 2500000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481685/Superstar_82_Shoes_Black_JI2026_01_standard_vk2bpv.avif'],
+    sizes: [
+      { sku: '1234568312', size: '40', stock: 15, color: 'White' },
+      { sku: '1234568313', size: '41', stock: 20, color: 'White' },
+      { sku: '1234568314', size: '42', stock: 25, color: 'White' },
+      { sku: '1234568315', size: '43', stock: 15, color: 'White' },
+      { sku: '1234568316', size: '40', stock: 15, color: 'Black' },
+      { sku: '1234568317', size: '41', stock: 20, color: 'Black' },
+      { sku: '1234568318', size: '42', stock: 25, color: 'Black' },
+      { sku: '1234568319', size: '43', stock: 15, color: 'Black' }
+    ],
+    tags: ['shoes', 'superstar', '82'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Vintage Shoes',
+    description: 'Adidas Superstar Vintage - Retro style with premium materials. Classic shell toe design.',
+    price: 2900000,
+    discountPrice: 2600000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481696/Superstar_Vintage_Shoes_White_JQ3254_01_00_standard_fvo24u.avif'],
+    sizes: [
+      { sku: '1234568320', size: '40', stock: 12, color: 'White' },
+      { sku: '1234568321', size: '41', stock: 18, color: 'White' },
+      { sku: '1234568322', size: '42', stock: 22, color: 'White' },
+      { sku: '1234568323', size: '43', stock: 12, color: 'White' },
+      { sku: '1234568324', size: '40', stock: 12, color: 'Black' },
+      { sku: '1234568325', size: '41', stock: 18, color: 'Black' },
+      { sku: '1234568326', size: '42', stock: 22, color: 'Black' },
+      { sku: '1234568327', size: '43', stock: 12, color: 'Black' },
+      { sku: '1234568328', size: '40', stock: 12, color: 'Navy' },
+      { sku: '1234568329', size: '41', stock: 18, color: 'Navy' },
+      { sku: '1234568330', size: '42', stock: 22, color: 'Navy' },
+      { sku: '1234568331', size: '43', stock: 12, color: 'Navy' }
+    ],
+    tags: ['shoes', 'superstar', 'vintage'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar II Shoes',
+    description: 'Adidas Superstar II - Enhanced comfort with classic style. Updated shell toe design.',
+    price: 2700000,
+    discountPrice: 2400000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481691/SUPERSTAR_II_Green_JI3076_01_00_standard_hpveet.avif'],
+    sizes: [
+      { sku: '1234568332', size: '40', stock: 14, color: 'White' },
+      { sku: '1234568333', size: '41', stock: 19, color: 'White' },
+      { sku: '1234568334', size: '42', stock: 24, color: 'White' },
+      { sku: '1234568335', size: '43', stock: 14, color: 'White' },
+      { sku: '1234568336', size: '40', stock: 14, color: 'Black' },
+      { sku: '1234568337', size: '41', stock: 19, color: 'Black' },
+      { sku: '1234568338', size: '42', stock: 24, color: 'Black' },
+      { sku: '1234568339', size: '43', stock: 14, color: 'Black' },
+      { sku: '1234568340', size: '40', stock: 14, color: 'Red' },
+      { sku: '1234568341', size: '41', stock: 19, color: 'Red' },
+      { sku: '1234568342', size: '42', stock: 24, color: 'Red' },
+      { sku: '1234568343', size: '43', stock: 14, color: 'Red' }
+    ],
+    tags: ['shoes', 'superstar', 'II'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Standard Shoes',
+    description: 'Adidas Superstar Standard - Original design with timeless appeal. Classic shell toe.',
+    price: 2600000,
+    discountPrice: 2300000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481702/Superstar_Shoes_White_IG9367_01_standard_tfdpml.avif'],
+    sizes: [
+      { sku: '1234568344', size: '40', stock: 16, color: 'White' },
+      { sku: '1234568345', size: '41', stock: 21, color: 'White' },
+      { sku: '1234568346', size: '42', stock: 26, color: 'White' },
+      { sku: '1234568347', size: '43', stock: 16, color: 'White' },
+      { sku: '1234568348', size: '40', stock: 16, color: 'Black' },
+      { sku: '1234568349', size: '41', stock: 21, color: 'Black' },
+      { sku: '1234568350', size: '42', stock: 26, color: 'Black' },
+      { sku: '1234568351', size: '43', stock: 16, color: 'Black' },
+      { sku: '1234568352', size: '40', stock: 16, color: 'Green' },
+      { sku: '1234568353', size: '41', stock: 21, color: 'Green' },
+      { sku: '1234568354', size: '42', stock: 26, color: 'Green' },
+      { sku: '1234568355', size: '43', stock: 16, color: 'Green' }
+    ],
+    tags: ['shoes', 'superstar', 'standard'],
+    brand: 'Adidas',
+    status: 'active'
+  },
   // Sample Sneakers from FE TestCardsPage
   {
     name: 'Nike Span 2',
@@ -1918,7 +2098,7 @@ const productsData = [
       { sku: '1234568544', size: 'L', stock: 18, color: 'Black' },
       { sku: '1234568545', size: 'XL', stock: 12, color: 'Black' }
     ],
-    tags: ['hoodie', 'adidas', 'essentials', '3-stripes', 'french-terry', 'full-zip', 'grey', 'black'],
+    tags: ['hoodie', 'adidas', 'essentials', '3-stripes', 'french-terry', 'full-zip', 'men'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -1943,7 +2123,7 @@ const productsData = [
       { sku: '1234568556', size: 'L', stock: 20, color: 'White' },
       { sku: '1234568557', size: 'XL', stock: 15, color: 'White' }
     ],
-    tags: ['hoodie', 'adidas', 'elevated', 'terry-loop', 'all-season', 'black', 'grey', 'white'],
+    tags: ['hoodie', 'adidas', 'elevated', 'terry-loop', 'all-season', 'men'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -1968,7 +2148,7 @@ const productsData = [
       { sku: '1234568568', size: 'L', stock: 19, color: 'Black' },
       { sku: '1234568569', size: 'XL', stock: 14, color: 'Black' }
     ],
-    tags: ['hoodie', 'adidas', 'z.n.e', 'full-zip', 'white', 'green', 'black'],
+    tags: ['hoodie', 'adidas', 'z.n.e', 'full-zip', 'white', 'men'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -1986,7 +2166,7 @@ const productsData = [
       { sku: '1234568572', size: 'M', stock: 22, color: 'Green' },
       { sku: '1234568573', size: 'L', stock: 16, color: 'Green' }
     ],
-    tags: ['vest', 'adidas', 'clot', 'edison-chen', 'crochet', 'green', 'women'],
+    tags: ['vest', 'adidas', 'clot', 'edison-chen', 'crochet', 'women'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -2003,7 +2183,7 @@ const productsData = [
       { sku: '1234568576', size: 'M', stock: 25, color: 'Grey' },
       { sku: '1234568577', size: 'L', stock: 18, color: 'Grey' }
     ],
-    tags: ['windbreaker', 'adidas', 'city-escape', 'lightweight', 'grey', 'women'],
+    tags: ['windbreaker', 'adidas', 'city-escape', 'lightweight', 'women'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -2020,7 +2200,7 @@ const productsData = [
       { sku: '1234568580', size: 'M', stock: 23, color: 'Grey' },
       { sku: '1234568581', size: 'L', stock: 17, color: 'Grey' }
     ],
-    tags: ['vest', 'adidas', 'own-the-run', 'spray-dye', 'grey', 'women'],
+    tags: ['vest', 'adidas', 'own-the-run', 'spray-dye', 'women'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -2045,7 +2225,7 @@ const productsData = [
       { sku: '1234568592', size: 'M', stock: 22, color: 'Black' },
       { sku: '1234568593', size: 'L', stock: 16, color: 'Black' }
     ],
-    tags: ['windbreaker', 'adidas', 'wind-rdy', 'hyperglam', 'purple', 'green', 'black', 'women'],
+    tags: ['windbreaker', 'adidas', 'wind-rdy', 'hyperglam', 'women'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -2097,7 +2277,7 @@ const productsData = [
       { sku: '1234568604', size: '8-9Y', stock: 18, color: 'Black' },
       { sku: '1234568605', size: '10-11Y', stock: 15, color: 'Black' }
     ],
-    tags: ['backpack', 'adidas', 'originals', 'smiley', 'kids', 'black'],
+    tags: ['backpack', 'adidas', 'originals', 'smiley', 'kids'],
     brand: 'Adidas',
     status: 'active'
   },
@@ -2114,11 +2294,670 @@ const productsData = [
       { sku: '1234568608', size: '8-9Y', stock: 20, color: 'Blue' },
       { sku: '1234568609', size: '10-11Y', stock: 16, color: 'Blue' }
     ],
-    tags: ['backpack', 'adidas', 'smiley-world', 'kids', 'blue', 'multicolor'],
+    tags: ['backpack', 'adidas', 'smiley-world', 'kids', 'blue', 'men'],
     brand: 'Adidas',
     status: 'active'
-  }
-]
+  },
+  // Men's Socks Products
+  {
+    name: "Cushioned Sportswear Ankle Socks 3 Pairs",
+    description: "Comfortable ankle socks with cushioned sole for maximum comfort during sports and daily activities. Available in Black and White.",
+    price: 399000,
+    discountPrice: 359000,
+    categoryPath: ['Accessories', 'Men', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093482/Cushioned_Sportswear_Ankle_Socks_3_Pairs_Black_IA3947_03_standard_glsyjp.avif'],
+    sizes: [
+      { sku: '1234568610', size: 'S', stock: 30, color: 'Black' },
+      { sku: '1234568611', size: 'M', stock: 35, color: 'Black' },
+      { sku: '1234568612', size: 'L', stock: 25, color: 'Black' },
+      { sku: '1234568613', size: 'XL', stock: 20, color: 'Black' },
+      { sku: '1234568614', size: 'S', stock: 30, color: 'White' },
+      { sku: '1234568615', size: 'M', stock: 35, color: 'White' },
+      { sku: '1234568616', size: 'L', stock: 25, color: 'White' },
+      { sku: '1234568617', size: 'XL', stock: 20, color: 'White' }
+    ],
+    tags: ['socks', 'adidas', 'cushioned', 'ankle', 'sportswear', 'men'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Cushioned Sportswear Crew Socks 6 Pairs",
+    description: "Premium crew socks with cushioned sole for ultimate comfort. Perfect for sports and everyday wear. Available in Black and White.",
+    price: 599000,
+    discountPrice: 539000,
+    categoryPath: ['Accessories', 'Men', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093480/Cushioned_Sportswear_Crew_Socks_6_Pairs_Black_IC1316_03_standard_pnv0bu.avif'],
+    sizes: [
+      { sku: '1234568618', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568619', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568620', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568621', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568622', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568623', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568624', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234568625', size: 'XL', stock: 15, color: 'White' }
+    ],
+    tags: ['socks', 'adidas', 'cushioned', 'crew', 'sportswear', 'men'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Essentials CLIMACOOL Low Cut Socks 3 Pairs",
+    description: "Low cut socks with CLIMACOOL technology for breathability and comfort. Perfect for casual and sports activities. Available in Black and White.",
+    price: 449000,
+    discountPrice: 399000,
+    categoryPath: ['Accessories', 'Men', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093477/Essentials_CLIMACOOL_Low_Cut_Socks_3_Pairs_White_JD9573_01_04_standard_tvrtyh.avif'],
+    sizes: [
+      { sku: '1234568626', size: 'S', stock: 28, color: 'White' },
+      { sku: '1234568627', size: 'M', stock: 32, color: 'White' },
+      { sku: '1234568628', size: 'L', stock: 22, color: 'White' },
+      { sku: '1234568629', size: 'XL', stock: 18, color: 'White' },
+      { sku: '1234568630', size: 'S', stock: 28, color: 'Black' },
+      { sku: '1234568631', size: 'M', stock: 32, color: 'Black' },
+      { sku: '1234568632', size: 'L', stock: 22, color: 'Black' },
+      { sku: '1234568633', size: 'XL', stock: 18, color: 'Black' }
+    ],
+    tags: ['socks', 'adidas', 'essentials', 'climacool', 'low-cut', 'men', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Mid Cut Crew Socks 3 Pairs",
+    description: "Mid cut crew socks with comfortable fit and durable construction. Ideal for daily wear and light sports activities. Available in Black and White.",
+    price: 399000,
+    discountPrice: 359000,
+    categoryPath: ['Accessories', 'Men', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093481/Mid_Cut_Crew_Socks_3_Pairs_White_IJ0733_01_01_00_standard_b3j0iv.avif'],
+    sizes: [
+      { sku: '1234568634', size: 'S', stock: 26, color: 'White' },
+      { sku: '1234568635', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568636', size: 'L', stock: 24, color: 'White' },
+      { sku: '1234568637', size: 'XL', stock: 20, color: 'White' },
+      { sku: '1234568638', size: 'S', stock: 26, color: 'Black' },
+      { sku: '1234568639', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568640', size: 'L', stock: 24, color: 'Black' },
+      { sku: '1234568641', size: 'XL', stock: 20, color: 'Black' }
+    ],
+    tags: ['socks', 'adidas', 'mid-cut', 'crew', 'men'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Women's Socks Products (same products for women)
+  {
+    name: "Cushioned Sportswear Ankle Socks 3 Pairs",
+    description: "Comfortable ankle socks with cushioned sole for maximum comfort during sports and daily activities. Available in Black and White.",
+    price: 399000,
+    discountPrice: 359000,
+    categoryPath: ['Accessories', 'Women', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093482/Cushioned_Sportswear_Ankle_Socks_3_Pairs_Black_IA3947_03_standard_glsyjp.avif'],
+    sizes: [
+      { sku: '1234568642', size: 'XS', stock: 25, color: 'Black' },
+      { sku: '1234568643', size: 'S', stock: 30, color: 'Black' },
+      { sku: '1234568644', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568645', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568646', size: 'XS', stock: 25, color: 'White' },
+      { sku: '1234568647', size: 'S', stock: 30, color: 'White' },
+      { sku: '1234568648', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234568649', size: 'L', stock: 20, color: 'White' }
+    ],
+    tags: ['socks', 'adidas', 'cushioned', 'ankle', 'sportswear', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Cushioned Sportswear Crew Socks 6 Pairs",
+    description: "Premium crew socks with cushioned sole for ultimate comfort. Perfect for sports and everyday wear. Available in Black and White.",
+    price: 599000,
+    discountPrice: 539000,
+    categoryPath: ['Accessories', 'Women', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093480/Cushioned_Sportswear_Crew_Socks_6_Pairs_Black_IC1316_03_standard_pnv0bu.avif'],
+    sizes: [
+      { sku: '1234568650', size: 'XS', stock: 20, color: 'Black' },
+      { sku: '1234568651', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568652', size: 'M', stock: 20, color: 'Black' },
+      { sku: '1234568653', size: 'L', stock: 15, color: 'Black' },
+      { sku: '1234568654', size: 'XS', stock: 20, color: 'White' },
+      { sku: '1234568655', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568656', size: 'M', stock: 20, color: 'White' },
+      { sku: '1234568657', size: 'L', stock: 15, color: 'White' }
+    ],
+    tags: ['socks', 'adidas', 'cushioned', 'crew', 'sportswear', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Essentials CLIMACOOL Low Cut Socks 3 Pairs",
+    description: "Low cut socks with CLIMACOOL technology for breathability and comfort. Perfect for casual and sports activities. Available in Black and White.",
+    price: 449000,
+    discountPrice: 399000,
+    categoryPath: ['Accessories', 'Women', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093477/Essentials_CLIMACOOL_Low_Cut_Socks_3_Pairs_White_JD9573_01_04_standard_tvrtyh.avif'],
+    sizes: [
+      { sku: '1234568658', size: 'XS', stock: 22, color: 'White' },
+      { sku: '1234568659', size: 'S', stock: 28, color: 'White' },
+      { sku: '1234568660', size: 'M', stock: 22, color: 'White' },
+      { sku: '1234568661', size: 'L', stock: 18, color: 'White' },
+      { sku: '1234568662', size: 'XS', stock: 22, color: 'Black' },
+      { sku: '1234568663', size: 'S', stock: 28, color: 'Black' },
+      { sku: '1234568664', size: 'M', stock: 22, color: 'Black' },
+      { sku: '1234568665', size: 'L', stock: 18, color: 'Black' }
+    ],
+    tags: ['socks', 'adidas', 'essentials', 'climacool', 'low-cut', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+        name: "Mid Cut Crew Socks 3 Pairs",
+    description: "Mid cut crew socks with comfortable fit and durable construction. Ideal for daily wear and light sports activities. Available in Black and White.",
+    price: 399000,
+    discountPrice: 359000,
+    categoryPath: ['Accessories', 'Women', 'Socks'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093481/Mid_Cut_Crew_Socks_3_Pairs_White_IJ0733_01_01_00_standard_b3j0iv.avif'],
+    sizes: [
+      { sku: '1234568666', size: 'XS', stock: 24, color: 'White' },
+      { sku: '1234568667', size: 'S', stock: 28, color: 'White' },
+      { sku: '1234568668', size: 'M', stock: 24, color: 'White' },
+      { sku: '1234568669', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234568670', size: 'XS', stock: 24, color: 'Black' },
+      { sku: '1234568671', size: 'S', stock: 28, color: 'Black' },
+      { sku: '1234568672', size: 'M', stock: 24, color: 'Black' },
+      { sku: '1234568673', size: 'L', stock: 20, color: 'Black' }
+    ],
+    tags: ['socks', 'adidas', 'mid-cut', 'crew', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Men's Bags Products
+   {
+     name: "Adicolor Archive Backpack",
+     description: "Classic archive backpack with modern design and comfortable straps. Perfect for daily use and outdoor activities. Available in Turquoise and Red.",
+     price: 899000,
+     discountPrice: 799000,
+     categoryPath: ['Accessories', 'Men', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093464/Adicolor_Archive_Backpack_Turquoise_IQ3514_01_standard_idiuew.avif'],
+     sizes: [
+       { sku: '1234568674', size: 'S', stock: 15, color: 'Turquoise' },
+       { sku: '1234568675', size: 'M', stock: 20, color: 'Turquoise' },
+       { sku: '1234568676', size: 'L', stock: 15, color: 'Turquoise' },
+       { sku: '1234568677', size: 'XL', stock: 10, color: 'Turquoise' },
+       { sku: '1234568678', size: 'S', stock: 12, color: 'Red' },
+       { sku: '1234568679', size: 'M', stock: 18, color: 'Red' },
+       { sku: '1234568680', size: 'L', stock: 12, color: 'Red' },
+       { sku: '1234568681', size: 'XL', stock: 8, color: 'Red' }
+     ],
+     tags: ['backpack', 'adidas', 'adicolor', 'archive', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Adicolor Backpack",
+     description: "Versatile backpack with classic Adicolor design. Spacious interior with multiple compartments for organization. Available in White, Burgundy, Blue, and Green.",
+     price: 799000,
+     discountPrice: 699000,
+     categoryPath: ['Accessories', 'Men', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093464/Adicolor_Backpack_White_IX7459_01_standard_dhicw1.avif'],
+     sizes: [
+       { sku: '1234568682', size: 'S', stock: 20, color: 'White' },
+       { sku: '1234568683', size: 'M', stock: 25, color: 'White' },
+       { sku: '1234568684', size: 'L', stock: 20, color: 'White' },
+       { sku: '1234568685', size: 'XL', stock: 15, color: 'White' },
+       { sku: '1234568686', size: 'S', stock: 18, color: 'Burgundy' },
+       { sku: '1234568687', size: 'M', stock: 22, color: 'Burgundy' },
+       { sku: '1234568688', size: 'L', stock: 18, color: 'Burgundy' },
+       { sku: '1234568689', size: 'XL', stock: 12, color: 'Burgundy' },
+       { sku: '1234568690', size: 'S', stock: 18, color: 'Blue' },
+       { sku: '1234568691', size: 'M', stock: 22, color: 'Blue' },
+       { sku: '1234568692', size: 'L', stock: 18, color: 'Blue' },
+       { sku: '1234568693', size: 'XL', stock: 12, color: 'Blue' },
+       { sku: '1234568694', size: 'S', stock: 18, color: 'Green' },
+       { sku: '1234568695', size: 'M', stock: 22, color: 'Green' },
+       { sku: '1234568696', size: 'L', stock: 18, color: 'Green' },
+       { sku: '1234568697', size: 'XL', stock: 12, color: 'Green' }
+     ],
+     tags: ['backpack', 'adidas', 'adicolor', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "adidas Adventure Backpack",
+     description: "Durable adventure backpack designed for outdoor activities and travel. Water-resistant material with ergonomic design for maximum comfort. Available in Green and Black.",
+     price: 999000,
+     discountPrice: 899000,
+     categoryPath: ['Accessories', 'Men', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093466/adidas_Adventure_Backpack_Green_II3334_01_00_standard_xirweu.avif'],
+     sizes: [
+       { sku: '1234568698', size: 'S', stock: 15, color: 'Green' },
+       { sku: '1234568699', size: 'M', stock: 20, color: 'Green' },
+       { sku: '1234568700', size: 'L', stock: 15, color: 'Green' },
+       { sku: '1234568701', size: 'XL', stock: 10, color: 'Green' },
+       { sku: '1234568702', size: 'S', stock: 18, color: 'Black' },
+       { sku: '1234568703', size: 'M', stock: 22, color: 'Black' },
+       { sku: '1234568704', size: 'L', stock: 18, color: 'Black' },
+       { sku: '1234568705', size: 'XL', stock: 12, color: 'Black' }
+     ],
+     tags: ['backpack', 'adidas', 'adventure', 'outdoor', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Adidas Originals X Liberty London Small Shoulder Bag",
+     description: "Exclusive collaboration shoulder bag with Liberty London design. Compact and stylish with adjustable strap for versatile carrying options. Available in Multicolor.",
+     price: 1299000,
+     discountPrice: 1099000,
+     categoryPath: ['Accessories', 'Men', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093466/Adidas_Originals_X_Liberty_London_Small_Shoulder_Bag_Multicolour_JX3197_01_00_standard_hgowof.avif'],
+     sizes: [
+       { sku: '1234568706', size: 'S', stock: 8, color: 'Multicolor' },
+       { sku: '1234568707', size: 'M', stock: 12, color: 'Multicolor' },
+       { sku: '1234568708', size: 'L', stock: 8, color: 'Multicolor' },
+       { sku: '1234568709', size: 'XL', stock: 5, color: 'Multicolor' }
+     ],
+     tags: ['shoulder-bag', 'adidas', 'originals', 'liberty-london', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Men's Eyewear Products
+   {
+     name: "Dunamis EVO L Sunglasses",
+     description: "Premium sports sunglasses with advanced lens technology for optimal performance. Lightweight frame with superior UV protection. Available in Purple, Blue, and Orange.",
+     price: 899000,
+     discountPrice: 799000,
+     categoryPath: ['Accessories', 'Men', 'Eyewear'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093467/Dunamis_EVO_L_Sunglasses_Blue_JK9720_01_hover_standard_qjenus.avif'],
+     sizes: [
+       { sku: '1234568710', size: 'S', stock: 12, color: 'Purple' },
+       { sku: '1234568711', size: 'M', stock: 18, color: 'Purple' },
+       { sku: '1234568712', size: 'L', stock: 12, color: 'Purple' },
+       { sku: '1234568713', size: 'S', stock: 15, color: 'Blue' },
+       { sku: '1234568714', size: 'M', stock: 22, color: 'Blue' },
+       { sku: '1234568715', size: 'L', stock: 15, color: 'Blue' },
+       { sku: '1234568716', size: 'S', stock: 10, color: 'Orange' },
+       { sku: '1234568717', size: 'M', stock: 15, color: 'Orange' },
+       { sku: '1234568718', size: 'L', stock: 10, color: 'Orange' }
+     ],
+     tags: ['sunglasses', 'adidas', 'dunamis', 'evo-l', 'sports', 'men', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Originals Sunglasses OR0132",
+     description: "Classic design sunglasses with timeless appeal. High-quality materials and comfortable fit for everyday wear. Available in Stone Black, Red, and Black.",
+     price: 699000,
+     discountPrice: 599000,
+     categoryPath: ['Accessories', 'Men', 'Eyewear'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093470/Originals_Sunglasses_OR0132_Stone_Black_JK9816_01_hover_standard_tevixg.avif'],
+     sizes: [
+       { sku: '1234568719', size: 'S', stock: 12, color: 'Stone Black' },
+       { sku: '1234568720', size: 'M', stock: 18, color: 'Stone Black' },
+       { sku: '1234568721', size: 'L', stock: 12, color: 'Stone Black' },
+       { sku: '1234568722', size: 'S', stock: 10, color: 'Red' },
+       { sku: '1234568723', size: 'M', stock: 15, color: 'Red' },
+       { sku: '1234568724', size: 'L', stock: 10, color: 'Red' },
+       { sku: '1234568725', size: 'S', stock: 15, color: 'Black' },
+       { sku: '1234568726', size: 'M', stock: 22, color: 'Black' },
+       { sku: '1234568727', size: 'L', stock: 15, color: 'Black' }
+     ],
+     tags: ['sunglasses', 'adidas', 'originals', 'or0132', 'classic', 'men', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Sport Sunglasses adidas DUNAMIS",
+     description: "High-performance sports sunglasses designed for athletes. Advanced lens technology with superior protection and comfort. Available in Black, Antique Black, and Antique Rainbow.",
+     price: 999000,
+     discountPrice: 899000,
+     categoryPath: ['Accessories', 'Men', 'Eyewear'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753094816/Sport_Sunglasses_adidas_DUNAMIS_Antique_Black_IV1298_01_hover_standard_whlnza.avif'],
+     sizes: [
+       { sku: '1234568728', size: 'S', stock: 10, color: 'Black' },
+       { sku: '1234568729', size: 'M', stock: 15, color: 'Black' },
+       { sku: '1234568730', size: 'L', stock: 10, color: 'Black' },
+       { sku: '1234568731', size: 'S', stock: 12, color: 'Antique Black' },
+       { sku: '1234568732', size: 'M', stock: 18, color: 'Antique Black' },
+       { sku: '1234568733', size: 'L', stock: 12, color: 'Antique Black' },
+       { sku: '1234568734', size: 'S', stock: 8, color: 'Antique Rainbow' },
+       { sku: '1234568735', size: 'M', stock: 12, color: 'Antique Rainbow' },
+       { sku: '1234568736', size: 'L', stock: 8, color: 'Antique Rainbow' }
+     ],
+     tags: ['sunglasses', 'adidas', 'dunamis', 'sport', 'performance', 'men', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Women's Eyewear Products
+   {
+     name: "Dunamis EVO L Sunglasses",
+     description: "Premium sports sunglasses with advanced lens technology for optimal performance. Lightweight frame with superior UV protection. Available in Purple, Blue, and Orange.",
+     price: 899000,
+     discountPrice: 799000,
+     categoryPath: ['Accessories', 'Women', 'Eyewear'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093467/Dunamis_EVO_L_Sunglasses_Blue_JK9720_01_hover_standard_qjenus.avif'],
+     sizes: [
+       { sku: '1234568737', size: 'XS', stock: 10, color: 'Purple' },
+       { sku: '1234568738', size: 'S', stock: 15, color: 'Purple' },
+       { sku: '1234568739', size: 'M', stock: 12, color: 'Purple' },
+       { sku: '1234568740', size: 'S', stock: 12, color: 'Blue' },
+       { sku: '1234568741', size: 'M', stock: 18, color: 'Blue' },
+       { sku: '1234568742', size: 'L', stock: 12, color: 'Blue' },
+       { sku: '1234568743', size: 'XS', stock: 8, color: 'Orange' },
+       { sku: '1234568744', size: 'S', stock: 12, color: 'Orange' },
+       { sku: '1234568745', size: 'M', stock: 10, color: 'Orange' }
+     ],
+     tags: ['sunglasses', 'adidas', 'dunamis', 'evo-l', 'sports', 'women', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Originals Sunglasses OR0132",
+     description: "Classic design sunglasses with timeless appeal. High-quality materials and comfortable fit for everyday wear. Available in Stone Black, Red, and Black.",
+     price: 699000,
+     discountPrice: 599000,
+     categoryPath: ['Accessories', 'Women', 'Eyewear'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093470/Originals_Sunglasses_OR0132_Stone_Black_JK9816_01_hover_standard_tevixg.avif'],
+     sizes: [
+       { sku: '1234568746', size: 'XS', stock: 10, color: 'Stone Black' },
+       { sku: '1234568747', size: 'S', stock: 15, color: 'Stone Black' },
+       { sku: '1234568748', size: 'M', stock: 12, color: 'Stone Black' },
+       { sku: '1234568749', size: 'XS', stock: 8, color: 'Red' },
+       { sku: '1234568750', size: 'S', stock: 12, color: 'Red' },
+       { sku: '1234568751', size: 'M', stock: 10, color: 'Red' },
+       { sku: '1234568752', size: 'XS', stock: 12, color: 'Black' },
+       { sku: '1234568753', size: 'S', stock: 18, color: 'Black' },
+       { sku: '1234568754', size: 'M', stock: 12, color: 'Black' }
+     ],
+     tags: ['sunglasses', 'adidas', 'originals', 'or0132', 'classic', 'women', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Sport Sunglasses adidas DUNAMIS",
+     description: "High-performance sports sunglasses designed for athletes. Advanced lens technology with superior protection and comfort. Available in Black, Antique Black, and Antique Rainbow.",
+     price: 999000,
+     discountPrice: 899000,
+     categoryPath: ['Accessories', 'Women', 'Eyewear'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753094816/Sport_Sunglasses_adidas_DUNAMIS_Antique_Black_IV1298_01_hover_standard_whlnza.avif'],
+     sizes: [
+       { sku: '1234568755', size: 'XS', stock: 8, color: 'Black' },
+       { sku: '1234568756', size: 'S', stock: 12, color: 'Black' },
+       { sku: '1234568757', size: 'M', stock: 10, color: 'Black' },
+       { sku: '1234568758', size: 'XS', stock: 10, color: 'Antique Black' },
+       { sku: '1234568759', size: 'S', stock: 15, color: 'Antique Black' },
+       { sku: '1234568760', size: 'M', stock: 12, color: 'Antique Black' },
+       { sku: '1234568761', size: 'XS', stock: 6, color: 'Antique Rainbow' },
+       { sku: '1234568762', size: 'S', stock: 10, color: 'Antique Rainbow' },
+       { sku: '1234568763', size: 'M', stock: 8, color: 'Antique Rainbow' }
+     ],
+     tags: ['sunglasses', 'adidas', 'dunamis', 'sport', 'performance', 'women', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Men's Hats Products
+   {
+     name: "Adicolor Classic Trefoil Baseball Cap",
+     description: "Classic baseball cap featuring the iconic Trefoil logo. Comfortable fit with adjustable strap for perfect sizing. Available in Blue, Black, White, and Grey.",
+     price: 399000,
+     discountPrice: 359000,
+     categoryPath: ['Accessories', 'Men', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093474/Adicolor_Classic_Trefoil_Baseball_Cap_Blue_JV7389_01_00_standard_bwbuwr.avif'],
+     sizes: [
+       { sku: '1234568764', size: 'S', stock: 15, color: 'Blue' },
+       { sku: '1234568765', size: 'M', stock: 20, color: 'Blue' },
+       { sku: '1234568766', size: 'L', stock: 15, color: 'Blue' },
+       { sku: '1234568767', size: 'XL', stock: 10, color: 'Blue' },
+       { sku: '1234568768', size: 'S', stock: 18, color: 'Black' },
+       { sku: '1234568769', size: 'M', stock: 22, color: 'Black' },
+       { sku: '1234568770', size: 'L', stock: 18, color: 'Black' },
+       { sku: '1234568771', size: 'XL', stock: 12, color: 'Black' },
+       { sku: '1234568772', size: 'S', stock: 16, color: 'White' },
+       { sku: '1234568773', size: 'M', stock: 20, color: 'White' },
+       { sku: '1234568774', size: 'L', stock: 16, color: 'White' },
+       { sku: '1234568775', size: 'XL', stock: 10, color: 'White' },
+       { sku: '1234568776', size: 'S', stock: 12, color: 'Grey' },
+       { sku: '1234568777', size: 'M', stock: 16, color: 'Grey' },
+       { sku: '1234568778', size: 'L', stock: 12, color: 'Grey' },
+       { sku: '1234568779', size: 'XL', stock: 8, color: 'Grey' }
+     ],
+     tags: ['baseball-cap', 'adidas', 'adicolor', 'trefoil', 'classic', 'blue', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Golf Performance Crestable Cap",
+     description: "High-performance golf cap designed for comfort during play. Moisture-wicking technology with adjustable fit for optimal performance. Available in Black.",
+     price: 499000,
+     discountPrice: 449000,
+     categoryPath: ['Accessories', 'Men', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093480/Golf_Performance_Crestable_Cap_Black_IM9184_01_standard_pjozkk.avif'],
+     sizes: [
+       { sku: '1234568780', size: 'S', stock: 8, color: 'Black' },
+       { sku: '1234568781', size: 'M', stock: 12, color: 'Black' },
+       { sku: '1234568782', size: 'L', stock: 8, color: 'Black' },
+       { sku: '1234568783', size: 'XL', stock: 5, color: 'Black' }
+     ],
+     tags: ['golf-cap', 'adidas', 'performance', 'crestable', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Leopard Bucket Hat",
+     description: "Stylish bucket hat with leopard print design. Perfect for casual wear and outdoor activities. Available in Brown and Grey.",
+     price: 349000,
+     discountPrice: 299000,
+     categoryPath: ['Accessories', 'Men', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093478/Leopard_Bucket_Hat_Brown_JX0603_01_00_standard_xwd9y0.avif'],
+     sizes: [
+       { sku: '1234568784', size: 'S', stock: 10, color: 'Brown' },
+       { sku: '1234568785', size: 'M', stock: 15, color: 'Brown' },
+       { sku: '1234568786', size: 'L', stock: 10, color: 'Brown' },
+       { sku: '1234568787', size: 'XL', stock: 8, color: 'Brown' },
+       { sku: '1234568788', size: 'S', stock: 12, color: 'Grey' },
+       { sku: '1234568789', size: 'M', stock: 18, color: 'Grey' },
+       { sku: '1234568790', size: 'L', stock: 12, color: 'Grey' },
+       { sku: '1234568791', size: 'XL', stock: 10, color: 'Grey' }
+     ],
+     tags: ['bucket-hat', 'adidas', 'leopard', 'casual', 'men', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "TOUR BUCKET HAT",
+     description: "Tour-inspired bucket hat with comfortable fit and durable construction. Perfect for travel and outdoor adventures. Available in Blue, Brown, and Turquoise.",
+     price: 399000,
+     discountPrice: 359000,
+     categoryPath: ['Accessories', 'Men', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093476/TOUR_BUCKET_HAT_Blue_KQ7990_27_model_owq0x2.avif'],
+     sizes: [
+       { sku: '1234568792', size: 'S', stock: 12, color: 'Blue' },
+       { sku: '1234568793', size: 'M', stock: 18, color: 'Blue' },
+       { sku: '1234568794', size: 'L', stock: 12, color: 'Blue' },
+       { sku: '1234568795', size: 'XL', stock: 10, color: 'Blue' },
+       { sku: '1234568796', size: 'S', stock: 10, color: 'Brown' },
+       { sku: '1234568797', size: 'M', stock: 15, color: 'Brown' },
+       { sku: '1234568798', size: 'L', stock: 10, color: 'Brown' },
+       { sku: '1234568799', size: 'XL', stock: 8, color: 'Brown' },
+       { sku: '1234568800', size: 'S', stock: 8, color: 'Turquoise' },
+       { sku: '1234568801', size: 'M', stock: 12, color: 'Turquoise' },
+       { sku: '1234568802', size: 'L', stock: 8, color: 'Turquoise' },
+       { sku: '1234568803', size: 'XL', stock: 6, color: 'Turquoise' }
+     ],
+     tags: ['bucket-hat', 'adidas', 'tour', 'travel', 'men', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Women's Hats Products (same products for women)
+   {
+     name: "Leopard Bucket Hat",
+     description: "Stylish bucket hat with leopard print design. Perfect for casual wear and outdoor activities. Available in Brown and Grey.",
+     price: 349000,
+     discountPrice: 299000,
+     categoryPath: ['Women', 'Adidas', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093478/Leopard_Bucket_Hat_Brown_JX0603_01_00_standard_xwd9y0.avif'],
+     sizes: [
+       { sku: '1234568804', size: 'XS', stock: 8, color: 'Brown' },
+       { sku: '1234568805', size: 'S', stock: 12, color: 'Brown' },
+       { sku: '1234568806', size: 'M', stock: 10, color: 'Brown' },
+       { sku: '1234568807', size: 'L', stock: 8, color: 'Brown' },
+       { sku: '1234568808', size: 'XS', stock: 10, color: 'Grey' },
+       { sku: '1234568809', size: 'S', stock: 15, color: 'Grey' },
+       { sku: '1234568810', size: 'M', stock: 12, color: 'Grey' },
+       { sku: '1234568811', size: 'L', stock: 10, color: 'Grey' }
+     ],
+     tags: ['bucket-hat', 'adidas', 'leopard', 'casual', 'men', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "TOUR BUCKET HAT",
+     description: "Tour-inspired bucket hat with comfortable fit and durable construction. Perfect for travel and outdoor adventures. Available in Blue, Brown, and Turquoise.",
+     price: 399000,
+     discountPrice: 359000,
+     categoryPath: ['Women', 'Adidas', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093476/TOUR_BUCKET_HAT_Blue_KQ7990_27_model_owq0x2.avif'],
+     sizes: [
+       { sku: '1234568812', size: 'XS', stock: 10, color: 'Blue' },
+       { sku: '1234568813', size: 'S', stock: 15, color: 'Blue' },
+       { sku: '1234568814', size: 'M', stock: 12, color: 'Blue' },
+       { sku: '1234568815', size: 'L', stock: 10, color: 'Blue' },
+       { sku: '1234568816', size: 'XS', stock: 8, color: 'Brown' },
+       { sku: '1234568817', size: 'S', stock: 12, color: 'Brown' },
+       { sku: '1234568818', size: 'M', stock: 10, color: 'Brown' },
+       { sku: '1234568819', size: 'L', stock: 8, color: 'Brown' },
+       { sku: '1234568820', size: 'XS', stock: 6, color: 'Turquoise' },
+       { sku: '1234568821', size: 'S', stock: 10, color: 'Turquoise' },
+       { sku: '1234568822', size: 'M', stock: 8, color: 'Turquoise' },
+       { sku: '1234568823', size: 'L', stock: 6, color: 'Turquoise' }
+     ],
+     tags: ['bucket-hat', 'adidas', 'tour', 'travel', 'women', 'men'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Women's Bags Products
+   {
+     name: "adidas Originals x Liberty London Mini Bowling Bag",
+     description: "Exclusive collaboration mini bowling bag with Liberty London design. Compact and stylish with adjustable strap for versatile carrying options. Available in Multicolor.",
+     price: 1499000,
+     discountPrice: 1299000,
+     categoryPath: ['Accessories', 'Women', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093482/adidas_Originals_x_Liberty_London_Mini_Bowling_Bag_Multicolour_JD5423_01_00_standard_khmd75.avif'],
+     sizes: [
+       { sku: '1234568824', size: 'XS', stock: 4, color: 'Multicolor' },
+       { sku: '1234568825', size: 'S', stock: 6, color: 'Multicolor' },
+       { sku: '1234568826', size: 'M', stock: 4, color: 'Multicolor' },
+       { sku: '1234568827', size: 'L', stock: 3, color: 'Multicolor' }
+     ],
+     tags: ['bowling-bag', 'adidas', 'originals', 'liberty-london', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Animal-Print Classic Backpack",
+     description: "Stylish classic backpack with animal print design. Spacious interior with multiple compartments for organization. Perfect for everyday use and travel. Available in Blue.",
+     price: 899000,
+     discountPrice: 799000,
+     categoryPath: ['Accessories', 'Women', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093483/Animal-Print_Classic_Backpack_Blue_JG1109_01_00_standard_gq12kz.avif'],
+     sizes: [
+       { sku: '1234568828', size: 'XS', stock: 8, color: 'Blue' },
+       { sku: '1234568829', size: 'S', stock: 12, color: 'Blue' },
+       { sku: '1234568830', size: 'M', stock: 10, color: 'Blue' },
+       { sku: '1234568831', size: 'L', stock: 8, color: 'Blue' }
+     ],
+     tags: ['backpack', 'adidas', 'animal-print', 'classic', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Mini Airliner Bag",
+     description: "Compact mini airliner bag perfect for travel and daily use. Lightweight design with comfortable straps and organized interior. Available in Blue.",
+     price: 699000,
+     discountPrice: 599000,
+     categoryPath: ['Accessories', 'Women', 'Bags'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093478/Mini_Airliner_Bag_Blue_JC8302_01_00_standard_qv8iwo.avif'],
+     sizes: [
+       { sku: '1234568832', size: 'XS', stock: 10, color: 'Blue' },
+       { sku: '1234568833', size: 'S', stock: 15, color: 'Blue' },
+       { sku: '1234568834', size: 'M', stock: 12, color: 'Blue' },
+       { sku: '1234568835', size: 'L', stock: 10, color: 'Blue' }
+     ],
+     tags: ['airliner-bag', 'adidas', 'mini', 'travel', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Additional Women's Hats Products
+   {
+     name: "3-Stripes Swim Hijab",
+     description: "Comfortable swim hijab with 3-stripes design. Made with quick-drying fabric perfect for swimming and water activities. Available in Grey.",
+     price: 299000,
+     discountPrice: 259000,
+     categoryPath: ['Accessories', 'Women', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093484/3-Stripes_Swim_Hijab_Grey_JD2437_21_model_xgyshq.avif'],
+     sizes: [
+       { sku: '1234568836', size: 'XS', stock: 6, color: 'Grey' },
+       { sku: '1234568837', size: 'S', stock: 10, color: 'Grey' },
+       { sku: '1234568838', size: 'M', stock: 8, color: 'Grey' },
+       { sku: '1234568839', size: 'L', stock: 6, color: 'Grey' }
+     ],
+     tags: ['swim-hijab', 'adidas', '3-stripes', 'swimming', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "adidas Originals x Liberty London Baseball Cap",
+     description: "Exclusive collaboration baseball cap with Liberty London design. Classic fit with adjustable strap and premium materials. Available in Multicolor.",
+     price: 499000,
+     discountPrice: 449000,
+     categoryPath: ['Accessories', 'Women', 'Hats'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093485/adidas_Originals_x_Liberty_London_Baseball_Cap_Multicolour_JW8021_01_00_standard_jtmx8t.avif'],
+     sizes: [
+       { sku: '1234568840', size: 'XS', stock: 4, color: 'Multicolor' },
+       { sku: '1234568841', size: 'S', stock: 6, color: 'Multicolor' },
+       { sku: '1234568842', size: 'M', stock: 4, color: 'Multicolor' },
+       { sku: '1234568843', size: 'L', stock: 3, color: 'Multicolor' }
+     ],
+     tags: ['baseball-cap', 'adidas', 'originals', 'liberty-london', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   // Additional Women's Socks Products
+   {
+     name: "adidas Originals x Liberty London Crew Socks 2 Pairs",
+     description: "Exclusive collaboration crew socks with Liberty London design. Comfortable fit with premium materials and stylish pattern. Available in White.",
+     price: 399000,
+     discountPrice: 359000,
+     categoryPath: ['Accessories', 'Women', 'Socks'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753093485/adidas_Originals_x_Liberty_London_Crew_Socks_2_Pairs_White_JV7833_01_04_standard_fvwz06.avif'],
+     sizes: [
+       { sku: '1234568721', size: 'S', stock: 25, color: 'White' },
+       { sku: '1234568722', size: 'M', stock: 30, color: 'White' },
+       { sku: '1234568723', size: 'L', stock: 20, color: 'White' },
+       { sku: '1234568724', size: 'XL', stock: 15, color: 'White' }
+     ],
+     tags: ['crew-socks', 'adidas', 'originals', 'liberty-london', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   },
+   {
+     name: "Ruffle Socks 2 Pairs",
+     description: "Stylish ruffle socks with decorative design. Comfortable and fashionable for everyday wear. Available in White and Black & White.",
+     price: 299000,
+     discountPrice: 259000,
+     categoryPath: ['Accessories', 'Women', 'Socks'],
+     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1753095630/Ruffle_Socks_2_Pairs_Black_White_JD5623_01_04_standard_nhhpqf.avif'],
+     sizes: [
+       { sku: '1234568725', size: 'S', stock: 20, color: 'White' },
+       { sku: '1234568726', size: 'M', stock: 25, color: 'White' },
+       { sku: '1234568727', size: 'L', stock: 18, color: 'White' },
+       { sku: '1234568728', size: 'XL', stock: 12, color: 'White' },
+       { sku: '1234568729', size: 'S', stock: 20, color: 'Black & White' },
+       { sku: '1234568730', size: 'M', stock: 25, color: 'Black & White' },
+       { sku: '1234568731', size: 'L', stock: 18, color: 'Black & White' },
+       { sku: '1234568732', size: 'XL', stock: 12, color: 'Black & White' }
+     ],
+     tags: ['ruffle-socks', 'adidas', 'decorative', 'fashion', 'women'],
+     brand: 'Adidas',
+     status: 'active'
+   }
+ ]
 
 // Helper function to find category IDs by path
 const findCategoryIdsByPath = async (categoryPath: string[]) => {
