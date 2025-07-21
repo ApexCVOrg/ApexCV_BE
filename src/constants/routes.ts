@@ -1,5 +1,5 @@
 // API Base path
-export const API_BASE = '/api'
+export const API_BASE = '/api';
 
 // Auth routes
 export const AUTH_ROUTES = {
@@ -12,51 +12,51 @@ export const AUTH_ROUTES = {
   PROFILE: '/profile',
   ADMIN: '/admin',
   GOOGLE: {
-    CALLBACK: '/google/callback'
+    CALLBACK: '/google/callback',
   },
   FACEBOOK: {
-    CALLBACK: '/facebook/callback'
-  }
-} as const
+    CALLBACK: '/facebook/callback',
+  },
+} as const;
 
 // User routes
 export const USER_ROUTES = {
   BASE: '/users',
   PROFILE: '/profile',
   SETTINGS: '/settings',
-  FAVORITES: '/favorites'
-} as const
+  FAVORITES: '/favorites',
+} as const;
 
 // Category routes
 export const CATEGORY_ROUTES = {
   BASE: '/categories',
   LIST: '/',
-  DETAIL: '/:id'
-} as const
+  DETAIL: '/:id',
+} as const;
 
 // Product routes
 export const PRODUCT_ROUTES = {
   BASE: '/products',
   LIST: '/',
   DETAIL: '/:id',
-  SEARCH: '/search'
-} as const
+  SEARCH: '/search',
+} as const;
 
 // Review routes
 export const REVIEW_ROUTES = {
   BASE: '/reviews',
   LIST: '/',
   DETAIL: '/:id',
-  PRODUCT: '/product/:productId'
-} as const
+  PRODUCT: '/product/:productId',
+} as const;
 
 // Order routes
 export const ORDER_ROUTES = {
   BASE: '/orders',
   LIST: '/',
   DETAIL: '/:id',
-  USER: '/user/:userId'
-} as const
+  USER: '/user/:userId',
+} as const;
 
 // Cart routes
 export const CART_ROUTES = {
@@ -64,22 +64,22 @@ export const CART_ROUTES = {
   USER: '/user/:userId',
   ADD_ITEM: '/add',
   REMOVE_ITEM: '/remove',
-  UPDATE_ITEM: '/update'
-} as const
+  UPDATE_ITEM: '/update',
+} as const;
 
 // Brand routes
 export const BRAND_ROUTES = {
   BASE: '/brands',
   LIST: '/',
-  DETAIL: '/:id'
-} as const
+  DETAIL: '/:id',
+} as const;
 
 // Suggestions routes
 export const SUGGESTIONS_ROUTES = {
   BASE: '/suggestions',
   LIST: '/',
-  TREE: '/tree'
-} as const
+  TREE: '/tree',
+} as const;
 
 // Manager routes
 export const MANAGER_ROUTES = {
@@ -95,9 +95,9 @@ export const MANAGER_ROUTES = {
     SALES: '/stats/sales',
     USERS: '/stats/users',
     ORDERS: '/stats/orders',
-    CUSTOMERS: '/stats/customers'
-  }
-} as const
+    CUSTOMERS: '/stats/customers',
+  },
+} as const;
 export const ADMIN_ROUTES = {
   BASE: '/admin',
   DASHBOARD: '/dashboard',
@@ -111,23 +111,23 @@ export const ADMIN_ROUTES = {
     SALES: '/stats/sales',
     USERS: '/stats/users',
     ORDERS: '/stats/orders',
-    CUSTOMERS: '/stats/customers'
-  }
-} as const
+    CUSTOMERS: '/stats/customers',
+  },
+} as const;
 // Favorites routes
 export const FAVORITES_ROUTES = {
   BASE: '/favorites',
   LIST: '/',
   ADD: '/add/:productId',
   REMOVE: '/remove/:productId',
-  CHECK: '/check/:productId'
-} as const
+  CHECK: '/check/:productId',
+} as const;
 
 // Chat routes
 export const CHAT_ROUTES = {
   BASE: '/chat',
-  SEND: '/'
-} as const
+  SEND: '/',
+} as const;
 
 // Manager Chat routes
 export const MANAGER_CHAT_ROUTES = {
@@ -135,8 +135,8 @@ export const MANAGER_CHAT_ROUTES = {
   LIST: '/',
   MESSAGES: '/:chatId/messages',
   SEND_MESSAGE: '/:chatId/messages',
-  CLOSE: '/:chatId/close'
-} as const
+  CLOSE: '/:chatId/close',
+} as const;
 
 // User Chat routes
 export const USER_CHAT_ROUTES = {
@@ -144,13 +144,13 @@ export const USER_CHAT_ROUTES = {
   CREATE: '/',
   LIST: '/',
   MESSAGES: '/:chatId/messages',
-  SEND_MESSAGE: '/:chatId/messages'
-} as const
+  SEND_MESSAGE: '/:chatId/messages',
+} as const;
 
 export const APPLY_COUPON_ROUTES = {
-  BASE: '/apply-coupon'
+  BASE: '/apply-coupon',
 } as const;
 
 export const buildRoute = (base: string, path: string): string => {
-  return `${API_BASE}${base}${path}`
-}
+  return `${API_BASE}${base}${path}`;
+};

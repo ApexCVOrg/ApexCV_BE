@@ -5,6 +5,7 @@ Hướng dẫn sử dụng API chat cho User và Manager trong hệ thống Apex
 ## 🔐 Authentication
 
 Tất cả API đều yêu cầu JWT token trong header:
+
 ```
 Authorization: Bearer <your_jwt_token>
 ```
@@ -16,6 +17,7 @@ Authorization: Bearer <your_jwt_token>
 ### **Base URL:** `/api/user/chats`
 
 ### 1. **Tạo chat session mới**
+
 ```http
 POST /api/user/chats
 ```
@@ -23,6 +25,7 @@ POST /api/user/chats
 **Mục đích:** Tạo session chat mới cho user
 **Body:** Không cần body
 **Response:**
+
 ```json
 {
   "success": true,
@@ -37,18 +40,22 @@ POST /api/user/chats
 ```
 
 ### 2. **Gửi tin nhắn**
+
 ```http
 POST /api/user/chats/:chatId/messages
 ```
 
 **Mục đích:** User gửi tin nhắn đến manager
 **Body:**
+
 ```json
 {
   "content": "Xin chào, tôi cần hỗ trợ về sản phẩm"
 }
 ```
+
 **Response:**
+
 ```json
 {
   "success": true,
@@ -63,12 +70,14 @@ POST /api/user/chats/:chatId/messages
 ```
 
 ### 3. **Lấy tin nhắn**
+
 ```http
 GET /api/user/chats/:chatId/messages
 ```
 
 **Mục đích:** Xem toàn bộ tin nhắn trong session
 **Response:**
+
 ```json
 {
   "success": true,
@@ -90,15 +99,18 @@ GET /api/user/chats/:chatId/messages
 ```
 
 ### 4. **Lấy danh sách chat sessions**
+
 ```http
 GET /api/user/chats?page=1&limit=10
 ```
 
 **Mục đích:** Xem tất cả chat sessions của user
 **Query params:**
+
 - `page` (optional): Số trang (default: 1)
 - `limit` (optional): Số lượng per page (default: 10)
-**Response:**
+  **Response:**
+
 ```json
 {
   "success": true,
@@ -132,18 +144,21 @@ GET /api/user/chats?page=1&limit=10
 ### **Base URL:** `/api/manager/chats`
 
 ### 1. **Lấy danh sách chat sessions**
+
 ```http
 GET /api/manager/chats?page=1&limit=10&status=open
 ```
 
 **Mục đích:** Manager xem tất cả chat sessions
 **Query params:**
+
 - `page` (optional): Số trang (default: 1)
 - `limit` (optional): Số lượng per page (default: 10, max: 100)
 - `status` (optional): Filter theo status ('open' | 'closed')
-**Response:** Tương tự user API nhưng hiển thị tất cả sessions
+  **Response:** Tương tự user API nhưng hiển thị tất cả sessions
 
 ### 2. **Xem tin nhắn của session**
+
 ```http
 GET /api/manager/chats/:chatId/messages
 ```
@@ -152,18 +167,22 @@ GET /api/manager/chats/:chatId/messages
 **Response:** Tương tự user API
 
 ### 3. **Gửi tin nhắn trả lời**
+
 ```http
 POST /api/manager/chats/:chatId/messages
 ```
 
 **Mục đích:** Manager trả lời tin nhắn của user
 **Body:**
+
 ```json
 {
   "content": "Cảm ơn bạn đã liên hệ! Tôi sẽ hỗ trợ bạn ngay."
 }
 ```
+
 **Response:**
+
 ```json
 {
   "success": true,
@@ -178,18 +197,22 @@ POST /api/manager/chats/:chatId/messages
 ```
 
 ### 4. **Đóng chat session**
+
 ```http
 PATCH /api/manager/chats/:chatId/close
 ```
 
 **Mục đích:** Manager đóng session khi đã hỗ trợ xong
 **Body:**
+
 ```json
 {
   "note": "Khách hàng đã được hỗ trợ đầy đủ"
 }
 ```
+
 **Response:**
+
 ```json
 {
   "success": true,
@@ -202,56 +225,60 @@ PATCH /api/manager/chats/:chatId/close
 ## 🔄 **Luồng hoạt động hoàn chỉnh:**
 
 ### **Bước 1: User tạo chat session**
+
 ```javascript
 // User tạo session
 const response = await fetch('/api/user/chats', {
   method: 'POST',
-  headers: { 'Authorization': `Bearer ${userToken}` }
+  headers: { Authorization: `Bearer ${userToken}` },
 });
 const { chatId } = await response.json();
 ```
 
 ### **Bước 2: User gửi tin nhắn**
+
 ```javascript
 // User gửi tin nhắn
 await fetch(`/api/user/chats/${chatId}/messages`, {
   method: 'POST',
-  headers: { 
-    'Authorization': `Bearer ${userToken}`,
-    'Content-Type': 'application/json'
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+    'Content-Type': 'application/json',
   },
-  body: JSON.stringify({ content: 'Tôi cần hỗ trợ' })
+  body: JSON.stringify({ content: 'Tôi cần hỗ trợ' }),
 });
 ```
 
 ### **Bước 3: Manager xem và trả lời**
+
 ```javascript
 // Manager xem danh sách sessions
 const sessions = await fetch('/api/manager/chats?status=open', {
-  headers: { 'Authorization': `Bearer ${managerToken}` }
+  headers: { Authorization: `Bearer ${managerToken}` },
 });
 
 // Manager trả lời
 await fetch(`/api/manager/chats/${chatId}/messages`, {
   method: 'POST',
-  headers: { 
-    'Authorization': `Bearer ${managerToken}`,
-    'Content-Type': 'application/json'
+  headers: {
+    Authorization: `Bearer ${managerToken}`,
+    'Content-Type': 'application/json',
   },
-  body: JSON.stringify({ content: 'Tôi sẽ hỗ trợ bạn ngay' })
+  body: JSON.stringify({ content: 'Tôi sẽ hỗ trợ bạn ngay' }),
 });
 ```
 
 ### **Bước 4: Manager đóng session**
+
 ```javascript
 // Manager đóng session
 await fetch(`/api/manager/chats/${chatId}/close`, {
   method: 'PATCH',
-  headers: { 
-    'Authorization': `Bearer ${managerToken}`,
-    'Content-Type': 'application/json'
+  headers: {
+    Authorization: `Bearer ${managerToken}`,
+    'Content-Type': 'application/json',
   },
-  body: JSON.stringify({ note: 'Đã hỗ trợ xong' })
+  body: JSON.stringify({ note: 'Đã hỗ trợ xong' }),
 });
 ```
 
@@ -260,17 +287,20 @@ await fetch(`/api/manager/chats/${chatId}/close`, {
 ## ⚠️ **Lưu ý quan trọng:**
 
 ### **User APIs:**
+
 - ✅ Chỉ có thể truy cập chat sessions của mình
 - ✅ Chỉ có thể gửi tin nhắn vào session của mình
 - ✅ Không thể đóng session
 
 ### **Manager APIs:**
+
 - ✅ Có thể xem tất cả chat sessions
 - ✅ Có thể trả lời bất kỳ session nào
 - ✅ Có thể đóng session
 - ✅ Cần role = 'manager'
 
 ### **Bảo mật:**
+
 - 🔐 Tất cả API đều yêu cầu JWT token
 - 🔐 User chỉ có thể truy cập dữ liệu của mình
 - 🔐 Manager cần role phù hợp
@@ -281,6 +311,7 @@ await fetch(`/api/manager/chats/${chatId}/close`, {
 ## 🧪 **Test với cURL:**
 
 ### **User test:**
+
 ```bash
 # Tạo session
 curl -X POST http://localhost:5000/api/user/chats \
@@ -294,6 +325,7 @@ curl -X POST http://localhost:5000/api/user/chats/CHAT_ID/messages \
 ```
 
 ### **Manager test:**
+
 ```bash
 # Xem sessions
 curl -X GET http://localhost:5000/api/manager/chats \
@@ -304,4 +336,4 @@ curl -X POST http://localhost:5000/api/manager/chats/CHAT_ID/messages \
   -H "Authorization: Bearer MANAGER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"content": "Manager reply"}'
-``` 
+```

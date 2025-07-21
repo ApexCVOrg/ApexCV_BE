@@ -28,7 +28,9 @@ export const seedDocuments = async () => {
       await DocumentModel.create(doc);
       added++;
     }
-    console.log(`✅ Imported ${added} new documents. Skipped ${skipped} documents (already exist).`);
+    console.log(
+      `✅ Imported ${added} new documents. Skipped ${skipped} documents (already exist).`,
+    );
   } catch (error) {
     console.error('❌ Lỗi khi seed dữ liệu:', error);
     throw error;
@@ -41,7 +43,7 @@ if (require.main === module) {
     try {
       await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
       } as mongoose.ConnectOptions);
       console.log('MongoDB connected for seeding documents');
       await seedDocuments();

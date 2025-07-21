@@ -20,4 +20,4 @@ const AuditLogSchema = new Schema<IAuditLog>({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model<IAuditLog>('AuditLog', AuditLogSchema); 
+export default mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);

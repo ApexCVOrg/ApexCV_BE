@@ -1,4 +1,4 @@
-import 'express-session'
+import 'express-session';
 
 declare module 'express-session' {
   interface SessionData {
@@ -8,7 +8,7 @@ declare module 'express-session' {
 
 declare namespace Express {
   export interface Request {
-    userId?: string
-    user?: any
+    userId?: string;
+    user?: any;
   }
 }

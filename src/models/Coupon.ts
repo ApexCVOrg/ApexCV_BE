@@ -29,4 +29,4 @@ CouponSchema.pre('save', function (next) {
   next();
 });
 
-export const Coupon = mongoose.model<ICoupon>('Coupon', CouponSchema); 
+export const Coupon = mongoose.model<ICoupon>('Coupon', CouponSchema);

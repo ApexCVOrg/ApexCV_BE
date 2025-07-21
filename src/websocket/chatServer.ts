@@ -63,7 +63,7 @@ class ChatWebSocketServer {
       const client: ChatClient = {
         ws,
         userId: decoded.id,
-        role: decoded.role
+        role: decoded.role,
       };
 
       this.clients.set(clientId, client);
@@ -87,7 +87,6 @@ class ChatWebSocketServer {
         console.error('WebSocket error:', error);
         this.handleDisconnect(clientId);
       });
-
     } catch (error) {
       console.error('Connection error:', error);
       ws.close(1008, 'Invalid token');
@@ -138,12 +137,16 @@ class ChatWebSocketServer {
     this.handleMarkAsRead(clientId, chatId);
 
     // Notify other clients in the room
-    this.broadcastToRoom(chatId, {
-      type: 'join',
+    this.broadcastToRoom(
       chatId,
-      userId: client.userId,
-      role: client.role
-    }, clientId);
+      {
+        type: 'join',
+        chatId,
+        userId: client.userId,
+        role: client.role,
+      },
+      clientId,
+    );
   }
 
   private handleLeave(clientId: string, chatId: string) {
@@ -164,12 +167,16 @@ class ChatWebSocketServer {
     console.log(`Client ${clientId} left chat ${chatId}`);
 
     // Notify other clients in the room
-    this.broadcastToRoom(chatId, {
-      type: 'leave',
+    this.broadcastToRoom(
       chatId,
-      userId: client.userId,
-      role: client.role
-    }, clientId);
+      {
+        type: 'leave',
+        chatId,
+        userId: client.userId,
+        role: client.role,
+      },
+      clientId,
+    );
   }
 
   private async handleChatMessage(clientId: string, message: ChatMessage) {
@@ -179,9 +186,20 @@ class ChatWebSocketServer {
     try {
       // Save message to database
       if (client.role === 'manager') {
-        await chatService.sendManagerMessage(message.chatId, client.userId, message.content, message.attachments);
+        await chatService.sendManagerMessage(
+          message.chatId,
+          client.userId,
+          message.content,
+          message.attachments,
+        );
       } else {
-        await chatService.sendUserMessage(message.chatId, message.content, 'user', false, message.attachments);
+        await chatService.sendUserMessage(
+          message.chatId,
+          message.content,
+          'user',
+          false,
+          message.attachments,
+        );
       }
 
       // Broadcast to room
@@ -193,7 +211,7 @@ class ChatWebSocketServer {
         userId: client.userId,
         timestamp: new Date(),
         attachments: message.attachments,
-        messageType: message.messageType
+        messageType: message.messageType,
       });
 
       // If it's a user message, broadcast to all managers
@@ -206,10 +224,10 @@ class ChatWebSocketServer {
           userId: client.userId,
           timestamp: new Date(),
           attachments: message.attachments,
-          messageType: message.messageType
+          messageType: message.messageType,
         });
       }
-      
+
       // If it's a manager message, broadcast to the specific user
       if (client.role === 'manager') {
         this.broadcastToUser(message.chatId, {
@@ -220,13 +238,12 @@ class ChatWebSocketServer {
           userId: client.userId,
           timestamp: new Date(),
           attachments: message.attachments,
-          messageType: message.messageType
+          messageType: message.messageType,
         });
       }
 
       // Update unread count for all clients in the room
       this.updateUnreadCountForRoom(message.chatId);
-
     } catch (error) {
       console.error('Error handling chat message:', error);
     }
@@ -238,14 +255,18 @@ class ChatWebSocketServer {
 
     try {
       await chatService.markMessagesAsRead(chatId, client.userId);
-      
+
       // Notify other clients that messages were read
-      this.broadcastToRoom(chatId, {
-        type: 'read',
+      this.broadcastToRoom(
         chatId,
-        userId: client.userId,
-        role: client.role
-      }, clientId);
+        {
+          type: 'read',
+          chatId,
+          userId: client.userId,
+          role: client.role,
+        },
+        clientId,
+      );
 
       // Update unread count for all clients in the room
       this.updateUnreadCountForRoom(chatId);
@@ -260,7 +281,7 @@ class ChatWebSocketServer {
 
     try {
       let unreadCount: number;
-      
+
       if (client.role === 'manager') {
         unreadCount = await chatService.getManagerUnreadCount();
       } else {
@@ -270,7 +291,7 @@ class ChatWebSocketServer {
       // Send unread count to the specific client
       const message = {
         type: 'unread_count',
-        unreadCount
+        unreadCount,
       };
 
       if (client.ws.readyState === WebSocket.OPEN) {
@@ -285,7 +306,7 @@ class ChatWebSocketServer {
     const room = this.chatRooms.get(chatId);
     if (!room) return;
 
-    room.forEach(clientId => {
+    room.forEach((clientId) => {
       const client = this.clients.get(clientId);
       if (client && client.ws.readyState === WebSocket.OPEN) {
         this.handleUnreadCount(clientId);
@@ -298,13 +319,17 @@ class ChatWebSocketServer {
     if (!client) return;
 
     // Broadcast typing indicator to room
-    this.broadcastToRoom(message.chatId, {
-      type: 'typing',
-      chatId: message.chatId,
-      userId: client.userId,
-      role: client.role,
-      isTyping: true
-    }, clientId);
+    this.broadcastToRoom(
+      message.chatId,
+      {
+        type: 'typing',
+        chatId: message.chatId,
+        userId: client.userId,
+        role: client.role,
+        isTyping: true,
+      },
+      clientId,
+    );
   }
 
   private broadcastToRoom(chatId: string, message: any, excludeClientId?: string) {
@@ -313,7 +338,7 @@ class ChatWebSocketServer {
 
     const messageStr = JSON.stringify(message);
 
-    room.forEach(clientId => {
+    room.forEach((clientId) => {
       if (clientId === excludeClientId) return;
 
       const client = this.clients.get(clientId);
@@ -343,7 +368,7 @@ class ChatWebSocketServer {
       chatId,
       content: message,
       role: 'system',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -359,7 +384,7 @@ class ChatWebSocketServer {
   // Public method to broadcast to all managers
   public broadcastToAllManagers(message: any) {
     const messageStr = JSON.stringify(message);
-    
+
     this.clients.forEach((client, clientId) => {
       if (client.role === 'manager' && client.ws.readyState === WebSocket.OPEN) {
         client.ws.send(messageStr);
@@ -370,13 +395,17 @@ class ChatWebSocketServer {
   // Public method to broadcast to specific user
   public broadcastToUser(chatId: string, message: any) {
     const messageStr = JSON.stringify(message);
-    
+
     this.clients.forEach((client, clientId) => {
-      if (client.role === 'user' && client.chatId === chatId && client.ws.readyState === WebSocket.OPEN) {
+      if (
+        client.role === 'user' &&
+        client.chatId === chatId &&
+        client.ws.readyState === WebSocket.OPEN
+      ) {
         client.ws.send(messageStr);
       }
     });
   }
 }
 
-export default ChatWebSocketServer; 
+export default ChatWebSocketServer;

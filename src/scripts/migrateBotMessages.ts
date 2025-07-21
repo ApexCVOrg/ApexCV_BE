@@ -29,40 +29,39 @@ const migrateBotMessages = async () => {
       'Xin chào! Bạn cần hỗ trợ gì ạ?',
       'Chúng tôi sẵn sàng giúp đỡ',
       'Shop:',
-      'Bot:'
+      'Bot:',
     ];
 
     // Update messages that match bot patterns
     const updateResult = await ChatMessageModel.updateMany(
       {
         role: 'manager',
-        content: { $regex: botPatterns.join('|'), $options: 'i' }
+        content: { $regex: botPatterns.join('|'), $options: 'i' },
       },
       {
         $set: {
           role: 'bot',
-          isBotMessage: true
-        }
-      }
+          isBotMessage: true,
+        },
+      },
     );
 
     console.log(`Migration completed! Updated ${updateResult.modifiedCount} messages.`);
-    
+
     // Also update messages that have isBotMessage flag but wrong role
     const updateBotFlagResult = await ChatMessageModel.updateMany(
       {
         role: 'manager',
-        isBotMessage: true
+        isBotMessage: true,
       },
       {
         $set: {
-          role: 'bot'
-        }
-      }
+          role: 'bot',
+        },
+      },
     );
 
     console.log(`Updated ${updateBotFlagResult.modifiedCount} messages with isBotMessage flag.`);
-
   } catch (error) {
     console.error('Migration error:', error);
   } finally {
@@ -78,4 +77,4 @@ if (require.main === module) {
   });
 }
 
-export { migrateBotMessages }; 
+export { migrateBotMessages };

@@ -14,46 +14,46 @@ export interface IChatSession extends MongooseDocument {
 
 const ChatSessionSchema = new Schema<IChatSession>(
   {
-    chatId: { 
-      type: String, 
-      required: true, 
-      unique: true,
-      index: true 
-    },
-    userId: { 
-      type: String, 
+    chatId: {
+      type: String,
       required: true,
-      index: true 
+      unique: true,
+      index: true,
+    },
+    userId: {
+      type: String,
+      required: true,
+      index: true,
     },
     managerId: {
       type: String,
       required: false,
-      index: true
+      index: true,
     },
-    status: { 
-      type: String, 
-      enum: ['open', 'closed', 'manager_joined'], 
+    status: {
+      type: String,
+      enum: ['open', 'closed', 'manager_joined'],
       default: 'open',
-      index: true 
+      index: true,
     },
     unreadCount: {
       type: Number,
       default: 0,
-      min: 0
+      min: 0,
     },
     lastMessage: {
       type: String,
-      maxlength: 100
+      maxlength: 100,
     },
     lastMessageAt: {
-      type: Date
-    }
+      type: Date,
+    },
   },
-  { 
+  {
     timestamps: true,
     toJSON: { virtuals: true },
-    toObject: { virtuals: true }
-  }
+    toObject: { virtuals: true },
+  },
 );
 
 // Index cho tìm kiếm hiệu quả
@@ -61,4 +61,7 @@ ChatSessionSchema.index({ status: 1, updatedAt: -1 });
 ChatSessionSchema.index({ userId: 1, status: 1 });
 ChatSessionSchema.index({ unreadCount: 1, lastMessageAt: -1 });
 
-export const ChatSessionModel: Model<IChatSession> = mongoose.model<IChatSession>('ChatSession', ChatSessionSchema); 
+export const ChatSessionModel: Model<IChatSession> = mongoose.model<IChatSession>(
+  'ChatSession',
+  ChatSessionSchema,
+);

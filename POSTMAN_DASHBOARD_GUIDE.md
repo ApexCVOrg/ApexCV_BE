@@ -3,11 +3,13 @@
 ## 1. Thiết lập Postman
 
 ### Base URL
+
 ```
 http://localhost:3000/api/manager
 ```
 
 ### Headers cần thiết
+
 ```
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
@@ -16,9 +18,10 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## 2. Lấy JWT Token (Đăng nhập Manager)
 
 ### Request
+
 - **Method**: POST
 - **URL**: `http://localhost:3000/api/auth/login`
-- **Headers**: 
+- **Headers**:
   ```
   Content-Type: application/json
   ```
@@ -31,6 +34,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 ### Response
+
 ```json
 {
   "success": true,
@@ -48,6 +52,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## 3. Test các Dashboard Endpoints
 
 ### 3.1. Dashboard Summary
+
 - **Method**: GET
 - **URL**: `http://localhost:3000/api/manager/dashboard/summary`
 - **Headers**:
@@ -56,6 +61,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -96,6 +102,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 3.2. Low Stock Products
+
 - **Method**: GET
 - **URL**: `http://localhost:3000/api/manager/dashboard/low-stock`
 - **Headers**:
@@ -104,6 +111,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -123,6 +131,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 3.3. Today Sales
+
 - **Method**: GET
 - **URL**: `http://localhost:3000/api/manager/dashboard/today-sales`
 - **Headers**:
@@ -131,6 +140,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -143,6 +153,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 3.4. Order Statistics
+
 - **Method**: GET
 - **URL**: `http://localhost:3000/api/manager/dashboard/order-stats`
 - **Headers**:
@@ -151,6 +162,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -175,6 +187,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 3.5. Top Selling Products
+
 - **Method**: GET
 - **URL**: `http://localhost:3000/api/manager/dashboard/top-products`
 - **Query Parameters** (optional):
@@ -186,10 +199,12 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 **Example URLs:**
+
 - `http://localhost:3000/api/manager/dashboard/top-products`
 - `http://localhost:3000/api/manager/dashboard/top-products?limit=10&days=7`
 
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -210,6 +225,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 3.6. Sales Chart
+
 - **Method**: GET
 - **URL**: `http://localhost:3000/api/manager/dashboard/sales-chart`
 - **Query Parameters** (optional):
@@ -220,10 +236,12 @@ Authorization: Bearer YOUR_JWT_TOKEN
   ```
 
 **Example URLs:**
+
 - `http://localhost:3000/api/manager/dashboard/sales-chart`
 - `http://localhost:3000/api/manager/dashboard/sales-chart?months=6`
 
 **Expected Response:**
+
 ```json
 {
   "success": true,
@@ -248,6 +266,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## 4. Error Responses
 
 ### 401 Unauthorized (Không có token)
+
 ```json
 {
   "message": "Không tìm thấy token xác thực"
@@ -255,6 +274,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 403 Forbidden (Không đủ quyền)
+
 ```json
 {
   "message": "Không có quyền truy cập"
@@ -262,6 +282,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 500 Internal Server Error
+
 ```json
 {
   "success": false,
@@ -273,19 +294,23 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## 5. Test Cases
 
 ### Test Case 1: Không có token
+
 1. Gọi endpoint mà không có header Authorization
 2. Expected: 401 Unauthorized
 
 ### Test Case 2: Token không hợp lệ
+
 1. Gọi endpoint với token sai
 2. Expected: 401 Unauthorized
 
 ### Test Case 3: User không phải manager
+
 1. Đăng nhập với user thường
 2. Gọi dashboard endpoint
 3. Expected: 403 Forbidden
 
 ### Test Case 4: Token hết hạn
+
 1. Sử dụng token cũ
 2. Expected: 401 Unauthorized
 
@@ -299,10 +324,12 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## 7. Environment Setup trong Postman
 
 ### Variables
+
 - `base_url`: `http://localhost:3000/api/manager`
 - `auth_token`: Token từ login response
 
 ### Headers (Collection Level)
+
 ```
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
@@ -311,15 +338,19 @@ Content-Type: application/json
 ## 8. Troubleshooting
 
 ### Server không chạy
+
 ```bash
 npm run dev
 ```
 
 ### Database connection error
+
 Kiểm tra MongoDB connection string trong `.env`
 
 ### No data returned
+
 Đảm bảo có dữ liệu trong database (orders, products, users)
 
 ### CORS error
-Kiểm tra CORS configuration trong server 
+
+Kiểm tra CORS configuration trong server

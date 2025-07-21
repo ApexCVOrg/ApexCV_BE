@@ -13,20 +13,20 @@ async function migrateChatSchema() {
     // Update ChatSession documents to add new fields
     console.log('Updating ChatSession documents...');
     const updateResult = await ChatSessionModel.updateMany(
-      { 
+      {
         $or: [
           { unreadCount: { $exists: false } },
           { lastMessage: { $exists: false } },
-          { lastMessageAt: { $exists: false } }
-        ]
+          { lastMessageAt: { $exists: false } },
+        ],
       },
       {
         $set: {
           unreadCount: 0,
           lastMessage: '',
-          lastMessageAt: new Date()
-        }
-      }
+          lastMessageAt: new Date(),
+        },
+      },
     );
     console.log(`Updated ${updateResult.modifiedCount} ChatSession documents`);
 
@@ -34,19 +34,19 @@ async function migrateChatSchema() {
     console.log('Updating ChatMessage documents...');
     const messageUpdateResult = await ChatMessageModel.updateMany(
       { isRead: { $exists: false } },
-      { $set: { isRead: false } }
+      { $set: { isRead: false } },
     );
     console.log(`Updated ${messageUpdateResult.modifiedCount} ChatMessage documents`);
 
     // Calculate and update unreadCount and lastMessage for existing sessions
     console.log('Calculating unread counts and last messages...');
     const sessions = await ChatSessionModel.find({});
-    
+
     for (const session of sessions) {
       // Get last message
       const lastMessage = await ChatMessageModel.findOne(
         { chatId: session.chatId },
-        { content: 1, createdAt: 1 }
+        { content: 1, createdAt: 1 },
       )
         .sort({ createdAt: -1 })
         .lean();
@@ -54,7 +54,7 @@ async function migrateChatSchema() {
       // Count unread messages
       const unreadCount = await ChatMessageModel.countDocuments({
         chatId: session.chatId,
-        isRead: false
+        isRead: false,
       });
 
       // Update session
@@ -62,9 +62,13 @@ async function migrateChatSchema() {
         { chatId: session.chatId },
         {
           unreadCount,
-          lastMessage: lastMessage ? (lastMessage.content.length > 100 ? lastMessage.content.substring(0, 100) + '...' : lastMessage.content) : '',
-          lastMessageAt: lastMessage ? lastMessage.createdAt : session.updatedAt
-        }
+          lastMessage: lastMessage
+            ? lastMessage.content.length > 100
+              ? lastMessage.content.substring(0, 100) + '...'
+              : lastMessage.content
+            : '',
+          lastMessageAt: lastMessage ? lastMessage.createdAt : session.updatedAt,
+        },
       );
     }
 
@@ -82,4 +86,4 @@ if (require.main === module) {
   migrateChatSchema();
 }
 
-export default migrateChatSchema; 
+export default migrateChatSchema;

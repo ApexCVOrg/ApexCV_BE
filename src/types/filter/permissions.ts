@@ -26,7 +26,7 @@ export enum Permission {
   MANAGE_MANAGERS = 'manage_managers',
   VIEW_ALL_REPORTS = 'view_all_reports',
   MANAGE_SYSTEM = 'manage_system',
-  MANAGE_SETTINGS = 'manage_settings'
+  MANAGE_SETTINGS = 'manage_settings',
 }
 
 // Define base user permissions
@@ -40,8 +40,8 @@ const userPermissions = [
   Permission.MANAGE_CART,
   Permission.WRITE_REVIEW,
   Permission.VIEW_PRODUCTS,
-  Permission.VIEW_CATEGORIES
-]
+  Permission.VIEW_CATEGORIES,
+];
 
 // Define manager specific permissions
 const managerPermissions = [
@@ -51,8 +51,8 @@ const managerPermissions = [
   Permission.VIEW_REPORTS,
   Permission.MANAGE_INVENTORY,
   Permission.VIEW_ALL_USERS,
-  Permission.MANAGE_REVIEWS
-]
+  Permission.MANAGE_REVIEWS,
+];
 
 // Define admin specific permissions
 const adminPermissions = [
@@ -61,11 +61,11 @@ const adminPermissions = [
   Permission.MANAGE_MANAGERS,
   Permission.VIEW_ALL_REPORTS,
   Permission.MANAGE_SYSTEM,
-  Permission.MANAGE_SETTINGS
-]
+  Permission.MANAGE_SETTINGS,
+];
 
 export const RolePermissions = {
   user: userPermissions,
   manager: [...userPermissions, ...managerPermissions],
-  admin: [...userPermissions, ...managerPermissions, ...adminPermissions]
-}
+  admin: [...userPermissions, ...managerPermissions, ...adminPermissions],
+};

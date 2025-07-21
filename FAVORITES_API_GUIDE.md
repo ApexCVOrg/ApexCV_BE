@@ -1,15 +1,19 @@
 # Favorites API Guide - ApexCV Backend
 
 ## Tổng quan
+
 API Favorites cho phép người dùng quản lý danh sách sản phẩm yêu thích của họ. Tất cả endpoints đều yêu cầu authentication.
 
 ## Base URL
+
 ```
 http://localhost:5000/api/favorites
 ```
 
 ## Authentication
+
 Tất cả requests phải include JWT token trong header:
+
 ```
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
@@ -17,9 +21,11 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## Endpoints
 
 ### 1. Lấy danh sách favorites
+
 **GET** `/api/favorites`
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -62,12 +68,15 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 2. Thêm sản phẩm vào favorites
+
 **POST** `/api/favorites/add/:productId`
 
 **Parameters:**
+
 - `productId` (string): ID của sản phẩm
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -80,12 +89,15 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 3. Xóa sản phẩm khỏi favorites
+
 **DELETE** `/api/favorites/remove/:productId`
 
 **Parameters:**
+
 - `productId` (string): ID của sản phẩm
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -98,12 +110,15 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 4. Kiểm tra sản phẩm có trong favorites không
+
 **GET** `/api/favorites/check/:productId`
 
 **Parameters:**
+
 - `productId` (string): ID của sản phẩm
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -115,12 +130,15 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 5. Toggle favorite (thêm/xóa)
+
 **POST** `/api/favorites/toggle/:productId`
 
 **Parameters:**
+
 - `productId` (string): ID của sản phẩm
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -134,9 +152,11 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 6. Xóa tất cả favorites
+
 **DELETE** `/api/favorites/clear`
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -151,6 +171,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## Error Responses
 
 ### 401 Unauthorized
+
 ```json
 {
   "message": "Unauthorized"
@@ -158,6 +179,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 400 Bad Request
+
 ```json
 {
   "success": false,
@@ -166,6 +188,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 404 Not Found
+
 ```json
 {
   "message": "Product not found"
@@ -173,6 +196,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
 ### 500 Internal Server Error
+
 ```json
 {
   "message": "Internal server error"
@@ -182,12 +206,13 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## Sử dụng với Frontend
 
 ### 1. Hiển thị danh sách favorites
+
 ```javascript
 const getFavorites = async () => {
   const response = await fetch('/api/favorites', {
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
   const data = await response.json();
   return data.data.favorites;
@@ -195,13 +220,14 @@ const getFavorites = async () => {
 ```
 
 ### 2. Toggle favorite button
+
 ```javascript
 const toggleFavorite = async (productId) => {
   const response = await fetch(`/api/favorites/toggle/${productId}`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
   const data = await response.json();
   return data.data.isFavorite;
@@ -209,12 +235,13 @@ const toggleFavorite = async (productId) => {
 ```
 
 ### 3. Kiểm tra trạng thái favorite
+
 ```javascript
 const checkFavorite = async (productId) => {
   const response = await fetch(`/api/favorites/check/${productId}`, {
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
   const data = await response.json();
   return data.data.isFavorite;
@@ -228,6 +255,7 @@ Favorites cũng được embed trong User model và có thể truy cập qua:
 **GET** `/api/users/profile`
 
 Response sẽ include favorites array:
+
 ```json
 {
   "id": "user_id",
@@ -239,7 +267,8 @@ Response sẽ include favorites array:
 ```
 
 ## Notes
+
 - Tất cả endpoints đều yêu cầu user đã đăng nhập
 - Product ID phải là MongoDB ObjectId hợp lệ
 - Favorites được lưu trữ trong User document dưới dạng array
-- Populate tự động được thực hiện để lấy thông tin đầy đủ của sản phẩm 
+- Populate tự động được thực hiện để lấy thông tin đầy đủ của sản phẩm
