@@ -4,28 +4,28 @@ import connectDB from '../config/db.js'
 
 const usersData = [
   {
-    name: 'Test User 01',
+    fullName: 'Test User 01',
     email: 'user01@example.com',
     password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
     isAdmin: false,
     isManager: false
   },
   {
-    name: 'Test User 02',
+    fullName: 'Test User 02',
     email: 'user02@example.com',
     password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
     isAdmin: false,
     isManager: false
   },
   {
-    name: 'Admin User',
+    fullName: 'Admin User',
     email: 'admin@example.com',
     password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
     isAdmin: true,
     isManager: false
   },
   {
-    name: 'Manager User',
+    fullName: 'Manager User',
     email: 'manager@example.com',
     password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
     isAdmin: false,
