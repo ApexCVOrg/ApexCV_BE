@@ -33,91 +33,70 @@ const categoriesData = [
           name: "Nike",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Adidas",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Arsenal",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Juventus",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Bayern Munich",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Real Madrid",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Manchester United",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
       ],
@@ -128,92 +107,71 @@ const categoriesData = [
         {
           name: "Nike",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
+            "Sneakers",          
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Adidas",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Arsenal",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
+            "Sneakers",        
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Juventus",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
+            "Sneakers", 
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Bayern Munich",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
-            "Tracksuits",
+            "Sneakers",          
+            "Jersey",
+            "Shorts",      
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Real Madrid",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
-            "Tracksuits",
+            "Sneakers",        
+            "Jersey",
+            "Shorts",     
             "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
+            "Hoodies",  
           ],
         },
         {
           name: "Manchester United",
           subcategories: [
             "Sneakers",
-            "T-Shirts",
+            "Jersey",
             "Shorts",
-            "Tracksuits",
             "Jackets",
             "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
       ],
@@ -224,92 +182,54 @@ const categoriesData = [
         {
           name: "Nike",
           subcategories: [
-            "Sneakers",
             "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
+            "Backpacks",
           ],
         },
         {
           name: "Adidas",
           subcategories: [
-            "Sneakers",
             "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
+            "Smiley World",
           ],
         },
         {
           name: "Arsenal",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Juventus",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Bayern Munich",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Real Madrid",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
         {
           name: "Manchester United",
           subcategories: [
-            "Sneakers",
-            "T-Shirts",
-            "Shorts",
+            "Jersey",
             "Tracksuits",
-            "Jackets",
-            "Hoodies",
-            "Socks",
-            "Bags"
           ],
         },
       ],

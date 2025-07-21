@@ -11,15 +11,18 @@ const productsData = [
       'Official Arsenal FC home jersey for the 2024/25 season. Made with high-quality materials and featuring the latest team design.',
     price: 2199000,
     discountPrice: 1959000,
-    categoryPath: ['Men', 'Arsenal', 'T-Shirts'],
+    categoryPath: ['Men', 'Arsenal', 'Jersey'],
     images: ['Arsenal_Home_2425.avif'],
     sizes: [
-      { size: 'S', stock: 15 },
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 },
-      { size: 'XL', stock: 10 }
+      { sku: '1234567890', size: 'S', stock: 15, color: 'Red' },
+      { sku: '1234567891', size: 'M', stock: 25, color: 'Red' },
+      { sku: '1234567892', size: 'L', stock: 20, color: 'Red' },
+      { sku: '1234567893', size: 'XL', stock: 10, color: 'Red' },
+      { sku: '1234567894', size: 'S', stock: 15, color: 'White' },
+      { sku: '1234567895', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234567896', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234567897', size: 'XL', stock: 10, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['arsenal', 'jersey', 'football', 'home'],
     brand: 'Nike',
     status: 'active'
@@ -32,11 +35,13 @@ const productsData = [
     categoryPath: ['Men', 'Arsenal', 'Jackets'],
     images: ['Arsenal_Training_Jacket.avif'],
     sizes: [
-      { size: 'M', stock: 20 },
-      { size: 'L', stock: 15 },
-      { size: 'XL', stock: 10 }
+      { sku: '1234567898', size: 'M', stock: 20, color: 'Black' },
+      { sku: '1234567899', size: 'L', stock: 15, color: 'Black' },
+      { sku: '1234567900', size: 'XL', stock: 10, color: 'Black' },
+      { sku: '1234567901', size: 'M', stock: 20, color: 'Red' },
+      { sku: '1234567902', size: 'L', stock: 15, color: 'Red' },
+      { sku: '1234567903', size: 'XL', stock: 10, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['arsenal', 'jacket', 'training'],
     brand: 'Adidas',
     status: 'active'
@@ -47,15 +52,18 @@ const productsData = [
       "Official Arsenal FC women's home jersey for the 2024/25 season. Designed specifically for female fans.",
     price: 1999000,
     discountPrice: 1799000,
-    categoryPath: ['Women', 'Arsenal', 'T-Shirts'],
+    categoryPath: ['Women', 'Arsenal', 'Jersey'],
     images: ['Arsenal_24-25_Home_Jersey_Red.avif'],
     sizes: [
-      { size: 'XS', stock: 10 },
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 15 }
+      { sku: '1234567904', size: 'XS', stock: 10, color: 'Red' },
+      { sku: '1234567905', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234567906', size: 'M', stock: 25, color: 'Red' },
+      { sku: '1234567907', size: 'L', stock: 15, color: 'Red' },
+      { sku: '1234567908', size: 'XS', stock: 10, color: 'White' },
+      { sku: '1234567909', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234567910', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234567911', size: 'L', stock: 15, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['arsenal', 'jersey', 'football', 'home', 'women'],
     brand: 'Nike',
     status: 'active'
@@ -68,11 +76,13 @@ const productsData = [
     categoryPath: ['Women', 'Arsenal', 'Hoodies'],
     images: ['Arsenal_Women_Hoodie.jpg'],
     sizes: [
-      { size: 'S', stock: 15 },
-      { size: 'M', stock: 20 },
-      { size: 'L', stock: 15 }
+      { sku: '1234567912', size: 'S', stock: 15, color: 'Black' },
+      { sku: '1234567913', size: 'M', stock: 20, color: 'Black' },
+      { sku: '1234567914', size: 'L', stock: 15, color: 'Black' },
+      { sku: '1234567915', size: 'S', stock: 15, color: 'Red' },
+      { sku: '1234567916', size: 'M', stock: 20, color: 'Red' },
+      { sku: '1234567917', size: 'L', stock: 15, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['arsenal', 'hoodie', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -83,15 +93,18 @@ const productsData = [
       'Official Arsenal FC home jersey for kids, perfect for young fans. Made with comfortable, breathable materials.',
     price: 1599000,
     discountPrice: 1399000,
-    categoryPath: ["Kids", "Arsenal", "T-Shirts"],
+    categoryPath: ["Kids", "Arsenal", "Jersey"],
     images: ["Arsenal_Shirt.avif"],
     sizes: [
-      { size: '4-5Y', stock: 20 },
-      { size: '6-7Y', stock: 25 },
-      { size: '8-9Y', stock: 20 },
-      { size: '10-11Y', stock: 15 }
+      { sku: '1234567918', size: '4-5Y', stock: 20, color: 'Red' },
+      { sku: '1234567919', size: '6-7Y', stock: 25, color: 'Red' },
+      { sku: '1234567920', size: '8-9Y', stock: 20, color: 'Red' },
+      { sku: '1234567921', size: '10-11Y', stock: 15, color: 'Red' },
+      { sku: '1234567922', size: '4-5Y', stock: 20, color: 'White' },
+      { sku: '1234567923', size: '6-7Y', stock: 25, color: 'White' },
+      { sku: '1234567924', size: '8-9Y', stock: 20, color: 'White' },
+      { sku: '1234567925', size: '10-11Y', stock: 15, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['arsenal', 'jersey', 'football', 'home', 'kids'],
     brand: 'Nike',
     status: 'active'
@@ -104,12 +117,15 @@ const productsData = [
     categoryPath: ["Kids", "Arsenal", "Tracksuits"],
     images: ["Arsenal_Tracksuit.png"],
     sizes: [
-      { size: '4-5Y', stock: 15 },
-      { size: '6-7Y', stock: 20 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234567926', size: '4-5Y', stock: 15, color: 'Red' },
+      { sku: '1234567927', size: '6-7Y', stock: 20, color: 'Red' },
+      { sku: '1234567928', size: '8-9Y', stock: 25, color: 'Red' },
+      { sku: '1234567929', size: '10-11Y', stock: 20, color: 'Red' },
+      { sku: '1234567930', size: '4-5Y', stock: 15, color: 'White' },
+      { sku: '1234567931', size: '6-7Y', stock: 20, color: 'White' },
+      { sku: '1234567932', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234567933', size: '10-11Y', stock: 20, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['arsenal', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -121,15 +137,18 @@ const productsData = [
       'Official Real Madrid home jersey for the 2024/25 season. Premium quality with the latest team design.',
     price: 2299000,
     discountPrice: 1999000,
-    categoryPath: ['Men', 'Real Madrid', 'T-Shirts'],
+    categoryPath: ['Men', 'Real Madrid', 'Jersey'],
     images: ['Real_Madrid_24-25_Home.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234567934', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234567935', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234567936', size: 'L', stock: 25, color: 'White' },
+      { sku: '1234567937', size: 'XL', stock: 15, color: 'White' },
+      { sku: '1234567938', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234567939', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234567940', size: 'L', stock: 25, color: 'Black' },
+      { sku: '1234567941', size: 'XL', stock: 15, color: 'Black' }
     ],
-    colors: ['White', 'Black'],
     tags: ['real-madrid', 'jersey', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -142,11 +161,13 @@ const productsData = [
     categoryPath: ['Men', 'Real Madrid', 'Jackets'],
     images: ['Real_Madrid_Training_Jacket.avif'],
     sizes: [
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234567942', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234567943', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234567944', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234567945', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234567946', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234567947', size: 'XL', stock: 15, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['real-madrid', 'jacket', 'training'],
     brand: 'Adidas',
     status: 'active'
@@ -156,15 +177,18 @@ const productsData = [
     description: "Official Real Madrid women's home jersey for the 2024/25 season. Stylish and comfortable design.",
     price: 2099000,
     discountPrice: 1899000,
-    categoryPath: ['Women', 'Real Madrid', 'T-Shirts'],
+    categoryPath: ['Women', 'Real Madrid', 'Jersey'],
     images: ['Real_Madrid_24-25_Home_Jersey_White_IT5182_HM1.avif'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234567948', size: 'XS', stock: 15, color: 'White' },
+      { sku: '1234567949', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234567950', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234567951', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234567952', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234567953', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234567954', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234567955', size: 'L', stock: 20, color: 'Black' }
     ],
-    colors: ['White', 'Black'],
     tags: ['real-madrid', 'jersey', 'football', 'home', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -178,11 +202,13 @@ const productsData = [
     categoryPath: ['Women', 'Real Madrid', 'Hoodies'],
     images: ['Real_Madrid_Travel_Hoodie_Grey_GR4277.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 }
+      { sku: '1234567956', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234567957', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234567958', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234567959', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234567960', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234567961', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['real-madrid', 'hoodie', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -192,15 +218,18 @@ const productsData = [
     description: 'Official Real Madrid home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ["Kids", "Real Madrid", "T-Shirts"],
+    categoryPath: ["Kids", "Real Madrid", "Jersey"],
     images: ["Real_Madrid_24-25_Home_Jersey_Kids_White_IT5186_21_model.avif"],
     sizes: [
-      { size: '4-5Y', stock: 25 },
-      { size: '6-7Y', stock: 30 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234567962', size: '4-5Y', stock: 25, color: 'White' },
+      { sku: '1234567963', size: '6-7Y', stock: 30, color: 'White' },
+      { sku: '1234567964', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234567965', size: '10-11Y', stock: 20, color: 'White' },
+      { sku: '1234567966', size: '4-5Y', stock: 25, color: 'Black' },
+      { sku: '1234567967', size: '6-7Y', stock: 30, color: 'Black' },
+      { sku: '1234567968', size: '8-9Y', stock: 25, color: 'Black' },
+      { sku: '1234567969', size: '10-11Y', stock: 20, color: 'Black' }
     ],
-    colors: ['White', 'Black'],
     tags: ['real-madrid', 'jersey', 'football', 'home', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -213,12 +242,15 @@ const productsData = [
     categoryPath: ["Kids", "Real Madrid", "Tracksuits"],
     images: ["Real_Madrid_Tiro_24_Competition_Training_Tracksuit_Bottoms_Kids_Blue_IT5120_21_model.avif"],
     sizes: [
-      { size: '4-5Y', stock: 15 },
-      { size: '6-7Y', stock: 20 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234567970', size: '4-5Y', stock: 15, color: 'White' },
+      { sku: '1234567971', size: '6-7Y', stock: 20, color: 'White' },
+      { sku: '1234567972', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234567973', size: '10-11Y', stock: 20, color: 'White' },
+      { sku: '1234567974', size: '4-5Y', stock: 15, color: 'Black' },
+      { sku: '1234567975', size: '6-7Y', stock: 20, color: 'Black' },
+      { sku: '1234567976', size: '8-9Y', stock: 25, color: 'Black' },
+      { sku: '1234567977', size: '10-11Y', stock: 20, color: 'Black' }
     ],
-    colors: ['White', 'Black'],
     tags: ['real-madrid', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -230,15 +262,18 @@ const productsData = [
       'Official Bayern Munich home jersey for the 2024/25 season. Premium quality with the latest team design.',
     price: 2299000,
     discountPrice: 1999000,
-    categoryPath: ['Men', 'Bayern Munich', 'T-Shirts'],
+    categoryPath: ['Men', 'Bayern Munich', 'Jersey'],
     images: ['FC_Bayern_24-25_Home_Jersey.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234567978', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234567979', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234567980', size: 'L', stock: 25, color: 'Red' },
+      { sku: '1234567981', size: 'XL', stock: 15, color: 'Red' },
+      { sku: '1234567982', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234567983', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234567984', size: 'L', stock: 25, color: 'White' },
+      { sku: '1234567985', size: 'XL', stock: 15, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['bayern', 'jersey', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -251,11 +286,13 @@ const productsData = [
     categoryPath: ['Men', 'Bayern Munich', 'Jackets'],
     images: ['FC_Bayern_Anniversary_Track.avif'],
     sizes: [
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234568000', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568001', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568002', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568003', size: 'M', stock: 25, color: 'Red' },
+      { sku: '1234568004', size: 'L', stock: 20, color: 'Red' },
+      { sku: '1234568005', size: 'XL', stock: 15, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['bayern', 'jacket', 'training'],
     brand: 'Adidas',
     status: 'active'
@@ -265,15 +302,18 @@ const productsData = [
     description: "Official Bayern Munich women's home jersey for the 2024/25 season. Stylish and comfortable design.",
     price: 2099000,
     discountPrice: 1899000,
-    categoryPath: ["Women", "Bayern Munich", "T-Shirts"],
+    categoryPath: ["Women", "Bayern Munich", "Jersey"],
     images: ["FC_Bayern_Shirt.png"],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568006', size: 'XS', stock: 15, color: 'Red' },
+      { sku: '1234568007', size: 'S', stock: 25, color: 'Red' },
+      { sku: '1234568008', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568009', size: 'L', stock: 20, color: 'Red' },
+      { sku: '1234568010', size: 'XS', stock: 15, color: 'White' },
+      { sku: '1234568011', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568012', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568013', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['bayern', 'jersey', 'football', 'home', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -287,11 +327,13 @@ const productsData = [
     categoryPath: ['Women', 'Bayern Munich', 'Hoodies'],
     images: ['FC_Bayern_Hoodie.jpg'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568014', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568015', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568016', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568017', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234568018', size: 'M', stock: 25, color: 'Red' },
+      { sku: '1234568019', size: 'L', stock: 20, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['bayern', 'hoodie', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -301,15 +343,18 @@ const productsData = [
     description: 'Official Bayern Munich home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ["Kids", "Bayern Munich", "T-Shirts"],
+    categoryPath: ["Kids", "Bayern Munich", "Jersey"],
     images: ["FC_Bayern_24-25_Home_Jersey_Kids_Red_IT2249_21_model.avif"],
     sizes: [
-      { size: '4-5Y', stock: 25 },
-      { size: '6-7Y', stock: 30 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234568020', size: '4-5Y', stock: 25, color: 'Red' },
+      { sku: '1234568021', size: '6-7Y', stock: 30, color: 'Red' },
+      { sku: '1234568022', size: '8-9Y', stock: 25, color: 'Red' },
+      { sku: '1234568023', size: '10-11Y', stock: 20, color: 'Red' },
+      { sku: '1234568024', size: '4-5Y', stock: 25, color: 'White' },
+      { sku: '1234568025', size: '6-7Y', stock: 30, color: 'White' },
+      { sku: '1234568026', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234568027', size: '10-11Y', stock: 20, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['bayern', 'jersey', 'football', 'home', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -323,12 +368,15 @@ const productsData = [
     categoryPath: ["Kids", "Bayern Munich", "Tracksuits"],
     images: ["294607_adidas-bayern-munchen-trainingspak-1-4-zip-2024-2025-kids-bordeauxrood-wit-rood.jpg"],
     sizes: [
-      { size: '4-5Y', stock: 15 },
-      { size: '6-7Y', stock: 20 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234568028', size: '4-5Y', stock: 15, color: 'Red' },
+      { sku: '1234568029', size: '6-7Y', stock: 20, color: 'Red' },
+      { sku: '1234568030', size: '8-9Y', stock: 25, color: 'Red' },
+      { sku: '1234568031', size: '10-11Y', stock: 20, color: 'Red' },
+      { sku: '1234568032', size: '4-5Y', stock: 15, color: 'White' },
+      { sku: '1234568033', size: '6-7Y', stock: 20, color: 'White' },
+      { sku: '1234568034', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234568035', size: '10-11Y', stock: 20, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['bayern', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -339,15 +387,18 @@ const productsData = [
     description: 'Official Juventus home jersey for the 2024/25 season. Premium quality with the latest team design.',
     price: 2299000,
     discountPrice: 1999000,
-    categoryPath: ['Men', 'Juventus', 'T-Shirts'],
+    categoryPath: ['Men', 'Juventus', 'Jersey'],
     images: ['Ao_DJau_San_Nha_Juventus_25-26.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234568036', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568037', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568038', size: 'L', stock: 25, color: 'Black' },
+      { sku: '1234568039', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568040', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234568041', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568042', size: 'L', stock: 25, color: 'White' },
+      { sku: '1234568043', size: 'XL', stock: 15, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'jersey', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -360,11 +411,13 @@ const productsData = [
     categoryPath: ['Men', 'Juventus', 'Jackets'],
     images: ['juv_jacket.jpg'],
     sizes: [
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234568044', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568045', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568046', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568047', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234568048', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234568049', size: 'XL', stock: 15, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'jacket', 'training'],
     brand: 'Adidas',
     status: 'active'
@@ -374,15 +427,18 @@ const productsData = [
     description: "Official Juventus women's home jersey for the 2024/25 season. Stylish and comfortable design.",
     price: 2099000,
     discountPrice: 1899000,
-    categoryPath: ['Women', 'Juventus', 'T-Shirts'],
+    categoryPath: ['Women', 'Juventus', 'Jersey'],
     images: ['Juventus_Shirt.avif'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568050', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568051', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568052', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568053', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568054', size: 'XS', stock: 15, color: 'White' },
+      { sku: '1234568055', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568056', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568057', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'jersey', 'football', 'home', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -396,11 +452,13 @@ const productsData = [
     categoryPath: ['Women', 'Juventus', 'Hoodies'],
     images: ['Juventus_Hoodie.png'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568058', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568059', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568060', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568061', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234568062', size: 'M', stock: 25, color: 'White' },
+      { sku: '1234568063', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'hoodie', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -410,15 +468,18 @@ const productsData = [
     description: 'Official Juventus home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ["Kids", "Juventus", "T-Shirts"],
+    categoryPath: ["Kids", "Juventus", "Jersey"],
     images: ["Juventus_25-26_Shorts_Kids_Black_JN5221_21_model.avif"],
     sizes: [
-      { size: '4-5Y', stock: 25 },
-      { size: '6-7Y', stock: 30 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234568064', size: '4-5Y', stock: 25, color: 'Black' },
+      { sku: '1234568065', size: '6-7Y', stock: 30, color: 'Black' },
+      { sku: '1234568066', size: '8-9Y', stock: 25, color: 'Black' },
+      { sku: '1234568067', size: '10-11Y', stock: 20, color: 'Black' },
+      { sku: '1234568068', size: '4-5Y', stock: 25, color: 'White' },
+      { sku: '1234568069', size: '6-7Y', stock: 30, color: 'White' },
+      { sku: '1234568070', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234568071', size: '10-11Y', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'jersey', 'football', 'home', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -431,12 +492,15 @@ const productsData = [
     categoryPath: ["Kids", "Juventus", "Tracksuits"],
     images: ["Juventus_Tiro_24_Competition_Training_Tracksuit_Bottoms_Kids_Blue_IS5818_21_model.avif"],
     sizes: [
-      { size: '4-5Y', stock: 15 },
-      { size: '6-7Y', stock: 20 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234568072', size: '4-5Y', stock: 15, color: 'Black' },
+      { sku: '1234568073', size: '6-7Y', stock: 20, color: 'Black' },
+      { sku: '1234568074', size: '8-9Y', stock: 25, color: 'Black' },
+      { sku: '1234568075', size: '10-11Y', stock: 20, color: 'Black' },
+      { sku: '1234568076', size: '4-5Y', stock: 15, color: 'White' },
+      { sku: '1234568077', size: '6-7Y', stock: 20, color: 'White' },
+      { sku: '1234568078', size: '8-9Y', stock: 25, color: 'White' },
+      { sku: '1234568079', size: '10-11Y', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -448,15 +512,18 @@ const productsData = [
       'Official Manchester United home jersey for the 2024/25 season. Premium quality with the latest team design.',
     price: 2299000,
     discountPrice: 1999000,
-    categoryPath: ['Men', 'Manchester United', 'T-Shirts'],
+    categoryPath: ['Men', 'Manchester United', 'Jersey'],
     images: ['Manchester_United_24-25_Home_Jersey_Red.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234568080', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234568081', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568082', size: 'L', stock: 25, color: 'Red' },
+      { sku: '1234568083', size: 'XL', stock: 15, color: 'Red' },
+      { sku: '1234568084', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568085', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568086', size: 'L', stock: 25, color: 'Black' },
+      { sku: '1234568087', size: 'XL', stock: 15, color: 'Black' }
     ],
-    colors: ['Red', 'Black'],
     tags: ['manchester-united', 'jersey', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -469,11 +536,13 @@ const productsData = [
     categoryPath: ['Men', 'Manchester United', 'Jackets'],
     images: ['MU_Training_Jacket.avif'],
     sizes: [
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 },
-      { size: 'XL', stock: 15 }
+      { sku: '1234568088', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568089', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568090', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568091', size: 'M', stock: 25, color: 'Red' },
+      { sku: '1234568092', size: 'L', stock: 20, color: 'Red' },
+      { sku: '1234568093', size: 'XL', stock: 15, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['manchester-united', 'jacket', 'training'],
     brand: 'Adidas',
     status: 'active'
@@ -484,15 +553,18 @@ const productsData = [
       "Official Manchester United women's home jersey for the 2024/25 season. Stylish and comfortable design.",
     price: 2099000,
     discountPrice: 1899000,
-    categoryPath: ['Women', 'Manchester United', 'T-Shirts'],
+    categoryPath: ['Women', 'Manchester United', 'Jersey'],
     images: ['MU_Tshirt.avif'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568094', size: 'XS', stock: 15, color: 'Red' },
+      { sku: '1234568095', size: 'S', stock: 25, color: 'Red' },
+      { sku: '1234568096', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568097', size: 'L', stock: 20, color: 'Red' },
+      { sku: '1234568098', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568099', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568100', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568101', size: 'L', stock: 20, color: 'Black' }
     ],
-    colors: ['Red', 'Black'],
     tags: ['manchester-united', 'jersey', 'football', 'home', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -506,11 +578,13 @@ const productsData = [
     categoryPath: ['Women', 'Manchester United', 'Hoodies'],
     images: ['MU_Hoodie.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 25 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568102', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568103', size: 'M', stock: 25, color: 'Black' },
+      { sku: '1234568104', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568105', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234568106', size: 'M', stock: 25, color: 'Red' },
+      { sku: '1234568107', size: 'L', stock: 20, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['manchester-united', 'hoodie', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -520,15 +594,18 @@ const productsData = [
     description: 'Official Manchester United home jersey for kids. Perfect for young fans with comfortable materials.',
     price: 1699000,
     discountPrice: 1499000,
-    categoryPath: ["Kids", "Manchester United", "T-Shirts"],
+    categoryPath: ["Kids", "Manchester United", "Jersey"],
     images: ["MU_Shirt.avif"],
     sizes: [
-      { size: '4-5Y', stock: 25 },
-      { size: '6-7Y', stock: 30 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234568108', size: '4-5Y', stock: 25, color: 'Red' },
+      { sku: '1234568109', size: '6-7Y', stock: 30, color: 'Red' },
+      { sku: '1234568110', size: '8-9Y', stock: 25, color: 'Red' },
+      { sku: '1234568111', size: '10-11Y', stock: 20, color: 'Red' },
+      { sku: '1234568112', size: '4-5Y', stock: 25, color: 'Black' },
+      { sku: '1234568113', size: '6-7Y', stock: 30, color: 'Black' },
+      { sku: '1234568114', size: '8-9Y', stock: 25, color: 'Black' },
+      { sku: '1234568115', size: '10-11Y', stock: 20, color: 'Black' }
     ],
-    colors: ['Red', 'Black'],
     tags: ['manchester-united', 'jersey', 'football', 'home', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -542,12 +619,15 @@ const productsData = [
     categoryPath: ["Kids", "Manchester United", "Tracksuits"],
     images: ["Manchester_United_Track_Suit_Kids_Blue_IT4200_21_model.avif"],
     sizes: [
-      { size: '4-5Y', stock: 15 },
-      { size: '6-7Y', stock: 20 },
-      { size: '8-9Y', stock: 25 },
-      { size: '10-11Y', stock: 20 }
+      { sku: '1234568116', size: '4-5Y', stock: 15, color: 'Red' },
+      { sku: '1234568117', size: '6-7Y', stock: 20, color: 'Red' },
+      { sku: '1234568118', size: '8-9Y', stock: 25, color: 'Red' },
+      { sku: '1234568119', size: '10-11Y', stock: 20, color: 'Red' },
+      { sku: '1234568120', size: '4-5Y', stock: 15, color: 'Black' },
+      { sku: '1234568121', size: '6-7Y', stock: 20, color: 'Black' },
+      { sku: '1234568122', size: '8-9Y', stock: 25, color: 'Black' },
+      { sku: '1234568123', size: '10-11Y', stock: 20, color: 'Black' }
     ],
-    colors: ['Red', 'Black'],
     tags: ['manchester-united', 'tracksuit', 'training', 'kids'],
     brand: 'Adidas',
     status: 'active'
@@ -561,11 +641,13 @@ const productsData = [
     categoryPath: ['Men', 'Arsenal', 'Shorts'],
     images: ['Arsenal_24-25_Home_Shorts.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 }
+      { sku: '1234568124', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234568125', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568126', size: 'L', stock: 25, color: 'Red' },
+      { sku: '1234568127', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234568128', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568129', size: 'L', stock: 25, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['arsenal', 'shorts', 'football', 'home'],
     brand: 'Nike',
     status: 'active'
@@ -579,11 +661,13 @@ const productsData = [
     categoryPath: ['Men', 'Real Madrid', 'Shorts'],
     images: ['Real_Madrid_25-26_Home_Shorts.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 }
+      { sku: '1234568130', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234568131', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568132', size: 'L', stock: 25, color: 'White' },
+      { sku: '1234568133', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568134', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568135', size: 'L', stock: 25, color: 'Black' }
     ],
-    colors: ['White', 'Black'],
     tags: ['real-madrid', 'shorts', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -597,12 +681,15 @@ const productsData = [
     categoryPath: ['Women', 'Real Madrid', 'Shorts'],
     images: ['Real_Madrid_Short.jpg'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568136', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568137', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568138', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568139', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568140', size: 'XS', stock: 15, color: 'White' },
+      { sku: '1234568141', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568142', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568143', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['real-madrid', 'shorts', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -617,11 +704,13 @@ const productsData = [
     categoryPath: ['Men', 'Bayern Munich', 'Shorts'],
     images: ['FC_Bayern_24-25_Home_Shorts.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 }
+      { sku: '1234568144', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234568145', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568146', size: 'L', stock: 25, color: 'Red' },
+      { sku: '1234568147', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234568148', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568149', size: 'L', stock: 25, color: 'White' }
     ],
-    colors: ['Red', 'White'],
     tags: ['bayern', 'shorts', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -635,11 +724,13 @@ const productsData = [
     categoryPath: ['Men', 'Juventus', 'Shorts'],
     images: ['Juventus_25-26_Home_Shorts.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 }
+      { sku: '1234568150', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568151', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568152', size: 'L', stock: 25, color: 'Black' },
+      { sku: '1234568153', size: 'S', stock: 20, color: 'White' },
+      { sku: '1234568154', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568155', size: 'L', stock: 25, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'shorts', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -654,11 +745,13 @@ const productsData = [
     categoryPath: ['Men', 'Manchester United', 'Shorts'],
     images: ['Manchester_United_24-25_Home_Shorts.avif'],
     sizes: [
-      { size: 'S', stock: 20 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 25 }
+      { sku: '1234568156', size: 'S', stock: 20, color: 'Red' },
+      { sku: '1234568157', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568158', size: 'L', stock: 25, color: 'Red' },
+      { sku: '1234568159', size: 'S', stock: 20, color: 'Black' },
+      { sku: '1234568160', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568161', size: 'L', stock: 25, color: 'Black' }
     ],
-    colors: ['Red', 'Black'],
     tags: ['manchester-united', 'shorts', 'football', 'home'],
     brand: 'Adidas',
     status: 'active'
@@ -673,12 +766,15 @@ const productsData = [
     categoryPath: ['Women', 'Arsenal', 'Shorts'],
     images: ['Arsenal_Women_Short.avif'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568162', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568163', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568164', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568165', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568166', size: 'XS', stock: 15, color: 'Red' },
+      { sku: '1234568167', size: 'S', stock: 25, color: 'Red' },
+      { sku: '1234568168', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568169', size: 'L', stock: 20, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['arsenal', 'shorts', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -692,12 +788,15 @@ const productsData = [
     categoryPath: ['Women', 'Real Madrid', 'Shorts'],
     images: ['Real_Madrid_Short.jpg'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568170', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568171', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568172', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568173', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568174', size: 'XS', stock: 15, color: 'White' },
+      { sku: '1234568175', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568176', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568177', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['real-madrid', 'shorts', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -711,12 +810,15 @@ const productsData = [
     categoryPath: ["Women", "Bayern Munich", "Shorts"],
     images: ["FC_Bayern_Short.png"],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568178', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568179', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568180', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568181', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568182', size: 'XS', stock: 15, color: 'Red' },
+      { sku: '1234568183', size: 'S', stock: 25, color: 'Red' },
+      { sku: '1234568184', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568185', size: 'L', stock: 20, color: 'Red' }
     ],
-    colors: ['Black', 'Red'],
     tags: ['bayern', 'shorts', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -730,12 +832,15 @@ const productsData = [
     categoryPath: ['Women', 'Juventus', 'Shorts'],
     images: ['Juventus_Short.png'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568186', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568187', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568188', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568189', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568190', size: 'XS', stock: 15, color: 'White' },
+      { sku: '1234568191', size: 'S', stock: 25, color: 'White' },
+      { sku: '1234568192', size: 'M', stock: 30, color: 'White' },
+      { sku: '1234568193', size: 'L', stock: 20, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['juventus', 'shorts', 'training', 'women'],
     brand: 'Adidas',
     status: 'active'
@@ -749,12 +854,15 @@ const productsData = [
     categoryPath: ['Women', 'Manchester United', 'Shorts'],
     images: ['MU_Short.avif'],
     sizes: [
-      { size: 'XS', stock: 15 },
-      { size: 'S', stock: 25 },
-      { size: 'M', stock: 30 },
-      { size: 'L', stock: 20 }
+      { sku: '1234568194', size: 'XS', stock: 15, color: 'Black' },
+      { sku: '1234568195', size: 'S', stock: 25, color: 'Black' },
+      { sku: '1234568196', size: 'M', stock: 30, color: 'Black' },
+      { sku: '1234568197', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568198', size: 'XS', stock: 15, color: 'Red' },
+      { sku: '1234568199', size: 'S', stock: 25, color: 'Red' },
+      { sku: '1234568200', size: 'M', stock: 30, color: 'Red' },
+      { sku: '1234568201', size: 'L', stock: 20, color: 'Red' }
     ],
-    colors: ["Black", "Red"],
     tags: ["manchester-united", "shorts", "training", "women"],
     brand: "Adidas",
     status: "active"
@@ -768,12 +876,15 @@ const productsData = [
     categoryPath: ["Men", "Arsenal", "Sneakers"],
     images: ["Arsenal_Men's_Training_Shoes.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568202', size: "40", stock: 10, color: "Red" },
+      { sku: '1234568203', size: "41", stock: 15, color: "Red" },
+      { sku: '1234568204', size: "42", stock: 20, color: "Red" },
+      { sku: '1234568205', size: "43", stock: 15, color: "Red" },
+      { sku: '1234568206', size: "40", stock: 10, color: "White" },
+      { sku: '1234568207', size: "41", stock: 15, color: "White" },
+      { sku: '1234568208', size: "42", stock: 20, color: "White" },
+      { sku: '1234568209', size: "43", stock: 15, color: "White" }
     ],
-    colors: ["Red", "White"],
     tags: ["arsenal", "sneakers", "casual", "men"],
     brand: "Adidas",
     status: "active"
@@ -786,12 +897,15 @@ const productsData = [
     categoryPath: ["Men", "Real Madrid", "Sneakers"],
     images: ["Real_Madrid_Shoes_White.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568210', size: "40", stock: 10, color: "White" },
+      { sku: '1234568211', size: "41", stock: 15, color: "White" },
+      { sku: '1234568212', size: "42", stock: 20, color: "White" },
+      { sku: '1234568213', size: "43", stock: 15, color: "White" },
+      { sku: '1234568214', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568215', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568216', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568217', size: "43", stock: 15, color: "Black" }
     ],
-    colors: ["White", "Black"],
     tags: ["real-madrid", "sneakers", "casual", "men"],
     brand: "Adidas",
     status: "active"
@@ -804,12 +918,15 @@ const productsData = [
     categoryPath: ["Men", "Bayern Munich", "Sneakers"],
     images: ["FC_Bayern_Shoes.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568218', size: "40", stock: 10, color: "Red" },
+      { sku: '1234568219', size: "41", stock: 15, color: "Red" },
+      { sku: '1234568220', size: "42", stock: 20, color: "Red" },
+      { sku: '1234568221', size: "43", stock: 15, color: "Red" },
+      { sku: '1234568222', size: "40", stock: 10, color: "White" },
+      { sku: '1234568223', size: "41", stock: 15, color: "White" },
+      { sku: '1234568224', size: "42", stock: 20, color: "White" },
+      { sku: '1234568225', size: "43", stock: 15, color: "White" }
     ],
-    colors: ["Red", "White"],
     tags: ["bayern", "sneakers", "casual", "men"],
     brand: "Adidas",
     status: "active"
@@ -822,12 +939,15 @@ const productsData = [
     categoryPath: ["Men", "Juventus", "Sneakers"],
     images: ["gazelle-juventus-terrace-icons-shoes.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568226', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568227', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568228', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568229', size: "43", stock: 15, color: "Black" },
+      { sku: '1234568230', size: "40", stock: 10, color: "White" },
+      { sku: '1234568231', size: "41", stock: 15, color: "White" },
+      { sku: '1234568232', size: "42", stock: 20, color: "White" },
+      { sku: '1234568233', size: "43", stock: 15, color: "White" }
     ],
-    colors: ["Black", "White"],
     tags: ["juventus", "sneakers", "casual", "men"],
     brand: "Adidas",
     status: "active"
@@ -840,12 +960,15 @@ const productsData = [
     categoryPath: ["Men", "Manchester United", "Sneakers"],
     images: ["Samba_OG_Shoes_White_IG1025_01_00_standard.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568234', size: "40", stock: 10, color: "Red" },
+      { sku: '1234568235', size: "41", stock: 15, color: "Red" },
+      { sku: '1234568236', size: "42", stock: 20, color: "Red" },
+      { sku: '1234568237', size: "43", stock: 15, color: "Red" },
+      { sku: '1234568238', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568239', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568240', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568241', size: "43", stock: 15, color: "Black" }
     ],
-    colors: ["Red", "Black"],
     tags: ["manchester-united", "sneakers", "casual", "men"],
     brand: "Adidas",
     status: "active"
@@ -859,12 +982,15 @@ const productsData = [
     categoryPath: ["Women", "Arsenal", "Sneakers"],
     images: ["Gazelle_Arsenal_Terrace_Icons_Shoes_White.avif"],
     sizes: [
-      { size: '36', stock: 10 },
-      { size: '37', stock: 15 },
-      { size: '38', stock: 20 },
-      { size: '39', stock: 15 }
+      { sku: '1234568242', size: '36', stock: 10, color: "Red" },
+      { sku: '1234568243', size: '37', stock: 15, color: "Red" },
+      { sku: '1234568244', size: '38', stock: 20, color: "Red" },
+      { sku: '1234568245', size: '39', stock: 15, color: "Red" },
+      { sku: '1234568246', size: '36', stock: 10, color: "White" },
+      { sku: '1234568247', size: '37', stock: 15, color: "White" },
+      { sku: '1234568248', size: '38', stock: 20, color: "White" },
+      { sku: '1234568249', size: '39', stock: 15, color: "White" }
     ],
-    colors: ["Red", "White"],
     tags: ["arsenal", "sneakers", "casual", "women"],
     brand: "Adidas",
     status: "active"
@@ -877,12 +1003,15 @@ const productsData = [
     categoryPath: ["Women", "Real Madrid", "Sneakers"],
     images: ["Samba_Real_Madrid_Shoes_White_JQ4038_HM1.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568250', size: "36", stock: 10, color: "White" },
+      { sku: '1234568251', size: "37", stock: 15, color: "White" },
+      { sku: '1234568252', size: "38", stock: 20, color: "White" },
+      { sku: '1234568253', size: "39", stock: 15, color: "White" },
+      { sku: '1234568254', size: "36", stock: 10, color: "Black" },
+      { sku: '1234568255', size: "37", stock: 15, color: "Black" },
+      { sku: '1234568256', size: "38", stock: 20, color: "Black" },
+      { sku: '1234568257', size: "39", stock: 15, color: "Black" }
     ],
-    colors: ["White", "Black"],
     tags: ["real-madrid", "sneakers", "casual", "women"],
     brand: "Adidas",
     status: "active"
@@ -895,12 +1024,15 @@ const productsData = [
     categoryPath: ["Women", "Bayern Munich", "Sneakers"],
     images: ["Samba_FC_Bayern_Shoes_Red_JQ4039_HM1.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568258', size: "36", stock: 10, color: "Red" },
+      { sku: '1234568259', size: "37", stock: 15, color: "Red" },
+      { sku: '1234568260', size: "38", stock: 20, color: "Red" },
+      { sku: '1234568261', size: "39", stock: 15, color: "Red" },
+      { sku: '1234568262', size: "36", stock: 10, color: "White" },
+      { sku: '1234568263', size: "37", stock: 15, color: "White" },
+      { sku: '1234568264', size: "38", stock: 20, color: "White" },
+      { sku: '1234568265', size: "39", stock: 15, color: "White" }
     ],
-    colors: ["Red", "White"],
     tags: ["bayern", "sneakers", "casual", "women"],
     brand: "Adidas",
     status: "active"
@@ -913,12 +1045,15 @@ const productsData = [
     categoryPath: ["Women", "Juventus", "Sneakers"],
     images: ["Samba_Juventus_Shoes_Black_JQ4040_HM1.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568266', size: "36", stock: 10, color: "Black" },
+      { sku: '1234568267', size: "37", stock: 15, color: "Black" },
+      { sku: '1234568268', size: "38", stock: 20, color: "Black" },
+      { sku: '1234568269', size: "39", stock: 15, color: "Black" },
+      { sku: '1234568270', size: "36", stock: 10, color: "White" },
+      { sku: '1234568271', size: "37", stock: 15, color: "White" },
+      { sku: '1234568272', size: "38", stock: 20, color: "White" },
+      { sku: '1234568273', size: "39", stock: 15, color: "White" }
     ],
-    colors: ["Black", "White"],
     tags: ["juventus", "sneakers", "casual", "women"],
     brand: "Adidas",
     status: "active"
@@ -931,12 +1066,15 @@ const productsData = [
     categoryPath: ["Women", "Manchester United", "Sneakers"],
     images: ["Gazelle_Manchester_United_Terrace_Icons_Shoes_White_JS3040_HM1.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568274', size: "36", stock: 10, color: "Red" },
+      { sku: '1234568275', size: "37", stock: 15, color: "Red" },
+      { sku: '1234568276', size: "38", stock: 20, color: "Red" },
+      { sku: '1234568277', size: "39", stock: 15, color: "Red" },
+      { sku: '1234568278', size: "36", stock: 10, color: "Black" },
+      { sku: '1234568279', size: "37", stock: 15, color: "Black" },
+      { sku: '1234568280', size: "38", stock: 20, color: "Black" },
+      { sku: '1234568281', size: "39", stock: 15, color: "Black" }
     ],
-    colors: ["Red", "Black"],
     tags: ["manchester-united", "sneakers", "casual", "women"],
     brand: "Adidas",
     status: "active"
@@ -950,11 +1088,16 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Samba"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752479523/Giay_Samba_OG_trang_B75806_01_00_standard_ts41vx.avif'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568282', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568283', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568284', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568285', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568286', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568287', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568288', size: '40', stock: 10, color: 'Grey' },
+      { sku: '1234568289', size: '41', stock: 10, color: 'Grey' },
+      { sku: '1234568290', size: '42', stock: 10, color: 'Grey' }
     ],
-    colors: ['White', 'Black', 'Grey'],
     tags: ['originals', 'OG'],
     brand: 'Adidas',
     status: 'active'
@@ -967,11 +1110,13 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Samba"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481341/Samba_Jp_Shoes_White_JR0964_01_00_standard_j1mljy.avif'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568291', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568292', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568293', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568294', size: '40', stock: 10, color: 'Green' },
+      { sku: '1234568295', size: '41', stock: 10, color: 'Green' },
+      { sku: '1234568296', size: '42', stock: 10, color: 'Green' }
     ],
-    colors: ['White', 'Green'],
     tags: ['originals', 'JP'],
     brand: 'Adidas',
     status: 'active'
@@ -984,11 +1129,16 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Samba"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481428/Samba_OG_W_Cream_White_ID0478_01_standard_yq6dvh.avif'],
     sizes: [
-      { size: '36', stock: 10 },
-      { size: '37', stock: 10 },
-      { size: '38', stock: 10 }
+      { sku: '1234568297', size: '36', stock: 10, color: 'Black' },
+      { sku: '1234568298', size: '37', stock: 10, color: 'Black' },
+      { sku: '1234568299', size: '38', stock: 10, color: 'Black' },
+      { sku: '1234568300', size: '36', stock: 10, color: 'White' },
+      { sku: '1234568301', size: '37', stock: 10, color: 'White' },
+      { sku: '1234568302', size: '38', stock: 10, color: 'White' },
+      { sku: '1234568303', size: '36', stock: 10, color: 'Beige' },
+      { sku: '1234568304', size: '37', stock: 10, color: 'Beige' },
+      { sku: '1234568305', size: '38', stock: 10, color: 'Beige' }
     ],
-    colors: ['Black', 'White', 'Beige'],
     tags: ['originals', 'W'],
     brand: 'Adidas',
     status: 'active'
@@ -1001,11 +1151,13 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Samba"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481448/Samba_LT_Shoes_Black_IG2010_01_standard_lftp7l.avif'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568306', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568307', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568308', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568309', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568310', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568311', size: '42', stock: 10, color: 'White' }
     ],
-    colors: ['Black', 'White'],
     tags: ['originals', 'LT'],
     brand: 'Adidas',
     status: 'active'
@@ -1019,12 +1171,15 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Superstar"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481685/Superstar_82_Shoes_Black_JI2026_01_standard_vk2bpv.avif'],
     sizes: [
-      { size: '40', stock: 15 },
-      { size: '41', stock: 20 },
-      { size: '42', stock: 25 },
-      { size: '43', stock: 15 }
+      { sku: '1234568312', size: '40', stock: 15, color: 'White' },
+      { sku: '1234568313', size: '41', stock: 20, color: 'White' },
+      { sku: '1234568314', size: '42', stock: 25, color: 'White' },
+      { sku: '1234568315', size: '43', stock: 15, color: 'White' },
+      { sku: '1234568316', size: '40', stock: 15, color: 'Black' },
+      { sku: '1234568317', size: '41', stock: 20, color: 'Black' },
+      { sku: '1234568318', size: '42', stock: 25, color: 'Black' },
+      { sku: '1234568319', size: '43', stock: 15, color: 'Black' }
     ],
-    colors: ['White', 'Black'],
     tags: ['shoes', 'superstar', '82'],
     brand: 'Adidas',
     status: 'active'
@@ -1037,12 +1192,19 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Superstar"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481696/Superstar_Vintage_Shoes_White_JQ3254_01_00_standard_fvo24u.avif'],
     sizes: [
-      { size: '40', stock: 12 },
-      { size: '41', stock: 18 },
-      { size: '42', stock: 22 },
-      { size: '43', stock: 12 }
+      { sku: '1234568320', size: '40', stock: 12, color: 'White' },
+      { sku: '1234568321', size: '41', stock: 18, color: 'White' },
+      { sku: '1234568322', size: '42', stock: 22, color: 'White' },
+      { sku: '1234568323', size: '43', stock: 12, color: 'White' },
+      { sku: '1234568324', size: '40', stock: 12, color: 'Black' },
+      { sku: '1234568325', size: '41', stock: 18, color: 'Black' },
+      { sku: '1234568326', size: '42', stock: 22, color: 'Black' },
+      { sku: '1234568327', size: '43', stock: 12, color: 'Black' },
+      { sku: '1234568328', size: '40', stock: 12, color: 'Navy' },
+      { sku: '1234568329', size: '41', stock: 18, color: 'Navy' },
+      { sku: '1234568330', size: '42', stock: 22, color: 'Navy' },
+      { sku: '1234568331', size: '43', stock: 12, color: 'Navy' }
     ],
-    colors: ['White', 'Black', 'Navy'],
     tags: ['shoes', 'superstar', 'vintage'],
     brand: 'Adidas',
     status: 'active'
@@ -1055,12 +1217,19 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Superstar"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481691/SUPERSTAR_II_Green_JI3076_01_00_standard_hpveet.avif'],
     sizes: [
-      { size: '40', stock: 14 },
-      { size: '41', stock: 19 },
-      { size: '42', stock: 24 },
-      { size: '43', stock: 14 }
+      { sku: '1234568332', size: '40', stock: 14, color: 'White' },
+      { sku: '1234568333', size: '41', stock: 19, color: 'White' },
+      { sku: '1234568334', size: '42', stock: 24, color: 'White' },
+      { sku: '1234568335', size: '43', stock: 14, color: 'White' },
+      { sku: '1234568336', size: '40', stock: 14, color: 'Black' },
+      { sku: '1234568337', size: '41', stock: 19, color: 'Black' },
+      { sku: '1234568338', size: '42', stock: 24, color: 'Black' },
+      { sku: '1234568339', size: '43', stock: 14, color: 'Black' },
+      { sku: '1234568340', size: '40', stock: 14, color: 'Red' },
+      { sku: '1234568341', size: '41', stock: 19, color: 'Red' },
+      { sku: '1234568342', size: '42', stock: 24, color: 'Red' },
+      { sku: '1234568343', size: '43', stock: 14, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['shoes', 'superstar', 'II'],
     brand: 'Adidas',
     status: 'active'
@@ -1073,12 +1242,19 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Superstar"],
     images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481702/Superstar_Shoes_White_IG9367_01_standard_tfdpml.avif'],
     sizes: [
-      { size: '40', stock: 16 },
-      { size: '41', stock: 21 },
-      { size: '42', stock: 26 },
-      { size: '43', stock: 16 }
+      { sku: '1234568344', size: '40', stock: 16, color: 'White' },
+      { sku: '1234568345', size: '41', stock: 21, color: 'White' },
+      { sku: '1234568346', size: '42', stock: 26, color: 'White' },
+      { sku: '1234568347', size: '43', stock: 16, color: 'White' },
+      { sku: '1234568348', size: '40', stock: 16, color: 'Black' },
+      { sku: '1234568349', size: '41', stock: 21, color: 'Black' },
+      { sku: '1234568350', size: '42', stock: 26, color: 'Black' },
+      { sku: '1234568351', size: '43', stock: 16, color: 'Black' },
+      { sku: '1234568352', size: '40', stock: 16, color: 'Green' },
+      { sku: '1234568353', size: '41', stock: 21, color: 'Green' },
+      { sku: '1234568354', size: '42', stock: 26, color: 'Green' },
+      { sku: '1234568355', size: '43', stock: 16, color: 'Green' }
     ],
-    colors: ['White', 'Black', 'Green'],
     tags: ['shoes', 'superstar', 'standard'],
     brand: 'Adidas',
     status: 'active'
@@ -1092,11 +1268,16 @@ const productsData = [
     categoryPath: ['Men', 'Nike', 'Sneakers'],
     images: ['nike-span-2.png'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568356', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568357', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568358', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568359', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568360', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568361', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568362', size: '40', stock: 10, color: 'Red' },
+      { sku: '1234568363', size: '41', stock: 10, color: 'Red' },
+      { sku: '1234568364', size: '42', stock: 10, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
@@ -1109,11 +1290,16 @@ const productsData = [
     categoryPath: ["Shoes", "Nike", "Air Force"],
     images: ['nike-air-force-1-high.png'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568365', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568366', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568367', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568368', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568369', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568370', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568371', size: '40', stock: 10, color: 'Red' },
+      { sku: '1234568372', size: '41', stock: 10, color: 'Red' },
+      { sku: '1234568373', size: '42', stock: 10, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
@@ -1126,11 +1312,16 @@ const productsData = [
     categoryPath: ["Shoes", "Nike", "Air Force"],
     images: ['nike-air-force.png'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568374', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568375', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568376', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568377', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568378', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568379', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568380', size: '40', stock: 10, color: 'Red' },
+      { sku: '1234568381', size: '41', stock: 10, color: 'Red' },
+      { sku: '1234568382', size: '42', stock: 10, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
@@ -1143,11 +1334,16 @@ const productsData = [
     categoryPath: ["Shoes", "Nike", "Air Max"],
     images: ['air-max-90.png'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568383', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568384', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568385', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568386', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568387', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568388', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568389', size: '40', stock: 10, color: 'Red' },
+      { sku: '1234568390', size: '41', stock: 10, color: 'Red' },
+      { sku: '1234568391', size: '42', stock: 10, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
@@ -1160,11 +1356,16 @@ const productsData = [
     categoryPath: ["Shoes", "Nike", "Air Max"],
     images: ['air-max-excee-.png'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568392', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568393', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568394', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568395', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568396', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568397', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568398', size: '40', stock: 10, color: 'Red' },
+      { sku: '1234568399', size: '41', stock: 10, color: 'Red' },
+      { sku: '1234568400', size: '42', stock: 10, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
@@ -1177,11 +1378,16 @@ const productsData = [
     categoryPath: ["Shoes", "Nike", "Air Max"],
     images: ['air-max-270.png'],
     sizes: [
-      { size: '40', stock: 10 },
-      { size: '41', stock: 10 },
-      { size: '42', stock: 10 }
+      { sku: '1234568401', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568402', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568403', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568404', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568405', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568406', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568407', size: '40', stock: 10, color: 'Red' },
+      { sku: '1234568408', size: '41', stock: 10, color: 'Red' },
+      { sku: '1234568409', size: '42', stock: 10, color: 'Red' }
     ],
-    colors: ['White', 'Black', 'Red'],
     tags: ['new', 'hot'],
     brand: 'Nike',
     status: 'active'
@@ -1195,12 +1401,15 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Gazelle", "Bold"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481668/Gazelle_Bold_Shoes_White_ID7056_01_standard_umjj7p.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568410', size: "36", stock: 10, color: "Black" },
+      { sku: '1234568411', size: "37", stock: 15, color: "Black" },
+      { sku: '1234568412', size: "38", stock: 20, color: "Black" },
+      { sku: '1234568413', size: "39", stock: 15, color: "Black" },
+      { sku: '1234568414', size: "36", stock: 10, color: "White" },
+      { sku: '1234568415', size: "37", stock: 15, color: "White" },
+      { sku: '1234568416', size: "38", stock: 20, color: "White" },
+      { sku: '1234568417', size: "39", stock: 15, color: "White" }
     ],
-    colors: ["Black", "White"],
     tags: ["shoes", "gazelle", "bold"],
     brand: "Adidas",
     status: "active"
@@ -1213,12 +1422,11 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Gazelle", "Bold X Liberty London"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481635/Gazelle_Bold_x_Liberty_London_Shoes_Black_JI2572_01_00_standard_ljphtg.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568418', size: "36", stock: 10, color: "Black" },
+      { sku: '1234568419', size: "37", stock: 15, color: "Black" },
+      { sku: '1234568420', size: "38", stock: 20, color: "Black" },
+      { sku: '1234568421', size: "39", stock: 15, color: "Black" }
     ],
-    colors: ["Black"],
     tags: ["shoes", "gazelle", "bold", "liberty", "london"],
     brand: "Adidas",
     status: "active"
@@ -1231,12 +1439,19 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Gazelle", "Indoor"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481663/Gazelle_Indoor_Shoes_Blue_JI2061_01_standard_njgqxv.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568422', size: "36", stock: 10, color: "Green" },
+      { sku: '1234568423', size: "37", stock: 15, color: "Green" },
+      { sku: '1234568424', size: "38", stock: 20, color: "Green" },
+      { sku: '1234568425', size: "39", stock: 15, color: "Green" },
+      { sku: '1234568426', size: "36", stock: 10, color: "Blue" },
+      { sku: '1234568427', size: "37", stock: 15, color: "Blue" },
+      { sku: '1234568428', size: "38", stock: 20, color: "Blue" },
+      { sku: '1234568429', size: "39", stock: 15, color: "Blue" },
+      { sku: '1234568430', size: "36", stock: 10, color: "Black" },
+      { sku: '1234568431', size: "37", stock: 15, color: "Black" },
+      { sku: '1234568432', size: "38", stock: 20, color: "Black" },
+      { sku: '1234568433', size: "39", stock: 15, color: "Black" }
     ],
-    colors: ["Green", "Blue", "Black"],
     tags: ["shoes", "gazelle", "indoor"],
     brand: "Adidas",
     status: "active"
@@ -1249,12 +1464,15 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Gazelle", "Spikeless Golf"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481658/Gazelle_Spikeless_Golf_Shoes_Yellow_JS1896_01_00_standard_anoj9k.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568434', size: "36", stock: 10, color: "White" },
+      { sku: '1234568435', size: "37", stock: 15, color: "White" },
+      { sku: '1234568436', size: "38", stock: 20, color: "White" },
+      { sku: '1234568437', size: "39", stock: 15, color: "White" },
+      { sku: '1234568438', size: "36", stock: 10, color: "Yellow" },
+      { sku: '1234568439', size: "37", stock: 15, color: "Yellow" },
+      { sku: '1234568440', size: "38", stock: 20, color: "Yellow" },
+      { sku: '1234568441', size: "39", stock: 15, color: "Yellow" }
     ],
-    colors: ["White", "Yellow"],
     tags: ["shoes", "gazelle", "golf", "spikeless"],
     brand: "Adidas",
     status: "active"
@@ -1267,12 +1485,19 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Gazelle", "Standard"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481650/Gazelle_Shoes_Burgundy_IF9652_01_standard_khizks.avif"],
     sizes: [
-      { size: "36", stock: 10 },
-      { size: "37", stock: 15 },
-      { size: "38", stock: 20 },
-      { size: "39", stock: 15 }
+      { sku: '1234568442', size: "36", stock: 10, color: "Burgundy" },
+      { sku: '1234568443', size: "37", stock: 15, color: "Burgundy" },
+      { sku: '1234568444', size: "38", stock: 20, color: "Burgundy" },
+      { sku: '1234568445', size: "39", stock: 15, color: "Burgundy" },
+      { sku: '1234568446', size: "36", stock: 10, color: "Green" },
+      { sku: '1234568447', size: "37", stock: 15, color: "Green" },
+      { sku: '1234568448', size: "38", stock: 20, color: "Green" },
+      { sku: '1234568449', size: "39", stock: 15, color: "Green" },
+      { sku: '1234568450', size: "36", stock: 10, color: "Blue" },
+      { sku: '1234568451', size: "37", stock: 15, color: "Blue" },
+      { sku: '1234568452', size: "38", stock: 20, color: "Blue" },
+      { sku: '1234568453', size: "39", stock: 15, color: "Blue" }
     ],
-    colors: ["Burgundy", "Green", "Blue"],
     tags: ["shoes", "gazelle", "standard"],
     brand: "Adidas",
     status: "active"
@@ -1286,12 +1511,23 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "SL 72", "OG"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481540/SL_72_OG_Shoes_Black_JH7390_01_standard_m9gnjo.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568454', size: "40", stock: 10, color: "Pink" },
+      { sku: '1234568455', size: "41", stock: 15, color: "Pink" },
+      { sku: '1234568456', size: "42", stock: 20, color: "Pink" },
+      { sku: '1234568457', size: "43", stock: 15, color: "Pink" },
+      { sku: '1234568458', size: "40", stock: 10, color: "Green" },
+      { sku: '1234568459', size: "41", stock: 15, color: "Green" },
+      { sku: '1234568460', size: "42", stock: 20, color: "Green" },
+      { sku: '1234568461', size: "43", stock: 15, color: "Green" },
+      { sku: '1234568462', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568463', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568464', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568465', size: "43", stock: 15, color: "Black" },
+      { sku: '1234568466', size: "40", stock: 10, color: "Navy" },
+      { sku: '1234568467', size: "41", stock: 15, color: "Navy" },
+      { sku: '1234568468', size: "42", stock: 20, color: "Navy" },
+      { sku: '1234568469', size: "43", stock: 15, color: "Navy" }
     ],
-    colors: ["Pink", "Green", "Black", "Navy"],
     tags: ["shoes", "sl72", "og"],
     brand: "Adidas",
     status: "active"
@@ -1304,12 +1540,19 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "SL 72", "RS"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481540/SL_72_OG_Shoes_Black_JH7390_01_standard_m9gnjo.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568470', size: "40", stock: 10, color: "Green" },
+      { sku: '1234568471', size: "41", stock: 15, color: "Green" },
+      { sku: '1234568472', size: "42", stock: 20, color: "Green" },
+      { sku: '1234568473', size: "43", stock: 15, color: "Green" },
+      { sku: '1234568474', size: "40", stock: 10, color: "Yellow" },
+      { sku: '1234568475', size: "41", stock: 15, color: "Yellow" },
+      { sku: '1234568476', size: "42", stock: 20, color: "Yellow" },
+      { sku: '1234568477', size: "43", stock: 15, color: "Yellow" },
+      { sku: '1234568478', size: "40", stock: 10, color: "Navy" },
+      { sku: '1234568479', size: "41", stock: 15, color: "Navy" },
+      { sku: '1234568480', size: "42", stock: 20, color: "Navy" },
+      { sku: '1234568481', size: "43", stock: 15, color: "Navy" }
     ],
-    colors: ["Green", "Yellow", "Navy"],
     tags: ["shoes", "sl72", "rs"],
     brand: "Adidas",
     status: "active"
@@ -1322,12 +1565,15 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "SL 72", "RS Mercedes"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481575/SL_72_RS_MERCEDES_SHOES_White_JQ1781_01_00_standard_n3k1ew.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568482', size: "40", stock: 10, color: "White" },
+      { sku: '1234568483', size: "41", stock: 15, color: "White" },
+      { sku: '1234568484', size: "42", stock: 20, color: "White" },
+      { sku: '1234568485', size: "43", stock: 15, color: "White" },
+      { sku: '1234568486', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568487', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568488', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568489', size: "43", stock: 15, color: "Black" }
     ],
-    colors: ["White", "Black"],
     tags: ["shoes", "sl72", "rs", "mercedes"],
     brand: "Adidas",
     status: "active"
@@ -1340,12 +1586,15 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "SL 72", "RTN"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481559/SL_72_RTN_Shoes_Grey_IH5558_01_standard_btczfy.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568490', size: "40", stock: 10, color: "Grey" },
+      { sku: '1234568491', size: "41", stock: 15, color: "Grey" },
+      { sku: '1234568492', size: "42", stock: 20, color: "Grey" },
+      { sku: '1234568493', size: "43", stock: 15, color: "Grey" },
+      { sku: '1234568494', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568495', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568496', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568497', size: "43", stock: 15, color: "Black" }
     ],
-    colors: ["Grey", "Black"],
     tags: ["shoes", "sl72", "rtn"],
     brand: "Adidas",
     status: "active"
@@ -1359,12 +1608,27 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Spezial"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481481/Giay_Handball_Spezial_mau_xanh_la_IG6192_01_standard_jnfcze.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568498', size: "40", stock: 10, color: "Sky Blue" },
+      { sku: '1234568499', size: "41", stock: 15, color: "Sky Blue" },
+      { sku: '1234568500', size: "42", stock: 20, color: "Sky Blue" },
+      { sku: '1234568501', size: "43", stock: 15, color: "Sky Blue" },
+      { sku: '1234568502', size: "40", stock: 10, color: "Yellow" },
+      { sku: '1234568503', size: "41", stock: 15, color: "Yellow" },
+      { sku: '1234568504', size: "42", stock: 20, color: "Yellow" },
+      { sku: '1234568505', size: "43", stock: 15, color: "Yellow" },
+      { sku: '1234568506', size: "40", stock: 10, color: "Black Sky Blue" },
+      { sku: '1234568507', size: "41", stock: 15, color: "Black Sky Blue" },
+      { sku: '1234568508', size: "42", stock: 20, color: "Black Sky Blue" },
+      { sku: '1234568509', size: "43", stock: 15, color: "Black Sky Blue" },
+      { sku: '1234568510', size: "40", stock: 10, color: "Green" },
+      { sku: '1234568511', size: "41", stock: 15, color: "Green" },
+      { sku: '1234568512', size: "42", stock: 20, color: "Green" },
+      { sku: '1234568513', size: "43", stock: 15, color: "Green" },
+      { sku: '1234568514', size: "40", stock: 10, color: "Orange" },
+      { sku: '1234568515', size: "41", stock: 15, color: "Orange" },
+      { sku: '1234568516', size: "42", stock: 20, color: "Orange" },
+      { sku: '1234568517', size: "43", stock: 15, color: "Orange" }
     ],
-    colors: ["Sky Blue", "Yellow", "Black Sky Blue", "Green", "Orange"],
     tags: ["shoes", "spezial", "handball"],
     brand: "Adidas",
     status: "active"
@@ -1378,12 +1642,11 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Adizero", "Adios 9"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488411/Giay_Chay_Bo_Adizero_Adios_9_Ngoc_lam_JH5243_01_00_standard_y05ir2.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568518', size: "40", stock: 10, color: "Teal" },
+      { sku: '1234568519', size: "41", stock: 15, color: "Teal" },
+      { sku: '1234568520', size: "42", stock: 20, color: "Teal" },
+      { sku: '1234568521', size: "43", stock: 15, color: "Teal" }
     ],
-    colors: ["Teal"],
     tags: ["shoes", "adizero", "adios9"],
     brand: "Adidas",
     status: "active"
@@ -1396,13 +1659,12 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Adizero", "Adios Pro 4"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488420/Giay_Adizero_Adios_Pro_4_trang_JR1094_01_00_standard_jqbqxe.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568522', size: "40", stock: 10, color: "White" },
+      { sku: '1234568523', size: "41", stock: 15, color: "White" },
+      { sku: '1234568524', size: "42", stock: 20, color: "White" },
+      { sku: '1234568525', size: "43", stock: 15, color: "White" }
     ],
-    colors: ["White"],
-    tags: ["shoes", "adizero", "adiospro4"],
+    tags: ["shoes", "adizero", "adios", "pro4"],
     brand: "Adidas",
     status: "active"
   },
@@ -1414,12 +1676,11 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Adizero", "Boston 13"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488420/Giay_Adizero_Adios_Pro_4_trang_JR1094_01_00_standard_jqbqxe.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568526', size: "40", stock: 10, color: "Golden" },
+      { sku: '1234568527', size: "41", stock: 15, color: "Golden" },
+      { sku: '1234568528', size: "42", stock: 20, color: "Golden" },
+      { sku: '1234568529', size: "43", stock: 15, color: "Golden" }
     ],
-    colors: ["Golden", "White"],
     tags: ["shoes", "adizero", "boston13"],
     brand: "Adidas",
     status: "active"
@@ -1432,15 +1693,249 @@ const productsData = [
     categoryPath: ["Shoes", "Adidas", "Adizero", "Evo SL"],
     images: ["https://res.cloudinary.com/dqmb4e2et/image/upload/v1752488489/Giay_Adizero_EVO_SL_DJen_JP7149_01_00_standard_cjuy6a.avif"],
     sizes: [
-      { size: "40", stock: 10 },
-      { size: "41", stock: 15 },
-      { size: "42", stock: 20 },
-      { size: "43", stock: 15 }
+      { sku: '1234568530', size: "40", stock: 10, color: "Black" },
+      { sku: '1234568531', size: "41", stock: 15, color: "Black" },
+      { sku: '1234568532', size: "42", stock: 20, color: "Black" },
+      { sku: '1234568533', size: "43", stock: 15, color: "Black" }
     ],
-    colors: ["Black"],
     tags: ["shoes", "adizero", "evosl"],
     brand: "Adidas",
     status: "active"
+  },
+  // Hoodie Products
+  {
+    name: "Future Icons 3 Bar Logo Hoodie",
+    description: "Premium hoodie featuring the iconic 3 Bar Logo design. Made with high-quality materials for ultimate comfort and style.",
+    price: 2899000,
+    discountPrice: 2599000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591255/Future_Icons_3_Bar_Logo_Hoodie_Brown_JW7168_21_model_bj1cn7.avif'],
+    sizes: [
+      { sku: '1234568534', size: 'S', stock: 20, color: 'Brown' },
+      { sku: '1234568535', size: 'M', stock: 25, color: 'Brown' },
+      { sku: '1234568536', size: 'L', stock: 20, color: 'Brown' },
+      { sku: '1234568537', size: 'XL', stock: 15, color: 'Brown' }
+    ],
+    tags: ['hoodie', 'adidas', 'future-icons', '3-bar-logo', 'brown'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Essentials 3-Stripes French Terry Full-Zip Hoodie",
+    description: "Classic essentials hoodie with 3-stripes design. French terry construction for superior comfort and durability.",
+    price: 2699000,
+    discountPrice: 2399000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591255/Essentials_3-Stripes_French_Terry_Full-Zip_Hoodie_Grey_JE6338_21_model_pfnakv.avif'],
+    sizes: [
+      { sku: '1234568538', size: 'S', stock: 15, color: 'Grey' },
+      { sku: '1234568539', size: 'M', stock: 20, color: 'Grey' },
+      { sku: '1234568540', size: 'L', stock: 18, color: 'Grey' },
+      { sku: '1234568541', size: 'XL', stock: 12, color: 'Grey' },
+      { sku: '1234568542', size: 'S', stock: 15, color: 'Black' },
+      { sku: '1234568543', size: 'M', stock: 20, color: 'Black' },
+      { sku: '1234568544', size: 'L', stock: 18, color: 'Black' },
+      { sku: '1234568545', size: 'XL', stock: 12, color: 'Black' }
+    ],
+    tags: ['hoodie', 'adidas', 'essentials', '3-stripes', 'french-terry', 'full-zip', 'grey', 'black'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Elevated ALL SZN Terry Loop Hoodie",
+    description: "Elevated comfort hoodie with terry loop construction. Perfect for all seasons with premium materials and modern design.",
+    price: 2999000,
+    discountPrice: 2699000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591255/Elevated_ALL_SZN_Terry_Loop_Hoodie_Black_IV5212_21_model_wtlnh6.avif'],
+    sizes: [
+      { sku: '1234568546', size: 'S', stock: 18, color: 'Black' },
+      { sku: '1234568547', size: 'M', stock: 22, color: 'Black' },
+      { sku: '1234568548', size: 'L', stock: 20, color: 'Black' },
+      { sku: '1234568549', size: 'XL', stock: 15, color: 'Black' },
+      { sku: '1234568550', size: 'S', stock: 18, color: 'Grey' },
+      { sku: '1234568551', size: 'M', stock: 22, color: 'Grey' },
+      { sku: '1234568552', size: 'L', stock: 20, color: 'Grey' },
+      { sku: '1234568553', size: 'XL', stock: 15, color: 'Grey' },
+      { sku: '1234568554', size: 'S', stock: 18, color: 'White' },
+      { sku: '1234568555', size: 'M', stock: 22, color: 'White' },
+      { sku: '1234568556', size: 'L', stock: 20, color: 'White' },
+      { sku: '1234568557', size: 'XL', stock: 15, color: 'White' }
+    ],
+    tags: ['hoodie', 'adidas', 'elevated', 'terry-loop', 'all-season', 'black', 'grey', 'white'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Z.N.E. Full-Zip Hoodie",
+    description: "Zero Negative Energy hoodie with full-zip design. Premium comfort and style for active lifestyle.",
+    price: 2799000,
+    discountPrice: 2499000,
+    categoryPath: ['Men', 'Adidas', 'Hoodies'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752591254/Z.N.E._Full-Zip_Hoodie_White_JF2443_21_model_r1cpxj.avif'],
+    sizes: [
+      { sku: '1234568558', size: 'S', stock: 16, color: 'White' },
+      { sku: '1234568559', size: 'M', stock: 21, color: 'White' },
+      { sku: '1234568560', size: 'L', stock: 19, color: 'White' },
+      { sku: '1234568561', size: 'XL', stock: 14, color: 'White' },
+      { sku: '1234568562', size: 'S', stock: 16, color: 'Green' },
+      { sku: '1234568563', size: 'M', stock: 21, color: 'Green' },
+      { sku: '1234568564', size: 'L', stock: 19, color: 'Green' },
+      { sku: '1234568565', size: 'XL', stock: 14, color: 'Green' },
+      { sku: '1234568566', size: 'S', stock: 16, color: 'Black' },
+      { sku: '1234568567', size: 'M', stock: 21, color: 'Black' },
+      { sku: '1234568568', size: 'L', stock: 19, color: 'Black' },
+      { sku: '1234568569', size: 'XL', stock: 14, color: 'Black' }
+    ],
+    tags: ['hoodie', 'adidas', 'z.n.e', 'full-zip', 'white', 'green', 'black'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Women Jacket/Vest Products
+  {
+    name: "Clot Crochet Vest by Edison Chen",
+    description: "Exclusive collaboration vest by Edison Chen featuring unique crochet design. Premium comfort and stylish appearance.",
+    price: 3299000,
+    discountPrice: 2999000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594828/Clot_Crochet_Vest_by_Edison_Chen_Green_JP1606_21_model_xkn8fc.avif'],
+    sizes: [
+      { sku: '1234568570', size: 'XS', stock: 12, color: 'Green' },
+      { sku: '1234568571', size: 'S', stock: 18, color: 'Green' },
+      { sku: '1234568572', size: 'M', stock: 22, color: 'Green' },
+      { sku: '1234568573', size: 'L', stock: 16, color: 'Green' }
+    ],
+    tags: ['vest', 'adidas', 'clot', 'edison-chen', 'crochet', 'green', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "City Escape Lightweight Windbreaker",
+    description: "Lightweight windbreaker perfect for city adventures. Breathable and stylish design for active women.",
+    price: 2899000,
+    discountPrice: 2599000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594830/City_Escape_Lightweight_Windbreaker_Grey_JF3403_21_model_fmvniw.avif'],
+    sizes: [
+      { sku: '1234568574', size: 'XS', stock: 15, color: 'Grey' },
+      { sku: '1234568575', size: 'S', stock: 20, color: 'Grey' },
+      { sku: '1234568576', size: 'M', stock: 25, color: 'Grey' },
+      { sku: '1234568577', size: 'L', stock: 18, color: 'Grey' }
+    ],
+    tags: ['windbreaker', 'adidas', 'city-escape', 'lightweight', 'grey', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Own The Run Spray Dye Vest",
+    description: "Unique spray dye vest for runners. Eye-catching design with premium comfort for active lifestyle.",
+    price: 2699000,
+    discountPrice: 2399000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594831/Own_The_Run_Spray_Dye_Vest_Grey_JL8726_21_model_pccabo.avif'],
+    sizes: [
+      { sku: '1234568578', size: 'XS', stock: 14, color: 'Grey' },
+      { sku: '1234568579', size: 'S', stock: 19, color: 'Grey' },
+      { sku: '1234568580', size: 'M', stock: 23, color: 'Grey' },
+      { sku: '1234568581', size: 'L', stock: 17, color: 'Grey' }
+    ],
+    tags: ['vest', 'adidas', 'own-the-run', 'spray-dye', 'grey', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "WIND.RDY Hyperglam Windbreaker",
+    description: "Hyperglam windbreaker with WIND.RDY technology. Stylish and functional for all weather conditions.",
+    price: 3099000,
+    discountPrice: 2799000,
+    categoryPath: ['Women', 'Adidas', 'Jackets'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752594828/WIND.RDY_Hyperglam_Windbreaker_Purple_IX3213_21_model_rbwfv0.avif'],
+    sizes: [
+      { sku: '1234568582', size: 'XS', stock: 13, color: 'Purple' },
+      { sku: '1234568583', size: 'S', stock: 18, color: 'Purple' },
+      { sku: '1234568584', size: 'M', stock: 22, color: 'Purple' },
+      { sku: '1234568585', size: 'L', stock: 16, color: 'Purple' },
+      { sku: '1234568586', size: 'XS', stock: 13, color: 'Green' },
+      { sku: '1234568587', size: 'S', stock: 18, color: 'Green' },
+      { sku: '1234568588', size: 'M', stock: 22, color: 'Green' },
+      { sku: '1234568589', size: 'L', stock: 16, color: 'Green' },
+      { sku: '1234568590', size: 'XS', stock: 13, color: 'Black' },
+      { sku: '1234568591', size: 'S', stock: 18, color: 'Black' },
+      { sku: '1234568592', size: 'M', stock: 22, color: 'Black' },
+      { sku: '1234568593', size: 'L', stock: 16, color: 'Black' }
+    ],
+    tags: ['windbreaker', 'adidas', 'wind-rdy', 'hyperglam', 'purple', 'green', 'black', 'women'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Kids Products
+  {
+    name: "Smiley World Cap Kids",
+    description: "Fun and colorful cap featuring the iconic Smiley World design. Perfect for kids who love to express their personality.",
+    price: 899000,
+    discountPrice: 799000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595934/Smiley_World_Cap_Kids_Blue_JG5803_01_00_standard_qnqeqw.avif'],
+    sizes: [
+      { sku: '1234568594', size: '4-5Y', stock: 25, color: 'Blue' },
+      { sku: '1234568595', size: '6-7Y', stock: 30, color: 'Blue' },
+      { sku: '1234568596', size: '8-9Y', stock: 25, color: 'Blue' },
+      { sku: '1234568597', size: '10-11Y', stock: 20, color: 'Blue' }
+    ],
+    tags: ['cap', 'adidas', 'smiley-world', 'kids', 'blue'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Advantage 2.0 Shoes",
+    description: "Comfortable and durable shoes perfect for active kids. Lightweight design with excellent support for daily activities.",
+    price: 1599000,
+    discountPrice: 1399000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595930/Advantage_2.0_Shoes_White_IH6251_01_00_standard_xxp8ce.avif'],
+    sizes: [
+      { sku: '1234568598', size: '4-5Y', stock: 20, color: 'White' },
+      { sku: '1234568599', size: '6-7Y', stock: 25, color: 'White' },
+      { sku: '1234568600', size: '8-9Y', stock: 22, color: 'White' },
+      { sku: '1234568601', size: '10-11Y', stock: 18, color: 'White' }
+    ],
+    tags: ['shoes', 'adidas', 'advantage', 'kids', 'white'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "adidas Originals x Smiley Kids Backpack",
+    description: "Collaboration backpack featuring the iconic Smiley design. Spacious and comfortable for school and outdoor activities.",
+    price: 1299000,
+    discountPrice: 1099000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595932/adidas_Originals_x_Smiley_Kids_Backpack_Black_JC8521_01_00_standard_lvyt9s.avif'],
+    sizes: [
+      { sku: '1234568602', size: '4-5Y', stock: 15, color: 'Black' },
+      { sku: '1234568603', size: '6-7Y', stock: 20, color: 'Black' },
+      { sku: '1234568604', size: '8-9Y', stock: 18, color: 'Black' },
+      { sku: '1234568605', size: '10-11Y', stock: 15, color: 'Black' }
+    ],
+    tags: ['backpack', 'adidas', 'originals', 'smiley', 'kids', 'black'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: "Smiley World Backpack Kids",
+    description: "Vibrant and fun backpack with Smiley World design. Perfect size for kids with comfortable straps and multiple compartments.",
+    price: 1199000,
+    discountPrice: 999000,
+    categoryPath: ['Kids', 'Adidas', 'Smiley World'],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752595931/Smiley_World_Backpack_Kids_Multicolor_JH3417_01_00_standard_ig9ouc.avif'],
+    sizes: [
+      { sku: '1234568606', size: '4-5Y', stock: 18, color: 'Blue' },
+      { sku: '1234568607', size: '6-7Y', stock: 22, color: 'Blue' },
+      { sku: '1234568608', size: '8-9Y', stock: 20, color: 'Blue' },
+      { sku: '1234568609', size: '10-11Y', stock: 16, color: 'Blue' }
+    ],
+    tags: ['backpack', 'adidas', 'smiley-world', 'kids', 'blue', 'multicolor'],
+    brand: 'Adidas',
+    status: 'active'
   }
 ]
 
@@ -1556,6 +2051,8 @@ export const updateAllProductImages = async () => {
   }
 }
 
+
+
 export const seedProducts = async () => {
   try {
     console.log('🔄 Starting product seeding and image updates...')
@@ -1577,8 +2074,8 @@ export const seedProducts = async () => {
             { new: true }
           )
           console.log(`🔄 Auto-updated images for: ${product.name}`)
-          console.log(`   Old: ${currentImages.join(', ')}`)
-          console.log(`   New: ${newImages.join(', ')}`)
+          console.log(`   Old images: ${currentImages.join(', ')}`)
+          console.log(`   New images: ${newImages.join(', ')}`)
         }
         continue
       }
@@ -1603,7 +2100,6 @@ export const seedProducts = async () => {
           categories: categoryIds,
           images: product.images,
           sizes: product.sizes || [],
-          colors: product.colors || [],
           tags: product.tags || [],
           brand: brand._id,
           status: product.status || 'active'
