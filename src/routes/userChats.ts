@@ -224,7 +224,7 @@ router.post('/:chatId/read', async (req: AuthRequest, res: Response) => {
       })
     }
 
-    await chatService.markMessagesAsRead(chatId, userId)
+    await chatService.markMessagesAsRead(chatId)
 
     res.json({
       success: true,

@@ -117,7 +117,7 @@ export const seedChatData = async () => {
       }
     }
 
-    console.log('✅ Chat data seeded successfully')
+    // Chat data seeded
     console.log(`   - ${chatSessionsData.length} chat sessions created`)
     console.log(`   - ${chatMessagesData.length} chat messages created`)
   } catch (error) {

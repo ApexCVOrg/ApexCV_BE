@@ -69,7 +69,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
             return
           }
           req.user = user
-          console.log('User authenticated successfully')
+          // User authenticated
           next()
         })
         .catch((error) => {

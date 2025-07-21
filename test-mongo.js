@@ -7,13 +7,13 @@ async function testMongoConnection() {
     // Test 1: MongoDB Atlas
     console.log('\n1. Testing MongoDB Atlas...');
     await mongoose.connect('mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority');
-    console.log('✅ MongoDB Atlas connected successfully');
+    // MongoDB Atlas connected
     await mongoose.disconnect();
     
     // Test 2: MongoDB Atlas with simple connection
     console.log('\n2. Testing MongoDB Atlas (simple)...');
     await mongoose.connect('mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority');
-    console.log('✅ MongoDB Atlas connected successfully');
+    // MongoDB Atlas connected
     await mongoose.disconnect();
     
     // Test 3: MongoDB Atlas with SSL options
@@ -28,7 +28,7 @@ async function testMongoConnection() {
       retryWrites: true,
       w: 'majority'
     });
-    console.log('✅ MongoDB Atlas with SSL options connected successfully');
+    // MongoDB Atlas with SSL options connected
     await mongoose.disconnect();
     
     console.log('\n🎉 All MongoDB connection tests passed!');

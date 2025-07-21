@@ -44,14 +44,14 @@ export const seedUsers = async () => {
       const existingUser = await User.findOne({ email: userData.email })
       
       if (existingUser) {
-        console.log(`✅ User already exists: ${userData.email}`)
+        // User already exists
         skippedCount++
         continue
       }
 
       const user = new User(userData)
       await user.save()
-      console.log(`✅ Created user: ${userData.email}`)
+      // User created
       createdCount++
     }
 
@@ -72,7 +72,7 @@ if (require.main === module) {
   connectDB()
     .then(() => seedUsers())
     .then(() => {
-      console.log('✅ User seeding completed')
+      // User seeding completed
       process.exit(0)
     })
     .catch((error: Error) => {

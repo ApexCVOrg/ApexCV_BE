@@ -50,9 +50,18 @@ export const checkUserAuth = async (req: AuthRequest, res: Response, next: NextF
     }
 
     // Add user info to request - bao gồm cả _id và id
+    const userId = decoded.id || decoded._id
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid token: missing user ID'
+      })
+      return
+    }
+
     req.user = {
-      _id: decoded.id || decoded._id, // MongoDB ObjectId
-      id: decoded.id || decoded._id, // String ID
+      _id: userId, // MongoDB ObjectId
+      id: userId, // String ID
       email: decoded.email,
       role: decoded.role
     }

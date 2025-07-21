@@ -1224,7 +1224,7 @@ const findProductByName = async (productName: string) => {
     )
     throw new Error(`Product with name ${productName} not found`)
   }
-  console.log(`✅ Found product: ${product.name}`)
+      // Found product
   return product._id
 }
 
@@ -1293,7 +1293,7 @@ export const seedOrders = async () => {
 
     const savedOrder = await order.save()
     createdOrders.push(savedOrder)
-    console.log(`✅ Created order for user: ${orderData.userEmail}`)
+    // Order created
   }
 
   console.log(`\n📊 Order seeding summary:`)

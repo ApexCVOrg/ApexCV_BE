@@ -28,7 +28,7 @@ export const seedDocuments = async () => {
       await DocumentModel.create(doc)
       added++
     }
-    console.log(`✅ Imported ${added} new documents. Skipped ${skipped} documents (already exist).`)
+    // Documents imported
   } catch (error) {
     console.error('❌ Lỗi khi seed dữ liệu:', error)
     throw error

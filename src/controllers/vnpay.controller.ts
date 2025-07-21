@@ -70,7 +70,7 @@ export const createPayment = (req: Request, res: Response) => {
         })
       }
 
-      console.log('[VNPAY] Session saved successfully')
+      // Session saved
 
       // Lưu backup vào database
       try {
@@ -184,13 +184,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       vnpTransactionNo && // Có transaction number
       vnpAmount // Có amount
 
-    console.log('[VNPAY Return] Payment success check:', {
-      responseCode: vnpResponseCode,
-      verificationSuccess: verificationResult.isSuccess,
-      hasTransactionNo: !!vnpTransactionNo,
-      hasAmount: !!vnpAmount,
-      isPaymentSuccess
-    })
+    // Payment success check
 
     // Nếu thanh toán không thành công, chỉ log và return thông báo
     if (!isPaymentSuccess) {
@@ -252,10 +246,10 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     }
 
     // Nếu thanh toán thành công, tiếp tục xử lý tạo order
-    console.log('[VNPAY Return] Payment successful, proceeding to create order')
+    // Payment successful, proceeding to create order
 
     // Lấy userId từ session hoặc từ token
-    let userId = (req.session.pendingOrder as any)?.user
+    let userId = (req.session.pendingOrder as { user?: string })?.user
     let orderData = req.session.pendingOrder
 
     if (!userId) {
@@ -264,7 +258,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       const token = authHeader && authHeader.split(' ')[1]
       if (token) {
         try {
-          const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
+          const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId?: string; id?: string }
           userId = decoded.userId || decoded.id
           console.log('[VNPAY Return] Got userId from token:', userId)
         } catch (err) {
@@ -362,7 +356,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
             ? {
                 id: product._id,
                 name: product.name,
-                brand: (product.brand as any)?.name
+                brand: (product.brand as { name?: string })?.name
               }
             : 'not found'
         )
@@ -382,14 +376,14 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
           size: sizeWithSku,
           productName: product?.name || item.name || '',
           productImage: product?.images?.[0] || '',
-          productBrand: (product?.brand as any)?.name || ''
+          productBrand: (product?.brand as { name?: string })?.name || ''
         }
 
         console.log(`[VNPAY Return] Populated item ${index + 1}:`, {
           productName: populatedItem.productName,
           quantity: populatedItem.quantity,
-          size: populatedItem.size[0]?.size,
-          color: populatedItem.size[0]?.color,
+          size: (populatedItem.size[0] as { size?: string })?.size,
+          color: (populatedItem.size[0] as { color?: string })?.color,
           price: populatedItem.price
         })
 
@@ -397,7 +391,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       })
     )
 
-    console.log('[VNPAY Return] All items populated successfully, creating order...')
+    // All items populated, creating order
     console.log('[VNPAY Return] Final populated items:', JSON.stringify(populatedOrderItems, null, 2))
 
     // Tạo đơn hàng mới với thông tin user thực
@@ -410,7 +404,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       },
       orderItems: populatedOrderItems,
       shippingAddress: {
-        recipientName: (orderData as any).shippingAddress?.fullName || 'N/A',
+        recipientName: (orderData as { shippingAddress?: { fullName?: string } }).shippingAddress?.fullName || 'N/A',
         street: orderData.shippingAddress?.street || '',
         city: orderData.shippingAddress?.city || '',
         state: orderData.shippingAddress?.state || '',
@@ -418,9 +412,9 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         country: orderData.shippingAddress?.country || '',
         phone: orderData.shippingAddress?.phone || user.phone
       },
-      paymentMethod: (orderData as any).paymentMethod || 'VNPAY',
-      taxPrice: (orderData as any).taxPrice || 0,
-      shippingPrice: (orderData as any).shippingPrice || 0,
+      paymentMethod: (orderData as { paymentMethod?: string; taxPrice?: number; shippingPrice?: number }).paymentMethod || 'VNPAY',
+      taxPrice: (orderData as { paymentMethod?: string; taxPrice?: number; shippingPrice?: number }).taxPrice || 0,
+      shippingPrice: (orderData as { paymentMethod?: string; taxPrice?: number; shippingPrice?: number }).shippingPrice || 0,
       totalPrice: orderData.totalPrice,
       isPaid: true,
       paidAt: new Date(),
@@ -505,7 +499,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         filteredCartItems.forEach((item) => userCart.cartItems.push(item))
 
         await userCart.save()
-        console.log('[VNPAY Return] Cart cleanup completed successfully')
+        // Cart cleanup completed
       }
     } catch (cartError) {
       console.error('[VNPAY Return] Error cleaning up cart:', cartError)
@@ -516,7 +510,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     if (req.session.pendingOrder) {
       delete req.session.pendingOrder
       req.session.save()
-      console.log('[VNPAY Return] Session cleaned up after successful order creation')
+      // Session cleaned up
     }
 
     // Tạo response thành công
@@ -559,7 +553,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       }
     }
 
-    console.log('[VNPAY Return] Sending success response:', JSON.stringify(successResponse, null, 2))
+    // Sending success response
     res.json(successResponse)
   } catch (err) {
     console.error('[VNPAY Return] Error processing return URL:', err)
@@ -754,7 +748,7 @@ export const handleIpn = (req: Request, res: Response) => {
     }
 
     // Nếu thanh toán thành công, có thể cập nhật trạng thái order nếu cần
-    console.log('[VNPAY IPN] Payment successful, order should be created via return URL')
+    // Payment successful, order should be created via return URL
 
     // TODO: Có thể thêm logic cập nhật trạng thái order ở đây nếu cần
     // Ví dụ: cập nhật trạng thái từ 'pending' sang 'paid' nếu order đã tồn tại

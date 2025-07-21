@@ -69,7 +69,7 @@ async function migrateChatSchema() {
       )
     }
 
-    console.log('Migration completed successfully!')
+    // Migration completed
   } catch (error) {
     console.error('Migration failed:', error)
   } finally {

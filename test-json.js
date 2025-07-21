@@ -10,7 +10,7 @@ try {
   console.log('First 20 chars:', JSON.stringify(rawData.substring(0, 20)));
 
   const docs = JSON.parse(rawData);
-  console.log('✅ JSON parsed successfully');
+      // JSON parsed
   console.log('Number of documents:', docs.length);
 
   // Test first document

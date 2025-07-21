@@ -68,7 +68,7 @@ const initializeServices = async () => {
     }
     
     suggestionsService.initialize()
-    console.log('✅ All services initialized successfully')
+    // Services initialized
   } catch (error) {
     console.error('❌ Error initializing services:', error)
     process.exit(1)

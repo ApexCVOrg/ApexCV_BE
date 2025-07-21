@@ -62,44 +62,44 @@ const connectDB = async (): Promise<void> => {
     }
 
     try {
-      await seedCategories() // Gọi seed tại đây
+      // await seedCategories() // Gọi seed tại đây
     } catch (error) {
       console.error('❌ Error seeding categories:', error)
     }
 
     try {
-      await seedBrands()
+      // await seedBrands()
     } catch (error) {
       console.error('❌ Error seeding brands:', error)
     }
 
     try {
-      await seedProducts()
+      // await seedProducts()
     } catch (error) {
       console.error('❌ Error seeding products:', error)
     }
 
     // Chỉ chạy seedOrders nếu có products
     try {
-      await seedOrders()
+      // await seedOrders()
     } catch (error) {
       console.error('❌ Error seeding orders:', error)
     }
 
     try {
-      await seedDocuments()
+      // await seedDocuments()
     } catch (error) {
       console.error('❌ Error seeding documents:', error)
     }
 
     try {
-      await seedChatData()
+      // await seedChatData()
     } catch (error) {
       console.error('❌ Error seeding chat data:', error)
     }
 
     try {
-      await seedCoupons()
+      // await seedCoupons()
     } catch (error) {
       console.error('❌ Error seeding coupons:', error)
     }

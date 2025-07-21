@@ -196,7 +196,7 @@ export const seedCategories = async () => {
       }
     }
 
-    console.log('Categories seeded successfully!');
+    // Categories seeded
   } catch (error) {
     console.error('Error seeding categories:', error);
     throw error;
@@ -263,5 +263,5 @@ export const fixCategoryStructure = async () => {
       }
     }
   }
-  console.log('✅ Category structure checked and fixed!');
+      // Category structure checked and fixed
 };

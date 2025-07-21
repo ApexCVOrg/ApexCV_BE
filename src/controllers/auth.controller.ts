@@ -118,7 +118,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 minute
 
-    console.log('✅ Generated verification code:', verificationCode);
+    // Verification code generated
 
     // Store verification data in memory
     verificationStore.set(email, {
@@ -135,7 +135,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     // Send verification email
     try {
       await sendVerificationEmail(email, verificationCode);
-      console.log('✅ Verification email sent successfully to:', email);
+      // Verification email sent
     } catch (emailError: any) {
       console.error('❌ Email sending failed:', {
         error: emailError.message,
@@ -151,7 +151,7 @@ export const register: RequestHandler = async (req: Request, res: Response): Pro
     }
 
     // Return success with pending status
-    console.log('✅ Registration completed successfully:', { email, status: 'pending' });
+    // Registration completed
     res.status(201).json({
       success: true,
       message: 'Registration successful, please check your email for verification',
@@ -319,7 +319,7 @@ export const verifyEmail: RequestHandler = async (req: Request, res: Response): 
         { expiresIn: '24h' },
       );
 
-      console.log('Email verification successful for:', email);
+      // Email verification successful
 
       res.status(200).json({
         success: true,
@@ -614,14 +614,14 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
     const { code, state } = req.query;
 
     // Validate state parameter
-    if (!state || state !== req.session.state) {
-      console.error('Invalid state parameter:', { received: state, expected: req.session.state });
+    if (!state || state !== (req.session as { state?: string }).state) {
+      console.error('Invalid state parameter:', { received: state, expected: (req.session as { state?: string }).state });
       res.status(400).json({ message: 'Invalid state parameter' });
       return;
     }
 
     // Clear state from session
-    delete req.session.state;
+    delete (req.session as { state?: string }).state;
 
     // Validate code
     if (!code || typeof code !== 'string') {
@@ -1013,7 +1013,7 @@ export const sendEmailChangeVerification: RequestHandler = async (
     // Send verification email
     try {
       await sendVerificationEmail(email, verificationCode);
-      console.log('✅ Email change verification code sent successfully to:', email);
+      // Email change verification code sent
     } catch (emailError: any) {
       console.error('❌ Email sending failed:', {
         error: emailError.message,
@@ -1169,7 +1169,7 @@ export const sendOTP: RequestHandler = async (req: Request, res: Response): Prom
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 minute
 
-    console.log('✅ Generated OTP for email:', email, 'Code:', verificationCode);
+    // OTP generated
 
     // Store verification data in memory
     verificationStore.set(email, {
@@ -1186,7 +1186,7 @@ export const sendOTP: RequestHandler = async (req: Request, res: Response): Prom
     // Send verification email
     try {
       await sendVerificationEmail(email, verificationCode);
-      console.log('✅ OTP email sent successfully to:', email);
+      // OTP email sent
     } catch (emailError: any) {
       console.error('❌ Email sending failed:', {
         error: emailError.message,
@@ -1202,7 +1202,7 @@ export const sendOTP: RequestHandler = async (req: Request, res: Response): Prom
     }
 
     // Return success
-    console.log('✅ OTP sent successfully:', { email, status: 'sent' });
+    // OTP sent
     res.status(200).json({
       success: true,
       message: 'OTP sent successfully',
@@ -1278,7 +1278,7 @@ export const saveAddress: RequestHandler = async (req: Request, res: Response): 
     user.addresses = addresses;
     await user.save();
 
-    console.log('✅ Address saved successfully for user:', email);
+    // Address saved
 
     res.status(200).json({
       success: true,

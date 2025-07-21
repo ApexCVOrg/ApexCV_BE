@@ -10,7 +10,7 @@ async function debugDatabase() {
       useUnifiedTopology: true,
     });
 
-    console.log('✅ MongoDB connected successfully!');
+    // MongoDB connected
 
     // Define schemas inline for debugging
     const CategorySchema = new mongoose.Schema({
@@ -77,7 +77,7 @@ async function debugDatabase() {
       return;
     }
 
-    console.log(`✅ Found Men category: ${menCategory._id}`);
+    // Found Men category
 
     // Find team categories under Men
     const menTeamCategories = await Category.find({ parentCategory: menCategory._id });
@@ -156,7 +156,7 @@ async function debugDatabase() {
       categories: { $in: productTypeCategoriesAPI.map((cat) => cat._id) },
     });
 
-    console.log(`✅ API logic found ${productsAPI.length} products for men`);
+    // API logic found products
   } catch (error) {
     console.error('❌ Error debugging database:', error);
   } finally {

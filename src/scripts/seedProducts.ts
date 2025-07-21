@@ -2327,7 +2327,7 @@ export const updateProductImages = async (productName: string, newImages: string
     );
 
     if (updatedProduct) {
-      console.log(`✅ Updated images for product: ${productName}`);
+      // Updated images for product
       return updatedProduct;
     } else {
       console.log(`❌ Product not found: ${productName}`);
@@ -2353,7 +2353,7 @@ export const updateMultipleProductImages = async (
       }
     }
 
-    console.log(`✅ Updated ${results.length} products successfully`);
+    // Updated products
     return results;
   } catch (error) {
     console.error('❌ Error updating multiple products:', error);
@@ -2377,13 +2377,13 @@ export const updateAllProductImages = async () => {
             { $set: { images: product.images } },
             { new: true },
           );
-          console.log(`✅ Updated images for: ${product.name}`);
+          // Updated images for product
           updatedCount++;
         }
       }
     }
 
-    console.log(`✅ Total products updated: ${updatedCount}`);
+    // Total products updated
     return updatedCount;
   } catch (error) {
     console.error('❌ Error updating all product images:', error);
@@ -2422,7 +2422,7 @@ export const seedProducts = async () => {
           console.log(`   New images: ${newImages.join(', ')}`);
           updatedCount++;
         } else {
-          console.log(`✅ Product already exists: ${product.name}`);
+          // Product already exists
         }
         continue;
       }
@@ -2478,7 +2478,7 @@ export const seedProducts = async () => {
 
         try {
           const newProduct = await new Product(productData).save();
-          console.log(`✅ Created product: ${newProduct.name}`);
+          // Product created
           createdCount++;
         } catch (productError) {
           console.error(`❌ Error creating product ${product.name}:`, productError);
