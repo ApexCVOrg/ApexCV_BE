@@ -83,6 +83,9 @@ const allowedOrigins = [
   'https://nidas-fe.vercel.app/',
   'https://nidas-fe.vercel.app/en',
   'https://nidas-fe.vercel.app/vi',
+  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app',
+  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app/en',
+  'https://nidas-a0hcixdo8-nidas-projects-e8bff2a3.vercel.app/vi',
   ...EXTRA_ORIGINS
 ]
 
