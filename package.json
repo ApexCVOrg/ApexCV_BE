@@ -98,8 +98,7 @@
   "lint-staged": {
     "src/**/*.{ts,tsx,js,jsx,json,md}": [
       "npm run format",
-      "npm run lint --fix",
-      "git add"
+      "npm run lint:fix"
     ]
   }
 }
