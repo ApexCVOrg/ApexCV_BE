@@ -18,7 +18,7 @@ const connectDB = async (): Promise<void> => {
     console.log(`MongoDB connected: ${conn.connection.host}`)
 
     await seedCategories() // Gọi seed tại đây
-    // await seedBrands()
+    await seedBrands()
     await seedProducts()
     // await seedOrders()
     // await seedDocuments()

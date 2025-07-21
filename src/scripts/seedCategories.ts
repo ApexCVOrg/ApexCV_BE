@@ -294,6 +294,11 @@ const categoriesData = [
     },
   ];
   
+// Thêm seed cho category OUTLET ở đầu mảng
+categoriesData.unshift({
+  name: 'Outlet',
+  subcategories: []
+});
 
 export const seedCategories = async () => {
   try {

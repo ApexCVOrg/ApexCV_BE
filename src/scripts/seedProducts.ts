@@ -1731,6 +1731,14 @@ const productsData = [
 const findCategoryIdsByPath = async (categoryPath: string[]) => {
   const categoryIds: mongoose.Types.ObjectId[] = []
 
+  // Nếu chỉ có 1 phần tử (ví dụ: ['Outlet'])
+  if (categoryPath.length === 1) {
+    const cat = await Category.findOne({ name: categoryPath[0], parentCategory: null });
+    if (!cat) throw new Error(`Category not found: ${categoryPath[0]}`);
+    categoryIds.push(cat._id as mongoose.Types.ObjectId);
+    return categoryIds;
+  }
+
   // Find parent category
   const parentCategory = (await Category.findOne({
     name: categoryPath[0],
@@ -1845,7 +1853,11 @@ export const seedProducts = async () => {
   try {
     console.log('🔄 Starting product seeding and image updates...')
     
-    for (const product of productsData) {
+    // Tìm category OUTLET nếu có
+    const outletCategory = await Category.findOne({ name: 'Outlet', parentCategory: null });
+    const outletCategoryId = outletCategory?._id;
+
+    for (const [idx, product] of productsData.entries()) {
       // Check if product already exists
       const existing = await Product.findOne({ name: product.name })
 
@@ -1878,6 +1890,11 @@ export const seedProducts = async () => {
       try {
         // Get category IDs from path
         const categoryIds = await findCategoryIdsByPath(product.categoryPath)
+        
+        // Nếu là 5 sản phẩm đầu tiên và có outletCategory, thêm vào mảng
+        if (outletCategoryId instanceof mongoose.Types.ObjectId && idx < 5) {
+          categoryIds.push(outletCategoryId);
+        }
         
         // Create new product
         const newProduct = await new Product({

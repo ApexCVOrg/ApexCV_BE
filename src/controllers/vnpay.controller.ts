@@ -116,6 +116,17 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     console.log('[VNPAY Return] Bắt đầu xử lý returnUrl');
     console.log('[VNPAY Return] Query params:', JSON.stringify(req.query, null, 2));
     console.log('[VNPAY Return] Headers:', JSON.stringify(req.headers, null, 2));
+
+    // Kiểm tra trạng thái giao dịch VNPAY
+    const responseCode = req.query['vnp_ResponseCode'];
+    if (responseCode !== '00') {
+      // Không thành công, không tạo order
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Thanh toán không thành công hoặc đã bị hủy. Đơn hàng sẽ không được ghi nhận.',
+        result: { isSuccess: false, responseCode }
+      });
+    }
     
     // Lấy userId từ session hoặc từ token
     let userId = req.session.pendingOrder?.user;
