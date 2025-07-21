@@ -152,4 +152,42 @@ router.get('/top-selling', (req, res, next) => getTopSellingProducts(req, res));
 // Public Top-selling products
 router.get('/public-top-selling', getPublicTopSellingProducts);
 
+// Get product by ID
+router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    const { id } = req.params
+    
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Invalid product ID format' 
+      })
+    }
+
+    const product = await Product.findById(id)
+      .populate('categories', 'name')
+      .populate('brand', 'name')
+      .lean()
+
+    if (!product) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'Product not found' 
+      })
+    }
+
+    res.json({
+      success: true,
+      data: product
+    })
+  } catch (error: any) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Error fetching product', 
+      error: error?.message || 'Unknown error' 
+    })
+  }
+})
+
 export default router

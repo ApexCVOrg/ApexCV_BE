@@ -18,6 +18,7 @@ const userSchema = new Schema({
   phone: String,
   role: { type: String, enum: ['user', 'admin', 'manager'], default: 'user' },
   status: { type: String, enum: ['active', 'inactive', 'suspended'], default: 'active' },
+  banReason: { type: String, default: '' },
   avatar: String,
   addresses: [addressSchema],
   favorites: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
@@ -53,6 +54,7 @@ interface IUser extends Document {
   favorites: mongoose.Types.ObjectId[]
   role: string
   status: string
+  banReason?: string
   isVerified: boolean
   verificationCode?: string
   verificationCodeExpires?: Date

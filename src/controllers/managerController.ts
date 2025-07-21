@@ -179,10 +179,23 @@ export const getOrderById = async (req: Request, res: Response) => {
 
 export const updateOrderStatus = async (req: Request, res: Response) => {
   try {
-    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, { status: req.body.status }, { new: true })
-    res.json(updatedOrder)
+    // Chỉ update các trường hợp lệ
+    const updateData: any = {};
+    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus;
+    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid;
+    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered;
+    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice;
+    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice;
+    // Có thể bổ sung các trường khác nếu cần
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+    res.json(updatedOrder);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message })
+    res.status(500).json({ message: (error as Error).message });
   }
 }
 

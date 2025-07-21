@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mongoose from 'mongoose'
 import { Product } from '../models/Product'
 import { Category } from '../models/Category'
@@ -1259,6 +1260,186 @@ const productsData = [
     brand: 'Adidas',
     status: 'active'
   },
+  // Adidas Shoes - Samba
+  {
+    name: 'Samba OG Shoes',
+    description: 'Adidas Samba OG Shoes - Originals, 14 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752479523/Giay_Samba_OG_trang_B75806_01_00_standard_ts41vx.avif'],
+    sizes: [
+      { sku: '1234568282', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568283', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568284', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568285', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568286', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568287', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568288', size: '40', stock: 10, color: 'Grey' },
+      { sku: '1234568289', size: '41', stock: 10, color: 'Grey' },
+      { sku: '1234568290', size: '42', stock: 10, color: 'Grey' }
+    ],
+    tags: ['originals', 'OG'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba JP Shoes',
+    description: 'Adidas Samba JP Shoes - Originals, 2 colours, New.',
+    price: 3000000,
+    discountPrice: 3000000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481341/Samba_Jp_Shoes_White_JR0964_01_00_standard_j1mljy.avif'],
+    sizes: [
+      { sku: '1234568291', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568292', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568293', size: '42', stock: 10, color: 'White' },
+      { sku: '1234568294', size: '40', stock: 10, color: 'Green' },
+      { sku: '1234568295', size: '41', stock: 10, color: 'Green' },
+      { sku: '1234568296', size: '42', stock: 10, color: 'Green' }
+    ],
+    tags: ['originals', 'JP'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba W',
+    description: 'Adidas Samba W - Originals, 3 colours, Trending.',
+    price: 2700000,
+    discountPrice: 2700000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481428/Samba_OG_W_Cream_White_ID0478_01_standard_yq6dvh.avif'],
+    sizes: [
+      { sku: '1234568297', size: '36', stock: 10, color: 'Black' },
+      { sku: '1234568298', size: '37', stock: 10, color: 'Black' },
+      { sku: '1234568299', size: '38', stock: 10, color: 'Black' },
+      { sku: '1234568300', size: '36', stock: 10, color: 'White' },
+      { sku: '1234568301', size: '37', stock: 10, color: 'White' },
+      { sku: '1234568302', size: '38', stock: 10, color: 'White' },
+      { sku: '1234568303', size: '36', stock: 10, color: 'Beige' },
+      { sku: '1234568304', size: '37', stock: 10, color: 'Beige' },
+      { sku: '1234568305', size: '38', stock: 10, color: 'Beige' }
+    ],
+    tags: ['originals', 'W'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Samba LT Shoes',
+    description: 'Adidas Samba LT Shoes - Originals, 2 colours.',
+    price: 2900000,
+    discountPrice: 2900000,
+    categoryPath: ["Shoes", "Adidas", "Samba"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481448/Samba_LT_Shoes_Black_IG2010_01_standard_lftp7l.avif'],
+    sizes: [
+      { sku: '1234568306', size: '40', stock: 10, color: 'Black' },
+      { sku: '1234568307', size: '41', stock: 10, color: 'Black' },
+      { sku: '1234568308', size: '42', stock: 10, color: 'Black' },
+      { sku: '1234568309', size: '40', stock: 10, color: 'White' },
+      { sku: '1234568310', size: '41', stock: 10, color: 'White' },
+      { sku: '1234568311', size: '42', stock: 10, color: 'White' }
+    ],
+    tags: ['originals', 'LT'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  // Adidas Superstar Collection
+  {
+    name: 'Superstar 82 Shoes',
+    description: 'Adidas Superstar 82 - Classic design with modern comfort. Iconic shell toe design.',
+    price: 2800000,
+    discountPrice: 2500000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481685/Superstar_82_Shoes_Black_JI2026_01_standard_vk2bpv.avif'],
+    sizes: [
+      { sku: '1234568312', size: '40', stock: 15, color: 'White' },
+      { sku: '1234568313', size: '41', stock: 20, color: 'White' },
+      { sku: '1234568314', size: '42', stock: 25, color: 'White' },
+      { sku: '1234568315', size: '43', stock: 15, color: 'White' },
+      { sku: '1234568316', size: '40', stock: 15, color: 'Black' },
+      { sku: '1234568317', size: '41', stock: 20, color: 'Black' },
+      { sku: '1234568318', size: '42', stock: 25, color: 'Black' },
+      { sku: '1234568319', size: '43', stock: 15, color: 'Black' }
+    ],
+    tags: ['shoes', 'superstar', '82'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Vintage Shoes',
+    description: 'Adidas Superstar Vintage - Retro style with premium materials. Classic shell toe design.',
+    price: 2900000,
+    discountPrice: 2600000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481696/Superstar_Vintage_Shoes_White_JQ3254_01_00_standard_fvo24u.avif'],
+    sizes: [
+      { sku: '1234568320', size: '40', stock: 12, color: 'White' },
+      { sku: '1234568321', size: '41', stock: 18, color: 'White' },
+      { sku: '1234568322', size: '42', stock: 22, color: 'White' },
+      { sku: '1234568323', size: '43', stock: 12, color: 'White' },
+      { sku: '1234568324', size: '40', stock: 12, color: 'Black' },
+      { sku: '1234568325', size: '41', stock: 18, color: 'Black' },
+      { sku: '1234568326', size: '42', stock: 22, color: 'Black' },
+      { sku: '1234568327', size: '43', stock: 12, color: 'Black' },
+      { sku: '1234568328', size: '40', stock: 12, color: 'Navy' },
+      { sku: '1234568329', size: '41', stock: 18, color: 'Navy' },
+      { sku: '1234568330', size: '42', stock: 22, color: 'Navy' },
+      { sku: '1234568331', size: '43', stock: 12, color: 'Navy' }
+    ],
+    tags: ['shoes', 'superstar', 'vintage'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar II Shoes',
+    description: 'Adidas Superstar II - Enhanced comfort with classic style. Updated shell toe design.',
+    price: 2700000,
+    discountPrice: 2400000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481691/SUPERSTAR_II_Green_JI3076_01_00_standard_hpveet.avif'],
+    sizes: [
+      { sku: '1234568332', size: '40', stock: 14, color: 'White' },
+      { sku: '1234568333', size: '41', stock: 19, color: 'White' },
+      { sku: '1234568334', size: '42', stock: 24, color: 'White' },
+      { sku: '1234568335', size: '43', stock: 14, color: 'White' },
+      { sku: '1234568336', size: '40', stock: 14, color: 'Black' },
+      { sku: '1234568337', size: '41', stock: 19, color: 'Black' },
+      { sku: '1234568338', size: '42', stock: 24, color: 'Black' },
+      { sku: '1234568339', size: '43', stock: 14, color: 'Black' },
+      { sku: '1234568340', size: '40', stock: 14, color: 'Red' },
+      { sku: '1234568341', size: '41', stock: 19, color: 'Red' },
+      { sku: '1234568342', size: '42', stock: 24, color: 'Red' },
+      { sku: '1234568343', size: '43', stock: 14, color: 'Red' }
+    ],
+    tags: ['shoes', 'superstar', 'II'],
+    brand: 'Adidas',
+    status: 'active'
+  },
+  {
+    name: 'Superstar Standard Shoes',
+    description: 'Adidas Superstar Standard - Original design with timeless appeal. Classic shell toe.',
+    price: 2600000,
+    discountPrice: 2300000,
+    categoryPath: ["Shoes", "Adidas", "Superstar"],
+    images: ['https://res.cloudinary.com/dqmb4e2et/image/upload/v1752481702/Superstar_Shoes_White_IG9367_01_standard_tfdpml.avif'],
+    sizes: [
+      { sku: '1234568344', size: '40', stock: 16, color: 'White' },
+      { sku: '1234568345', size: '41', stock: 21, color: 'White' },
+      { sku: '1234568346', size: '42', stock: 26, color: 'White' },
+      { sku: '1234568347', size: '43', stock: 16, color: 'White' },
+      { sku: '1234568348', size: '40', stock: 16, color: 'Black' },
+      { sku: '1234568349', size: '41', stock: 21, color: 'Black' },
+      { sku: '1234568350', size: '42', stock: 26, color: 'Black' },
+      { sku: '1234568351', size: '43', stock: 16, color: 'Black' },
+      { sku: '1234568352', size: '40', stock: 16, color: 'Green' },
+      { sku: '1234568353', size: '41', stock: 21, color: 'Green' },
+      { sku: '1234568354', size: '42', stock: 26, color: 'Green' },
+      { sku: '1234568355', size: '43', stock: 16, color: 'Green' }
+    ],
+    tags: ['shoes', 'superstar', 'standard'],
+    brand: 'Adidas',
+    status: 'active'
+  },
   // Sample Sneakers from FE TestCardsPage
   {
     name: 'Nike Span 2',
@@ -2051,10 +2232,10 @@ export const updateAllProductImages = async () => {
   }
 }
 
-
-
 export const seedProducts = async () => {
   try {
+    console.log('🔄 Starting product seeding and image updates...')
+    
     console.log('🔄 Starting product seeding and image updates...')
     
     for (const product of productsData) {

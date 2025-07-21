@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Request, Response, RequestHandler } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -430,20 +431,28 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     if (!user) {
       res.status(401).json({
         success: false,
-        message: 'login.errors.invalidCredentials'
+        message: 'login.errors.invalidCredentials',
+        errors: { username: 'Tên đăng nhập không tồn tại' }
       })
       return
     }
 
-    // Compare password using bcrypt
-    const isPasswordValid = await bcrypt.compare(loginPassword, user.passwordHash)
-
+    if (typeof user.passwordHash !== 'string' || !user.passwordHash) {
+      res.status(401).json({
+        success: false,
+        message: 'login.errors.invalidCredentials',
+        errors: { password: 'Mật khẩu không hợp lệ' }
+      });
+      return;
+    }
+    const isPasswordValid = await bcrypt.compare(loginPassword, user.passwordHash);
     if (!isPasswordValid) {
       res.status(401).json({
         success: false,
-        message: 'login.errors.invalidCredentials'
-      })
-      return
+        message: 'login.errors.invalidCredentials',
+        errors: { password: 'Mật khẩu không đúng' }
+      });
+      return;
     }
 
     // Check if user is verified
@@ -455,11 +464,21 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       return
     }
 
+    // Check if user is banned
+    if (user.status === 'locked') {
+      res.status(403).json({
+        success: false,
+        message: 'login.errors.banned',
+        reason: user.banReason || 'Your account has been banned by admin.'
+      });
+      return;
+    }
+
     // Generate JWT token
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
 
     // Generate refresh token
@@ -576,11 +595,11 @@ export const handleGoogleCallback: RequestHandler = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
 
-    // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`)
+    // Redirect to frontend with token and locale
+    res.redirect(`${process.env.FRONTEND_URL}/vi/auth/success?token=${token}`)
   } catch (error) {
     console.error('Google callback error:', error)
     res.redirect(`${process.env.FRONTEND_URL}/auth/error`)
@@ -709,11 +728,11 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
         role: user.role
       },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
 
-    // Redirect về FE
-    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}`)
+    // Redirect về FE với locale
+    res.redirect(`${process.env.FRONTEND_URL}/vi/auth/success?token=${token}`)
     return
   } catch (error: any) {
     console.error('Facebook callback error:', error?.response?.data || error.message)
@@ -1035,7 +1054,7 @@ export const refreshToken: RequestHandler = async (req, res): Promise<void> => {
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '10m' }
+      { expiresIn: '24h' }
     )
     res.json({ token })
   } catch (error) {
@@ -1066,6 +1085,13 @@ export const changePassword: RequestHandler = async (req: Request, res: Response
       return
     }
 
+    if (typeof user.passwordHash !== 'string' || !user.passwordHash) {
+      res.status(400).json({
+        success: false,
+        message: 'Current password is incorrect'
+      })
+      return
+    }
     // Verify current password
     const isMatch = await bcrypt.compare(currentPassword, user.passwordHash)
     if (!isMatch) {

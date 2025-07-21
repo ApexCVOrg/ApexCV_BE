@@ -4,7 +4,7 @@ import { User } from '../models/User'
 
 // Store last activity time for each user
 const userActivity = new Map<string, number>()
-const INACTIVITY_LIMIT = 60 * 60 * 1000 // 1 giờ
+const INACTIVITY_LIMIT = 15 * 60 * 1000 // 15 phút
 
 // Middleware to check user inactivity
 export const checkInactivity = (req: Request, res: Response, next: NextFunction): void => {
@@ -18,11 +18,11 @@ export const checkInactivity = (req: Request, res: Response, next: NextFunction)
   const lastActivity = userActivity.get(userId) || now
   const inactiveTime = now - lastActivity
 
-  // Nếu không hoạt động quá 10 phút thì xóa session và trả về 401
+  // Nếu không hoạt động quá 15 phút thì xóa session và trả về 401
   if (inactiveTime > INACTIVITY_LIMIT) {
     userActivity.delete(userId)
     req.session.destroy(() => {
-      res.status(401).json({ message: 'Phiên đăng nhập đã hết hạn do không hoạt động' })
+      res.status(401).json({ message: 'Phiên đăng nhập đã hết hạn do không hoạt động trong 15 phút' })
     })
     return
   }
