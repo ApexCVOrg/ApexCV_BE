@@ -55,9 +55,11 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     }))
 
     res.json(mappedCategories)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching categories:', error)
-    res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res
+      .status(500)
+      .json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
@@ -67,9 +69,9 @@ router.get('/tree', async (req: Request, res: Response): Promise<void> => {
     const categories = await Category.find().sort({ createdAt: 1 }).lean()
     const treeStructure = buildCategoryTree(categories)
     res.json(treeStructure)
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching category tree:', error)
-    res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
@@ -85,9 +87,9 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
     })
     const saved = await category.save()
     res.status(201).json({ ...saved.toObject(), message: CATEGORY_MESSAGES.CREATE_SUCCESS })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating category:', error)
-    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
@@ -113,9 +115,9 @@ router.put('/:id', async (req: Request<{ id: string }>, res: Response): Promise<
       return
     }
     res.json({ ...updated.toObject(), message: CATEGORY_MESSAGES.UPDATE_SUCCESS })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating category:', error)
-    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 
@@ -137,9 +139,9 @@ router.delete('/:id', async (req: Request<{ id: string }>, res: Response): Promi
       return
     }
     res.json({ message: CATEGORY_MESSAGES.DELETE_SUCCESS })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error deleting category:', error)
-    res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(500).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 })
 

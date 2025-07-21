@@ -22,8 +22,6 @@ import {
   getCustomerById,
   updateCustomer,
   deleteCustomer,
-  getSettings,
-  updateSettings,
   getSalesStats,
   getUserStats,
   getOrderStats,

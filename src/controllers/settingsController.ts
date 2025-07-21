@@ -143,4 +143,4 @@ export const updateIntegrations = async (req: Request, res: Response, next: Next
   } catch (err) {
     next(err)
   }
-} 
+}

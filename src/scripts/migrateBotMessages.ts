@@ -1,21 +1,21 @@
-import mongoose from 'mongoose';
-import { ChatMessageModel } from '../models/ChatMessage';
+import mongoose from 'mongoose'
+import { ChatMessageModel } from '../models/ChatMessage'
 
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/apexcv');
-    console.log('MongoDB connected successfully');
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority')
+    // MongoDB connected
   } catch (error) {
-    console.error('MongoDB connection error:', error);
-    process.exit(1);
+    console.error('MongoDB connection error:', error)
+    process.exit(1)
   }
-};
+}
 
 // Migrate bot messages from role 'manager' to 'bot'
 const migrateBotMessages = async () => {
   try {
-    console.log('Starting bot messages migration...');
+    console.log('Starting bot messages migration...')
 
     // Find all messages with role 'manager' that are likely bot messages
     // We'll identify them by common bot response patterns
@@ -30,7 +30,7 @@ const migrateBotMessages = async () => {
       'Chúng tôi sẵn sàng giúp đỡ',
       'Shop:',
       'Bot:'
-    ];
+    ]
 
     // Update messages that match bot patterns
     const updateResult = await ChatMessageModel.updateMany(
@@ -44,10 +44,10 @@ const migrateBotMessages = async () => {
           isBotMessage: true
         }
       }
-    );
+    )
 
-    console.log(`Migration completed! Updated ${updateResult.modifiedCount} messages.`);
-    
+    console.log(`Migration completed! Updated ${updateResult.modifiedCount} messages.`)
+
     // Also update messages that have isBotMessage flag but wrong role
     const updateBotFlagResult = await ChatMessageModel.updateMany(
       {
@@ -59,23 +59,22 @@ const migrateBotMessages = async () => {
           role: 'bot'
         }
       }
-    );
+    )
 
-    console.log(`Updated ${updateBotFlagResult.modifiedCount} messages with isBotMessage flag.`);
-
+    console.log(`Updated ${updateBotFlagResult.modifiedCount} messages with isBotMessage flag.`)
   } catch (error) {
-    console.error('Migration error:', error);
+    console.error('Migration error:', error)
   } finally {
-    await mongoose.disconnect();
-    console.log('MongoDB disconnected');
+    await mongoose.disconnect()
+    console.log('MongoDB disconnected')
   }
-};
+}
 
 // Run migration
 if (require.main === module) {
   connectDB().then(() => {
-    migrateBotMessages();
-  });
+    migrateBotMessages()
+  })
 }
 
-export { migrateBotMessages }; 
+export { migrateBotMessages }

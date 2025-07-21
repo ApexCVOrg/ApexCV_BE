@@ -1,7 +1,9 @@
 # 🎯 Tính năng Favorites - ApexCV Backend
 
 ## 📋 Tổng quan
+
 Đã thêm thành công tính năng **"Yêu thích" (Favorites)** vào backend ApexCV. Tính năng này cho phép người dùng:
+
 - Thêm/xóa sản phẩm vào danh sách yêu thích
 - Xem danh sách sản phẩm yêu thích
 - Truy cập favorites từ dropdown menu user
@@ -10,11 +12,13 @@
 ## 🏗️ Cấu trúc đã thêm
 
 ### 1. **Database Schema**
+
 - **File:** `src/models/User.ts`
 - **Thay đổi:** Thêm trường `favorites: [{ type: Schema.Types.ObjectId, ref: 'Product' }]`
 - **Mô tả:** Array chứa ObjectId của các sản phẩm yêu thích
 
 ### 2. **Controllers**
+
 - **File:** `src/controllers/favorites.controller.ts` (mới)
 - **File:** `src/controllers/user.controller.ts` (cập nhật)
 - **Chức năng:**
@@ -26,6 +30,7 @@
   - `clearFavorites()` - Xóa tất cả favorites
 
 ### 3. **Routes**
+
 - **File:** `src/routes/favorites.ts` (mới)
 - **File:** `src/routes/users.ts` (cập nhật)
 - **Endpoints:**
@@ -37,10 +42,12 @@
   - `DELETE /api/favorites/clear` - Xóa tất cả
 
 ### 4. **Constants**
+
 - **File:** `src/constants/routes.ts` (cập nhật)
 - **Thêm:** `FAVORITES_ROUTES` với các endpoint constants
 
 ### 5. **Main App**
+
 - **File:** `src/index.ts` (cập nhật)
 - **Thêm:** Đăng ký favorites router
 
@@ -48,22 +55,24 @@
 
 ### Base URL: `http://localhost:5000/api/favorites`
 
-| Method | Endpoint | Mô tả |
-|--------|----------|-------|
-| GET | `/` | Lấy danh sách favorites |
-| POST | `/add/:productId` | Thêm sản phẩm vào favorites |
-| DELETE | `/remove/:productId` | Xóa sản phẩm khỏi favorites |
-| GET | `/check/:productId` | Kiểm tra trạng thái favorite |
-| POST | `/toggle/:productId` | Toggle thêm/xóa favorites |
-| DELETE | `/clear` | Xóa tất cả favorites |
+| Method | Endpoint             | Mô tả                        |
+| ------ | -------------------- | ---------------------------- |
+| GET    | `/`                  | Lấy danh sách favorites      |
+| POST   | `/add/:productId`    | Thêm sản phẩm vào favorites  |
+| DELETE | `/remove/:productId` | Xóa sản phẩm khỏi favorites  |
+| GET    | `/check/:productId`  | Kiểm tra trạng thái favorite |
+| POST   | `/toggle/:productId` | Toggle thêm/xóa favorites    |
+| DELETE | `/clear`             | Xóa tất cả favorites         |
 
 ## 🔐 Authentication
+
 - Tất cả endpoints đều yêu cầu JWT token
 - Header: `Authorization: Bearer YOUR_TOKEN`
 
 ## 📊 Response Format
 
 ### Success Response
+
 ```json
 {
   "success": true,
@@ -76,6 +85,7 @@
 ```
 
 ### Error Response
+
 ```json
 {
   "success": false,
@@ -86,6 +96,7 @@
 ## 🔄 Integration với User Profile
 
 ### User Profile Response (cập nhật)
+
 ```json
 {
   "id": "user_id",
@@ -99,11 +110,13 @@
 ## 🧪 Testing
 
 ### Test Script
+
 - **File:** `test_favorites_api.js`
 - **Chạy:** `node test_favorites_api.js`
 - **Chức năng:** Test tất cả endpoints favorites
 
 ### Manual Testing với Postman
+
 1. Login để lấy token
 2. Sử dụng token trong header `Authorization: Bearer YOUR_TOKEN`
 3. Test các endpoints favorites
@@ -111,6 +124,7 @@
 ## 📁 Files đã tạo/cập nhật
 
 ### Files mới:
+
 - ✅ `src/controllers/favorites.controller.ts`
 - ✅ `src/routes/favorites.ts`
 - ✅ `FAVORITES_API_GUIDE.md`
@@ -118,6 +132,7 @@
 - ✅ `FAVORITES_FEATURE_SUMMARY.md`
 
 ### Files cập nhật:
+
 - ✅ `src/models/User.ts` - Thêm trường favorites
 - ✅ `src/controllers/user.controller.ts` - Thêm functions favorites
 - ✅ `src/routes/users.ts` - Thêm routes favorites
@@ -127,6 +142,7 @@
 ## 🎨 Frontend Integration
 
 ### Dropdown Menu User
+
 ```javascript
 // Thêm option "Favorites" vào dropdown
 {
@@ -137,19 +153,20 @@
 ```
 
 ### Favorites Page
+
 ```javascript
 // Component hiển thị danh sách favorites
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
-  
+
   useEffect(() => {
     fetchFavorites();
   }, []);
-  
+
   return (
     <div>
       <h1>My Favorites</h1>
-      {favorites.map(product => (
+      {favorites.map((product) => (
         <ProductCard key={product._id} product={product} />
       ))}
     </div>
@@ -158,24 +175,23 @@ const FavoritesPage = () => {
 ```
 
 ### Product Card với Favorite Button
+
 ```javascript
 const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  
+
   const toggleFavorite = async () => {
     const response = await fetch(`/api/favorites/toggle/${product._id}`, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     setIsFavorite(data.data.isFavorite);
   };
-  
+
   return (
     <div>
-      <button onClick={toggleFavorite}>
-        {isFavorite ? '❤️' : '🤍'}
-      </button>
+      <button onClick={toggleFavorite}>{isFavorite ? '❤️' : '🤍'}</button>
     </div>
   );
 };
@@ -184,11 +200,13 @@ const ProductCard = ({ product }) => {
 ## 🚀 Cách sử dụng
 
 1. **Start server:**
+
    ```bash
    npm run dev
    ```
 
 2. **Test API:**
+
    ```bash
    node test_favorites_api.js
    ```
@@ -214,7 +232,8 @@ const ProductCard = ({ product }) => {
 ## 🎯 Kết quả
 
 Tính năng Favorites đã được implement hoàn chỉnh và sẵn sàng cho frontend integration. Người dùng có thể:
+
 - Thêm/xóa sản phẩm yêu thích
 - Xem danh sách favorites từ dropdown menu
 - Truy cập trang favorites riêng biệt
-- Favorites được lưu trữ an toàn trong database 
+- Favorites được lưu trữ an toàn trong database

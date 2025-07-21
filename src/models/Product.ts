@@ -31,7 +31,7 @@ const sizeSchema = new Schema({
   sku: { type: String, required: true },
   size: String,
   stock: Number,
-  color: String,
+  color: String
 })
 
 const productSchema = new Schema({

@@ -47,7 +47,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     }
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId?: string; id?: string }
       console.log('Decoded token:', decoded)
 
       // Try both id and userId from token
@@ -69,7 +69,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
             return
           }
           req.user = user
-          console.log('User authenticated successfully')
+          // User authenticated
           next()
         })
         .catch((error) => {

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { Order } from '../models/Order'
 import { User } from '../models/User'
 import { Product } from '../models/Product'
@@ -480,7 +479,7 @@ const ordersData = [
     userEmail: 'user15@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: 'Bayern Munich Kids Tracksuit',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
@@ -708,7 +707,7 @@ const ordersData = [
     userEmail: 'user01@example.com',
     orderItems: [
       {
-        productName: "Arsenal Kids Home Jersey 2024/25",
+        productName: 'Arsenal Kids Home Jersey 2024/25',
         size: '6-7Y',
         color: 'Red',
         quantity: 1,
@@ -778,7 +777,7 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Home Jersey 2024/25",
+        productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '6-7Y',
         color: 'White',
         quantity: 1,
@@ -805,7 +804,7 @@ const ordersData = [
     userEmail: 'user04@example.com',
     orderItems: [
       {
-        productName: "Manchester United Kids Tracksuit",
+        productName: 'Manchester United Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 2,
@@ -874,7 +873,7 @@ const ordersData = [
         price: 979000
       },
       {
-        productName: "Juventus Kids Home Jersey 2024/25",
+        productName: 'Juventus Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Black',
         quantity: 1,
@@ -1001,33 +1000,6 @@ const ordersData = [
     isDelivered: false,
     orderStatus: 'paid'
   },
-  {
-    userEmail: 'user10@example.com',
-    orderItems: [
-      {
-        productName: "Arsenal Kids Football Boots",
-        size: '30',
-        color: 'Red',
-        quantity: 1,
-        price: 2199000
-      }
-    ],
-    shippingAddress: {
-      recipientName: 'Van J',
-      street: 'Nguyen Trai',
-      city: 'Hai Phong',
-      state: 'Hai Phong',
-      postalCode: '31000',
-      country: 'Vietnam',
-      phone: '0901000010'
-    },
-    paymentMethod: 'COD',
-    taxPrice: 219900,
-    shippingPrice: 50000,
-    totalPrice: 2468900,
-    isPaid: false,
-    orderStatus: 'pending'
-  },
   // TODAY'S ORDERS - For testing Today's Sales
   {
     userEmail: 'user01@example.com',
@@ -1097,14 +1069,14 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Home Jersey 2024/25",
+        productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
         price: 1499000
       },
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: 'Bayern Munich Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 1,
@@ -1246,85 +1218,86 @@ const findProductByName = async (productName: string) => {
     // Log all available products for debugging
     const allProducts = await Product.find({}, 'name')
     console.log(`❌ Product with name ${productName} not found`)
-    console.log(`Available products:`, allProducts.map(p => p.name))
+    console.log(
+      `Available products:`,
+      allProducts.map((p) => p.name)
+    )
     throw new Error(`Product with name ${productName} not found`)
   }
-  console.log(`✅ Found product: ${product.name}`)
+      // Found product
   return product._id
 }
 
 export const seedOrders = async () => {
-  try {
-    console.log('🔄 Starting order seeding...')
-    
-    // Check if products exist
-    const productCount = await Product.countDocuments()
-    console.log(`📊 Total products in database: ${productCount}`)
-    
-    if (productCount === 0) {
-      console.log('❌ No products found in database. Skipping order seeding.')
-      return []
-    }
-    
-    const createdOrders = []
+  console.log('🔄 Starting order seeding...')
 
-    for (const orderData of ordersData) {
-      // Check if order already exists by checking user, orderItems, and totalPrice
-      const userId = await findUserByEmail(orderData.userEmail)
-      
-      const orderItems = []
-      for (const item of orderData.orderItems) {
-        const productId = await findProductByName(item.productName)
-        orderItems.push({
-          product: productId,
-          size: [{
+  // Check if products exist
+  const productCount = await Product.countDocuments()
+  console.log(`📊 Total products in database: ${productCount}`)
+
+  if (productCount === 0) {
+    console.log('❌ No products found in database. Skipping order seeding.')
+    return []
+  }
+
+  const createdOrders = []
+
+  for (const orderData of ordersData) {
+    // Check if order already exists by checking user, orderItems, and totalPrice
+    const userId = await findUserByEmail(orderData.userEmail)
+
+    const orderItems = []
+    for (const item of orderData.orderItems) {
+      const productId = await findProductByName(item.productName)
+      orderItems.push({
+        product: productId,
+        size: [
+          {
             sku: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             size: item.size,
             stock: item.quantity,
             color: item.color
-          }],
-          quantity: item.quantity,
-          price: item.price
-        })
-      }
-
-      // Check if order with same user, similar items, and totalPrice already exists
-      const existingOrder = await Order.findOne({
-        user: userId,
-        totalPrice: orderData.totalPrice,
-        'orderItems.0.product': orderItems[0].product
+          }
+        ],
+        quantity: item.quantity,
+        price: item.price
       })
-
-      if (existingOrder) {
-        continue
-      }
-
-      const order = new Order({
-        user: userId,
-        orderItems,
-        shippingAddress: orderData.shippingAddress,
-        paymentMethod: orderData.paymentMethod,
-        paymentResult: orderData.paymentResult,
-        taxPrice: orderData.taxPrice,
-        shippingPrice: orderData.shippingPrice,
-        totalPrice: orderData.totalPrice,
-        isPaid: orderData.isPaid,
-        paidAt: orderData.paidAt,
-        isDelivered: orderData.isDelivered,
-        deliveredAt: orderData.deliveredAt,
-        orderStatus: orderData.orderStatus
-      })
-
-      const savedOrder = await order.save()
-      createdOrders.push(savedOrder)
-      console.log(`✅ Created order for user: ${orderData.userEmail}`)
     }
 
-    console.log(`\n📊 Order seeding summary:`)
-    console.log(`   Created: ${createdOrders.length} orders`)
-    
-    return createdOrders
-  } catch (error) {
-    throw error
+    // Check if order with same user, similar items, and totalPrice already exists
+    const existingOrder = await Order.findOne({
+      user: userId,
+      totalPrice: orderData.totalPrice,
+      'orderItems.0.product': orderItems[0].product
+    })
+
+    if (existingOrder) {
+      continue
+    }
+
+    const order = new Order({
+      user: userId,
+      orderItems,
+      shippingAddress: orderData.shippingAddress,
+      paymentMethod: orderData.paymentMethod,
+      paymentResult: orderData.paymentResult,
+      taxPrice: orderData.taxPrice,
+      shippingPrice: orderData.shippingPrice,
+      totalPrice: orderData.totalPrice,
+      isPaid: orderData.isPaid,
+      paidAt: orderData.paidAt,
+      isDelivered: orderData.isDelivered,
+      deliveredAt: orderData.deliveredAt,
+      orderStatus: orderData.orderStatus
+    })
+
+    const savedOrder = await order.save()
+    createdOrders.push(savedOrder)
+    // Order created
   }
-} 
+
+  console.log(`\n📊 Order seeding summary:`)
+  console.log(`   Created: ${createdOrders.length} orders`)
+
+  return createdOrders
+}
