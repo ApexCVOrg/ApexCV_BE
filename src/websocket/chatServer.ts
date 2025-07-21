@@ -48,7 +48,7 @@ class ChatWebSocketServer {
   private handleConnection(ws: WebSocket, request: { url?: string }) {
     try {
       // Extract token from query string
-      const url = new URL(request.url || '', 'http://localhost')
+      const url = new URL(request.url || '', 'https://apexcv-be.onrender.com')
       const token = url.searchParams.get('token')
 
       if (!token) {

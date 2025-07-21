@@ -88,8 +88,8 @@ const allowedOrigins = [
   'https://apex-cv-fe.vercel.app',
   'https://apex-cv-fe-git-main-nidas-projects-e8bff2a3.vercel.app/en',
   'https://apex-cv-fe-git-main-nidas-projects-e8bff2a3.vercel.app/vi',
-  'http://10.0.2.2:5000', // Android emulator
-  'http://10.0.3.2:5000', // Genymotion
+  'https://apex-cv-fe-git-main-nidas-projects-e8bff2a3.vercel.app', // Production frontend
+  'https://apex-cv-fe.vercel.app', // Alternative frontend
   ...EXTRA_ORIGINS
 ]
 
@@ -133,7 +133,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
+      mongoUrl: process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority',
       ttl: 10 * 60, // 10 minutes
       autoRemove: 'native'
     }),
@@ -166,7 +166,7 @@ app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
 app.use('/api/payment', paymentVnpayRoutes)
-app.use(API_BASE + '/coupon', couponRouter)
+app.use(API_BASE + '/coupons', couponRouter)
 
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
@@ -186,8 +186,8 @@ new ChatWebSocketServer(server)
 // Start server và log thêm IP LAN cho debug
 server.listen(PORT, HOST, async () => {
   await initializeServices()
-  console.log(`– Server đang chạy trên: http://${HOST}:${PORT}  (cho web/emulator)`)
-  console.log(`– WebSocket server: ws://${HOST}:${PORT}`)
+  console.log(`– Server đang chạy trên: https://apexcv-be.onrender.com  (production)`)
+  console.log(`– WebSocket server: wss://apexcv-be.onrender.com`)
   const lanIp = getLocalIp()
   if (lanIp) {
     console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)

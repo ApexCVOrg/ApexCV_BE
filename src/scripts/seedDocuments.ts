@@ -39,7 +39,7 @@ export const seedDocuments = async () => {
 if (require.main === module) {
   ;(async () => {
     try {
-      await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
+      await mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
       } as mongoose.ConnectOptions)

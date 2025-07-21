@@ -4,10 +4,10 @@ async function testMongoConnection() {
   try {
     console.log('Testing MongoDB connection...');
     
-    // Test 1: Local MongoDB
-    console.log('\n1. Testing local MongoDB...');
-    await mongoose.connect('mongodb://localhost:27017/nidas');
-    console.log('✅ Local MongoDB connected successfully');
+    // Test 1: MongoDB Atlas
+    console.log('\n1. Testing MongoDB Atlas...');
+    await mongoose.connect('mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority');
+    console.log('✅ MongoDB Atlas connected successfully');
     await mongoose.disconnect();
     
     // Test 2: MongoDB Atlas with simple connection
