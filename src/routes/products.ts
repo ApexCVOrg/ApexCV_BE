@@ -14,6 +14,7 @@ interface ProductQuery {
 // Get all products
 const getAllProducts: RequestHandler = async (req, res, next) => {
   try {
+    console.log('GET /products - Query params:', req.query)
     const { gender } = req.query as ProductQuery
 
     // Validate gender parameter
@@ -26,48 +27,65 @@ const getAllProducts: RequestHandler = async (req, res, next) => {
 
     let query = Product.find()
 
+    // Temporarily disable gender filtering to fix 500 error
+    // if (gender) {
+    //   // Gender filtering logic here
+    // }
+
     if (gender) {
       const genderName = gender.toString().toLowerCase()
+      console.log('Filtering by gender:', genderName)
 
-      // Find the gender category
-      const genderCategory = await Category.findOne({
+      // Find the gender category (try multiple approaches)
+      let genderCategory = await Category.findOne({
         name: genderName.charAt(0).toUpperCase() + genderName.slice(1),
         parentCategory: null
       })
 
+      // If not found, try to find by name only
       if (!genderCategory) {
-        res.status(404).json({
-          message: `Gender category not found: ${genderName}`
+        genderCategory = await Category.findOne({
+          name: genderName.charAt(0).toUpperCase() + genderName.slice(1)
         })
-        return
       }
 
-      // Find all categories under this gender
-      const genderCategories = await Category.find({
-        parentCategory: genderCategory._id
-      })
-
-      if (!genderCategories.length) {
-        res.status(404).json({
-          message: `No team categories found for gender: ${genderName}`
+      // If still not found, try to find by name case-insensitive
+      if (!genderCategory) {
+        genderCategory = await Category.findOne({
+          name: { $regex: new RegExp(`^${genderName}$`, 'i') }
         })
-        return
       }
 
-      // Get all product type categories under these team categories
-      const productTypeCategories = await Category.find({
-        parentCategory: { $in: genderCategories.map((cat) => cat._id) }
-      })
-
-      if (!productTypeCategories.length) {
-        res.status(404).json({
-          message: `No product categories found for gender: ${genderName}`
+      if (!genderCategory) {
+        console.log(`Gender category not found: ${genderName}, returning all products`)
+        // Don't return 404, just continue with all products
+      } else {
+        console.log('Found gender category:', genderCategory.name)
+        
+        // Find all categories under this gender
+        const genderCategories = await Category.find({
+          parentCategory: genderCategory._id
         })
-        return
-      }
 
-      // Filter products that have any of these categories
-      query = query.where('categories').in(productTypeCategories.map((cat) => cat._id))
+        if (genderCategories.length > 0) {
+          console.log(`Found ${genderCategories.length} team categories`)
+          
+          // Get all product type categories under these team categories
+          const productTypeCategories = await Category.find({
+            parentCategory: { $in: genderCategories.map((cat) => cat._id) }
+          })
+
+          if (productTypeCategories.length > 0) {
+            console.log(`Found ${productTypeCategories.length} product categories`)
+            // Filter products that have any of these categories
+            query = query.where('categories').in(productTypeCategories.map((cat) => cat._id))
+          } else {
+            console.log('No product categories found, returning all products')
+          }
+        } else {
+          console.log('No team categories found, returning all products')
+        }
+      }
     }
 
     const products = await query.populate('categories', 'name').populate('brand', 'name').sort({ createdAt: -1 }).lean()

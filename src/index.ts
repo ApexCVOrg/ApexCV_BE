@@ -166,7 +166,7 @@ app.use(MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
 app.use(USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use('/checkout', checkoutRouter)
-app.use('/api/payment', paymentVnpayRoutes)
+app.use('/payment', paymentVnpayRoutes)
 app.use('/coupons', couponRouter)
 
 app.use(CHAT_ROUTES.BASE, chatRouter)
