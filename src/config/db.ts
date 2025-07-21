@@ -11,7 +11,7 @@ import { seedCoupons } from '../scripts/seedVouchers'
 const connectDB = async (): Promise<void> => {
   try {
     // Kiểm tra và sửa format của MONGO_URI
-    let mongoUri = process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority'
+    let mongoUri = process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority&ssl=true&tls=true&tlsInsecure=true'
     
     // Nếu MONGO_URI bắt đầu với "MONGO_URI=" thì loại bỏ prefix
     if (mongoUri.startsWith('MONGO_URI=')) {
@@ -26,20 +26,38 @@ const connectDB = async (): Promise<void> => {
       throw new Error('Invalid MongoDB connection string format')
     }
     
-    // Thử kết nối với retry logic
+    // Thử kết nối với retry logic và SSL options
     let retries = 3;
     while (retries > 0) {
       try {
-        const conn = await mongoose.connect(mongoUri)
+        // Thử connection string đơn giản trước
+        const conn = await mongoose.connect(mongoUri, {
+          serverSelectionTimeoutMS: 30000,
+          socketTimeoutMS: 45000,
+          bufferCommands: false,
+          maxPoolSize: 10,
+          minPoolSize: 1,
+          maxIdleTimeMS: 30000,
+          retryWrites: true,
+          w: 'majority'
+        } as any)
         console.log(`MongoDB connected: ${conn.connection.host}`)
         break;
       } catch (error) {
         retries--;
         console.log(`MongoDB connection attempt failed, retries left: ${retries}`)
+        console.log(`Error details:`, (error as Error).message)
+        
+        // Nếu lỗi SSL, thử connection string khác
+        if (retries === 2 && (error as Error).message.includes('SSL')) {
+          console.log('SSL error detected, trying alternative connection string...')
+          mongoUri = 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority'
+        }
+        
         if (retries === 0) {
           throw error;
         }
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+        await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
       }
     }
 

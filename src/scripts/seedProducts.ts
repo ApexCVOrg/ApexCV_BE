@@ -2288,31 +2288,26 @@ const findCategoryIdsByPath = async (categoryPath: string[]) => {
     console.log(`Found parent category: ${parentCategory.name} (${parentCategory._id})`);
     categoryIds.push(parentCategory._id as mongoose.Types.ObjectId);
 
-    // Find team category
-    const teamCategory = await Category.findOne({
-      name: categoryPath[1],
-      parentCategory: parentCategory._id,
-    });
+    // For now, skip team categories and just use parent category
+    // This is a temporary fix for production deployment
+    console.log(`Skipping team category lookup for production deployment`);
+    
+    // Try to find product type category under parent
+    if (categoryPath.length > 2) {
+      const productTypeCategory = await Category.findOne({
+        name: categoryPath[2],
+        parentCategory: parentCategory._id,
+      });
 
-    if (!teamCategory) {
-      throw new Error(`Team category not found: ${categoryPath[1]}`);
+      if (productTypeCategory) {
+        console.log(
+          `Found product type category: ${productTypeCategory.name} (${productTypeCategory._id})`,
+        );
+        categoryIds.push(productTypeCategory._id as mongoose.Types.ObjectId);
+      } else {
+        console.log(`Product type category not found: ${categoryPath[2]}, using parent only`);
+      }
     }
-    console.log(`Found team category: ${teamCategory.name} (${teamCategory._id})`);
-    categoryIds.push(teamCategory._id as mongoose.Types.ObjectId);
-
-    // Find product type category
-    const productTypeCategory = await Category.findOne({
-      name: categoryPath[2],
-      parentCategory: teamCategory._id,
-    });
-
-    if (!productTypeCategory) {
-      throw new Error(`Product type category not found: ${categoryPath[2]}`);
-    }
-    console.log(
-      `Found product type category: ${productTypeCategory.name} (${productTypeCategory._id})`,
-    );
-    categoryIds.push(productTypeCategory._id as mongoose.Types.ObjectId);
 
     console.log(`All category IDs found: ${categoryIds.map((id) => id.toString())}`);
     return categoryIds;

@@ -10,6 +10,7 @@ import path from 'path'
 import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
 import ChatWebSocketServer from './websocket/chatServer'
+import { seedUsers } from './scripts/seedUsers.js'
 
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
@@ -59,6 +60,13 @@ dotenv.config()
 const initializeServices = async () => {
   try {
     await connectDB()
+    
+    // Seed users for production
+    if (process.env.NODE_ENV === 'production') {
+      console.log('🔄 Seeding users for production...')
+      await seedUsers()
+    }
+    
     suggestionsService.initialize()
     console.log('✅ All services initialized successfully')
   } catch (error) {
