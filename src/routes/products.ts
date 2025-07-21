@@ -27,6 +27,39 @@ const getAllProducts: RequestHandler = async (req, res, next) => {
 
     let query = Product.find()
 
+    // Filter theo categorySlug và subSlug nếu có
+    if (req.query.categorySlug && req.query.subSlug) {
+      const parentCat = await Category.findOne({ name: new RegExp('^' + req.query.categorySlug + '$', 'i'), parentCategory: null });
+      if (parentCat) {
+        const subCat = await Category.findOne({ name: new RegExp('^' + req.query.subSlug + '$', 'i'), parentCategory: parentCat._id });
+        if (subCat) {
+          query = query.where('categories').in([subCat._id]);
+        } else {
+          query = query.where('_id').in([]); // Không có category con, trả về rỗng
+        }
+      } else {
+        query = query.where('_id').in([]); // Không có category cha, trả về rỗng
+      }
+    } else if (req.query.categorySlug) {
+      const parentCat = await Category.findOne({ name: new RegExp('^' + req.query.categorySlug + '$', 'i'), parentCategory: null });
+      if (parentCat) {
+        const subCategories = await Category.find({ parentCategory: parentCat._id }).select('_id');
+        const subCategoryIds = subCategories.map(cat => cat._id);
+        query = query.where('categories').in(subCategoryIds);
+      } else {
+        query = query.where('_id').in([]);
+      }
+    } else if (req.query.category) {
+      const categoryId = req.query.category.toString();
+      query = query.where('categories').in([categoryId]);
+    }
+
+    // Filter theo tag nếu có
+    if (req.query.tag) {
+      const tags = req.query.tag.toString().split(',').map((t: string) => t.trim());
+      query = query.where('tags').all(tags);
+    }
+
     if (gender) {
       const genderName = gender.toString().toLowerCase()
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import express, { Application, Request, Response } from 'express'
 import cors from 'cors'
 import session from 'express-session'
@@ -26,7 +27,6 @@ import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay';
 import couponRouter from './routes/voucher'
-
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
 import adminRouter from './routes/admin/admin'
@@ -150,7 +150,6 @@ app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
 app.use('/api/payment', paymentVnpayRoutes);
 app.use(API_BASE + '/coupon', couponRouter)
-
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)

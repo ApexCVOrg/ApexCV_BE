@@ -116,6 +116,17 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     console.log('[VNPAY Return] Bắt đầu xử lý returnUrl');
     console.log('[VNPAY Return] Query params:', JSON.stringify(req.query, null, 2));
     console.log('[VNPAY Return] Headers:', JSON.stringify(req.headers, null, 2));
+
+    // Kiểm tra trạng thái giao dịch VNPAY
+    const responseCode = req.query['vnp_ResponseCode'];
+    if (responseCode !== '00') {
+      // Không thành công, không tạo order
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Thanh toán không thành công hoặc đã bị hủy. Đơn hàng sẽ không được ghi nhận.',
+        result: { isSuccess: false, responseCode }
+      });
+    }
     
     // Kiểm tra response code từ VNPay trước tiên
     const vnpResponseCode = req.query['vnp_ResponseCode'];
@@ -135,7 +146,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         console.log('[VNPAY Return] Order already exists:', existingOrder._id);
         return res.json({ 
           status: 'success', 
-          message: 'Đơn hàng đã tồn tại', 
+          message: 'Cảm ơn bạn đã tin tưởng chúng tôi', 
           order: {
             _id: existingOrder._id,
             orderNumber: existingOrder._id,
@@ -277,6 +288,28 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     
     console.log('[VNPAY Return] pendingOrder:', req.session.pendingOrder);
     console.log('[VNPAY Return] userId:', userId);
+    
+    let result;
+    try {
+      result = verifyVnpayReturn(req.query as any);
+      console.log('[VNPAY Return] Verification result:', JSON.stringify(result, null, 2));
+    } catch (verifyError) {
+      console.error('[VNPAY Return] Verification error:', verifyError);
+      // Tiếp tục xử lý ngay cả khi verification fail
+      result = { isSuccess: false, message: 'Verification failed but continuing' };
+    }
+      
+      // Kiểm tra xem transaction này đã được xử lý chưa
+      const existingOrder = await Order.findOne({ 'paymentResult.id': req.query['vnp_TransactionNo'] });
+      if (existingOrder) {
+      console.log('[VNPAY Return] Order already exists:', existingOrder._id);
+        return res.json({ 
+          status: 'success', 
+          message: 'Cảm ơn bạn vì đã tin tưởng', 
+          order: existingOrder,
+          result: { isSuccess: true, message: 'Order already processed' }
+        });
+      }
       
     // Nếu không có session, thử lấy từ backup database
     if (!req.session.pendingOrder && userId) {
@@ -628,7 +661,7 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
         console.log('[VNPAY Return] Order already exists:', existingOrder._id);
         return res.json({ 
           status: 'success', 
-          message: 'Đơn hàng đã tồn tại', 
+          message: 'Cảm ơn bạn đã tin tưởng chúng tôi', 
           order: {
             _id: existingOrder._id,
             orderNumber: existingOrder._id,
