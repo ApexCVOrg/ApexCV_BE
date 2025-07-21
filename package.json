@@ -2,6 +2,9 @@
   "name": "apexcv-be",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "npx nodemon",
     "build": "rimraf ./dist && tsc && tsc-alias",
@@ -49,8 +52,6 @@
     "typescript-eslint": "^8.32.1"
   },
   "dependencies": {
-    "@google-cloud/aiplatform": "^4.3.0",
-    "@google/generative-ai": "^0.24.1",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/connect-mongo": "^3.1.2",

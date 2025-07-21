@@ -179,22 +179,23 @@ const server = createServer(app)
 // Initialize WebSocket server
 new ChatWebSocketServer(server)
 
-// Start server ngay lập tức cho Render
-server.listen(PORT, HOST, async () => {
-  console.log(`– Server đang chạy trên: https://apexcv-be.onrender.com  (production)`)
-  console.log(`– WebSocket server: wss://apexcv-be.onrender.com`)
-  const lanIp = getLocalIp()
-  if (lanIp) {
-    console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
-    console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
-  }
-  
-  // Khởi tạo services sau khi server đã listen
+// Start server và log thêm IP LAN cho debug
+const startServer = async () => {
   try {
     await initializeServices()
-    console.log('✅ Services initialized successfully')
+    server.listen(PORT, HOST, () => {
+      console.log(`– Server đang chạy trên: https://nidas-be.onrender.com  (production)`)
+      console.log(`– WebSocket server: wss://nidas-be.onrender.com`)
+      const lanIp = getLocalIp()
+      if (lanIp) {
+        console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
+        console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+      }
+    })
   } catch (error) {
-    console.error('❌ Error initializing services:', error)
-    // Không exit process, chỉ log error
+    console.error('❌ Failed to start server:', error)
+    process.exit(1)
   }
-})
+}
+
+startServer()
