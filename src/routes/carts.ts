@@ -6,12 +6,37 @@ import { authenticateToken } from '../middlewares/auth';
 
 const router: Router = express.Router();
 
+// Rate limiting for cart requests
+const requestCache = new Map<string, { timestamp: number; promise: Promise<any> }>();
+const CACHE_DURATION = 2000; // 2 seconds cache
+
+// Cleanup old cache entries every 5 seconds
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, value] of requestCache.entries()) {
+    if (now - value.timestamp > CACHE_DURATION) {
+      requestCache.delete(key);
+    }
+  }
+}, 5000);
+
 // Lấy giỏ hàng của user hiện tại
 router.get('/user', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     console.log('GET /carts/user - Request received');
     const userId = (req as any).user.id;
     console.log('User ID:', userId);
+    
+    // Check if we have a recent request for this user
+    const cacheKey = `cart_${userId}`;
+    const cachedRequest = requestCache.get(cacheKey);
+    
+    if (cachedRequest && Date.now() - cachedRequest.timestamp < CACHE_DURATION) {
+      console.log('Returning cached cart response for user:', userId);
+      const result = await cachedRequest.promise;
+      res.json(result);
+      return;
+    }
     
     // Add timeout protection - increased to 30 seconds
     const timeoutPromise = new Promise((_, reject) => {
@@ -26,7 +51,16 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
       })
       .lean(); // Use lean() for better performance
     
-    let cart = await Promise.race([cartPromise, timeoutPromise]) as any;
+    // Create new promise for this request
+    const newPromise = Promise.race([cartPromise, timeoutPromise]) as Promise<any>;
+    
+    // Cache this request
+    requestCache.set(cacheKey, {
+      timestamp: Date.now(),
+      promise: newPromise
+    });
+    
+    let cart = await newPromise;
     console.log('Cart found:', cart ? 'Yes' : 'No');
 
     if (!cart) {
@@ -55,9 +89,19 @@ router.get('/user', authenticateToken, async (req: Request, res: Response): Prom
       return { ...item, stock };
     });
     
-    res.json({ ...cart, cartItems });
+    const result = { ...cart, cartItems };
+    res.json(result);
+    
+    // Clean up cache after successful response
+    requestCache.delete(cacheKey);
   } catch (error) {
     console.error('Cart API Error:', error);
+    
+    // Clean up cache on error
+    const userId = (req as any).user.id;
+    const cacheKey = `cart_${userId}`;
+    requestCache.delete(cacheKey);
+    
     if (error instanceof Error && error.message === 'Request timeout') {
       res.status(408).json({ message: 'Request timeout - server is busy, please try again' });
     } else {
