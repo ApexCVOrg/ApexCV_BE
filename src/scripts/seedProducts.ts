@@ -1731,40 +1731,51 @@ const productsData = [
 const findCategoryIdsByPath = async (categoryPath: string[]) => {
   const categoryIds: mongoose.Types.ObjectId[] = []
 
-  // Find parent category
-  const parentCategory = (await Category.findOne({
-    name: categoryPath[0],
-    parentCategory: null
-  })) as mongoose.Document & { _id: mongoose.Types.ObjectId }
+  try {
+    console.log(`Finding categories for path: ${categoryPath.join(' > ')}`)
 
-  if (!parentCategory) {
-    throw new Error(`Parent category not found: ${categoryPath[0]}`)
+    // Find parent category
+    const parentCategory = await Category.findOne({
+      name: categoryPath[0],
+      parentCategory: null
+    })
+
+    if (!parentCategory) {
+      throw new Error(`Parent category not found: ${categoryPath[0]}`)
+    }
+    console.log(`Found parent category: ${parentCategory.name} (${parentCategory._id})`)
+    categoryIds.push(parentCategory._id as mongoose.Types.ObjectId)
+
+    // Find team category
+    const teamCategory = await Category.findOne({
+      name: categoryPath[1],
+      parentCategory: parentCategory._id
+    })
+
+    if (!teamCategory) {
+      throw new Error(`Team category not found: ${categoryPath[1]}`)
+    }
+    console.log(`Found team category: ${teamCategory.name} (${teamCategory._id})`)
+    categoryIds.push(teamCategory._id as mongoose.Types.ObjectId)
+
+    // Find product type category
+    const productTypeCategory = await Category.findOne({
+      name: categoryPath[2],
+      parentCategory: teamCategory._id
+    })
+
+    if (!productTypeCategory) {
+      throw new Error(`Product type category not found: ${categoryPath[2]}`)
+    }
+    console.log(`Found product type category: ${productTypeCategory.name} (${productTypeCategory._id})`)
+    categoryIds.push(productTypeCategory._id as mongoose.Types.ObjectId)
+
+    console.log(`All category IDs found: ${categoryIds.map(id => id.toString())}`)
+    return categoryIds
+  } catch (error) {
+    console.error(`Error finding categories for path ${categoryPath.join(' > ')}:`, error)
+    throw error
   }
-  categoryIds.push(parentCategory._id)
-
-  // Find team category
-  const teamCategory = (await Category.findOne({
-    name: categoryPath[1],
-    parentCategory: parentCategory._id
-  })) as mongoose.Document & { _id: mongoose.Types.ObjectId }
-
-  if (!teamCategory) {
-    throw new Error(`Team category not found: ${categoryPath[1]}`)
-  }
-  categoryIds.push(teamCategory._id)
-
-  // Find product type category
-  const productTypeCategory = (await Category.findOne({
-    name: categoryPath[2],
-    parentCategory: teamCategory._id
-  })) as mongoose.Document & { _id: mongoose.Types.ObjectId }
-
-  if (!productTypeCategory) {
-    throw new Error(`Product type category not found: ${categoryPath[2]}`)
-  }
-  categoryIds.push(productTypeCategory._id)
-
-  return categoryIds
 }
 
 // Function to update product images in MongoDB
@@ -1844,6 +1855,10 @@ export const updateAllProductImages = async () => {
 export const seedProducts = async () => {
   try {
     console.log('🔄 Starting product seeding and image updates...')
+    console.log(`📊 Total products to process: ${productsData.length}`)
+    
+    let createdCount = 0
+    let updatedCount = 0
     
     for (const product of productsData) {
       // Check if product already exists
@@ -1864,39 +1879,79 @@ export const seedProducts = async () => {
           console.log(`🔄 Auto-updated images for: ${product.name}`)
           console.log(`   Old images: ${currentImages.join(', ')}`)
           console.log(`   New images: ${newImages.join(', ')}`)
+          updatedCount++
+        } else {
+          console.log(`✅ Product already exists: ${product.name}`)
         }
         continue
       }
 
       // Get brand ObjectId
+      console.log(`Looking for brand: ${product.brand}`)
       const brand = await Brand.findOne({ name: product.brand })
       if (!brand) {
         console.error(`❌ Brand not found: ${product.brand}`)
         continue
       }
+      
+      console.log(`Found brand: ${brand.name} (${brand._id})`)
 
       try {
         // Get category IDs from path
+        console.log(`Processing product: ${product.name}`)
+        console.log(`Category path: ${product.categoryPath.join(' > ')}`)
+        
+        // Check if categories exist before trying to find them
+        const allCategories = await Category.find({})
+        console.log(`Total categories in database: ${allCategories.length}`)
+        console.log(`Categories:`, allCategories.map(c => `${c.name} (parent: ${c.parentCategory})`))
+        
         const categoryIds = await findCategoryIdsByPath(product.categoryPath)
         
-        // Create new product
-        const newProduct = await new Product({
+        // Create new product with proper data validation
+        const productData = {
           name: product.name,
           description: product.description,
           price: product.price,
           discountPrice: product.discountPrice || null,
           categories: categoryIds,
-          images: product.images,
+          images: product.images || [],
           sizes: product.sizes || [],
+          colors: product.colors || [],
           tags: product.tags || [],
           brand: brand._id,
           status: product.status || 'active'
-        }).save()
+        }
+        
+        console.log(`Creating product: ${product.name}`)
+        console.log(`Product data:`, JSON.stringify(productData, null, 2))
+        
+        // Validate data before creating
+        if (!productData.name || !productData.price || !productData.brand) {
+          console.error(`❌ Invalid product data for ${product.name}`)
+          continue
+        }
+        
+        try {
+          const newProduct = await new Product(productData).save()
+          console.log(`✅ Created product: ${newProduct.name}`)
+          createdCount++
+        } catch (productError) {
+          console.error(`❌ Error creating product ${product.name}:`, productError)
+          console.error(`Product data that failed:`, productData)
+          continue
+        }
       } catch (error) {
         console.error(`❌ Error processing categories for ${product.name}:`, error)
         continue
       }
     }
+    
+    console.log(`\n📊 Product seeding summary:`)
+    console.log(`   Created: ${createdCount} products`)
+    console.log(`   Updated: ${updatedCount} products`)
+    console.log(`   Total processed: ${createdCount + updatedCount} products`)
+    
   } catch (error) {
     console.error('\n❌ Error seeding products:', error)
     throw error

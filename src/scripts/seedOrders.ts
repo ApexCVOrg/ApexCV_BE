@@ -708,11 +708,11 @@ const ordersData = [
     userEmail: 'user01@example.com',
     orderItems: [
       {
-        productName: "Arsenal Kids Football Boots",
-        size: '29',
+        productName: "Arsenal Kids Home Jersey 2024/25",
+        size: '6-7Y',
         color: 'Red',
         quantity: 1,
-        price: 2199000
+        price: 1399000
       }
     ],
     shippingAddress: {
@@ -725,9 +725,9 @@ const ordersData = [
       phone: '0901000001'
     },
     paymentMethod: 'COD',
-    taxPrice: 219900,
+    taxPrice: 139900,
     shippingPrice: 50000,
-    totalPrice: 2468900,
+    totalPrice: 1598900,
     isPaid: false,
     orderStatus: 'pending'
   },
@@ -1196,11 +1196,11 @@ const ordersData = [
     userEmail: 'baotuangay@gmail.com',
     orderItems: [
       {
-        productName: "Arsenal Women's Training Shoes",
-        size: '38',
+        productName: "Arsenal Women's Training Hoodie",
+        size: 'M',
         color: 'Red',
         quantity: 1,
-        price: 2499000
+        price: 1599000
       }
     ],
     shippingAddress: {
@@ -1220,9 +1220,9 @@ const ordersData = [
       update_time: '2025-07-20T12:00:00Z',
       email_address: 'baotuangay@gmail.com'
     },
-    taxPrice: 249900,
+    taxPrice: 159900,
     shippingPrice: 50000,
-    totalPrice: 2798900,
+    totalPrice: 1808900,
     isPaid: true,
     paidAt: new Date('2025-07-20T12:00:00Z'),
     isDelivered: true,
@@ -1240,15 +1240,32 @@ const findUserByEmail = async (email: string) => {
 }
 
 const findProductByName = async (productName: string) => {
+  console.log(`🔍 Looking for product: ${productName}`)
   const product = await Product.findOne({ name: productName })
   if (!product) {
+    // Log all available products for debugging
+    const allProducts = await Product.find({}, 'name')
+    console.log(`❌ Product with name ${productName} not found`)
+    console.log(`Available products:`, allProducts.map(p => p.name))
     throw new Error(`Product with name ${productName} not found`)
   }
+  console.log(`✅ Found product: ${product.name}`)
   return product._id
 }
 
 export const seedOrders = async () => {
   try {
+    console.log('🔄 Starting order seeding...')
+    
+    // Check if products exist
+    const productCount = await Product.countDocuments()
+    console.log(`📊 Total products in database: ${productCount}`)
+    
+    if (productCount === 0) {
+      console.log('❌ No products found in database. Skipping order seeding.')
+      return []
+    }
+    
     const createdOrders = []
 
     for (const orderData of ordersData) {
@@ -1260,8 +1277,12 @@ export const seedOrders = async () => {
         const productId = await findProductByName(item.productName)
         orderItems.push({
           product: productId,
-          size: item.size,
-          color: item.color,
+          size: [{
+            sku: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            size: item.size,
+            stock: item.quantity,
+            color: item.color
+          }],
           quantity: item.quantity,
           price: item.price
         })
@@ -1271,9 +1292,7 @@ export const seedOrders = async () => {
       const existingOrder = await Order.findOne({
         user: userId,
         totalPrice: orderData.totalPrice,
-        'orderItems.0.product': orderItems[0].product,
-        'orderItems.0.size': orderItems[0].size,
-        'orderItems.0.color': orderItems[0].color
+        'orderItems.0.product': orderItems[0].product
       })
 
       if (existingOrder) {
@@ -1298,8 +1317,12 @@ export const seedOrders = async () => {
 
       const savedOrder = await order.save()
       createdOrders.push(savedOrder)
+      console.log(`✅ Created order for user: ${orderData.userEmail}`)
     }
 
+    console.log(`\n📊 Order seeding summary:`)
+    console.log(`   Created: ${createdOrders.length} orders`)
+    
     return createdOrders
   } catch (error) {
     throw error

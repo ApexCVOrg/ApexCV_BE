@@ -59,6 +59,7 @@ const categoriesData = [
         {
           name: "Arsenal",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -72,6 +73,7 @@ const categoriesData = [
         {
           name: "Juventus",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -85,6 +87,7 @@ const categoriesData = [
         {
           name: "Bayern Munich",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -98,6 +101,7 @@ const categoriesData = [
         {
           name: "Real Madrid",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -111,6 +115,7 @@ const categoriesData = [
         {
           name: "Manchester United",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -155,6 +160,7 @@ const categoriesData = [
         {
           name: "Arsenal",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -168,6 +174,7 @@ const categoriesData = [
         {
           name: "Juventus",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -181,6 +188,7 @@ const categoriesData = [
         {
           name: "Bayern Munich",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -194,6 +202,7 @@ const categoriesData = [
         {
           name: "Real Madrid",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -207,6 +216,7 @@ const categoriesData = [
         {
           name: "Manchester United",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -251,6 +261,7 @@ const categoriesData = [
         {
           name: "Arsenal",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -264,6 +275,7 @@ const categoriesData = [
         {
           name: "Juventus",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -277,6 +289,7 @@ const categoriesData = [
         {
           name: "Bayern Munich",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -290,6 +303,7 @@ const categoriesData = [
         {
           name: "Real Madrid",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -303,6 +317,7 @@ const categoriesData = [
         {
           name: "Manchester United",
           subcategories: [
+            "Jersey",
             "Sneakers",
             "T-Shirts",
             "Shorts",
@@ -331,6 +346,7 @@ export const seedCategories = async () => {
     }
 
     console.log('Starting to seed categories...')
+    console.log(`Total categories to create: ${categoriesData.length}`)
 
     // Create all parent categories
     const parentCategories = []
@@ -354,8 +370,12 @@ export const seedCategories = async () => {
     for (const cat of categoriesData) {
       const parent = parentMap.get(cat.name)
       if (!parent) {
+        console.log(`❌ Parent category not found: ${cat.name}`)
         continue
       }
+      
+      console.log(`Processing parent category: ${cat.name}`)
+      console.log(`Subcategories count: ${cat.subcategories.length}`)
       
       for (const sub of cat.subcategories) {
         // Create team category for this parent
@@ -371,6 +391,7 @@ export const seedCategories = async () => {
           console.log(`  Team category exists: ${cat.name} > ${sub.name}`)
         }
         // Create product type subcategories for this team
+        console.log(`  Creating product types for ${sub.name}: ${sub.subcategories.join(', ')}`)
         for (const productType of sub.subcategories) {
           let productTypeCat = await Category.findOne({ name: productType, parentCategory: teamCategory._id })
           if (!productTypeCat) {
