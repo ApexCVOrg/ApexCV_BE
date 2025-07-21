@@ -1,12 +1,12 @@
 // src/config/db.ts
 import mongoose from 'mongoose'
-import { seedCategories } from '../scripts/seedCategories'
-import { seedProducts } from '../scripts/seedProducts'
-import { seedBrands } from '../scripts/seedBrands'
-import { seedOrders } from '../scripts/seedOrders'
-import { seedDocuments } from '../scripts/seedDocuments'
-import { seedChatData } from '../scripts/seedChatData'
-import { seedCoupons } from '../scripts/seedVouchers'
+// import { seedCategories } from '../scripts/seedCategories'
+// import { seedProducts } from '../scripts/seedProducts'
+// import { seedBrands } from '../scripts/seedBrands'
+// import { seedOrders } from '../scripts/seedOrders'
+// import { seedDocuments } from '../scripts/seedDocuments'
+// import { seedChatData } from '../scripts/seedChatData'
+// import { seedCoupons } from '../scripts/seedVouchers'
 
 const connectDB = async (): Promise<void> => {
   try {

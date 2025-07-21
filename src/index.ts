@@ -10,7 +10,7 @@ import path from 'path'
 import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
 import ChatWebSocketServer from './websocket/chatServer'
-import { seedUsers } from './scripts/seedUsers.js'
+
 
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
@@ -61,11 +61,7 @@ const initializeServices = async () => {
   try {
     await connectDB()
     
-    // Seed users for production
-    if (process.env.NODE_ENV === 'production') {
-      console.log('🔄 Seeding users for production...')
-      await seedUsers()
-    }
+
     
     suggestionsService.initialize()
     // Services initialized
@@ -184,13 +180,22 @@ const server = createServer(app)
 new ChatWebSocketServer(server)
 
 // Start server và log thêm IP LAN cho debug
-server.listen(PORT, HOST, async () => {
-  await initializeServices()
-  console.log(`– Server đang chạy trên: https://apexcv-be.onrender.com  (production)`)
-  console.log(`– WebSocket server: wss://apexcv-be.onrender.com`)
-  const lanIp = getLocalIp()
-  if (lanIp) {
-    console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
-    console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+const startServer = async () => {
+  try {
+    await initializeServices()
+    server.listen(PORT, HOST, () => {
+      console.log(`– Server đang chạy trên: https://apexcv-be.onrender.com  (production)`)
+      console.log(`– WebSocket server: wss://apexcv-be.onrender.com`)
+      const lanIp = getLocalIp()
+      if (lanIp) {
+        console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
+        console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+      }
+    })
+  } catch (error) {
+    console.error('❌ Failed to start server:', error)
+    process.exit(1)
   }
-})
+}
+
+startServer()
