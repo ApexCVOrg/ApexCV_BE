@@ -88,9 +88,9 @@ export const createPayment = (req: Request, res: Response) => {
       
       // Tạo URL thanh toán sau khi session đã được lưu
       try {
-        const url = createVnpayPayment(req.body);
+    const url = createVnpayPayment(req.body);
         console.log('[VNPAY] Generated payment URL:', url);
-        res.json({ paymentUrl: url });
+    res.json({ paymentUrl: url });
       } catch (paymentError) {
         console.error('[VNPAY] Error creating payment URL:', paymentError);
         res.status(400).json({ 
