@@ -1,0 +1,644 @@
+{
+  "default": {
+    "XS": {
+      "chest": 85,
+      "waist": 70,
+      "hip": 90
+    },
+    "S": {
+      "chest": 90,
+      "waist": 75,
+      "hip": 95
+    },
+    "M": {
+      "chest": 95,
+      "waist": 80,
+      "hip": 100
+    },
+    "L": {
+      "chest": 100,
+      "waist": 85,
+      "hip": 105
+    },
+    "XL": {
+      "chest": 105,
+      "waist": 90,
+      "hip": 110
+    },
+    "XXL": {
+      "chest": 110,
+      "waist": 95,
+      "hip": 115
+    }
+  },
+  "687e5b50d598cabd359f5743": {
+    "S": {
+      "chest": 92,
+      "waist": 76,
+      "hip": 96
+    },
+    "M": {
+      "chest": 97,
+      "waist": 81,
+      "hip": 101
+    },
+    "L": {
+      "chest": 102,
+      "waist": 86,
+      "hip": 106
+    },
+    "XL": {
+      "chest": 107,
+      "waist": 91,
+      "hip": 111
+    }
+  },
+  "687e5b50d598cabd359f5752": {
+    "M": {
+      "chest": 98,
+      "waist": 82,
+      "hip": 102
+    },
+    "L": {
+      "chest": 103,
+      "waist": 87,
+      "hip": 107
+    },
+    "XL": {
+      "chest": 108,
+      "waist": 92,
+      "hip": 112
+    }
+  },
+  "687e5b50d598cabd359f575f": {
+    "XS": {
+      "chest": 82,
+      "waist": 67,
+      "hip": 87
+    },
+    "S": {
+      "chest": 87,
+      "waist": 72,
+      "hip": 92
+    },
+    "M": {
+      "chest": 92,
+      "waist": 77,
+      "hip": 97
+    },
+    "L": {
+      "chest": 97,
+      "waist": 82,
+      "hip": 102
+    }
+  },
+  "687e5b50d598cabd359f576e": {
+    "S": {
+      "chest": 88,
+      "waist": 73,
+      "hip": 93
+    },
+    "M": {
+      "chest": 93,
+      "waist": 78,
+      "hip": 98
+    },
+    "L": {
+      "chest": 98,
+      "waist": 83,
+      "hip": 103
+    }
+  },
+  "687e5b50d598cabd359f577b": {
+    "4-5Y": {
+      "chest": 60,
+      "waist": 55,
+      "hip": 65
+    },
+    "6-7Y": {
+      "chest": 65,
+      "waist": 60,
+      "hip": 70
+    },
+    "8-9Y": {
+      "chest": 70,
+      "waist": 65,
+      "hip": 75
+    },
+    "10-11Y": {
+      "chest": 75,
+      "waist": 70,
+      "hip": 80
+    }
+  },
+  "687e5b50d598cabd359f578a": {
+    "4-5Y": {
+      "chest": 62,
+      "waist": 57,
+      "hip": 67
+    },
+    "6-7Y": {
+      "chest": 67,
+      "waist": 62,
+      "hip": 72
+    },
+    "8-9Y": {
+      "chest": 72,
+      "waist": 67,
+      "hip": 77
+    },
+    "10-11Y": {
+      "chest": 77,
+      "waist": 72,
+      "hip": 82
+    }
+  },
+  "687e5b50d598cabd359f5799": {
+    "S": {
+      "chest": 94,
+      "waist": 78,
+      "hip": 98
+    },
+    "M": {
+      "chest": 99,
+      "waist": 83,
+      "hip": 103
+    },
+    "L": {
+      "chest": 104,
+      "waist": 88,
+      "hip": 108
+    },
+    "XL": {
+      "chest": 109,
+      "waist": 93,
+      "hip": 113
+    }
+  },
+  "687e5b50d598cabd359f57a8": {
+    "M": {
+      "chest": 100,
+      "waist": 84,
+      "hip": 104
+    },
+    "L": {
+      "chest": 105,
+      "waist": 89,
+      "hip": 109
+    },
+    "XL": {
+      "chest": 110,
+      "waist": 94,
+      "hip": 114
+    }
+  },
+  "687e5b50d598cabd359f57b5": {
+    "XS": {
+      "chest": 84,
+      "waist": 69,
+      "hip": 89
+    },
+    "S": {
+      "chest": 89,
+      "waist": 74,
+      "hip": 94
+    },
+    "M": {
+      "chest": 94,
+      "waist": 79,
+      "hip": 99
+    },
+    "L": {
+      "chest": 99,
+      "waist": 84,
+      "hip": 104
+    }
+  },
+  "687e5b50d598cabd359f57c4": {
+    "S": {
+      "chest": 90,
+      "waist": 75,
+      "hip": 95
+    },
+    "M": {
+      "chest": 95,
+      "waist": 80,
+      "hip": 100
+    },
+    "L": {
+      "chest": 100,
+      "waist": 85,
+      "hip": 105
+    }
+  },
+  "687e5b50d598cabd359f57d1": {
+    "4-5Y": {
+      "chest": 63,
+      "waist": 58,
+      "hip": 68
+    },
+    "6-7Y": {
+      "chest": 68,
+      "waist": 63,
+      "hip": 73
+    },
+    "8-9Y": {
+      "chest": 73,
+      "waist": 68,
+      "hip": 78
+    },
+    "10-11Y": {
+      "chest": 78,
+      "waist": 73,
+      "hip": 83
+    }
+  },
+  "687e5b50d598cabd359f57e0": {
+    "4-5Y": {
+      "chest": 61,
+      "waist": 56,
+      "hip": 66
+    },
+    "6-7Y": {
+      "chest": 66,
+      "waist": 61,
+      "hip": 71
+    },
+    "8-9Y": {
+      "chest": 71,
+      "waist": 66,
+      "hip": 76
+    },
+    "10-11Y": {
+      "chest": 76,
+      "waist": 71,
+      "hip": 81
+    }
+  },
+  "687e5b50d598cabd359f57ef": {
+    "S": {
+      "chest": 96,
+      "waist": 80,
+      "hip": 100
+    },
+    "M": {
+      "chest": 101,
+      "waist": 85,
+      "hip": 105
+    },
+    "L": {
+      "chest": 106,
+      "waist": 90,
+      "hip": 110
+    },
+    "XL": {
+      "chest": 111,
+      "waist": 95,
+      "hip": 115
+    }
+  },
+  "687e5b50d598cabd359f57fe": {
+    "M": {
+      "chest": 102,
+      "waist": 86,
+      "hip": 106
+    },
+    "L": {
+      "chest": 107,
+      "waist": 91,
+      "hip": 111
+    },
+    "XL": {
+      "chest": 112,
+      "waist": 96,
+      "hip": 116
+    }
+  },
+  "687e5b50d598cabd359f580b": {
+    "XS": {
+      "chest": 86,
+      "waist": 71,
+      "hip": 91
+    },
+    "S": {
+      "chest": 91,
+      "waist": 76,
+      "hip": 96
+    },
+    "M": {
+      "chest": 96,
+      "waist": 81,
+      "hip": 101
+    },
+    "L": {
+      "chest": 101,
+      "waist": 86,
+      "hip": 106
+    }
+  },
+  "687e5b50d598cabd359f581a": {
+    "S": {
+      "chest": 92,
+      "waist": 77,
+      "hip": 97
+    },
+    "M": {
+      "chest": 97,
+      "waist": 82,
+      "hip": 102
+    },
+    "L": {
+      "chest": 102,
+      "waist": 87,
+      "hip": 107
+    }
+  },
+  "687e5b50d598cabd359f5827": {
+    "4-5Y": {
+      "chest": 64,
+      "waist": 59,
+      "hip": 69
+    },
+    "6-7Y": {
+      "chest": 69,
+      "waist": 64,
+      "hip": 74
+    },
+    "8-9Y": {
+      "chest": 74,
+      "waist": 69,
+      "hip": 79
+    },
+    "10-11Y": {
+      "chest": 79,
+      "waist": 74,
+      "hip": 84
+    }
+  },
+  "687e5b50d598cabd359f5836": {
+    "4-5Y": {
+      "chest": 62,
+      "waist": 57,
+      "hip": 67
+    },
+    "6-7Y": {
+      "chest": 67,
+      "waist": 62,
+      "hip": 72
+    },
+    "8-9Y": {
+      "chest": 72,
+      "waist": 67,
+      "hip": 77
+    },
+    "10-11Y": {
+      "chest": 77,
+      "waist": 72,
+      "hip": 82
+    }
+  },
+  "687e5b50d598cabd359f5845": {
+    "S": {
+      "chest": 93,
+      "waist": 77,
+      "hip": 97
+    },
+    "M": {
+      "chest": 98,
+      "waist": 82,
+      "hip": 102
+    },
+    "L": {
+      "chest": 103,
+      "waist": 87,
+      "hip": 107
+    },
+    "XL": {
+      "chest": 108,
+      "waist": 92,
+      "hip": 112
+    }
+  },
+  "687e5b50d598cabd359f5854": {
+    "M": {
+      "chest": 99,
+      "waist": 83,
+      "hip": 103
+    },
+    "L": {
+      "chest": 104,
+      "waist": 88,
+      "hip": 108
+    },
+    "XL": {
+      "chest": 109,
+      "waist": 93,
+      "hip": 113
+    }
+  },
+  "687e5b50d598cabd359f5861": {
+    "XS": {
+      "chest": 85,
+      "waist": 70,
+      "hip": 90
+    },
+    "S": {
+      "chest": 90,
+      "waist": 75,
+      "hip": 95
+    },
+    "M": {
+      "chest": 95,
+      "waist": 80,
+      "hip": 100
+    },
+    "L": {
+      "chest": 100,
+      "waist": 85,
+      "hip": 105
+    }
+  },
+  "687e5b50d598cabd359f5870": {
+    "S": {
+      "chest": 91,
+      "waist": 76,
+      "hip": 96
+    },
+    "M": {
+      "chest": 96,
+      "waist": 81,
+      "hip": 101
+    },
+    "L": {
+      "chest": 101,
+      "waist": 86,
+      "hip": 106
+    }
+  },
+  "687e5b50d598cabd359f587d": {
+    "4-5Y": {
+      "chest": 65,
+      "waist": 60,
+      "hip": 70
+    },
+    "6-7Y": {
+      "chest": 70,
+      "waist": 65,
+      "hip": 75
+    },
+    "8-9Y": {
+      "chest": 75,
+      "waist": 70,
+      "hip": 80
+    },
+    "10-11Y": {
+      "chest": 80,
+      "waist": 75,
+      "hip": 85
+    }
+  },
+  "687e5b50d598cabd359f588c": {
+    "4-5Y": {
+      "chest": 63,
+      "waist": 58,
+      "hip": 68
+    },
+    "6-7Y": {
+      "chest": 68,
+      "waist": 63,
+      "hip": 73
+    },
+    "8-9Y": {
+      "chest": 73,
+      "waist": 68,
+      "hip": 78
+    },
+    "10-11Y": {
+      "chest": 78,
+      "waist": 73,
+      "hip": 83
+    }
+  },
+  "687e5b50d598cabd359f589b": {
+    "S": {
+      "chest": 95,
+      "waist": 79,
+      "hip": 99
+    },
+    "M": {
+      "chest": 100,
+      "waist": 84,
+      "hip": 104
+    },
+    "L": {
+      "chest": 105,
+      "waist": 89,
+      "hip": 109
+    },
+    "XL": {
+      "chest": 110,
+      "waist": 94,
+      "hip": 114
+    }
+  },
+  "687e5b50d598cabd359f58aa": {
+    "M": {
+      "chest": 101,
+      "waist": 85,
+      "hip": 105
+    },
+    "L": {
+      "chest": 106,
+      "waist": 90,
+      "hip": 110
+    },
+    "XL": {
+      "chest": 111,
+      "waist": 95,
+      "hip": 115
+    }
+  },
+  "687e5b50d598cabd359f58b7": {
+    "XS": {
+      "chest": 87,
+      "waist": 72,
+      "hip": 92
+    },
+    "S": {
+      "chest": 92,
+      "waist": 77,
+      "hip": 97
+    },
+    "M": {
+      "chest": 97,
+      "waist": 82,
+      "hip": 102
+    },
+    "L": {
+      "chest": 102,
+      "waist": 87,
+      "hip": 107
+    }
+  },
+  "687e5b50d598cabd359f58c6": {
+    "S": {
+      "chest": 93,
+      "waist": 78,
+      "hip": 98
+    },
+    "M": {
+      "chest": 98,
+      "waist": 83,
+      "hip": 103
+    },
+    "L": {
+      "chest": 103,
+      "waist": 88,
+      "hip": 108
+    }
+  },
+  "687e5b50d598cabd359f58d3": {
+    "4-5Y": {
+      "chest": 66,
+      "waist": 61,
+      "hip": 71
+    },
+    "6-7Y": {
+      "chest": 71,
+      "waist": 66,
+      "hip": 76
+    },
+    "8-9Y": {
+      "chest": 76,
+      "waist": 71,
+      "hip": 81
+    },
+    "10-11Y": {
+      "chest": 81,
+      "waist": 76,
+      "hip": 86
+    }
+  },
+  "687e5b50d598cabd359f58e2": {
+    "4-5Y": {
+      "chest": 64,
+      "waist": 59,
+      "hip": 69
+    },
+    "6-7Y": {
+      "chest": 69,
+      "waist": 64,
+      "hip": 74
+    },
+    "8-9Y": {
+      "chest": 74,
+      "waist": 69,
+      "hip": 79
+    },
+    "10-11Y": {
+      "chest": 79,
+      "waist": 74,
+      "hip": 84
+    }
+  }
+} 

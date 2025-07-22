@@ -19,5 +19,3 @@ build/
 .vscode/
 .idea/
 
-# Firebase credentials
-src/config/*.json
