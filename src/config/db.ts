@@ -10,20 +10,17 @@ import { seedCoupons } from '../scripts/seedVouchers'
 
 const connectDB = async (): Promise<void> => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    } as mongoose.ConnectOptions)
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas')
 
     console.log(`MongoDB connected: ${conn.connection.host}`)
 
-    await seedCategories() // Gọi seed tại đây
+    // await seedCategories() // Gọi seed tại đây
     // await seedBrands()
-    await seedProducts()
+    // await seedProducts()
     // await seedOrders()
     // await seedDocuments()
     // await seedChatData()
-    await seedCoupons()
+    // await seedCoupons()
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${(error as Error).message}`)
     process.exit(1)
