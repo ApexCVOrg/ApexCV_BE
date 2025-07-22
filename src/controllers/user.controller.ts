@@ -31,7 +31,11 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
       avatar: user.avatar,
       role: user.role,
       status: user.status,
-      isVerified: user.isVerified
+      isVerified: user.isVerified,
+      // Body measurements for size recommendation
+      height: user.height,
+      weight: user.weight,
+      footLength: user.footLength
     }
 
     res.json(formattedUser)
@@ -49,7 +53,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       return
     }
 
-    const { fullName, phone, addresses } = req.body
+    const { fullName, phone, addresses, height, weight, footLength } = req.body
 
     // Validate input
     if (fullName && typeof fullName !== 'string') {
@@ -64,6 +68,18 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       res.status(400).json({ message: 'Invalid addresses format' })
       return
     }
+    if (height !== undefined && (typeof height !== 'number' || height < 100 || height > 250)) {
+      res.status(400).json({ message: 'Invalid height format (must be between 100-250 cm)' })
+      return
+    }
+    if (weight !== undefined && (typeof weight !== 'number' || weight < 20 || weight > 200)) {
+      res.status(400).json({ message: 'Invalid weight format (must be between 20-200 kg)' })
+      return
+    }
+    if (footLength !== undefined && (typeof footLength !== 'number' || footLength < 150 || footLength > 350)) {
+      res.status(400).json({ message: 'Invalid footLength format (must be between 150-350 mm)' })
+      return
+    }
 
     const user = await User.findById(userId)
     if (!user) {
@@ -75,6 +91,9 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
     if (fullName) user.fullName = fullName
     if (phone) user.phone = phone
     if (addresses) user.addresses = addresses
+    if (height !== undefined) user.height = height
+    if (weight !== undefined) user.weight = weight
+    if (footLength !== undefined) user.footLength = footLength
 
     await user.save()
 
@@ -89,7 +108,11 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       avatar: user.avatar,
       role: user.role,
       status: user.status,
-      isVerified: user.isVerified
+      isVerified: user.isVerified,
+      // Body measurements for size recommendation
+      height: user.height,
+      weight: user.weight,
+      footLength: user.footLength
     }
 
     res.json(updatedUser)
@@ -305,7 +328,7 @@ export const getUserOrders = async (req: Request, res: Response): Promise<void> 
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const orders = await (await import('../models/Order')).Order.find({ user: userId })
+    const orders = await (await import('../models/Order.js')).Order.find({ user: userId })
       .populate({
         path: 'orderItems.product',
         select: 'name price discountPrice images brand categories',
