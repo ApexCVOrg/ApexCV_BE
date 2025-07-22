@@ -296,3 +296,28 @@ export const checkFavorite = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ message: 'Internal server error' })
   }
 }
+
+// Lịch sử mua hàng của user
+export const getUserOrders = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = req.user?._id;
+    if (!userId) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+    const orders = await (await import('../models/Order')).Order.find({ user: userId })
+      .populate({
+        path: 'orderItems.product',
+        select: 'name price discountPrice images brand categories',
+        populate: [
+          { path: 'brand', select: 'name' },
+          { path: 'categories', select: 'name' }
+        ]
+      })
+      .sort({ createdAt: -1 });
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.error('Error in getUserOrders:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
