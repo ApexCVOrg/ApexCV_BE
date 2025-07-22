@@ -26,6 +26,7 @@ import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay';
 import couponRouter from './routes/voucher'
+import sizeRecommendationRouter from './routes/size-recommendation'
 
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
@@ -170,6 +171,7 @@ app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
 app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter);
 app.use(API_BASE + '/upload', uploadRouter);
+app.use(API_BASE + '/size-recommendation', sizeRecommendationRouter);
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
