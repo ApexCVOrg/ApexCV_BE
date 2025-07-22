@@ -2,12 +2,12 @@ import { VNPay } from '../lib/vnpay/vnpay';
 import type { BuildPaymentUrl, ReturnQueryFromVNPay } from '../lib/vnpay/types';
 import { VnpCurrCode, VnpLocale, ProductCode } from '../lib/vnpay/enums';
 
-// TODO: Thay thế các giá trị này bằng config thực tế của bạn
+// VNPAY Configuration from environment variables
 const vnpay = new VNPay({
   tmnCode: process.env.VNP_TMNCODE || 'ROJ5KGHQ',
   secureSecret: process.env.VNP_SECRET || '10KO2R5UHJ1X4HX42PUS6KH8WINLYE0A',
   vnpayHost: 'https://sandbox.vnpayment.vn',
-  testMode: true,
+  testMode: process.env.NODE_ENV !== 'production',
 });
 
 /**

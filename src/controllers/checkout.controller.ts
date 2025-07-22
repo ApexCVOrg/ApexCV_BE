@@ -2,6 +2,10 @@
 import { Request, Response } from 'express';
 import Stripe from 'stripe';
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2025-06-30.basil',
+});
+
 
 interface CheckoutItem {
   priceId: string;
@@ -51,8 +55,8 @@ export const createCheckoutSession = async (req: Request, res: Response): Promis
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `${process.env.DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.DOMAIN}/cancel`,
+              success_url: `${process.env.FRONTEND_URL || 'https://nidas-fe.vercel.app'}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.FRONTEND_URL || 'https://nidas-fe.vercel.app'}/cancel`,
     });
 
     res.status(200).json({
