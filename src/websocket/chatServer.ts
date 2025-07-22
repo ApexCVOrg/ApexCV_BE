@@ -122,17 +122,28 @@ class ChatWebSocketServer {
 
   private handleJoin(clientId: string, chatId: string) {
     const client = this.clients.get(clientId);
-    if (!client) return;
+    if (!client) {
+      console.log('Client not found for join:', clientId);
+      return;
+    }
+
+    console.log('Client joining chat:', {
+      clientId,
+      userId: client.userId,
+      role: client.role,
+      chatId
+    });
 
     client.chatId = chatId;
 
     // Add to chat room
     if (!this.chatRooms.has(chatId)) {
+      console.log('Creating new chat room:', chatId);
       this.chatRooms.set(chatId, new Set());
     }
     this.chatRooms.get(chatId)!.add(clientId);
 
-    console.log(`Client ${clientId} joined chat ${chatId}`);
+    console.log(`Client ${clientId} joined chat ${chatId}. Room size: ${this.chatRooms.get(chatId)!.size}`);
 
     // Mark messages as read when joining
     this.handleMarkAsRead(clientId, chatId);
@@ -176,15 +187,26 @@ class ChatWebSocketServer {
     const client = this.clients.get(clientId);
     if (!client || !message.content) return;
 
+    console.log('Handling chat message:', {
+      clientId,
+      clientRole: client.role,
+      chatId: message.chatId,
+      content: message.content,
+      messageType: message.messageType
+    });
+
     try {
       // Save message to database
       if (client.role === 'manager') {
+        console.log('Saving manager message to database');
         await chatService.sendManagerMessage(message.chatId, client.userId, message.content, message.attachments);
       } else {
+        console.log('Saving user message to database');
         await chatService.sendUserMessage(message.chatId, message.content, 'user', false, message.attachments);
       }
 
       // Broadcast to room
+      console.log('Broadcasting message to room:', message.chatId);
       this.broadcastToRoom(message.chatId, {
         type: 'message',
         chatId: message.chatId,
@@ -198,21 +220,8 @@ class ChatWebSocketServer {
 
       // If it's a user message, broadcast to all managers
       if (client.role === 'user') {
+        console.log('Broadcasting user message to all managers');
         this.broadcastToAllManagers({
-          type: 'message',
-          chatId: message.chatId,
-          content: message.content,
-          role: client.role as 'user' | 'manager',
-          userId: client.userId,
-          timestamp: new Date(),
-          attachments: message.attachments,
-          messageType: message.messageType
-        });
-      }
-      
-      // If it's a manager message, broadcast to the specific user
-      if (client.role === 'manager') {
-        this.broadcastToUser(message.chatId, {
           type: 'message',
           chatId: message.chatId,
           content: message.content,
@@ -309,16 +318,26 @@ class ChatWebSocketServer {
 
   private broadcastToRoom(chatId: string, message: any, excludeClientId?: string) {
     const room = this.chatRooms.get(chatId);
-    if (!room) return;
+    if (!room) {
+      console.log('No room found for chatId:', chatId);
+      return;
+    }
 
+    console.log('Broadcasting to room:', chatId, 'Clients in room:', room.size);
     const messageStr = JSON.stringify(message);
 
     room.forEach(clientId => {
-      if (clientId === excludeClientId) return;
+      if (clientId === excludeClientId) {
+        console.log('Excluding client:', clientId);
+        return;
+      }
 
       const client = this.clients.get(clientId);
       if (client && client.ws.readyState === WebSocket.OPEN) {
+        console.log('Sending message to client:', clientId, 'Role:', client.role);
         client.ws.send(messageStr);
+      } else {
+        console.log('Client not available or connection closed:', clientId);
       }
     });
   }
