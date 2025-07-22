@@ -255,3 +255,63 @@ const generateUnbanUserEmailHTML = (admin: string): string => `
     </div>
   </div>
 `;
+
+/**
+ * Sends an email to the user when their review is deleted by admin.
+ * @param email - The user's email address.
+ * @param productName - The name of the product reviewed.
+ * @param reviewContent - The content of the user's review.
+ */
+export const sendReviewDeletedEmail = async (
+  email: string,
+  productName: string,
+  reviewContent: string
+): Promise<void> => {
+  try {
+    if (!email || !productName || !reviewContent) {
+      throw new Error('Email, product name, and review content are required.')
+    }
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!isEmailValid) {
+      throw new Error('Invalid email format.')
+    }
+    const mailOptions = {
+      from: `"NIDAS" <${process.env.GMAIL_USER}>`,
+      to: email,
+      subject: 'Thông báo: Đánh giá của bạn đã bị xóa',
+      text: `Đánh giá của bạn cho sản phẩm "${productName}" đã bị xóa do vi phạm tiêu chuẩn cộng đồng.\n\nNội dung đánh giá: ${reviewContent}\n\nNếu bạn nghĩ đây là nhầm lẫn, vui lòng liên hệ bộ phận hỗ trợ của chúng tôi.`,
+      html: generateReviewDeletedEmailHTML(productName, reviewContent)
+    }
+    console.log(`📤 Sending review deleted email to: ${email}`)
+    const info = await transporter.sendMail(mailOptions)
+    console.log(`✅ Review deleted email sent: ${info.messageId}`)
+    console.log(`📨 Response: ${info.response}`)
+  } catch (error) {
+    console.error('❌ Review deleted email send failed:', error)
+    throw new Error(`Email delivery failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+  }
+}
+
+const generateReviewDeletedEmailHTML = (productName: string, reviewContent: string): string => `
+  <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h1 style="color: #d32f2f; margin: 0;">NIDAS</h1>
+      <p style="color: #64748b; margin: 5px 0;">Thông báo xóa đánh giá</p>
+    </div>
+    <div style="background: #fff3e0; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;">
+      <h2 style="color: #d32f2f; margin: 0 0 15px 0;">Đánh giá của bạn đã bị xóa</h2>
+      <p style="color: #b71c1c; margin: 0;">Sản phẩm: <b>${productName}</b></p>
+      <p style="color: #b71c1c; margin: 0;">Nội dung đánh giá:</p>
+      <div style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px; border-radius: 8px; margin: 10px 0; color: #1e293b;">${reviewContent}</div>
+      <p style="color: #b71c1c; margin: 0;">Lý do: <b>Vi phạm tiêu chuẩn cộng đồng</b></p>
+    </div>
+    <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
+      <p style="margin: 0; color: #92400e; font-weight: 500;">Nếu bạn nghĩ đây là nhầm lẫn, vui lòng liên hệ bộ phận hỗ trợ của chúng tôi.</p>
+    </div>
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+      <p style="color: #64748b; font-size: 14px; margin: 0;">
+        © 2025 NIDAS. All rights reserved.
+      </p>
+    </div>
+  </div>
+`;

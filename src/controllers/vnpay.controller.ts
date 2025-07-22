@@ -56,6 +56,7 @@ export const createPayment = (req: Request, res: Response) => {
       user: userId,
       sessionId: sessionId,
       createdAt: new Date().toISOString(),
+      shippingPrice: 50000, // Luôn là 50.000 VND
     };
     
     console.log('[VNPAY] Pending order data:', JSON.stringify(req.session.pendingOrder, null, 2));
@@ -413,7 +414,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       },
       paymentMethod: orderData.paymentMethod,
       taxPrice: orderData.taxPrice || 0,
-      shippingPrice: orderData.shippingPrice || 0,
+      shippingPrice: 50000, // Luôn là 50.000 VND
       totalPrice: orderData.totalPrice,
       isPaid: true,
       paidAt: new Date(),
@@ -788,7 +789,7 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
       },
       paymentMethod: 'VNPAY',
       taxPrice: orderData?.taxPrice || 0,
-      shippingPrice: orderData?.shippingPrice || 0,
+      shippingPrice: 50000, // Luôn là 50.000 VND
       totalPrice: orderData?.totalPrice || vnpAmount,
       isPaid: true,
       paidAt: new Date(),
