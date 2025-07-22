@@ -9,7 +9,8 @@ import {
   getFavorites, 
   addToFavorites, 
   removeFromFavorites, 
-  checkFavorite 
+  checkFavorite, 
+  getUserOrders 
 } from '../controllers/user.controller'
 
 const router: Router = express.Router()
@@ -27,6 +28,9 @@ router.get('/favorites', getFavorites)
 router.post('/favorites/add/:productId', addToFavorites)
 router.delete('/favorites/remove/:productId', removeFromFavorites)
 router.get('/favorites/check/:productId', checkFavorite)
+
+// Lấy lịch sử mua hàng của user
+router.get('/orders', getUserOrders)
 
 // Get all users (admin only)
 router.get('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, res: Response) => {

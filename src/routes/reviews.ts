@@ -1,12 +1,18 @@
+/* eslint-disable */
 import express, { Request, Response, Router } from 'express'
 import { Review } from '../models/Review'
+import { authenticateToken } from '../middlewares/auth'
+import { Order } from '../models/Order'
 
 const router: Router = express.Router()
 
-router.get('/', async (_req: Request, res: Response): Promise<void> => {
+router.get('/', async (req: Request, res: Response): Promise<void> => {
   try {
-    const reviews = await Review.find().populate('user product')
-    res.json(reviews)
+    const filter: any = {};
+    if (req.query.product) filter.product = req.query.product;
+    if (req.query.user) filter.user = req.query.user;
+    const reviews = await Review.find(filter).populate('user product');
+    res.json(reviews);
   } catch (error) {
     res.status(500).json({ message: 'Lỗi khi lấy danh sách đánh giá: ' + (error as Error).message })
   }
@@ -25,9 +31,32 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
-router.post('/', async (req: Request, res: Response): Promise<void> => {
+router.post('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
-    const review = new Review(req.body)
+    const userId = req.user._id
+    const { product: productId, rating, comment } = req.body
+    // Kiểm tra user đã mua sản phẩm này chưa
+    const hasBought = await Order.exists({
+      user: userId,
+      'orderItems.product': productId,
+      orderStatus: { $in: ['paid', 'shipped', 'delivered'] },
+    })
+    if (!hasBought) {
+      res.status(403).json({ message: 'Bạn chỉ có thể đánh giá sản phẩm đã mua.' })
+      return
+    }
+    // Kiểm tra đã review chưa (mỗi user chỉ review 1 lần cho 1 sản phẩm)
+    const existed = await Review.findOne({ user: userId, product: productId })
+    if (existed) {
+      res.status(400).json({ message: 'Bạn đã đánh giá sản phẩm này.' })
+      return
+    }
+    const review = new Review({
+      user: userId,
+      product: productId,
+      rating,
+      comment,
+    })
     const savedReview = await review.save()
     res.status(201).json(savedReview)
   } catch (error) {
@@ -60,5 +89,34 @@ router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: 'Lỗi khi xóa đánh giá: ' + (error as Error).message })
   }
 })
+
+// Lấy rating trung bình của 1 sản phẩm
+router.get('/average/:productId', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const productId = req.params.productId
+    const result = await Review.aggregate([
+      { $match: { product: new (require('mongoose')).Types.ObjectId(productId) } },
+      { $group: { _id: '$product', average: { $avg: '$rating' }, count: { $sum: 1 } } }
+    ])
+    if (result.length === 0) {
+      res.json({ average: 0, count: 0 })
+      return
+    }
+    res.json({ average: result[0].average, count: result[0].count })
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi lấy rating trung bình: ' + (error as Error).message })
+  }
+})
+
+// Lấy tất cả reviews của 1 sản phẩm
+router.get('/product/:productId', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { productId } = req.params;
+    const reviews = await Review.find({ product: productId }).populate('user', 'fullName avatar');
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi lấy danh sách đánh giá: ' + (error as Error).message });
+  }
+});
 
 export default router
