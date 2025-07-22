@@ -1,8 +1,9 @@
 /* eslint-disable */
 import express, { Request, Response, Router } from 'express'
 import { Review } from '../models/Review'
-import { authenticateToken } from '../middlewares/auth'
+import { authenticateToken, isAdmin } from '../middlewares/auth'
 import { Order } from '../models/Order'
+import { sendReviewDeletedEmail } from '../services/email.service'
 
 const router: Router = express.Router()
 
@@ -77,12 +78,35 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
-router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
+router.delete('/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   try {
-    const review = await Review.findByIdAndDelete(req.params.id)
+    // Lấy đầy đủ thông tin review trước khi xóa
+    const review = await Review.findById(req.params.id).populate('user product')
     if (!review) {
       res.status(404).json({ message: 'Không tìm thấy đánh giá' })
       return
+    }
+    // Lưu thông tin cần thiết trước khi xóa
+    const userEmail = (review.user && typeof review.user === 'object' && typeof (review.user as any).email === 'string')
+      ? (review.user as any).email
+      : null;
+    const productName = (review.product && typeof review.product === 'object' && typeof (review.product as any).name === 'string')
+      ? (review.product as any).name
+      : null;
+    let reviewContent = typeof review.comment === 'string' ? review.comment : '';
+    if (!reviewContent || !reviewContent.trim()) {
+      reviewContent = '(Không có nội dung đánh giá)';
+    }
+    // Xóa review
+    await Review.findByIdAndDelete(req.params.id);
+    // Gửi email nếu đủ thông tin
+    console.log('[Review Delete Email] userEmail:', userEmail, '| productName:', productName, '| reviewContent:', reviewContent);
+    if (userEmail && productName) {
+      try {
+        await sendReviewDeletedEmail(userEmail, productName, reviewContent);
+      } catch (mailErr) {
+        console.error('Không gửi được email thông báo xóa đánh giá:', mailErr);
+      }
     }
     res.json({ message: 'Đã xóa đánh giá thành công' })
   } catch (error) {
