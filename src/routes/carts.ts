@@ -91,7 +91,10 @@ router.post('/add', authenticateToken, async (req: Request, res: Response): Prom
 
     cart.updatedAt = new Date()
     await cart.save()
-    
+    // Emit realtime cart update
+    if (global.chatWebSocketServer) {
+      global.chatWebSocketServer.broadcastCartUpdate(String(userId));
+    }
     const updatedCart = await Cart.findById(cart._id).populate('cartItems.product')
     res.json(updatedCart)
   } catch (error) {
@@ -141,7 +144,10 @@ router.put('/update/:itemId', authenticateToken, async (req: Request, res: Respo
     if (color !== undefined) cart.cartItems[itemIndex].color = color
     cart.updatedAt = new Date()
     await cart.save()
-
+    // Emit realtime cart update
+    if (global.chatWebSocketServer) {
+      global.chatWebSocketServer.broadcastCartUpdate(String(userId));
+    }
     const updatedCart = await Cart.findById(cart._id).populate('cartItems.product')
     res.json(updatedCart)
   } catch (error) {
@@ -164,7 +170,10 @@ router.delete('/remove/:itemId', authenticateToken, async (req: Request, res: Re
     cart.cartItems.pull({ _id: itemId })
     cart.updatedAt = new Date()
     await cart.save()
-
+    // Emit realtime cart update
+    if (global.chatWebSocketServer) {
+      global.chatWebSocketServer.broadcastCartUpdate(String(userId));
+    }
     const updatedCart = await Cart.findById(cart._id).populate('cartItems.product')
     res.json(updatedCart)
   } catch (error) {
@@ -182,6 +191,10 @@ router.delete('/clear', authenticateToken, async (req: Request, res: Response): 
       cart.cartItems.splice(0, cart.cartItems.length)
       cart.updatedAt = new Date()
       await cart.save()
+      // Emit realtime cart update
+      if (global.chatWebSocketServer) {
+        global.chatWebSocketServer.broadcastCartUpdate(String(userId));
+      }
     }
     
     res.json({ message: 'Đã xóa toàn bộ giỏ hàng' })

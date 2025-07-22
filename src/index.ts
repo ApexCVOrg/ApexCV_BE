@@ -11,6 +11,12 @@ import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
 import ChatWebSocketServer from './websocket/chatServer'
 
+// Fix for global.chatWebSocketServer type
+declare global {
+  // eslint-disable-next-line no-var
+  var chatWebSocketServer: ChatWebSocketServer | undefined;
+}
+
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
 import categoryRouter from './routes/categories'
@@ -26,6 +32,7 @@ import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay';
 import couponRouter from './routes/voucher'
+import refundRouter from './routes/refund';
 
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
@@ -150,6 +157,7 @@ app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
 app.use('/api/payment', paymentVnpayRoutes);
 app.use(API_BASE + '/coupon', couponRouter)
+app.use('/api/refund', refundRouter);
 
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
@@ -165,6 +173,7 @@ const server = createServer(app);
 
 // Initialize WebSocket server
 const chatWebSocketServer = new ChatWebSocketServer(server);
+global.chatWebSocketServer = chatWebSocketServer;
 
 // Start server và log thêm IP LAN cho debug
 server.listen(PORT, HOST, async () => {

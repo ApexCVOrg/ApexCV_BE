@@ -377,6 +377,15 @@ class ChatWebSocketServer {
       }
     });
   }
+
+  // Public method to broadcast cart update to a specific user
+  public broadcastCartUpdate(userId: string) {
+    this.clients.forEach((client, clientId) => {
+      if (client.userId === userId && client.ws.readyState === WebSocket.OPEN) {
+        client.ws.send(JSON.stringify({ type: 'cart_update' }));
+      }
+    });
+  }
 }
 
 export default ChatWebSocketServer; 

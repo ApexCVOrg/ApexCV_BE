@@ -255,3 +255,46 @@ const generateUnbanUserEmailHTML = (admin: string): string => `
     </div>
   </div>
 `;
+
+/**
+ * Gửi email xác nhận đơn hàng thành công hoặc thất bại
+ * @param email - email người nhận
+ * @param orderInfo - thông tin đơn hàng (mã đơn, tổng tiền, ...) hoặc lý do thất bại
+ * @param isSuccess - true nếu thành công, false nếu thất bại
+ */
+export const sendOrderStatusEmail = async (
+  email: string,
+  orderInfo: { orderId?: string; totalPrice?: number; reason?: string },
+  isSuccess: boolean
+) => {
+  if (!email) return;
+  const subject = isSuccess
+    ? 'Xác nhận đặt hàng thành công'
+    : 'Thanh toán thất bại';
+  const html = isSuccess
+    ? `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #2563eb;">Cảm ơn bạn đã đặt hàng tại NIDAS!</h2>
+        <p>Đơn hàng <b>#${orderInfo.orderId}</b> của bạn đã được đặt thành công.</p>
+        <ul>
+          <li><b>Tổng tiền:</b> ${orderInfo.totalPrice?.toLocaleString('vi-VN')} VND</li>
+        </ul>
+        <p>Chúng tôi sẽ xử lý đơn hàng và giao đến bạn sớm nhất có thể.</p>
+        <p style="margin-top: 32px;">Nếu có thắc mắc, vui lòng liên hệ hỗ trợ.</p>
+        <p>Trân trọng,<br/>NIDAS Team</p>
+      </div>`
+    : `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #d32f2f;">Thanh toán không thành công</h2>
+        <p>Đơn hàng của bạn chưa được xác nhận do lỗi thanh toán.</p>
+        <p><b>Lý do:</b> ${orderInfo.reason || 'Không xác định'}</p>
+        <p>Vui lòng thử lại hoặc liên hệ hỗ trợ nếu cần giúp đỡ.</p>
+        <p>Trân trọng,<br/>NIDAS Team</p>
+      </div>`;
+  await transporter.sendMail({
+    from: `"NIDAS" <${process.env.GMAIL_USER}>`,
+    to: email,
+    subject,
+    html
+  });
+};
+
+export { transporter };
