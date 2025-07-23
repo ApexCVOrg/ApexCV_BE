@@ -1,40 +1,40 @@
-import mongoose, { Schema, Document as MongooseDocument, Model } from 'mongoose';
+import mongoose, { Schema, Document as MongooseDocument, Model } from 'mongoose'
 
 export interface IChatSession extends MongooseDocument {
-  chatId: string;
-  userId: string;
-  managerId?: string;
-  status: 'open' | 'closed' | 'manager_joined';
-  unreadCount: number;
-  lastMessage?: string;
-  lastMessageAt?: Date;
-  updatedAt: Date;
-  createdAt: Date;
+  chatId: string
+  userId: string
+  managerId?: string
+  status: 'open' | 'closed' | 'manager_joined'
+  unreadCount: number
+  lastMessage?: string
+  lastMessageAt?: Date
+  updatedAt: Date
+  createdAt: Date
 }
 
 const ChatSessionSchema = new Schema<IChatSession>(
   {
-    chatId: { 
-      type: String, 
-      required: true, 
-      unique: true,
-      index: true 
-    },
-    userId: { 
-      type: String, 
+    chatId: {
+      type: String,
       required: true,
-      index: true 
+      unique: true,
+      index: true
+    },
+    userId: {
+      type: String,
+      required: true,
+      index: true
     },
     managerId: {
       type: String,
       required: false,
       index: true
     },
-    status: { 
-      type: String, 
-      enum: ['open', 'closed', 'manager_joined'], 
+    status: {
+      type: String,
+      enum: ['open', 'closed', 'manager_joined'],
       default: 'open',
-      index: true 
+      index: true
     },
     unreadCount: {
       type: Number,
@@ -49,16 +49,16 @@ const ChatSessionSchema = new Schema<IChatSession>(
       type: Date
     }
   },
-  { 
+  {
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
   }
-);
+)
 
 // Index cho tìm kiếm hiệu quả
-ChatSessionSchema.index({ status: 1, updatedAt: -1 });
-ChatSessionSchema.index({ userId: 1, status: 1 });
-ChatSessionSchema.index({ unreadCount: 1, lastMessageAt: -1 });
+ChatSessionSchema.index({ status: 1, updatedAt: -1 })
+ChatSessionSchema.index({ userId: 1, status: 1 })
+ChatSessionSchema.index({ unreadCount: 1, lastMessageAt: -1 })
 
-export const ChatSessionModel: Model<IChatSession> = mongoose.model<IChatSession>('ChatSession', ChatSessionSchema); 
+export const ChatSessionModel: Model<IChatSession> = mongoose.model<IChatSession>('ChatSession', ChatSessionSchema)

@@ -1,13 +1,13 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose'
 
 export interface IAuditLog extends Document {
-  adminId: mongoose.Types.ObjectId;
-  action: string;
-  target: string;
-  detail: string;
-  ip: string;
-  userAgent: string;
-  createdAt: Date;
+  adminId: mongoose.Types.ObjectId
+  action: string
+  target: string
+  detail: string
+  ip: string
+  userAgent: string
+  createdAt: Date
 }
 
 const AuditLogSchema = new Schema<IAuditLog>({
@@ -17,7 +17,7 @@ const AuditLogSchema = new Schema<IAuditLog>({
   detail: { type: String, required: true },
   ip: { type: String, required: true },
   userAgent: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+  createdAt: { type: Date, default: Date.now }
+})
 
-export default mongoose.model<IAuditLog>('AuditLog', AuditLogSchema); 
+export default mongoose.model<IAuditLog>('AuditLog', AuditLogSchema)

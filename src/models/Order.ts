@@ -3,7 +3,7 @@ const sizeSchema = new Schema({
   sku: { type: String, required: true },
   size: String,
   stock: Number,
-  color: String,
+  color: String
 })
 const orderItemSchema = new Schema({
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
@@ -11,9 +11,8 @@ const orderItemSchema = new Schema({
   quantity: { type: Number, required: true, min: 1 },
   price: Number,
   productName: String,
-productImage: String,
-productBrand: String
-
+  productImage: String,
+  productBrand: String
 })
 
 const orderSchema = new Schema({
@@ -32,7 +31,7 @@ const orderSchema = new Schema({
     fullName: String,
     email: String,
     phone: String
-  },  
+  },
   paymentMethod: String,
   paymentResult: {
     id: String,
@@ -59,7 +58,7 @@ const orderSchema = new Schema({
 // Schema cho pending order (backup khi session mất)
 const pendingOrderSchema = new Schema({
   sessionId: { type: String, required: true, unique: true },
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: String, required: true }, // Đổi từ ObjectId sang String
   orderData: { type: Schema.Types.Mixed, required: true }, // Lưu toàn bộ order data
   createdAt: { type: Date, default: Date.now, expires: 3600 } // Tự động xóa sau 1 giờ
 })

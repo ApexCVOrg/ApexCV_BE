@@ -57,55 +57,80 @@ export interface ISettings extends Document {
   updatedAt: Date
 }
 
-const GeneralSettingsSchema = new Schema<GeneralSettings>({
-  shopName: { type: String, required: true },
-  logoUrl: { type: String, required: false },
-  timezone: { type: String, required: true },
-  currency: { type: String, required: true }
-}, { _id: false })
-
-const AccountSettingsSchema = new Schema<AccountSettings>({
-  profile: {
-    fullName: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String },
-    avatar: { type: String }
+const GeneralSettingsSchema = new Schema<GeneralSettings>(
+  {
+    shopName: { type: String, required: true },
+    logoUrl: { type: String, required: false },
+    timezone: { type: String, required: true },
+    currency: { type: String, required: true }
   },
-  passwordLastChanged: { type: Date, required: true }
-}, { _id: false })
+  { _id: false }
+)
 
-const UserManagementSettingsSchema = new Schema<UserManagementSettings>({
-  roles: [{ type: String, required: true }],
-  canInvite: { type: Boolean, default: true }
-}, { _id: false })
+const AccountSettingsSchema = new Schema<AccountSettings>(
+  {
+    profile: {
+      fullName: { type: String, required: true },
+      email: { type: String, required: true },
+      phone: { type: String },
+      avatar: { type: String }
+    },
+    passwordLastChanged: { type: Date, required: true }
+  },
+  { _id: false }
+)
 
-const InventoryOrderRulesSettingsSchema = new Schema<InventoryOrderRulesSettings>({
-  lowStockThreshold: { type: Number, default: 10 },
-  slaDays: { type: Number, default: 3 }
-}, { _id: false })
+const UserManagementSettingsSchema = new Schema<UserManagementSettings>(
+  {
+    roles: [{ type: String, required: true }],
+    canInvite: { type: Boolean, default: true }
+  },
+  { _id: false }
+)
 
-const LocalizationSettingsSchema = new Schema<LocalizationSettings>({
-  defaultLanguage: { type: String, required: true },
-  enabledLocales: [{ type: String, required: true }]
-}, { _id: false })
+const InventoryOrderRulesSettingsSchema = new Schema<InventoryOrderRulesSettings>(
+  {
+    lowStockThreshold: { type: Number, default: 10 },
+    slaDays: { type: Number, default: 3 }
+  },
+  { _id: false }
+)
 
-const NotificationSettingsSchema = new Schema<NotificationSettings>({
-  emailEnabled: { type: Boolean, default: true },
-  smsEnabled: { type: Boolean, default: false },
-  rules: [{
-    type: { type: String, required: true },
-    enabled: { type: Boolean, default: true }
-  }]
-}, { _id: false })
+const LocalizationSettingsSchema = new Schema<LocalizationSettings>(
+  {
+    defaultLanguage: { type: String, required: true },
+    enabledLocales: [{ type: String, required: true }]
+  },
+  { _id: false }
+)
 
-const IntegrationSettingsSchema = new Schema<IntegrationSettings>({
-  webhooks: [{ type: String }],
-  apiKeys: [{
-    name: { type: String, required: true },
-    key: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
-  }]
-}, { _id: false })
+const NotificationSettingsSchema = new Schema<NotificationSettings>(
+  {
+    emailEnabled: { type: Boolean, default: true },
+    smsEnabled: { type: Boolean, default: false },
+    rules: [
+      {
+        type: { type: String, required: true },
+        enabled: { type: Boolean, default: true }
+      }
+    ]
+  },
+  { _id: false }
+)
+
+const IntegrationSettingsSchema = new Schema<IntegrationSettings>(
+  {
+    webhooks: [{ type: String }],
+    apiKeys: [
+      {
+        name: { type: String, required: true },
+        key: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now }
+      }
+    ]
+  },
+  { _id: false }
+)
 
 const SettingsSchema = new Schema<ISettings>({
   general: { type: GeneralSettingsSchema, required: true },
@@ -128,4 +153,4 @@ SettingsSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function (ne
   next()
 })
 
-export const Settings = mongoose.model<ISettings>('Settings', SettingsSchema) 
+export const Settings = mongoose.model<ISettings>('Settings', SettingsSchema)

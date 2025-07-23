@@ -10,4 +10,4 @@ router.use(authenticateToken)
 // POST /api/size-recommendation
 router.post('/', getSizeRecommendation)
 
-export default router 
+export default router

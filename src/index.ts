@@ -11,6 +11,11 @@ import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
 import ChatWebSocketServer from './websocket/chatServer'
 
+// Fix for global.chatWebSocketServer type
+declare global {
+  var chatWebSocketServer: ChatWebSocketServer | undefined
+}
+
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
 import categoryRouter from './routes/categories'
@@ -24,15 +29,16 @@ import managerChatsRouter from './routes/managerChats'
 import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
-import paymentVnpayRoutes from './routes/payment-vnpay';
+import paymentVnpayRoutes from './routes/payment-vnpay'
 import couponRouter from './routes/voucher'
+import refundRouter from './routes/refund'
 import sizeRecommendationRouter from './routes/size-recommendation'
 
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
 import adminRouter from './routes/admin/admin'
-import applyCouponRouter from './routes/apply-coupon';
-import uploadRouter from './routes/upload';
+import applyCouponRouter from './routes/apply-coupon'
+import uploadRouter from './routes/upload'
 import { errorHandler } from './middlewares/errorHandler'
 import {
   API_BASE,
@@ -68,7 +74,6 @@ const initializeServices = async () => {
   }
 }
 
-
 const app: Application = express()
 const PORT = Number(process.env.PORT) || 5000
 const HOST = process.env.HOST || '0.0.0.0'
@@ -102,14 +107,16 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true)
-      
+
       // Cho phép tất cả các URL của Vercel
-      if (origin.includes('nidas-fe.vercel.app') || 
-          origin.includes('nidas-projects-e8bff2a3.vercel.app') ||
-          allowedOrigins.includes(origin)) {
+      if (
+        origin.includes('nidas-fe.vercel.app') ||
+        origin.includes('nidas-projects-e8bff2a3.vercel.app') ||
+        allowedOrigins.includes(origin)
+      ) {
         return callback(null, true)
       }
-      
+
       console.log('Blocked origin:', origin)
       return callback(new Error(`Origin ${origin} không được phép`))
     },
@@ -121,27 +128,29 @@ app.use(
 )
 // Đúng: bắt mọi preflight request
 // ✅ Bắt mọi preflight request cho tất cả routes
-app.options(/.*/, cors());
+app.options(/.*/, cors())
 app.use(express.json())
 app.use(cookieParser())
 
 // Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
-    ttl: 10 * 60,        // 10 minutes
-    autoRemove: 'native'
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 10 * 60 * 1000  // 10 minutes
-  }
-}))
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
+      ttl: 10 * 60, // 10 minutes
+      autoRemove: 'native'
+    }),
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 10 * 60 * 1000 // 10 minutes
+    }
+  })
+)
 
 // Health-check route
 app.get('/', (_req: Request, res: Response) => {
@@ -162,24 +171,26 @@ app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
 app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
-app.use('/api/payment', paymentVnpayRoutes);
+app.use('/api/payment', paymentVnpayRoutes)
 app.use(API_BASE + '/coupon', couponRouter)
+app.use('/api/refund', refundRouter)
 
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
 app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
 app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
-app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter);
-app.use(API_BASE + '/upload', uploadRouter);
-app.use(API_BASE + '/size-recommendation', sizeRecommendationRouter);
+app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
+app.use(API_BASE + '/upload', uploadRouter)
+app.use(API_BASE + '/size-recommendation', sizeRecommendationRouter)
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
 // Create HTTP server
-const server = createServer(app);
+const server = createServer(app)
 
 // Initialize WebSocket server
-const chatWebSocketServer = new ChatWebSocketServer(server);
+const chatWebSocketServer = new ChatWebSocketServer(server)
+global.chatWebSocketServer = chatWebSocketServer
 
 // Start server và log thêm IP LAN cho debug
 server.listen(PORT, HOST, async () => {

@@ -6,8 +6,8 @@ import { User } from '../models/User'
 import { CATEGORY_MESSAGES } from '../constants/categories'
 import { Brand } from '../models/Brand'
 import bcrypt from 'bcryptjs'
-import { logAdminAction } from '../utils/logAdminAction';
-import { sendBanUserEmail } from '../services/email.service';
+import { logAdminAction } from '../utils/logAdminAction'
+import { sendBanUserEmail } from '../services/email.service'
 
 /* -------------------------------- Dashboard ------------------------------- */
 export const getDashboard = async (_req: Request, res: Response) => {
@@ -69,7 +69,7 @@ export const createProduct = async (req: Request, res: Response) => {
       action: 'CREATE_PRODUCT',
       target: savedProduct && savedProduct._id ? String(savedProduct._id) : '',
       detail: `Created product: ${savedProduct.name}`
-    });
+    })
     res.status(201).json(savedProduct)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -85,7 +85,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       action: 'UPDATE_PRODUCT',
       target: req.params.id,
       detail: `Updated product: ${updatedProduct?.name}`
-    });
+    })
     res.json(updatedProduct)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -101,7 +101,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
       action: 'DELETE_PRODUCT',
       target: req.params.id,
       detail: `Deleted product: ${req.params.id}`
-    });
+    })
     res.json({ message: 'Product deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -203,26 +203,22 @@ export const getOrderById = async (req: Request, res: Response) => {
 export const updateOrderStatus = async (req: Request, res: Response) => {
   try {
     // Chỉ update các trường hợp lệ
-    const updateData: any = {};
-    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus;
-    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid;
-    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered;
-    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice;
-    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice;
+    const updateData: any = {}
+    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus
+    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid
+    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered
+    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice
+    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice
     // Có thể bổ sung các trường khác nếu cần
 
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
+    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, updateData, { new: true })
     // Audit log
     await logAdminAction(req, {
       adminId: req.user?._id,
       action: 'UPDATE_ORDER',
       target: req.params.id,
       detail: `Updated order: ${JSON.stringify(updateData)}`
-    });
+    })
     res.json(updatedOrder)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -238,7 +234,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
       action: 'DELETE_ORDER',
       target: req.params.id,
       detail: `Deleted order: ${req.params.id}`
-    });
+    })
     res.json({ message: 'Order deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -259,8 +255,9 @@ export const getCustomers = async (_req: Request, res: Response): Promise<void> 
 
 export const getCustomerById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const customer = await User.findById(req.params.id)
-      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    const customer = await User.findById(req.params.id).select(
+      'username email fullName phone role isVerified addresses createdAt status updatedAt avatar'
+    )
     if (!customer) {
       res.status(404).json({ message: 'Customer not found' })
       return
@@ -344,8 +341,9 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const user = await User.findById(req.params.id)
-      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    const user = await User.findById(req.params.id).select(
+      'username email fullName phone role isVerified addresses createdAt status updatedAt avatar'
+    )
     if (!user) {
       res.status(404).json({
         success: false,
@@ -417,7 +415,7 @@ export const createUser = async (req: Request, res: Response) => {
       action: 'CREATE_USER',
       target: savedUser && savedUser._id ? String(savedUser._id) : '',
       detail: `Created user: ${savedUser.username}`
-    });
+    })
 
     res.status(201).json({
       success: true,
@@ -458,7 +456,7 @@ export const updateUser = async (req: Request, res: Response) => {
       action: 'UPDATE_USER',
       target: id,
       detail: `Updated user: ${user?.username || id}`
-    });
+    })
 
     if (!user) {
       res.status(404).json({
@@ -483,29 +481,33 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const updateUserStatus = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { status, reason } = req.body;
+    const { id } = req.params
+    const { status, reason } = req.body
     if (!['active', 'locked'].includes(status)) {
-      return res.status(400).json({ message: 'Invalid status' });
+      return res.status(400).json({ message: 'Invalid status' })
     }
     if (status === 'locked' && (!reason || reason.trim() === '')) {
-      return res.status(400).json({ message: 'Ban reason is required' });
+      return res.status(400).json({ message: 'Ban reason is required' })
     }
-    const user = await User.findByIdAndUpdate(id, { status, banReason: status === 'locked' ? reason : '' }, { new: true }).select('-passwordHash');
+    const user = await User.findByIdAndUpdate(
+      id,
+      { status, banReason: status === 'locked' ? reason : '' },
+      { new: true }
+    ).select('-passwordHash')
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' })
     }
     await logAdminAction(req, {
       adminId: req.user?._id,
       action: status === 'locked' ? 'LOCK_USER' : 'UNLOCK_USER',
       target: id,
       detail: `Set user status to ${status}${reason ? `, reason: ${reason}` : ''}`
-    });
+    })
     // Gửi email thông báo
-    await sendBanUserEmail(user.email, reason || '', req.user?.username || 'admin', status);
-    res.json({ success: true, data: user });
+    await sendBanUserEmail(user.email, reason || '', req.user?.username || 'admin', status)
+    res.json({ success: true, data: user })
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    res.status(500).json({ message: (error as Error).message })
   }
 }
 
@@ -529,7 +531,7 @@ export const deleteUser = async (req: Request, res: Response) => {
       action: 'DELETE_USER',
       target: id,
       detail: `Deleted user: ${user?.username || id}`
-    });
+    })
 
     if (!user) {
       res.status(404).json({

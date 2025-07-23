@@ -1,17 +1,17 @@
 import express, { Request, Response, Router } from 'express'
 import { Order } from '../models/Order'
 import { checkUserAuth } from '../middlewares/checkUserAuth'
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const router: Router = express.Router()
 
 // Lấy lịch sử đơn hàng của user đang đăng nhập
 router.get('/history', checkUserAuth, async (req: any, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?.id
     if (!userId) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
+      res.status(401).json({ message: 'Unauthorized' })
+      return
     }
     const orders = await Order.find({ user: new mongoose.Types.ObjectId(userId) })
       .populate({
@@ -22,12 +22,12 @@ router.get('/history', checkUserAuth, async (req: any, res: Response): Promise<v
           { path: 'categories', select: 'name' }
         ]
       })
-      .sort({ createdAt: -1 });
-    res.json(orders);
+      .sort({ createdAt: -1 })
+    res.json(orders)
   } catch (error) {
-    res.status(500).json({ message: 'Lỗi khi lấy lịch sử đơn hàng: ' + (error as Error).message });
+    res.status(500).json({ message: 'Lỗi khi lấy lịch sử đơn hàng: ' + (error as Error).message })
   }
-});
+})
 
 router.get('/', async (_req: Request, res: Response): Promise<void> => {
   try {

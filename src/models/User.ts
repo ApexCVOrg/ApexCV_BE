@@ -37,13 +37,13 @@ const userSchema = new Schema({
 })
 
 // Update updatedAt on save
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   this.updatedAt = new Date()
   next()
 })
 
 // Update updatedAt on update operations
-userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function(next) {
+userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function (next) {
   this.set({ updatedAt: new Date() })
   next()
 })

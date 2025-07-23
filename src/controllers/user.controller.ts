@@ -14,7 +14,7 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
     const user = await User.findById(userId)
       .select('-passwordHash -verificationCode -verificationCodeExpires')
       .populate('favorites', 'name price images brand categories status')
-    
+
     if (!user) {
       res.status(404).json({ message: 'User not found' })
       return
@@ -131,15 +131,15 @@ export const getFavorites = async (req: Request, res: Response): Promise<void> =
       return
     }
 
-    const user = await User.findById(userId)
-      .populate({
-        path: 'favorites',
-        select: 'name description price discountPrice images brand categories sizes colors tags status ratingsAverage ratingsQuantity',
-        populate: [
-          { path: 'brand', select: 'name' },
-          { path: 'categories', select: 'name' }
-        ]
-      })
+    const user = await User.findById(userId).populate({
+      path: 'favorites',
+      select:
+        'name description price discountPrice images brand categories sizes colors tags status ratingsAverage ratingsQuantity',
+      populate: [
+        { path: 'brand', select: 'name' },
+        { path: 'categories', select: 'name' }
+      ]
+    })
 
     if (!user) {
       res.status(404).json({ message: 'User not found' })
@@ -191,7 +191,7 @@ export const addToFavorites = async (req: Request, res: Response): Promise<void>
     const productObjectId = new mongoose.Types.ObjectId(productId)
 
     // Check if product is already in favorites
-    if (user.favorites.some(fav => fav.equals(productObjectId))) {
+    if (user.favorites.some((fav) => fav.equals(productObjectId))) {
       res.status(400).json({ message: 'Product is already in favorites' })
       return
     }
@@ -203,7 +203,8 @@ export const addToFavorites = async (req: Request, res: Response): Promise<void>
     // Populate favorites for response
     await user.populate({
       path: 'favorites',
-      select: 'name description price discountPrice images brand categories sizes colors tags status ratingsAverage ratingsQuantity',
+      select:
+        'name description price discountPrice images brand categories sizes colors tags status ratingsAverage ratingsQuantity',
       populate: [
         { path: 'brand', select: 'name' },
         { path: 'categories', select: 'name' }
@@ -249,19 +250,20 @@ export const removeFromFavorites = async (req: Request, res: Response): Promise<
     const productObjectId = new mongoose.Types.ObjectId(productId)
 
     // Check if product is in favorites
-    if (!user.favorites.some(fav => fav.equals(productObjectId))) {
+    if (!user.favorites.some((fav) => fav.equals(productObjectId))) {
       res.status(400).json({ message: 'Product is not in favorites' })
       return
     }
 
     // Remove from favorites
-    user.favorites = user.favorites.filter(fav => !fav.equals(productObjectId))
+    user.favorites = user.favorites.filter((fav) => !fav.equals(productObjectId))
     await user.save()
 
     // Populate favorites for response
     await user.populate({
       path: 'favorites',
-      select: 'name description price discountPrice images brand categories sizes colors tags status ratingsAverage ratingsQuantity',
+      select:
+        'name description price discountPrice images brand categories sizes colors tags status ratingsAverage ratingsQuantity',
       populate: [
         { path: 'brand', select: 'name' },
         { path: 'categories', select: 'name' }
@@ -305,7 +307,7 @@ export const checkFavorite = async (req: Request, res: Response): Promise<void> 
 
     // Convert string to ObjectId for comparison
     const productObjectId = new mongoose.Types.ObjectId(productId)
-    const isFavorite = user.favorites.some(fav => fav.equals(productObjectId))
+    const isFavorite = user.favorites.some((fav) => fav.equals(productObjectId))
 
     res.json({
       success: true,
@@ -323,12 +325,14 @@ export const checkFavorite = async (req: Request, res: Response): Promise<void> 
 // Lịch sử mua hàng của user
 export const getUserOrders = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?._id;
+    const userId = req.user?._id
     if (!userId) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
+      res.status(401).json({ message: 'Unauthorized' })
+      return
     }
-    const orders = await (await import('../models/Order.js')).Order.find({ user: userId })
+    const orders = await (
+      await import('../models/Order.js')
+    ).Order.find({ user: userId })
       .populate({
         path: 'orderItems.product',
         select: 'name price discountPrice images brand categories',
@@ -337,10 +341,10 @@ export const getUserOrders = async (req: Request, res: Response): Promise<void> 
           { path: 'categories', select: 'name' }
         ]
       })
-      .sort({ createdAt: -1 });
-    res.json({ success: true, data: orders });
+      .sort({ createdAt: -1 })
+    res.json({ success: true, data: orders })
   } catch (error) {
-    console.error('Error in getUserOrders:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Error in getUserOrders:', error)
+    res.status(500).json({ message: 'Internal server error' })
   }
 }

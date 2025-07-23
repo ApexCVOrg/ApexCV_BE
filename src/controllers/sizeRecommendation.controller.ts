@@ -61,15 +61,20 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
     const categoryNames = product.categories.map((cat: any) => cat.name.toLowerCase())
     console.log('Size recommendation - Category names:', categoryNames)
     console.log('Size recommendation - Available sizes:', sizes)
-    
-    const isApparel = categoryNames.some(name => 
-      name.includes('jersey') || name.includes('jacket') || name.includes('hoodie') || 
-      name.includes('tracksuit') || name.includes('shorts') || name.includes('apparel')
+
+    const isApparel = categoryNames.some(
+      (name) =>
+        name.includes('jersey') ||
+        name.includes('jacket') ||
+        name.includes('hoodie') ||
+        name.includes('tracksuit') ||
+        name.includes('shorts') ||
+        name.includes('apparel')
     )
-    const isFootwear = categoryNames.some(name => 
-      name.includes('sneakers') || name.includes('shoes') || name.includes('footwear')
+    const isFootwear = categoryNames.some(
+      (name) => name.includes('sneakers') || name.includes('shoes') || name.includes('footwear')
     )
-    
+
     console.log('Size recommendation - Is apparel:', isApparel)
     console.log('Size recommendation - Is footwear:', isFootwear)
 
@@ -94,7 +99,7 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
       const userBMI = user.weight / Math.pow(user.height / 100, 2)
       console.log('Size recommendation - User BMI:', userBMI)
       console.log('Size recommendation - User height:', user.height, 'weight:', user.weight)
-      
+
       for (const size of sizes) {
         const sizeData = productChart[size]
         if (!sizeData) {
@@ -116,12 +121,14 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
         const chestError = Math.abs(sizeData.chest - estimatedChest)
         const waistError = Math.abs(sizeData.waist - estimatedWaist)
         const hipError = Math.abs(sizeData.hip - estimatedHip)
-        
+
         // Weighted average error (chest is most important for tops)
-        const totalError = (chestError * 0.5) + (waistError * 0.3) + (hipError * 0.2)
-        
-        console.log(`Size recommendation - Size ${size}: chest=${sizeData.chest}, waist=${sizeData.waist}, hip=${sizeData.hip}, error=${totalError}`)
-        
+        const totalError = chestError * 0.5 + waistError * 0.3 + hipError * 0.2
+
+        console.log(
+          `Size recommendation - Size ${size}: chest=${sizeData.chest}, waist=${sizeData.waist}, hip=${sizeData.hip}, error=${totalError}`
+        )
+
         if (totalError < minError) {
           minError = totalError
           bestSize = size
@@ -137,7 +144,6 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
       } else {
         res.status(400).json({ message: 'No suitable size found for this product' })
       }
-
     } else if (isFootwear) {
       // Handle Footwear size recommendation
       if (!user.footLength) {
@@ -150,12 +156,12 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
       }
 
       const footwearChart = sizeChartFootwear as SizeChartFootwear
-      
+
       // Check if product has sizes 39-42, use appropriate chart
       let productChart = footwearChart[productId]
       if (!productChart) {
         // Check if product has sizes 39, 40, 41, 42
-        const has39to42 = sizes.some(size => ['39', '40', '41', '42'].includes(size))
+        const has39to42 = sizes.some((size) => ['39', '40', '41', '42'].includes(size))
         console.log('Size recommendation - Has sizes 39-42:', has39to42)
         if (has39to42) {
           productChart = footwearChart.sneakers_39_42
@@ -185,26 +191,28 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
 
       if (closestFootLength) {
         const recommendedSizes = productChart[closestFootLength]
-        
+
         // Find the closest size from available sizes in the product
         let bestAvailableSize = ''
         let minSizeDifference = Infinity
-        
+
         console.log('Size recommendation - Recommended EU size:', recommendedSizes.EU)
         console.log('Size recommendation - Available sizes:', sizes)
-        
+
         for (const availableSize of sizes) {
           const sizeNum = parseInt(availableSize)
           if (!isNaN(sizeNum)) {
             const difference = Math.abs(sizeNum - recommendedSizes.EU)
-            console.log(`Size recommendation - Size ${availableSize}: difference from EU ${recommendedSizes.EU} = ${difference}`)
+            console.log(
+              `Size recommendation - Size ${availableSize}: difference from EU ${recommendedSizes.EU} = ${difference}`
+            )
             if (difference < minSizeDifference) {
               minSizeDifference = difference
               bestAvailableSize = availableSize
             }
           }
         }
-        
+
         // If no numeric size found, use the first available size
         if (!bestAvailableSize && sizes.length > 0) {
           bestAvailableSize = sizes[0]
@@ -237,13 +245,11 @@ export const getSizeRecommendation = async (req: Request, res: Response): Promis
           res.status(400).json({ message: 'No suitable size found for your foot length' })
         }
       }
-
     } else {
       res.status(400).json({ message: 'Product type not supported for size recommendation' })
     }
-
   } catch (error) {
     console.error('Error in getSizeRecommendation:', error)
     res.status(500).json({ message: 'Internal server error' })
   }
-} 
+}
