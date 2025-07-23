@@ -25,7 +25,7 @@ export function createVnpayPayment(data: BuildPaymentUrl) {
 
   try {
     // Import dateFormat utility
-    const { dateFormat } = require('../lib/vnpay/utils/common')
+    const { dateFormat, getDateInGMT7 } = require('../lib/vnpay/utils/common')
 
     // Chỉ lấy các trường cần thiết cho VNPAY, loại bỏ các trường không cần thiết
     const vnpayData = {
@@ -38,9 +38,9 @@ export function createVnpayPayment(data: BuildPaymentUrl) {
       vnp_CurrCode: VnpCurrCode.VND,
       vnp_Locale: VnpLocale.VN,
       vnp_OrderType: ProductCode.Other,
-      // Format date đúng cho VNPAY
-      vnp_ExpireDate: data.vnp_ExpireDate ? dateFormat(new Date(data.vnp_ExpireDate * 1000)) : undefined,
-      vnp_CreateDate: dateFormat(new Date())
+      // Format date đúng cho VNPAY (luôn dùng giờ Việt Nam)
+      vnp_ExpireDate: data.vnp_ExpireDate ? dateFormat(getDateInGMT7(new Date(data.vnp_ExpireDate * 1000))) : undefined,
+      vnp_CreateDate: dateFormat(getDateInGMT7()),
     }
 
     console.log('[VNPAY Service] Cleaned VNPAY data:', JSON.stringify(vnpayData, null, 2))
