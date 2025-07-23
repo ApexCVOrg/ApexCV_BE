@@ -1,8 +1,8 @@
 import express, { Router } from 'express'
-import { 
-  getFavorites, 
-  addToFavorites, 
-  removeFromFavorites, 
+import {
+  getFavorites,
+  addToFavorites,
+  removeFromFavorites,
   checkFavorite,
   toggleFavorite,
   clearFavorites
@@ -22,4 +22,4 @@ router.get('/check/:productId', checkFavorite)
 router.post('/toggle/:productId', toggleFavorite)
 router.delete('/clear', clearFavorites)
 
-export default router 
+export default router

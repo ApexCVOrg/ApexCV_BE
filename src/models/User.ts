@@ -22,6 +22,10 @@ const userSchema = new Schema({
   avatar: String,
   addresses: [addressSchema],
   favorites: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+  // Body measurements for size recommendation
+  height: { type: Number, min: 100, max: 250 }, // cm
+  weight: { type: Number, min: 20, max: 200 }, // kg
+  footLength: { type: Number, min: 150, max: 350 }, // mm
   googleId: { type: String, unique: true, sparse: true },
   facebookId: { type: String, unique: true, sparse: true },
   isVerified: { type: Boolean, default: false },
@@ -33,13 +37,13 @@ const userSchema = new Schema({
 })
 
 // Update updatedAt on save
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   this.updatedAt = new Date()
   next()
 })
 
 // Update updatedAt on update operations
-userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function(next) {
+userSchema.pre(['updateOne', 'findOneAndUpdate', 'updateMany'], function (next) {
   this.set({ updatedAt: new Date() })
   next()
 })
@@ -55,6 +59,10 @@ interface IUser extends Document {
   role: string
   status: string
   banReason?: string
+  // Body measurements for size recommendation
+  height?: number
+  weight?: number
+  footLength?: number
   isVerified: boolean
   verificationCode?: string
   verificationCodeExpires?: Date

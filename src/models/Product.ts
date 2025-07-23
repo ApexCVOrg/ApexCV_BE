@@ -30,7 +30,7 @@ interface IProduct extends Document {
 const sizeSchema = new Schema({
   size: String,
   stock: Number,
-  color: String,
+  color: String
 })
 
 const productSchema = new Schema({

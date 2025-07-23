@@ -199,12 +199,11 @@ export const sendBanUserEmail = async (email: string, reason: string, admin: str
       from: `"NIDAS" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: status === 'locked' ? 'Your account has been banned' : 'Your account has been unbanned',
-      text: status === 'locked'
-        ? `Your account has been banned by admin (${admin}). Reason: ${reason}`
-        : `Your account has been reactivated by admin (${admin}).`,
-      html: status === 'locked'
-        ? generateBanUserEmailHTML(reason, admin)
-        : generateUnbanUserEmailHTML(admin)
+      text:
+        status === 'locked'
+          ? `Your account has been banned by admin (${admin}). Reason: ${reason}`
+          : `Your account has been reactivated by admin (${admin}).`,
+      html: status === 'locked' ? generateBanUserEmailHTML(reason, admin) : generateUnbanUserEmailHTML(admin)
     }
     console.log(`📤 Sending ban/unban email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
@@ -236,7 +235,7 @@ const generateBanUserEmailHTML = (reason: string, admin: string): string => `
       </p>
     </div>
   </div>
-`;
+`
 
 const generateUnbanUserEmailHTML = (admin: string): string => `
   <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -254,7 +253,7 @@ const generateUnbanUserEmailHTML = (admin: string): string => `
       </p>
     </div>
   </div>
-`;
+`
 
 /**
  * Gửi email xác nhận đơn hàng thành công hoặc thất bại
@@ -267,10 +266,8 @@ export const sendOrderStatusEmail = async (
   orderInfo: { orderId?: string; totalPrice?: number; reason?: string },
   isSuccess: boolean
 ) => {
-  if (!email) return;
-  const subject = isSuccess
-    ? 'Xác nhận đặt hàng thành công'
-    : 'Thanh toán thất bại';
+  if (!email) return
+  const subject = isSuccess ? 'Xác nhận đặt hàng thành công' : 'Thanh toán thất bại'
   const html = isSuccess
     ? `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #2563eb;">Cảm ơn bạn đã đặt hàng tại NIDAS!</h2>
@@ -288,13 +285,13 @@ export const sendOrderStatusEmail = async (
         <p><b>Lý do:</b> ${orderInfo.reason || 'Không xác định'}</p>
         <p>Vui lòng thử lại hoặc liên hệ hỗ trợ nếu cần giúp đỡ.</p>
         <p>Trân trọng,<br/>NIDAS Team</p>
-      </div>`;
+      </div>`
   await transporter.sendMail({
     from: `"NIDAS" <${process.env.GMAIL_USER}>`,
     to: email,
     subject,
     html
-  });
-};
+  })
+}
 
-export { transporter };
+export { transporter }

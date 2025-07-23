@@ -453,7 +453,7 @@ const ordersData = [
     userEmail: 'user15@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: 'Bayern Munich Kids Tracksuit',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
@@ -724,7 +724,7 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Home Jersey 2024/25",
+        productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '6-7Y',
         color: 'White',
         quantity: 1,
@@ -751,7 +751,7 @@ const ordersData = [
     userEmail: 'user04@example.com',
     orderItems: [
       {
-        productName: "Manchester United Kids Tracksuit",
+        productName: 'Manchester United Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 2,
@@ -793,7 +793,7 @@ const ordersData = [
         price: 979000
       },
       {
-        productName: "Juventus Kids Home Jersey 2024/25",
+        productName: 'Juventus Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Black',
         quantity: 1,
@@ -989,14 +989,14 @@ const ordersData = [
     userEmail: 'user03@example.com',
     orderItems: [
       {
-        productName: "Bayern Munich Kids Home Jersey 2024/25",
+        productName: 'Bayern Munich Kids Home Jersey 2024/25',
         size: '8-9Y',
         color: 'Red',
         quantity: 1,
         price: 1499000
       },
       {
-        productName: "Bayern Munich Kids Tracksuit",
+        productName: 'Bayern Munich Kids Tracksuit',
         size: '10-11Y',
         color: 'Red',
         quantity: 1,
@@ -1146,7 +1146,7 @@ export const seedOrders = async () => {
     for (const orderData of ordersData) {
       // Check if order already exists by checking user, orderItems, and totalPrice
       const userId = await findUserByEmail(orderData.userEmail)
-      
+
       const orderItems = []
       for (const item of orderData.orderItems) {
         const productId = await findProductByName(item.productName)
@@ -1196,4 +1196,4 @@ export const seedOrders = async () => {
   } catch (error) {
     throw error
   }
-} 
+}

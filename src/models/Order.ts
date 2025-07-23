@@ -3,7 +3,7 @@ const sizeSchema = new Schema({
   sku: { type: String, required: true },
   size: String,
   stock: Number,
-  color: String,
+  color: String
 })
 const orderItemSchema = new Schema({
   product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
@@ -11,9 +11,8 @@ const orderItemSchema = new Schema({
   quantity: { type: Number, required: true, min: 1 },
   price: Number,
   productName: String,
-productImage: String,
-productBrand: String
-
+  productImage: String,
+  productBrand: String
 })
 
 const orderSchema = new Schema({
@@ -32,7 +31,7 @@ const orderSchema = new Schema({
     fullName: String,
     email: String,
     phone: String
-  },  
+  },
   paymentMethod: String,
   paymentResult: {
     id: String,
