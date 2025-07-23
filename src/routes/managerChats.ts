@@ -128,7 +128,7 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
       });
     }
 
-    const message = await chatService.sendManagerMessage(chatId, managerId, content, attachments);
+    const message = await chatService.sendManagerMessage(chatId, managerId, content, attachments, undefined, undefined, req);
 
     res.json({
       success: true,
@@ -185,7 +185,7 @@ router.patch('/:chatId/close', validateCloseSession, async (req: AuthRequest, re
       });
     }
 
-    await chatService.closeSession(chatId, managerId, note);
+    await chatService.closeSession(chatId, managerId, note, req);
 
     res.json({
       success: true,

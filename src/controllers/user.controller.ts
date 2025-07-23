@@ -53,7 +53,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       return
     }
 
-    const { fullName, phone, addresses, height, weight, footLength } = req.body
+    const { fullName, phone, addresses, height, weight, footLength, avatar } = req.body
 
     // Validate input
     if (fullName && typeof fullName !== 'string') {
@@ -80,6 +80,10 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       res.status(400).json({ message: 'Invalid footLength format (must be between 150-350 mm)' })
       return
     }
+    if (avatar && typeof avatar !== 'string') {
+      res.status(400).json({ message: 'Invalid avatar format' })
+      return
+    }
 
     const user = await User.findById(userId)
     if (!user) {
@@ -94,6 +98,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
     if (height !== undefined) user.height = height
     if (weight !== undefined) user.weight = weight
     if (footLength !== undefined) user.footLength = footLength
+    if (avatar) user.avatar = avatar
 
     await user.save()
 
