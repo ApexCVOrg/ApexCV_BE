@@ -1,6 +1,7 @@
 import { VNPay } from '../lib/vnpay/vnpay'
 import type { BuildPaymentUrl, ReturnQueryFromVNPay } from '../lib/vnpay/types'
 import { VnpCurrCode, VnpLocale, ProductCode } from '../lib/vnpay/enums'
+import { dateFormat, getDateInGMT7 } from '../lib/vnpay/utils/common'
 
 // VNPAY Configuration from environment variables
 const vnpay = new VNPay({
@@ -24,9 +25,6 @@ export function createVnpayPayment(data: BuildPaymentUrl) {
   console.log('[VNPAY Service] Payment data:', JSON.stringify(data, null, 2))
 
   try {
-    // Import dateFormat utility
-    const { dateFormat, getDateInGMT7 } = require('../lib/vnpay/utils/common')
-
     // Chỉ lấy các trường cần thiết cho VNPAY, loại bỏ các trường không cần thiết
     const vnpayData = {
       vnp_Amount: data.vnp_Amount,
