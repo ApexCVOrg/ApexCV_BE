@@ -1,12 +1,12 @@
-import mongoose, { Schema, Document as MongooseDocument, Model } from 'mongoose';
+import mongoose, { Schema, Document as MongooseDocument, Model } from 'mongoose'
 
 export interface IChatMessage extends MongooseDocument {
-  chatId: string;
-  role: 'user' | 'manager' | 'bot';
-  content: string;
-  createdAt: Date;
-  isBotMessage?: boolean; // Flag to identify bot messages
-  isRead?: boolean; // Flag to track if message is read
+  chatId: string
+  role: 'user' | 'manager' | 'bot'
+  content: string
+  createdAt: Date
+  isBotMessage?: boolean // Flag to identify bot messages
+  isRead?: boolean // Flag to track if message is read
   attachments?: Array<{
     filename: string;
     originalName: string;
@@ -36,20 +36,20 @@ export interface IChatMessage extends MongooseDocument {
 
 const ChatMessageSchema = new Schema<IChatMessage>(
   {
-    chatId: { 
-      type: String, 
+    chatId: {
+      type: String,
       required: true,
-      index: true 
+      index: true
     },
-    role: { 
-      type: String, 
-      enum: ['user', 'manager', 'bot'], 
-      required: true 
+    role: {
+      type: String,
+      enum: ['user', 'manager', 'bot'],
+      required: true
     },
-    content: { 
-      type: String, 
+    content: {
+      type: String,
       required: true,
-      maxlength: 1000 
+      maxlength: 1000
     },
     isBotMessage: {
       type: Boolean,
@@ -59,13 +59,15 @@ const ChatMessageSchema = new Schema<IChatMessage>(
       type: Boolean,
       default: false
     },
-    attachments: [{
-      filename: { type: String, required: true },
-      originalName: { type: String, required: true },
-      mimetype: { type: String, required: true },
-      size: { type: Number, required: true },
-      url: { type: String, required: true }
-    }],
+    attachments: [
+      {
+        filename: { type: String, required: true },
+        originalName: { type: String, required: true },
+        mimetype: { type: String, required: true },
+        size: { type: Number, required: true },
+        url: { type: String, required: true }
+      }
+    ],
     messageType: {
       type: String,
       enum: ['text', 'file', 'image', 'product'],
@@ -98,13 +100,13 @@ const ChatMessageSchema = new Schema<IChatMessage>(
       createdAt: { type: Date }
     }
   },
-  { 
+  {
     timestamps: { createdAt: true, updatedAt: false }
   }
-);
+)
 
 // Index cho tìm kiếm hiệu quả
-ChatMessageSchema.index({ chatId: 1, createdAt: 1 });
-ChatMessageSchema.index({ chatId: 1, isRead: 1 });
+ChatMessageSchema.index({ chatId: 1, createdAt: 1 })
+ChatMessageSchema.index({ chatId: 1, isRead: 1 })
 
-export const ChatMessageModel: Model<IChatMessage> = mongoose.model<IChatMessage>('ChatMessage', ChatMessageSchema); 
+export const ChatMessageModel: Model<IChatMessage> = mongoose.model<IChatMessage>('ChatMessage', ChatMessageSchema)

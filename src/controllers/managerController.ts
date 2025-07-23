@@ -242,12 +242,12 @@ export const getOrderById = async (req: Request, res: Response) => {
 export const updateOrderStatus = async (req: Request, res: Response) => {
   try {
     // Chỉ update các trường hợp lệ
-    const updateData: any = {};
-    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus;
-    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid;
-    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered;
-    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice;
-    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice;
+    const updateData: any = {}
+    if ('orderStatus' in req.body) updateData.orderStatus = req.body.orderStatus
+    if ('isPaid' in req.body) updateData.isPaid = req.body.isPaid
+    if ('isDelivered' in req.body) updateData.isDelivered = req.body.isDelivered
+    if ('shippingPrice' in req.body) updateData.shippingPrice = req.body.shippingPrice
+    if ('taxPrice' in req.body) updateData.taxPrice = req.body.taxPrice
     // Có thể bổ sung các trường khác nếu cần
 
     const updatedOrder = await Order.findByIdAndUpdate(
@@ -268,7 +268,7 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
     
     res.json(updatedOrder);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    res.status(500).json({ message: (error as Error).message })
   }
 }
 
@@ -307,8 +307,9 @@ export const getCustomers = async (_req: Request, res: Response): Promise<void> 
 
 export const getCustomerById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const customer = await User.findById(req.params.id)
-      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    const customer = await User.findById(req.params.id).select(
+      'username email fullName phone role isVerified addresses createdAt status updatedAt avatar'
+    )
     if (!customer) {
       res.status(404).json({ message: 'Customer not found' })
       return
@@ -413,8 +414,9 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const user = await User.findById(req.params.id)
-      .select('username email fullName phone role isVerified addresses createdAt status updatedAt avatar')
+    const user = await User.findById(req.params.id).select(
+      'username email fullName phone role isVerified addresses createdAt status updatedAt avatar'
+    )
     if (!user) {
       res.status(404).json({
         success: false,

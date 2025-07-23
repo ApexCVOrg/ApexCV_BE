@@ -6,14 +6,14 @@ import { User } from '../models/User'
 import { authenticateToken } from '../middlewares/auth'
 import { checkPermission, checkPermissions } from '../middlewares/permission'
 import { Permission } from '../types/filter/permissions'
-import { 
-  getProfile, 
-  updateProfile, 
-  getFavorites, 
-  addToFavorites, 
-  removeFromFavorites, 
-  checkFavorite, 
-  getUserOrders 
+import {
+  getProfile,
+  updateProfile,
+  getFavorites,
+  addToFavorites,
+  removeFromFavorites,
+  checkFavorite,
+  getUserOrders
 } from '../controllers/user.controller'
 
 const router: Router = express.Router()

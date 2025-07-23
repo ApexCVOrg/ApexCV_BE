@@ -60,7 +60,8 @@ export const seedCoupons = async () => {
 
 // Nếu chạy trực tiếp file này
 if (require.main === module) {
-  mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas')
+  mongoose
+    .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nidas')
     .then(async () => {
       await seedCoupons()
       process.exit(0)
@@ -69,4 +70,4 @@ if (require.main === module) {
       console.error('MongoDB connection error:', err)
       process.exit(1)
     })
-} 
+}

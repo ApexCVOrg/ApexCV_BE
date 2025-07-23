@@ -62,4 +62,4 @@ export const SettingsSchema = z.object({
   localization: LocalizationSettingsSchema,
   notifications: NotificationSettingsSchema,
   integrations: IntegrationSettingsSchema
-}) 
+})
