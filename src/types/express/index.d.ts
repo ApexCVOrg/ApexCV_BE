@@ -2,7 +2,8 @@ import 'express-session'
 
 declare module 'express-session' {
   interface SessionData {
-    pendingOrder?: any
+    pendingOrder?: any;
+    state?: string;
   }
 }
 

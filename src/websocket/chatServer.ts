@@ -10,23 +10,43 @@ interface ChatClient {
   chatId?: string
 }
 
+interface IProduct {
+  _id: string;
+  name: string;
+  description?: string;
+  price: number;
+  discountPrice?: number;
+  images: string[];
+  sizes: { size: string; stock: number }[];
+  colors: string[];
+  tags: string[];
+  brand?: { _id: string; name: string };
+  categories?: { _id: string; name: string }[];
+  status: string;
+  ratingsAverage: number;
+  ratingsQuantity: number;
+  createdAt: Date;
+}
+
 interface ChatMessage {
-  type: 'message' | 'join' | 'leave' | 'typing' | 'read' | 'unread_count'
-  chatId: string
-  userId?: string
-  managerId?: string
-  content?: string
-  role?: 'user' | 'manager'
-  timestamp?: Date
-  isTyping?: boolean
+  type: 'message' | 'join' | 'leave' | 'typing' | 'read' | 'unread_count' | 'manager_send_product' | 'user_click_product';
+  chatId: string;
+  userId?: string;
+  managerId?: string;
+  content?: string;
+  role?: 'user' | 'manager';
+  timestamp?: Date;
+  isTyping?: boolean;
   attachments?: Array<{
-    filename: string
-    originalName: string
-    mimetype: string
-    size: number
-    url: string
-  }>
-  messageType?: 'text' | 'file' | 'image'
+    filename: string;
+    originalName: string;
+    mimetype: string;
+    size: number;
+    url: string;
+  }>;
+  messageType?: 'text' | 'file' | 'image' | 'product';
+  product?: IProduct;
+  slug?: string;
 }
 
 class ChatWebSocketServer {
@@ -114,8 +134,14 @@ class ChatWebSocketServer {
         this.handleMarkAsRead(clientId, message.chatId)
         break
       case 'unread_count':
-        this.handleUnreadCount(clientId)
-        break
+        this.handleUnreadCount(clientId);
+        break;
+      case 'manager_send_product':
+        this.handleManagerSendProduct(clientId, message);
+        break;
+      case 'user_click_product':
+        this.handleUserClickProduct(clientId, message);
+        break;
     }
   }
 
@@ -418,6 +444,67 @@ class ChatWebSocketServer {
         client.ws.send(JSON.stringify({ type: 'cart_update' }))
       }
     })
+  }
+
+  // Handle manager sending product to user
+  private async handleManagerSendProduct(clientId: string, message: ChatMessage) {
+    const client = this.clients.get(clientId);
+    if (!client || client.role !== 'manager' || !message.product) return;
+
+    console.log('Manager sending product:', {
+      clientId,
+      managerId: client.userId,
+      chatId: message.chatId,
+      productId: message.product._id,
+      productName: message.product.name
+    });
+
+    try {
+      // Save product message to database
+      await chatService.sendManagerMessage(
+        message.chatId, 
+        client.userId, 
+        `Sản phẩm: ${message.product.name}`,
+        undefined,
+        'product',
+        message.product
+      );
+
+      // Broadcast product message to room
+      this.broadcastToRoom(message.chatId, {
+        type: 'new_product_message',
+        chatId: message.chatId,
+        content: `Sản phẩm: ${message.product.name}`,
+        role: 'manager',
+        userId: client.userId,
+        timestamp: new Date(),
+        messageType: 'product',
+        product: message.product
+      });
+
+      // Update unread count for all clients in the room
+      this.updateUnreadCountForRoom(message.chatId);
+
+    } catch (error) {
+      console.error('Error handling manager send product:', error);
+    }
+  }
+
+  // Handle user clicking on product
+  private handleUserClickProduct(clientId: string, message: ChatMessage) {
+    const client = this.clients.get(clientId);
+    if (!client || client.role !== 'user' || !message.slug) return;
+
+    console.log('User clicked product:', {
+      clientId,
+      userId: client.userId,
+      chatId: message.chatId,
+      slug: message.slug
+    });
+
+    // Log analytics or save to database for tracking
+    // This could be used for analytics, recommendations, etc.
+    console.log(`User ${client.userId} clicked product with slug: ${message.slug} in chat ${message.chatId}`);
   }
 }
 

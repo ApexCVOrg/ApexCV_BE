@@ -152,6 +152,48 @@ router.get('/top-selling', (req, res, next) => getTopSellingProducts(req, res))
 // Public Top-selling products
 router.get('/public-top-selling', getPublicTopSellingProducts)
 
+// Search products for manager chat
+router.get('/search/chat', async (req: Request, res: Response) => {
+  try {
+    const { q, limit = 10 } = req.query;
+    
+    if (!q || typeof q !== 'string') {
+      return res.status(400).json({
+        success: false,
+        message: 'Search query is required'
+      });
+    }
+
+    const searchLimit = Math.min(parseInt(limit as string) || 10, 20); // Max 20 results
+
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: q, $options: 'i' } },
+        { description: { $regex: q, $options: 'i' } },
+        { tags: { $in: [new RegExp(q, 'i')] } }
+      ],
+      status: 'active'
+    })
+    .populate('categories', 'name')
+    .populate('brand', 'name')
+    .select('name description price discountPrice images sizes colors tags brand categories status ratingsAverage ratingsQuantity createdAt')
+    .limit(searchLimit)
+    .lean();
+
+    res.json({
+      success: true,
+      count: products.length,
+      data: products
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Error searching products',
+      error: error?.message || 'Unknown error'
+    });
+  }
+});
+
 // Get product by ID
 router.get('/:id', async (req: Request<{ id: string }>, res: Response) => {
   try {

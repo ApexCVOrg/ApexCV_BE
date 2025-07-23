@@ -45,6 +45,7 @@ import {
   getSalesChart
 } from '../../controllers/dashboardController'
 import settingsRouter from './settings'
+import ManagerAuditLog from '../../models/ManagerAuditLog'
 
 const router = express.Router()
 
@@ -121,5 +122,51 @@ router.get('/dashboard/today-sales', getTodaySales)
 router.get('/dashboard/order-stats', getDashboardOrderStats)
 router.get('/dashboard/top-products', getTopSellingProducts)
 router.get('/dashboard/sales-chart', getSalesChart)
+
+// Manager Audit Logs
+router.get('/logs', async (req, res) => {
+  try {
+    const { page = 1, limit = 20, action, managerId, target } = req.query;
+    const query: Record<string, any> = {};
+    if (action) query['action'] = action;
+    if (managerId) query['managerId'] = managerId;
+    if (target) query['target'] = target;
+    const skip = (Number(page) - 1) * Number(limit);
+    const [logs, total] = await Promise.all([
+      ManagerAuditLog.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(Number(limit))
+        .populate('managerId', 'username email'),
+      ManagerAuditLog.countDocuments(query)
+    ]);
+    res.json({
+      success: true,
+      data: logs,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        pages: Math.ceil(total / Number(limit))
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error fetching manager audit logs', error: err });
+  }
+});
+
+// Get all managers for filter dropdown
+router.get('/managers', async (req, res) => {
+  try {
+    const { User } = await import('../../models/User.js');
+    const managers = await User.find({ role: 'manager' }).select('_id username email');
+    res.json({
+      success: true,
+      data: managers
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error fetching managers', error: err });
+  }
+});
 
 export default router
