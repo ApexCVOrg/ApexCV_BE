@@ -32,6 +32,7 @@ const userSchema = new Schema({
   verificationCode: String,
   verificationCodeExpires: Date,
   refreshToken: { type: String },
+  points: { type: Number, default: 0 }, // Điểm tích lũy từ thanh toán
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 })
@@ -70,6 +71,7 @@ interface IUser extends Document {
   facebookId?: string
   avatar?: string
   refreshToken?: string
+  points: number
   createdAt: Date
   updatedAt: Date
 }

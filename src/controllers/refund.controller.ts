@@ -15,7 +15,7 @@ export const createRefundRequest = async (req: Request, res: Response) => {
     let images: string[] = []
     if (req.files && Array.isArray(req.files)) {
       images = (req.files as Express.Multer.File[]).map(
-        (file) => `${process.env.API_BASE_URL || 'https://nidas-be.onrender.com'}/api/uploads/${file.filename}`
+        (file) => `${process.env.API_BASE_URL || 'https://nidas-be.onrender.com'}/uploads/${file.filename}`
       )
     }
     if (!orderId || !txnRef || !amount || !reason) {

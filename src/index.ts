@@ -30,6 +30,7 @@ import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay'
+import sepayRouter from './routes/sepay'
 import couponRouter from './routes/voucher'
 import refundRouter from './routes/refund'
 import sizeRecommendationRouter from './routes/size-recommendation'
@@ -130,6 +131,8 @@ app.use(
 // ✅ Bắt mọi preflight request cho tất cả routes
 app.options(/.*/, cors())
 app.use(express.json())
+// Support Sepay or third-party webhooks sending urlencoded payloads
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // Serve static files from uploads directory
@@ -172,6 +175,7 @@ app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
 app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
 app.use(API_BASE + '/checkout', checkoutRouter)
 app.use('/api/payment', paymentVnpayRoutes)
+app.use('/api/sepay', sepayRouter)
 app.use(API_BASE + '/coupon', couponRouter)
 app.use('/api/refund', refundRouter)
 
