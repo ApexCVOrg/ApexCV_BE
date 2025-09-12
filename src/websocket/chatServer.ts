@@ -192,6 +192,7 @@ class ChatWebSocketServer {
       }
 
       // Broadcast to room
+      console.log('Broadcasting message to room:', message.chatId)
       this.broadcastToRoom(message.chatId, {
         type: 'message',
         chatId: message.chatId,
@@ -205,6 +206,7 @@ class ChatWebSocketServer {
 
       // If it's a user message, broadcast to all managers
       if (client.role === 'user') {
+        console.log('Broadcasting user message to all managers')
         this.broadcastToAllManagers({
           type: 'message',
           chatId: message.chatId,

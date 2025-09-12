@@ -6,6 +6,7 @@ import { User } from '../models/User'
 import { CATEGORY_MESSAGES } from '../constants/categories'
 import { Brand } from '../models/Brand'
 import bcrypt from 'bcryptjs'
+import { logManagerAction } from '../utils/logManagerAction'
 
 /* -------------------------------- Dashboard ------------------------------- */
 export const getDashboard = async (_req: Request, res: Response) => {
@@ -61,6 +62,15 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const newProduct = new Product(req.body)
     const savedProduct = await newProduct.save()
+    
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'CREATE_PRODUCT',
+      target: `Product: ${savedProduct.name}`,
+      detail: `Created product: ${savedProduct.name} (ID: ${savedProduct._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+    
     res.status(201).json(savedProduct)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -70,6 +80,17 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    
+    if (updatedProduct) {
+      // Log manager action
+      await logManagerAction(req, {
+        action: 'UPDATE_PRODUCT',
+        target: `Product: ${updatedProduct.name}`,
+        detail: `Updated product: ${updatedProduct.name} (ID: ${updatedProduct._id})`,
+        managerId: (req.user as any)?._id?.toString()
+      });
+    }
+    
     res.json(updatedProduct)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -78,7 +99,19 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
-    await Product.findByIdAndDelete(req.params.id)
+    const product = await Product.findById(req.params.id);
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id)
+    
+    if (deletedProduct) {
+      // Log manager action
+      await logManagerAction(req, {
+        action: 'DELETE_PRODUCT',
+        target: `Product: ${deletedProduct.name}`,
+        detail: `Deleted product: ${deletedProduct.name} (ID: ${deletedProduct._id})`,
+        managerId: (req.user as any)?._id?.toString()
+      });
+    }
+    
     res.json({ message: 'Product deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -115,6 +148,15 @@ export const createCategory = async (req: Request, res: Response) => {
       status
     })
     const saved = await category.save()
+    
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'CREATE_CATEGORY',
+      target: `Category: ${saved.name}`,
+      detail: `Created category: ${saved.name} (ID: ${saved._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+    
     res.status(201).json({ ...saved.toObject(), message: CATEGORY_MESSAGES.CREATE_SUCCESS })
   } catch (error: unknown) {
     console.error('Error creating category:', error)
@@ -141,6 +183,14 @@ export const updateCategory = async (req: Request, res: Response) => {
       return res.status(404).json({ message: CATEGORY_MESSAGES.ERROR })
     }
 
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'UPDATE_CATEGORY',
+      target: `Category: ${updated.name}`,
+      detail: `Updated category: ${updated.name} (ID: ${updated._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+
     res.json({ ...updated.toObject(), message: CATEGORY_MESSAGES.UPDATE_SUCCESS })
   } catch (error: any) {
     console.error('Error updating category:', error)
@@ -150,7 +200,19 @@ export const updateCategory = async (req: Request, res: Response) => {
 
 export const deleteCategory = async (req: Request, res: Response) => {
   try {
-    await Category.findByIdAndDelete(req.params.id)
+    const category = await Category.findById(req.params.id);
+    const deletedCategory = await Category.findByIdAndDelete(req.params.id)
+    
+    if (deletedCategory) {
+      // Log manager action
+      await logManagerAction(req, {
+        action: 'DELETE_CATEGORY',
+        target: `Category: ${deletedCategory.name}`,
+        detail: `Deleted category: ${deletedCategory.name} (ID: ${deletedCategory._id})`,
+        managerId: (req.user as any)?._id?.toString()
+      });
+    }
+    
     res.json({ message: 'Category deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -197,7 +259,19 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
 
 export const deleteOrder = async (req: Request, res: Response) => {
   try {
-    await Order.findByIdAndDelete(req.params.id)
+    const order = await Order.findById(req.params.id);
+    const deletedOrder = await Order.findByIdAndDelete(req.params.id)
+    
+    if (deletedOrder) {
+      // Log manager action
+      await logManagerAction(req, {
+        action: 'DELETE_ORDER',
+        target: `Order: ${deletedOrder._id}`,
+        detail: `Deleted order (ID: ${deletedOrder._id})`,
+        managerId: (req.user as any)?._id?.toString()
+      });
+    }
+    
     res.json({ message: 'Order deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -240,6 +314,15 @@ export const updateCustomer = async (req: Request, res: Response): Promise<void>
       res.status(404).json({ message: 'Customer not found' })
       return
     }
+    
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'UPDATE_CUSTOMER',
+      target: `Customer: ${updatedCustomer.username}`,
+      detail: `Updated customer: ${updatedCustomer.username} (ID: ${updatedCustomer._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+    
     res.json(updatedCustomer)
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -248,7 +331,19 @@ export const updateCustomer = async (req: Request, res: Response): Promise<void>
 
 export const deleteCustomer = async (req: Request, res: Response): Promise<void> => {
   try {
-    await User.findByIdAndDelete(req.params.id)
+    const customer = await User.findById(req.params.id);
+    const deletedCustomer = await User.findByIdAndDelete(req.params.id)
+    
+    if (deletedCustomer) {
+      // Log manager action
+      await logManagerAction(req, {
+        action: 'DELETE_CUSTOMER',
+        target: `Customer: ${deletedCustomer.username}`,
+        detail: `Deleted customer: ${deletedCustomer.username} (ID: ${deletedCustomer._id})`,
+        managerId: (req.user as any)?._id?.toString()
+      });
+    }
+    
     res.json({ message: 'Customer deleted' })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })
@@ -375,6 +470,14 @@ export const createUser = async (req: Request, res: Response) => {
 
     const savedUser = await user.save()
 
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'CREATE_USER',
+      target: `User: ${savedUser.username}`,
+      detail: `Created user: ${savedUser.username} (ID: ${savedUser._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+
     res.status(201).json({
       success: true,
       data: {
@@ -417,6 +520,14 @@ export const updateUser = async (req: Request, res: Response) => {
       return
     }
 
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'UPDATE_USER',
+      target: `User: ${user.username}`,
+      detail: `Updated user: ${user.username} (ID: ${user._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+
     res.json({
       success: true,
       data: user
@@ -453,6 +564,14 @@ export const deleteUser = async (req: Request, res: Response) => {
       return
     }
 
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'DELETE_USER',
+      target: `User: ${user.username}`,
+      detail: `Deleted user: ${user.username} (ID: ${user._id})`,
+      managerId: (req.user as any)?._id?.toString()
+    });
+
     res.json({
       success: true,
       message: 'User deleted successfully'
@@ -481,6 +600,14 @@ export const getSettings = async (_req: Request, res: Response) => {
 
 export const updateSettings = async (req: Request, res: Response) => {
   try {
+    // Log manager action
+    await logManagerAction(req, {
+      action: 'UPDATE_SETTINGS',
+      target: 'System Settings',
+      detail: 'Updated system settings',
+      managerId: (req.user as any)?._id?.toString()
+    });
+    
     res.json({ message: 'Settings updated', settings: req.body })
   } catch (error) {
     res.status(500).json({ message: (error as Error).message })

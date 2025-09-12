@@ -1,4 +1,22 @@
 {
+<<<<<<< HEAD
+    "compilerOptions": {
+      "module": "NodeNext", // Quy định output module được sử dụng
+      "moduleResolution": "NodeNext",
+      "target": "ES2023", // Target output cho code
+      "outDir": "dist", // Đường dẫn output cho thư mục build
+      "esModuleInterop": true,
+      "strict": true /* Enable all strict type-checking options. */,
+      "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+      "baseUrl": ".", // Đường dẫn base cho các import
+      "types": ["node"],
+      "paths": {
+        "~/*": ["src/*"] // Đường dẫn tương đối cho các import (alias)
+      },
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "strictPropertyInitialization": false
+=======
   "compilerOptions": {
     "module": "NodeNext", // Quy định output module được sử dụng
     "moduleResolution": "NodeNext",
@@ -10,6 +28,7 @@
     "baseUrl": ".", // Đường dẫn base cho các import
     "paths": {
       "~/*": ["src/*"] // Đường dẫn tương đối cho các import (alias)
+>>>>>>> cadd51a9b3d64b3e13964185dd446e7313256b49
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

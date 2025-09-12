@@ -18,7 +18,7 @@ interface IProduct extends Document {
   categories: mongoose.Types.ObjectId[] | ICategory[]
   brand: mongoose.Types.ObjectId | IBrand
   images: string[]
-  sizes: { size: string; stock: number }[]
+  sizes: { size: string; stock: number; color?: string }[]
   colors: string[]
   tags: string[]
   status: 'active' | 'inactive' | 'out_of_stock' | 'discontinued'
@@ -28,7 +28,6 @@ interface IProduct extends Document {
 }
 
 const sizeSchema = new Schema({
-  sku: { type: String, required: true },
   size: String,
   stock: Number,
   color: String

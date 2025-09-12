@@ -53,8 +53,34 @@ const ChatMessageSchema = new Schema<IChatMessage>(
     ],
     messageType: {
       type: String,
-      enum: ['text', 'file', 'image'],
+      enum: ['text', 'file', 'image', 'product'],
       default: 'text'
+    },
+    product: {
+      _id: { type: String },
+      name: { type: String },
+      description: { type: String },
+      price: { type: Number },
+      discountPrice: { type: Number },
+      images: [{ type: String }],
+      sizes: [{
+        size: { type: String },
+        stock: { type: Number }
+      }],
+      colors: [{ type: String }],
+      tags: [{ type: String }],
+      brand: {
+        _id: { type: String },
+        name: { type: String }
+      },
+      categories: [{
+        _id: { type: String },
+        name: { type: String }
+      }],
+      status: { type: String },
+      ratingsAverage: { type: Number },
+      ratingsQuantity: { type: Number },
+      createdAt: { type: Date }
     }
   },
   {

@@ -291,7 +291,7 @@ class ChatService {
   /**
    * Đóng chat session
    */
-  async closeSession(chatId: string, managerId: string, note?: string): Promise<void> {
+  async closeSession(chatId: string, managerId: string, note?: string, req?: Request): Promise<void> {
     try {
       // Verify session exists
       const session = await ChatSessionModel.findOne({ chatId })
@@ -299,7 +299,7 @@ class ChatService {
         throw new Error('Chat session not found')
       }
 
-      // Update session status
+      // Update session status AFTER sending the note
       await ChatSessionModel.updateOne(
         { chatId },
         {
@@ -353,7 +353,7 @@ class ChatService {
   /**
    * Manager tham gia chat session
    */
-  async joinSession(chatId: string, managerId: string): Promise<IChatSession> {
+  async joinSession(chatId: string, managerId: string, req?: Request): Promise<IChatSession> {
     try {
       // Verify session exists
       const session = await ChatSessionModel.findOne({ chatId })

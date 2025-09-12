@@ -22,12 +22,17 @@ const userSchema = new Schema({
   avatar: String,
   addresses: [addressSchema],
   favorites: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+  // Body measurements for size recommendation
+  height: { type: Number, min: 100, max: 250 }, // cm
+  weight: { type: Number, min: 20, max: 200 }, // kg
+  footLength: { type: Number, min: 150, max: 350 }, // mm
   googleId: { type: String, unique: true, sparse: true },
   facebookId: { type: String, unique: true, sparse: true },
   isVerified: { type: Boolean, default: false },
   verificationCode: String,
   verificationCodeExpires: Date,
   refreshToken: { type: String },
+  points: { type: Number, default: 0 }, // Điểm tích lũy từ thanh toán
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 })
@@ -63,6 +68,10 @@ interface IUser extends Document {
   role: string
   status: string
   banReason?: string
+  // Body measurements for size recommendation
+  height?: number
+  weight?: number
+  footLength?: number
   isVerified: boolean
   verificationCode?: string
   verificationCodeExpires?: Date
@@ -70,6 +79,7 @@ interface IUser extends Document {
   facebookId?: string
   avatar?: string
   refreshToken?: string
+  points: number
   createdAt: Date
   updatedAt: Date
 }

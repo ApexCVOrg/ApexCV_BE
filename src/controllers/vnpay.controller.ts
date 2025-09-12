@@ -76,7 +76,7 @@ export const createPayment = (req: Request, res: Response) => {
       try {
         const pendingOrder = new PendingOrder({
           sessionId: sessionId,
-          userId: userId,
+          userId: String(userId), // Đảm bảo luôn là string
           orderData: req.session.pendingOrder
         })
         await pendingOrder.save()
@@ -110,6 +110,7 @@ export const createPayment = (req: Request, res: Response) => {
  * API xử lý returnUrl từ VNPAY
  */
 export const handleReturnUrl = async (req: Request, res: Response) => {
+  let user: any = null // <-- Move this to the top
   try {
     console.log('[VNPAY Return] Bắt đầu xử lý returnUrl')
     console.log('[VNPAY Return] Query params:', JSON.stringify(req.query, null, 2))

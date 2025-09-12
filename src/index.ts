@@ -27,6 +27,8 @@ import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay'
 import couponRouter from './routes/voucher'
+import refundRouter from './routes/refund'
+import sizeRecommendationRouter from './routes/size-recommendation'
 
 import favoritesRouter from './routes/favorites'
 import chatRouter from './routes/chat'
@@ -124,6 +126,8 @@ app.use(
 // ✅ Bắt mọi preflight request cho tất cả routes
 app.options(/.*/, cors())
 app.use(express.json())
+// Support Sepay or third-party webhooks sending urlencoded payloads
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // Serve static files from uploads directory

@@ -58,7 +58,7 @@ const orderSchema = new Schema({
 // Schema cho pending order (backup khi session mất)
 const pendingOrderSchema = new Schema({
   sessionId: { type: String, required: true, unique: true },
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: String, required: true }, // Đổi từ ObjectId sang String
   orderData: { type: Schema.Types.Mixed, required: true }, // Lưu toàn bộ order data
   createdAt: { type: Date, default: Date.now, expires: 3600 } // Tự động xóa sau 1 giờ
 })
