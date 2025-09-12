@@ -319,7 +319,7 @@ router.post('/:chatId/join', checkManagerAuth, async (req: AuthRequest, res: Res
       })
     }
 
-    const updatedSession = await chatService.joinSession(chatId, managerId)
+    const updatedSession = await chatService.joinSession(chatId, managerId, req);
 
     res.status(200).json({
       success: true,

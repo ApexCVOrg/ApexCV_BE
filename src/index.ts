@@ -135,25 +135,28 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-// Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
-      ttl: 10 * 60, // 10 minutes
-      autoRemove: 'native'
-    }),
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: true,
-      maxAge: 10 * 60 * 1000 // 10 minutes
-    }
-  })
-)
+// Serve static files from uploads directory with CORS
+app.use('/uploads', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+}, express.static(path.join(__dirname, '../uploads')));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
+    ttl: 10 * 60,        // 10 minutes
+    autoRemove: 'native'
+  }),
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 10 * 60 * 1000  // 10 minutes
+  }
+}))
 
 // Health-check route
 app.get('/', (_req: Request, res: Response) => {

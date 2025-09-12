@@ -1,5 +1,7 @@
-import { ChatSessionModel, IChatSession } from '../models/ChatSession'
-import { ChatMessageModel, IChatMessage } from '../models/ChatMessage'
+import { ChatSessionModel, IChatSession } from '../models/ChatSession';
+import { ChatMessageModel, IChatMessage } from '../models/ChatMessage';
+import { logManagerAction } from '../utils/logManagerAction';
+import { Request } from 'express';
 
 export interface ChatSessionWithLastMessage extends Omit<IChatSession, 'lastMessage'> {
   lastMessage?: {
@@ -111,10 +113,13 @@ class ChatService {
    * Gửi tin nhắn từ manager
    */
   async sendManagerMessage(
-    chatId: string,
-    managerId: string,
-    content: string,
-    attachments?: any[]
+    chatId: string, 
+    managerId: string, 
+    content: string, 
+    attachments?: any[],
+    messageType?: 'text' | 'file' | 'image' | 'product',
+    product?: any,
+    req?: Request
   ): Promise<IChatMessage> {
     try {
       // Verify session exists and is open
@@ -126,13 +131,9 @@ class ChatService {
         throw new Error('Cannot send message to closed session')
       }
 
-      // Determine message type
-      const messageType =
-        attachments && attachments.length > 0
-          ? attachments.some((att) => att.mimetype.startsWith('image/'))
-            ? 'image'
-            : 'file'
-          : 'text'
+      // Determine message type if not provided
+      const finalMessageType = messageType || (attachments && attachments.length > 0 ? 
+        (attachments.some(att => att.mimetype.startsWith('image/')) ? 'image' : 'file') : 'text');
 
       // Create new message
       const message = new ChatMessageModel({
@@ -141,8 +142,9 @@ class ChatService {
         content,
         isRead: false,
         attachments,
-        messageType
-      })
+        messageType: finalMessageType,
+        product: product
+      });
 
       await message.save()
 
@@ -164,7 +166,17 @@ class ChatService {
         }
       )
 
-      return message
+      // Log manager action if request is provided
+      if (req) {
+        await logManagerAction(req, {
+          action: 'SEND_MESSAGE',
+          target: `Chat: ${chatId}`,
+          detail: `Sent ${finalMessageType} message: ${content.substring(0, 100)}${content.length > 100 ? '...' : ''}`,
+          managerId
+        });
+      }
+
+      return message;
     } catch (error) {
       throw new Error(`Failed to send manager message: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
@@ -291,7 +303,7 @@ class ChatService {
   /**
    * Đóng chat session
    */
-  async closeSession(chatId: string, managerId: string, note?: string): Promise<void> {
+  async closeSession(chatId: string, managerId: string, note?: string, req?: Request): Promise<void> {
     try {
       // Verify session exists
       const session = await ChatSessionModel.findOne({ chatId })
@@ -299,7 +311,12 @@ class ChatService {
         throw new Error('Chat session not found')
       }
 
-      // Update session status
+      // Optionally add a closing note as a manager message BEFORE closing
+      if (note) {
+        await this.sendManagerMessage(chatId, managerId, `[CLOSED] ${note}`);
+      }
+
+      // Update session status AFTER sending the note
       await ChatSessionModel.updateOne(
         { chatId },
         {
@@ -308,9 +325,14 @@ class ChatService {
         }
       )
 
-      // Optionally add a closing note as a manager message
-      if (note) {
-        await this.sendManagerMessage(chatId, managerId, `[CLOSED] ${note}`)
+      // Log manager action if request is provided
+      if (req) {
+        await logManagerAction(req, {
+          action: 'CLOSE_CHAT',
+          target: `Chat: ${chatId}`,
+          detail: `Closed chat session${note ? ` with note: ${note}` : ''}`,
+          managerId
+        });
       }
     } catch (error) {
       throw new Error(`Failed to close session: ${error instanceof Error ? error.message : 'Unknown error'}`)
@@ -353,7 +375,7 @@ class ChatService {
   /**
    * Manager tham gia chat session
    */
-  async joinSession(chatId: string, managerId: string): Promise<IChatSession> {
+  async joinSession(chatId: string, managerId: string, req?: Request): Promise<IChatSession> {
     try {
       // Verify session exists
       const session = await ChatSessionModel.findOne({ chatId })
@@ -376,7 +398,17 @@ class ChatService {
         throw new Error('Failed to join session')
       }
 
-      return updatedSession
+      // Log manager action if request is provided
+      if (req) {
+        await logManagerAction(req, {
+          action: 'JOIN_CHAT',
+          target: `Chat: ${chatId}`,
+          detail: 'Joined chat session to provide support',
+          managerId
+        });
+      }
+
+      return updatedSession;
     } catch (error) {
       throw new Error(`Failed to join session: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }

@@ -8,13 +8,30 @@ export interface IChatMessage extends MongooseDocument {
   isBotMessage?: boolean // Flag to identify bot messages
   isRead?: boolean // Flag to track if message is read
   attachments?: Array<{
-    filename: string
-    originalName: string
-    mimetype: string
-    size: number
-    url: string
-  }>
-  messageType: 'text' | 'file' | 'image'
+    filename: string;
+    originalName: string;
+    mimetype: string;
+    size: number;
+    url: string;
+  }>;
+  messageType: 'text' | 'file' | 'image' | 'product';
+  product?: {
+    _id: string;
+    name: string;
+    description?: string;
+    price: number;
+    discountPrice?: number;
+    images: string[];
+    sizes: { size: string; stock: number }[];
+    colors: string[];
+    tags: string[];
+    brand?: { _id: string; name: string };
+    categories?: { _id: string; name: string }[];
+    status: string;
+    ratingsAverage: number;
+    ratingsQuantity: number;
+    createdAt: Date;
+  };
 }
 
 const ChatMessageSchema = new Schema<IChatMessage>(
@@ -53,8 +70,34 @@ const ChatMessageSchema = new Schema<IChatMessage>(
     ],
     messageType: {
       type: String,
-      enum: ['text', 'file', 'image'],
+      enum: ['text', 'file', 'image', 'product'],
       default: 'text'
+    },
+    product: {
+      _id: { type: String },
+      name: { type: String },
+      description: { type: String },
+      price: { type: Number },
+      discountPrice: { type: Number },
+      images: [{ type: String }],
+      sizes: [{
+        size: { type: String },
+        stock: { type: Number }
+      }],
+      colors: [{ type: String }],
+      tags: [{ type: String }],
+      brand: {
+        _id: { type: String },
+        name: { type: String }
+      },
+      categories: [{
+        _id: { type: String },
+        name: { type: String }
+      }],
+      status: { type: String },
+      ratingsAverage: { type: Number },
+      ratingsQuantity: { type: Number },
+      createdAt: { type: Date }
     }
   },
   {

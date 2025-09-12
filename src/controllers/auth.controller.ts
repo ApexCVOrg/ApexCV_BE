@@ -6,6 +6,8 @@ import { User } from '../models/User'
 import { OAuth2Client } from 'google-auth-library'
 import axios from 'axios'
 import { sendVerificationEmail, sendResetPasswordEmail } from '../services/email.service'
+import { logAdminAction } from '../utils/logAdminAction'
+import { logManagerAction } from '../utils/logManagerAction'
 
 const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -490,6 +492,23 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     user.refreshToken = refreshToken
     await user.save()
 
+    // Log audit action for admin and manager
+    if (user.role === 'admin') {
+      await logAdminAction(req, {
+        action: 'LOGIN',
+        target: 'System',
+        detail: `Admin ${user.username} logged in successfully`,
+        adminId: (user._id as any).toString()
+      });
+    } else if (user.role === 'manager') {
+      await logManagerAction(req, {
+        action: 'LOGIN',
+        target: 'System',
+        detail: `Manager ${user.username} logged in successfully`,
+        managerId: (user._id as any).toString()
+      });
+    }
+
     // Return success response
     res.status(200).json({
       success: true,
@@ -746,6 +765,26 @@ export const handleFacebookCallback: RequestHandler = async (req, res): Promise<
 
 export const logout: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   try {
+    // Get user info from token for audit logging
+    let userInfo = null;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      try {
+        const token = authHeader.substring(7);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any;
+        if (decoded) {
+          userInfo = {
+            id: decoded.id,
+            username: decoded.username,
+            role: decoded.role
+          };
+        }
+      } catch (error) {
+        // Token is invalid, continue with logout
+        console.log('Invalid token during logout');
+      }
+    }
+
     // Clear JWT token cookie if it exists
     res.clearCookie('token')
 
@@ -762,6 +801,25 @@ export const logout: RequestHandler = async (req: Request, res: Response): Promi
         const cookies = req.cookies
         for (const cookieName in cookies) {
           res.clearCookie(cookieName)
+        }
+
+        // Log audit action for admin and manager
+        if (userInfo) {
+          if (userInfo.role === 'admin') {
+            logAdminAction(req, {
+              action: 'LOGOUT',
+              target: 'System',
+              detail: `Admin ${userInfo.username} logged out`,
+              adminId: userInfo.id
+            }).catch(console.error);
+          } else if (userInfo.role === 'manager') {
+            logManagerAction(req, {
+              action: 'LOGOUT',
+              target: 'System',
+              detail: `Manager ${userInfo.username} logged out`,
+              managerId: userInfo.id
+            }).catch(console.error);
+          }
         }
 
         res.status(200).json({
