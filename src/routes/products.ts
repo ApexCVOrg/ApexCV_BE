@@ -10,12 +10,18 @@ const router = express.Router()
 
 interface ProductQuery {
   gender?: string
+  brand?: string
+  category?: string
+  minPrice?: string
+  maxPrice?: string
+  search?: string
 }
 
 // Get all products
 const getAllProducts: RequestHandler = async (req, res, next) => {
   try {
-    const { gender } = req.query as ProductQuery
+    console.log('GET /products - Query params:', req.query)
+    const { gender, brand, category, minPrice, maxPrice, search } = req.query as ProductQuery
 
     // Validate gender parameter
     if (gender && !['men', 'women', 'kids'].includes(gender.toString().toLowerCase())) {
@@ -37,41 +43,79 @@ const getAllProducts: RequestHandler = async (req, res, next) => {
       })
 
       if (!genderCategory) {
-        res.status(404).json({
-          message: `Gender category not found: ${genderName}`
+        console.log(`Gender category not found: ${genderName}, returning all products`)
+        // Don't return 404, just continue with all products
+      } else {
+        console.log('Found gender category:', genderCategory.name)
+        
+        // Find all categories under this gender
+        const genderCategories = await Category.find({
+          parentCategory: genderCategory._id
         })
-        return
+
+        if (genderCategories.length > 0) {
+          console.log(`Found ${genderCategories.length} team categories`)
+          
+          // Get all product type categories under these team categories
+          const productTypeCategories = await Category.find({
+            parentCategory: { $in: genderCategories.map((cat) => cat._id) }
+          })
+
+          if (productTypeCategories.length > 0) {
+            console.log(`Found ${productTypeCategories.length} product categories`)
+            // Filter products that have any of these categories
+            query = query.where('categories').in(productTypeCategories.map((cat) => cat._id))
+          } else {
+            console.log('No product categories found, returning all products')
+          }
+        } else {
+          console.log('No team categories found, returning all products')
+        }
       }
-
-      // Find all categories under this gender
-      const genderCategories = await Category.find({
-        parentCategory: genderCategory._id
-      })
-
-      if (!genderCategories.length) {
-        res.status(404).json({
-          message: `No team categories found for gender: ${genderName}`
-        })
-        return
-      }
-
-      // Get all product type categories under these team categories
-      const productTypeCategories = await Category.find({
-        parentCategory: { $in: genderCategories.map((cat) => cat._id) }
-      })
-
-      if (!productTypeCategories.length) {
-        res.status(404).json({
-          message: `No product categories found for gender: ${genderName}`
-        })
-        return
-      }
-
-      // Filter products that have any of these categories
-      query = query.where('categories').in(productTypeCategories.map((cat) => cat._id))
     }
 
+    // Handle brand filtering
+    if (brand) {
+      console.log('Filtering by brand:', brand)
+      const brandIds = brand.split(',').map(id => id.trim())
+      // Validate brand IDs are valid ObjectIds
+      const validBrandIds = brandIds.filter(id => /^[0-9a-fA-F]{24}$/.test(id))
+      if (validBrandIds.length > 0) {
+        query = query.where('brand').in(validBrandIds)
+      }
+    }
+
+    // Handle category filtering
+    if (category) {
+      console.log('Filtering by category:', category)
+      const categoryIds = category.split(',').map(id => id.trim())
+      // Validate category IDs are valid ObjectIds
+      const validCategoryIds = categoryIds.filter(id => /^[0-9a-fA-F]{24}$/.test(id))
+      if (validCategoryIds.length > 0) {
+        query = query.where('categories').in(validCategoryIds)
+      }
+    }
+
+    // Handle price filtering
+    if (minPrice || maxPrice) {
+      console.log('Filtering by price range:', minPrice, '-', maxPrice)
+      const priceFilter: any = {}
+      if (minPrice) priceFilter.$gte = parseFloat(minPrice)
+      if (maxPrice) priceFilter.$lte = parseFloat(maxPrice)
+      query = query.where('price', priceFilter)
+    }
+
+    // Handle search filtering
+    if (search) {
+      console.log('Filtering by search:', search)
+      query = query.where('name', { $regex: search, $options: 'i' })
+    }
+
+    console.log('Final query conditions:', query.getQuery())
+    
     const products = await query.populate('categories', 'name').populate('brand', 'name').sort({ createdAt: -1 }).lean()
+
+    console.log('Products found:', products.length)
 
     res.json({
       success: true,

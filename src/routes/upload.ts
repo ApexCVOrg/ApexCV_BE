@@ -2,8 +2,6 @@ import { Router, Request, Response } from 'express'
 import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
-import { checkUserAuth } from '../middlewares/checkUserAuth'
-import { checkManagerAuth } from '../middlewares/checkManagerAuth'
 
 const router = Router()
 
@@ -23,7 +21,11 @@ const storage = multer.diskStorage({
 })
 
 // Filter file types
-const fileFilter = (req: any, file: any, cb: any) => {
+const fileFilter = (
+  req: Express.Request,
+  file: Express.Multer.File,
+  cb: (error: Error | null, acceptFile?: boolean) => void
+) => {
   // Cho phép images
   if (file.mimetype.startsWith('image/')) {
     cb(null, true)
@@ -70,7 +72,7 @@ router.post('/chat-files', upload.array('files', 5), async (req: Request, res: R
       originalName: file.originalname,
       mimetype: file.mimetype,
       size: file.size,
-      url: `${process.env.API_BASE_URL || 'https://nidas-be.onrender.com'}/uploads/${file.filename}`
+              url: `${process.env.API_BASE_URL || 'https://nidas-be.onrender.com'}/uploads/${file.filename}`
     }))
 
     res.json({

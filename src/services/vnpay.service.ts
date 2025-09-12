@@ -1,14 +1,14 @@
 import { VNPay } from '../lib/vnpay/vnpay'
 import type { BuildPaymentUrl, ReturnQueryFromVNPay } from '../lib/vnpay/types'
 import { VnpCurrCode, VnpLocale, ProductCode } from '../lib/vnpay/enums'
-import { dateFormat, getDateInGMT7 } from '../lib/vnpay/utils/common'
+import { dateFormat } from '../lib/vnpay/utils/common'
 
-// VNPAY Configuration from environment variables
+// TODO: Thay thế các giá trị này bằng config thực tế của bạn
 const vnpay = new VNPay({
   tmnCode: process.env.VNP_TMNCODE || 'ROJ5KGHQ',
   secureSecret: process.env.VNP_SECRET || '10KO2R5UHJ1X4HX42PUS6KH8WINLYE0A',
   vnpayHost: 'https://sandbox.vnpayment.vn',
-  testMode: process.env.NODE_ENV !== 'production'
+  testMode: true
 })
 
 /**
@@ -36,9 +36,9 @@ export function createVnpayPayment(data: BuildPaymentUrl) {
       vnp_CurrCode: VnpCurrCode.VND,
       vnp_Locale: VnpLocale.VN,
       vnp_OrderType: ProductCode.Other,
-      // Format date đúng cho VNPAY (luôn dùng giờ Việt Nam)
-      vnp_ExpireDate: data.vnp_ExpireDate ? dateFormat(getDateInGMT7(new Date(data.vnp_ExpireDate * 1000))) : undefined,
-      vnp_CreateDate: dateFormat(getDateInGMT7()),
+      // Format date đúng cho VNPAY
+      vnp_ExpireDate: data.vnp_ExpireDate ? dateFormat(new Date(data.vnp_ExpireDate * 1000)) : undefined,
+      vnp_CreateDate: dateFormat(new Date())
     }
 
     console.log('[VNPAY Service] Cleaned VNPAY data:', JSON.stringify(vnpayData, null, 2))

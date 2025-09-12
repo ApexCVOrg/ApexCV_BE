@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { Brand } from '../models/Brand'
 
 const brandsData = [

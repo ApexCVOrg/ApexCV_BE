@@ -27,8 +27,11 @@ export const checkInactivity = (req: Request, res: Response, next: NextFunction)
     return
   }
 
-  // Nếu có hoạt động thì reset lại thời gian
-  userActivity.set(userId, now)
+  // Chỉ update activity time nếu đã qua 1 phút từ lần update cuối
+  const timeSinceLastUpdate = now - (userActivity.get(userId) || 0)
+  if (timeSinceLastUpdate > 60000) { // 1 phút
+    userActivity.set(userId, now)
+  }
   next()
 }
 
@@ -47,7 +50,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     }
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId?: string; id?: string }
       console.log('Decoded token:', decoded)
 
       // Try both id and userId from token
@@ -69,7 +72,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
             return
           }
           req.user = user
-          console.log('User authenticated successfully')
+          // User authenticated
           next()
         })
         .catch((error) => {

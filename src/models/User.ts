@@ -55,7 +55,15 @@ interface IUser extends Document {
   passwordHash?: string
   fullName?: string
   phone?: string
-  addresses: any[]
+  addresses: Array<{
+    recipientName?: string
+    street?: string
+    city?: string
+    state?: string
+    country?: string
+    addressNumber?: string
+    isDefault?: boolean
+  }>
   favorites: mongoose.Types.ObjectId[]
   role: string
   status: string

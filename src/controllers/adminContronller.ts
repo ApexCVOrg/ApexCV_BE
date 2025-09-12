@@ -39,10 +39,10 @@ export const getProducts = async (_req: Request, res: Response) => {
       .sort({ createdAt: -1 })
       .lean()
     res.json(products)
-  } catch (error: any) {
+  } catch (error: unknown) {
     res.status(500).json({
       message: 'Error fetching products',
-      error: error?.message || 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error'
     })
   }
 }
@@ -139,9 +139,9 @@ export const createCategory = async (req: Request, res: Response) => {
     })
     const saved = await category.save()
     res.status(201).json({ ...saved.toObject(), message: CATEGORY_MESSAGES.CREATE_SUCCESS })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating category:', error)
-    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 }
 
@@ -165,9 +165,9 @@ export const updateCategory = async (req: Request, res: Response) => {
     }
 
     res.json({ ...updated.toObject(), message: CATEGORY_MESSAGES.UPDATE_SUCCESS })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating category:', error)
-    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error?.message || 'Unknown error' })
+    res.status(400).json({ message: CATEGORY_MESSAGES.ERROR, error: error instanceof Error ? error.message : 'Unknown error' })
   }
 }
 
@@ -270,7 +270,9 @@ export const getCustomerById = async (req: Request, res: Response): Promise<void
 
 export const updateCustomer = async (req: Request, res: Response): Promise<void> => {
   try {
-    const updatedCustomer = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-passwordHash')
+    const updatedCustomer = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    }).select('-passwordHash')
     if (!updatedCustomer) {
       res.status(404).json({ message: 'Customer not found' })
       return
@@ -612,7 +614,7 @@ export const getBrands = async (_req: Request, res: Response) => {
   try {
     const brands = await Brand.find().lean()
     res.json(brands)
-  } catch (error: any) {
-    res.status(500).json({ message: 'Error fetching brands', error: error?.message || 'Unknown error' })
+  } catch (error: unknown) {
+    res.status(500).json({ message: 'Error fetching brands', error: error instanceof Error ? error.message : 'Unknown error' })
   }
 }

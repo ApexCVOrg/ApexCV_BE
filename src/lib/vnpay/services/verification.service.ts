@@ -1,4 +1,4 @@
-import { WRONG_CHECKSUM_KEY, numberRegex } from '../constants'
+import { numberRegex } from '../constants'
 import type { HashAlgorithm } from '../enums'
 import type {
   GlobalConfig,
@@ -60,7 +60,7 @@ export class VerificationService {
     query: ReturnQueryFromVNPay,
     options?: VerifyReturnUrlOptions<LoggerFields>
   ): VerifyReturnUrl {
-    const { vnp_SecureHash = '', vnp_SecureHashType, ...cloneQuery } = query
+    const { vnp_SecureHash = '', ...cloneQuery } = query
 
     if (typeof cloneQuery?.vnp_Amount !== 'number') {
       const isValidAmount = numberRegex.test(cloneQuery?.vnp_Amount ?? '')

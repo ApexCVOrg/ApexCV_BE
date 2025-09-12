@@ -4,7 +4,7 @@ import path from 'path'
 import fs from 'fs'
 import { User } from '../models/User'
 import { authenticateToken } from '../middlewares/auth'
-import { checkPermission, checkPermissions } from '../middlewares/permission'
+import { checkPermission } from '../middlewares/permission'
 import { Permission } from '../types/filter/permissions'
 import {
   getProfile,
@@ -12,8 +12,7 @@ import {
   getFavorites,
   addToFavorites,
   removeFromFavorites,
-  checkFavorite,
-  getUserOrders
+  checkFavorite
 } from '../controllers/user.controller'
 
 const router: Router = express.Router()
@@ -136,7 +135,7 @@ router.get('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, r
   try {
     const users = await User.find().select('-passwordHash')
     res.json(users)
-  } catch (error) {
+  } catch {
     res.status(500).json({ message: 'Error fetching users' })
   }
 })
@@ -171,8 +170,8 @@ router.post('/', checkPermission(Permission.MANAGE_USERS), async (req: Request, 
 
     const savedUser = await user.save()
     res.status(201).json(savedUser)
-  } catch (error) {
-    res.status(400).json({ message: 'Lỗi khi tạo người dùng: ' + (error as Error).message })
+  } catch {
+    res.status(400).json({ message: 'Lỗi khi tạo người dùng' })
   }
 })
 
@@ -192,7 +191,7 @@ router.put('/:id', checkPermission(Permission.MANAGE_USERS), async (req: Request
       return
     }
     res.json(user)
-  } catch (error) {
+  } catch {
     res.status(500).json({ message: 'Error updating user' })
   }
 })
@@ -207,7 +206,7 @@ router.delete('/:id', checkPermission(Permission.MANAGE_USERS), async (req: Requ
       return
     }
     res.json({ message: 'User deleted successfully' })
-  } catch (error) {
+  } catch {
     res.status(500).json({ message: 'Error deleting user' })
   }
 })

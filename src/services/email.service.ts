@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 const verifyTransporter = async (): Promise<boolean> => {
   try {
     await transporter.verify()
-    console.log('✅ SMTP transporter is configured correctly.')
+    // SMTP transporter configured
     return true
   } catch (error) {
     console.error('❌ SMTP verification failed:', error)
@@ -63,7 +63,7 @@ export const sendVerificationEmail = async (email: string, code: string): Promis
 
     console.log(`📤 Sending email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
-    console.log(`✅ Email sent: ${info.messageId}`)
+    // Email sent
     console.log(`📨 Response: ${info.response}`)
   } catch (error) {
     console.error('❌ Email send failed:', error)
@@ -137,7 +137,7 @@ export const sendResetPasswordEmail = async (email: string, otp: string): Promis
 
     console.log(`📤 Sending password reset email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
-    console.log(`✅ Password reset email sent: ${info.messageId}`)
+    // Password reset email sent
     console.log(`📨 Response: ${info.response}`)
   } catch (error) {
     console.error('❌ Password reset email send failed:', error)
@@ -207,7 +207,7 @@ export const sendBanUserEmail = async (email: string, reason: string, admin: str
     }
     console.log(`📤 Sending ban/unban email to: ${email}`)
     const info = await transporter.sendMail(mailOptions)
-    console.log(`✅ Ban/unban email sent: ${info.messageId}`)
+    // Ban/unban email sent
     console.log(`📨 Response: ${info.response}`)
   } catch (error) {
     console.error('❌ Ban/unban email send failed:', error)
@@ -254,91 +254,3 @@ const generateUnbanUserEmailHTML = (admin: string): string => `
     </div>
   </div>
 `
-
-/**
- * Gửi email xác nhận đơn hàng thành công hoặc thất bại
- * @param email - email người nhận
- * @param orderInfo - thông tin đơn hàng (mã đơn, tổng tiền, ...) hoặc lý do thất bại
- * @param isSuccess - true nếu thành công, false nếu thất bại
- */
-export const sendOrderStatusEmail = async (
-  email: string,
-  orderInfo: { orderId?: string; totalPrice?: number; reason?: string },
-  isSuccess: boolean
-) => {
-  if (!email) return
-  const subject = isSuccess ? 'Xác nhận đặt hàng thành công' : 'Thanh toán thất bại'
-  const html = isSuccess
-    ? `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2 style="color: #2563eb;">Cảm ơn bạn đã đặt hàng tại NIDAS!</h2>
-        <p>Đơn hàng <b>#${orderInfo.orderId}</b> của bạn đã được đặt thành công.</p>
-        <ul>
-          <li><b>Tổng tiền:</b> ${orderInfo.totalPrice?.toLocaleString('vi-VN')} VND</li>
-        </ul>
-        <p>Chúng tôi sẽ xử lý đơn hàng và giao đến bạn sớm nhất có thể.</p>
-        <p style="margin-top: 32px;">Nếu có thắc mắc, vui lòng liên hệ hỗ trợ.</p>
-        <p>Trân trọng,<br/>NIDAS Team</p>
-      </div>`
-    : `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2 style="color: #d32f2f;">Thanh toán không thành công</h2>
-        <p>Đơn hàng của bạn chưa được xác nhận do lỗi thanh toán.</p>
-        <p><b>Lý do:</b> ${orderInfo.reason || 'Không xác định'}</p>
-        <p>Vui lòng thử lại hoặc liên hệ hỗ trợ nếu cần giúp đỡ.</p>
-        <p>Trân trọng,<br/>NIDAS Team</p>
-      </div>`
-  await transporter.sendMail({
-    from: `"NIDAS" <${process.env.GMAIL_USER}>`,
-    to: email,
-    subject,
-    html
-  })
-}
-
-/**
- * Gửi email thông báo đánh giá sản phẩm bị xóa
- * @param email - email người nhận
- * @param productName - tên sản phẩm
- * @param reviewContent - nội dung đánh giá
- * @param reason - lý do xóa (mặc định: Vi phạm tiêu chuẩn cộng đồng)
- */
-export const sendReviewDeletedEmail = async (
-  email: string,
-  productName: string,
-  reviewContent: string,
-  reason = 'Vi phạm tiêu chuẩn cộng đồng'
-): Promise<void> => {
-  if (!email || !productName) return
-  const subject = 'Thông báo xóa đánh giá'
-  const html = generateReviewDeletedEmailHTML(productName, reviewContent, reason)
-  await transporter.sendMail({
-    from: `"NIDAS" <${process.env.GMAIL_USER}>`,
-    to: email,
-    subject,
-    html
-  })
-}
-
-const generateReviewDeletedEmailHTML = (
-  productName: string,
-  reviewContent: string,
-  reason: string
-): string => `
-  <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-    <div style="text-align: center; margin-bottom: 20px;">
-      <h1 style="color: #d32f2f; margin: 0;">NIDAS</h1>
-      <p style="color: #64748b; margin: 5px 0;">Thông báo xóa đánh giá</p>
-    </div>
-    <div style="background: #fff7ed; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;">
-      <h2 style="color: #d32f2f; margin: 0 0 15px 0;">Đánh giá của bạn đã bị xóa</h2>
-      <p style="color: #b71c1c; margin: 0 0 8px 0;"><b>Sản phẩm:</b> <span style="color: #b71c1c;">${productName}</span></p>
-      <p style="color: #b71c1c; margin: 0 0 8px 0;"><b>Nội dung đánh giá:</b></p>
-      <div style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px; border-radius: 8px; margin: 0 0 8px 0; color: #1e293b;">${reviewContent}</div>
-      <p style="color: #d32f2f; margin: 0 0 8px 0;"><b>Lý do:</b> ${reason}</p>
-    </div>
-    <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
-      <p style="margin: 0; color: #92400e; font-weight: 500;">Nếu bạn nghĩ đây là nhầm lẫn, vui lòng liên hệ bộ phận hỗ trợ của chúng tôi.</p>
-    </div>
-  </div>
-`
-
-export { transporter }

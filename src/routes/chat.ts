@@ -38,7 +38,7 @@ router.post('/', async (req: Request, res: Response) => {
 
       // Tạo suggestions từ các documents khác
       if (documents.length > 1) {
-        suggestions = documents.slice(1).map((doc: any) => doc.title)
+        suggestions = documents.slice(1).map((doc: { title: string }) => doc.title)
       }
     } else {
       // Fallback response khi không tìm thấy

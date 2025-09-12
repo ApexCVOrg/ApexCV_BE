@@ -20,7 +20,7 @@ class SuggestionsService {
   /**
    * Xây dựng cây từ array JSON theo thứ tự preorder
    */
-  private buildTree(documents: any[]): DocumentNode[] {
+  private buildTree(documents: Array<{ title: string; content: string; tags: string[] }>): DocumentNode[] {
     const tree: DocumentNode[] = []
     const stack: DocumentNode[] = []
 
@@ -110,7 +110,7 @@ class SuggestionsService {
 
       const documents = JSON.parse(fs.readFileSync(dataPath, 'utf-8'))
       this.tree = this.buildTree(documents)
-      console.log('✅ Suggestions tree built successfully')
+      // Suggestions tree built
     } catch (error) {
       console.error('❌ Error initializing suggestions service:', error)
       throw error

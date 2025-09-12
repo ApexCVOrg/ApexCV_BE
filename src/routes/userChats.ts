@@ -224,7 +224,7 @@ router.post('/:chatId/read', async (req: AuthRequest, res: Response) => {
       })
     }
 
-    await chatService.markMessagesAsRead(chatId, userId)
+    await chatService.markMessagesAsRead(chatId)
 
     res.json({
       success: true,
@@ -319,7 +319,7 @@ router.post('/:chatId/join', checkManagerAuth, async (req: AuthRequest, res: Res
       })
     }
 
-    const updatedSession = await chatService.joinSession(chatId, managerId, req);
+    const updatedSession = await chatService.joinSession(chatId, managerId)
 
     res.status(200).json({
       success: true,

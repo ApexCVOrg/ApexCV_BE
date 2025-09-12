@@ -4,8 +4,8 @@ import { ChatMessageModel } from '../models/ChatMessage'
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/apexcv')
-    console.log('MongoDB connected successfully')
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority')
+    // MongoDB connected
   } catch (error) {
     console.error('MongoDB connection error:', error)
     process.exit(1)

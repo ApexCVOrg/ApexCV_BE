@@ -5,15 +5,13 @@ import { User } from '../models/User'
 import { Product } from '../models/Product'
 import { Cart } from '../models/Cart'
 import jwt from 'jsonwebtoken'
-import { sendOrderStatusEmail } from '../services/email.service'
-import ChatWebSocketServer from '../websocket/chatServer'
 
 /**
  * API tạo link thanh toán VNPAY
  */
 export const createPayment = (req: Request, res: Response) => {
   try {
-    console.log('[VNPAY] ====== TẠO PAYMENT ======')
+    console.log('[VNPAY] Bắt đầu tạo payment URL')
     console.log('[VNPAY] Request body:', JSON.stringify(req.body, null, 2))
     console.log('[VNPAY] User from request:', req.user)
     console.log('[VNPAY] User ID from body:', req.body.user)
@@ -57,12 +55,10 @@ export const createPayment = (req: Request, res: Response) => {
       ...req.body,
       user: userId,
       sessionId: sessionId,
-      createdAt: new Date().toISOString(),
-      shippingPrice: 50000 // Luôn là 50.000 VND
+      createdAt: new Date().toISOString()
     }
 
     console.log('[VNPAY] Pending order data:', JSON.stringify(req.session.pendingOrder, null, 2))
-    console.log('[VNPAY] SessionId:', sessionId)
 
     // Lưu session ngay lập tức và đợi hoàn thành
     req.session.save(async (err) => {
@@ -74,7 +70,7 @@ export const createPayment = (req: Request, res: Response) => {
         })
       }
 
-      console.log('[VNPAY] Session saved successfully')
+      // Session saved
 
       // Lưu backup vào database
       try {
@@ -116,9 +112,9 @@ export const createPayment = (req: Request, res: Response) => {
 export const handleReturnUrl = async (req: Request, res: Response) => {
   let user: any = null // <-- Move this to the top
   try {
-    console.log('[VNPAY Return] ====== RETURN TỪ VNPAY ======')
-    console.log('[VNPAY Return] Query params:', req.query)
-    console.log('[VNPAY Return] Headers:', req.headers)
+    console.log('[VNPAY Return] Bắt đầu xử lý returnUrl')
+    console.log('[VNPAY Return] Query params:', JSON.stringify(req.query, null, 2))
+    console.log('[VNPAY Return] Headers:', JSON.stringify(req.headers, null, 2))
 
     // Kiểm tra response code từ VNPay trước tiên
     const vnpResponseCode = req.query['vnp_ResponseCode']
@@ -189,13 +185,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       vnpTransactionNo && // Có transaction number
       vnpAmount // Có amount
 
-    console.log('[VNPAY Return] Payment success check:', {
-      responseCode: vnpResponseCode,
-      verificationSuccess: verificationResult.isSuccess,
-      hasTransactionNo: !!vnpTransactionNo,
-      hasAmount: !!vnpAmount,
-      isPaymentSuccess
-    })
+    // Payment success check
 
     // Nếu thanh toán không thành công, chỉ log và return thông báo
     if (!isPaymentSuccess) {
@@ -257,20 +247,20 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     }
 
     // Nếu thanh toán thành công, tiếp tục xử lý tạo order
-    console.log('[VNPAY Return] Payment successful, proceeding to create order')
+    // Payment successful, proceeding to create order
 
     // Lấy userId từ session hoặc từ token
-    let userId = req.session.pendingOrder?.user
+    let userId = (req.session.pendingOrder as { user?: string })?.user
     let orderData = req.session.pendingOrder
 
     if (!userId) {
-      // Lấy từ token
+      // Nếu không có userId trong session, lấy từ token
       const authHeader = req.headers['authorization']
       const token = authHeader && authHeader.split(' ')[1]
       if (token) {
         try {
-          const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
-          userId = decoded.userId || decoded.id // <-- Đảm bảo gán vào userId
+          const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { userId?: string; id?: string }
+          userId = decoded.userId || decoded.id
           console.log('[VNPAY Return] Got userId from token:', userId)
         } catch (err) {
           console.log('[VNPAY Return] Token verification failed:', err)
@@ -281,19 +271,16 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     console.log('[VNPAY Return] pendingOrder:', req.session.pendingOrder)
     console.log('[VNPAY Return] userId:', userId)
 
-    // Nếu không có orderData, thử lấy từ backup database
-    if (!orderData && userId) {
-      // <-- Sửa lại điều kiện này
+    // Nếu không có session, thử lấy từ backup database
+    if (!req.session.pendingOrder && userId) {
       console.log('[VNPAY Return] No session found, trying to get from backup database')
       try {
-        const backupOrder = await PendingOrder.findOne({ userId: String(userId) }).sort({ createdAt: -1 })
-        console.log('[VNPAY Return] backupOrder:', backupOrder)
+        const backupOrder = await PendingOrder.findOne({ userId: userId }).sort({ createdAt: -1 })
         if (backupOrder) {
           console.log('[VNPAY Return] Found backup order data')
           orderData = backupOrder.orderData
+          // Xóa backup data sau khi sử dụng
           await PendingOrder.findByIdAndDelete(backupOrder._id)
-        } else {
-          console.log('[VNPAY Return] Không tìm thấy backup order trong DB cho userId:', userId)
         }
       } catch (backupError) {
         console.error('[VNPAY Return] Error getting backup order data:', backupError)
@@ -321,6 +308,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     }
 
     // Tìm user thực từ userId
+    let user
     if (userId) {
       user = await User.findById(userId)
       console.log('[VNPAY Return] Found user:', user ? user.email : 'not found')
@@ -369,7 +357,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
             ? {
                 id: product._id,
                 name: product.name,
-                brand: (product.brand as any)?.name
+                brand: (product.brand as { name?: string })?.name
               }
             : 'not found'
         )
@@ -389,14 +377,14 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
           size: sizeWithSku,
           productName: product?.name || item.name || '',
           productImage: product?.images?.[0] || '',
-          productBrand: (product?.brand as any)?.name || ''
+          productBrand: (product?.brand as { name?: string })?.name || ''
         }
 
         console.log(`[VNPAY Return] Populated item ${index + 1}:`, {
           productName: populatedItem.productName,
           quantity: populatedItem.quantity,
-          size: populatedItem.size[0]?.size,
-          color: populatedItem.size[0]?.color,
+          size: (populatedItem.size[0] as { size?: string })?.size,
+          color: (populatedItem.size[0] as { color?: string })?.color,
           price: populatedItem.price
         })
 
@@ -404,7 +392,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       })
     )
 
-    console.log('[VNPAY Return] All items populated successfully, creating order...')
+    // All items populated, creating order
     console.log('[VNPAY Return] Final populated items:', JSON.stringify(populatedOrderItems, null, 2))
 
     // Tạo đơn hàng mới với thông tin user thực
@@ -417,17 +405,17 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       },
       orderItems: populatedOrderItems,
       shippingAddress: {
-        recipientName: orderData.shippingAddress.fullName || 'N/A',
-        street: orderData.shippingAddress.street,
-        city: orderData.shippingAddress.city,
-        state: orderData.shippingAddress.state,
-        postalCode: orderData.shippingAddress.postalCode,
-        country: orderData.shippingAddress.country,
-        phone: orderData.shippingAddress.phone || user.phone
+        recipientName: (orderData as { shippingAddress?: { fullName?: string } }).shippingAddress?.fullName || 'N/A',
+        street: orderData.shippingAddress?.street || '',
+        city: orderData.shippingAddress?.city || '',
+        state: orderData.shippingAddress?.state || '',
+        postalCode: orderData.shippingAddress?.postalCode || '',
+        country: orderData.shippingAddress?.country || '',
+        phone: orderData.shippingAddress?.phone || user.phone
       },
-      paymentMethod: orderData.paymentMethod,
-      taxPrice: orderData.taxPrice || 0,
-      shippingPrice: 50000, // Luôn là 50.000 VND
+      paymentMethod: (orderData as { paymentMethod?: string; taxPrice?: number; shippingPrice?: number }).paymentMethod || 'VNPAY',
+      taxPrice: (orderData as { paymentMethod?: string; taxPrice?: number; shippingPrice?: number }).taxPrice || 0,
+      shippingPrice: (orderData as { paymentMethod?: string; taxPrice?: number; shippingPrice?: number }).shippingPrice || 0,
       totalPrice: orderData.totalPrice,
       isPaid: true,
       paidAt: new Date(),
@@ -442,20 +430,6 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
 
     const savedOrder = await order.save()
     console.log('[VNPAY Return] Order created successfully:', savedOrder._id)
-    // --- Update stock cho từng sản phẩm đã mua ---
-    for (const item of savedOrder.orderItems) {
-      const product = await Product.findById(item.product)
-      if (product && Array.isArray(product.sizes)) {
-        const sizeItem = product.sizes.find((s) => s.size === item.size[0]?.size && s.color === item.size[0]?.color)
-        if (sizeItem) {
-          sizeItem.stock = Math.max(0, (sizeItem.stock || 0) - item.quantity)
-          await product.save()
-          console.log(
-            `[VNPAY Return] Updated stock for product ${product._id} - size: ${sizeItem.size}, color: ${sizeItem.color}, new stock: ${sizeItem.stock}`
-          )
-        }
-      }
-    }
     console.log('[VNPAY Return] Order contains items:', savedOrder.orderItems.length)
     console.log('[VNPAY Return] Order total price:', savedOrder.totalPrice)
     console.log(
@@ -526,11 +500,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
         filteredCartItems.forEach((item) => userCart.cartItems.push(item))
 
         await userCart.save()
-        console.log('[VNPAY Return] Cart cleanup completed successfully')
-        // Gửi event realtime cart_update cho user
-        if (global.chatWebSocketServer) {
-          global.chatWebSocketServer.broadcastCartUpdate(String(userId))
-        }
+        // Cart cleanup completed
       }
     } catch (cartError) {
       console.error('[VNPAY Return] Error cleaning up cart:', cartError)
@@ -541,7 +511,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
     if (req.session.pendingOrder) {
       delete req.session.pendingOrder
       req.session.save()
-      console.log('[VNPAY Return] Session cleaned up after successful order creation')
+      // Session cleaned up
     }
 
     // Tạo response thành công
@@ -584,20 +554,8 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       }
     }
 
-    console.log('[VNPAY Return] Sending success response:', JSON.stringify(successResponse, null, 2))
+    // Sending success response
     res.json(successResponse)
-
-    // Gửi email thông báo thanh toán thành công
-    if (user && user.email) {
-      await sendOrderStatusEmail(
-        user.email,
-        {
-          orderId: savedOrder._id.toString(),
-          totalPrice: savedOrder.totalPrice ?? 0 // fallback to 0 if null/undefined
-        },
-        true
-      )
-    }
   } catch (err) {
     console.error('[VNPAY Return] Error processing return URL:', err)
     res.status(500).json({
@@ -605,15 +563,6 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
       message: 'Có lỗi xảy ra khi xử lý thanh toán',
       detail: (err as any)?.message
     })
-
-    // Gửi email thông báo thanh toán thất bại
-    if (user && user.email) {
-      await sendOrderStatusEmail(
-        user.email,
-        { reason: 'Thanh toán không thành công hoặc hết hạn. Vui lòng thử lại.' },
-        false
-      )
-    }
   }
 }
 
@@ -621,6 +570,7 @@ export const handleReturnUrl = async (req: Request, res: Response) => {
  * Tạo order từ dữ liệu VNPAY khi session bị mất
  * Lưu ý: Hàm này chỉ tạo order khi có thông tin user thực
  */
+/*
 async function createOrderFromVnpayData(req: Request, res: Response) {
   try {
     const vnpAmount = parseInt(req.query['vnp_Amount'] as string) / 100 // Chia 100 vì VNPAY nhân 100
@@ -718,210 +668,16 @@ async function createOrderFromVnpayData(req: Request, res: Response) {
         })
       }
     }
-
-    // Tìm user từ token - BẮT BUỘC phải có user
-    let user = null
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-
-    if (!token) {
-      console.log('[VNPAY Return] No token found, cannot create order')
-      return res.status(400).json({
-        status: 'fail',
-        message: 'Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.',
-        result: { isSuccess: false, message: 'User token required' }
-      })
-    }
-
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
-      const userId = decoded.userId || decoded.id
-      if (userId) {
-        user = await User.findById(userId)
-        console.log('[VNPAY Return] Found user from token:', user ? user.email : 'not found')
-      }
-    } catch (err) {
-      console.log('[VNPAY Return] Token verification failed for order creation:', err)
-      return res.status(400).json({
-        status: 'fail',
-        message: 'Token không hợp lệ. Vui lòng đăng nhập lại.',
-        result: { isSuccess: false, message: 'Invalid token' }
-      })
-    }
-
-    // Nếu không tìm thấy user, không thể tạo order
-    if (!user) {
-      console.log('[VNPAY Return] No user found, cannot create order')
-      return res.status(400).json({
-        status: 'fail',
-        message: 'Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.',
-        result: { isSuccess: false, message: 'User not found' }
-      })
-    }
-
-    // Kiểm tra xem có order data từ request body không
-    const orderData = req.body
-    if (orderData && orderData.orderItems && Array.isArray(orderData.orderItems)) {
-      // Kiểm tra size và màu cho tất cả items
-      const invalidItems = orderData.orderItems.filter((item: any) => {
-        if (!item.size || !Array.isArray(item.size) || item.size.length === 0) {
-          return true
-        }
-        const sizeItem = item.size[0]
-        return !sizeItem.size || !sizeItem.color
-      })
-
-      if (invalidItems.length > 0) {
-        console.error('[VNPAY Return] Items missing size or color in order data:', invalidItems)
-        return res.status(400).json({
-          status: 'fail',
-          message: 'Thông tin size và màu không đầy đủ. Vui lòng chọn lại.',
-          result: { isSuccess: false, message: 'Size and color required' }
-        })
-      }
-    }
-
-    // Tạo order với thông tin user thực
-    console.log('[VNPAY Return] Creating order with real user data')
-
-    // Nếu có order data từ request body, sử dụng nó
-    let orderItems = []
-    if (orderData && orderData.orderItems && Array.isArray(orderData.orderItems)) {
-      // Tạo snapshot cho mỗi order item
-      orderItems = await Promise.all(
-        orderData.orderItems.map(async (item: any) => {
-          const product = await Product.findById(item.product).populate('brand')
-
-          // Tạo sku từ size và color nếu không có
-          const sizeWithSku = item.size.map((sizeItem: any) => ({
-            ...sizeItem,
-            sku:
-              sizeItem.sku ||
-              `${product?.name || 'product'}_${sizeItem.size}_${sizeItem.color || 'default'}`
-                .replace(/\s+/g, '_')
-                .toUpperCase()
-          }))
-
-          return {
-            ...item,
-            size: sizeWithSku,
-            productName: product?.name || '',
-            productImage: product?.images?.[0] || '',
-            productBrand: (product?.brand as any)?.name || ''
-          }
-        })
-      )
-    } else {
-      // Fallback: tạo placeholder order item nếu không có data
-      orderItems = [
-        {
-          product: '000000000000000000000000', // Placeholder product ID
-          name: 'Sản phẩm',
-          quantity: 1,
-          size: [
-            {
-              size: 'M',
-              color: 'Default',
-              quantity: 1,
-              sku: 'PRODUCT_M_DEFAULT'
-            }
-          ],
-          price: vnpAmount,
-          productName: 'Sản phẩm',
-          productImage: '',
-          productBrand: ''
-        }
-      ]
-    }
-
-    const order = new Order({
-      user: user._id,
-      userSnapshot: {
-        fullName: user.username,
-        email: user.email,
-        phone: user.phone
-      },
-      orderItems: orderItems,
-      shippingAddress: {
-        recipientName:
-          orderData?.shippingAddress?.recipientName || orderData?.shippingAddress?.fullName || user.fullName || 'N/A',
-        street: orderData?.shippingAddress?.street,
-        city: orderData?.shippingAddress?.city,
-        state: orderData?.shippingAddress?.state,
-        postalCode: orderData?.shippingAddress?.postalCode,
-        country: orderData?.shippingAddress?.country,
-        phone: orderData?.shippingAddress?.phone || user.phone
-      },
-      paymentMethod: 'VNPAY',
-      taxPrice: orderData?.taxPrice || 0,
-      shippingPrice: 50000, // Luôn là 50.000 VND
-      totalPrice: orderData?.totalPrice || vnpAmount,
-      isPaid: true,
-      paidAt: new Date(),
-      orderStatus: 'paid',
-      paymentResult: {
-        id: vnpTransactionNo,
-        status: 'COMPLETED',
-        update_time: new Date().toISOString(),
-        email_address: user.email
-      }
-    })
-
-    const savedOrder = await order.save()
-    console.log('[VNPAY Return] User order created:', savedOrder._id)
-    console.log('[VNPAY Return] Order contains items:', savedOrder.orderItems.length)
-
-    // Tạo response chi tiết
-    const orderResponse = {
-      status: 'success',
-      message: `Đặt hàng và thanh toán thành công với ${savedOrder.orderItems.length} sản phẩm`,
-      order: {
-        _id: savedOrder._id,
-        orderNumber: savedOrder._id,
-        totalItems: savedOrder.orderItems.length,
-        totalPrice: savedOrder.totalPrice,
-        orderStatus: savedOrder.orderStatus,
-        paymentStatus: savedOrder.isPaid ? 'Paid' : 'Pending',
-        items: savedOrder.orderItems.map((item: any, index: number) => ({
-          index: index + 1,
-          productName: item.productName || item.name,
-          quantity: item.quantity,
-          size: item.size[0]?.size || 'N/A',
-          color: item.size[0]?.color || 'N/A',
-          price: item.price,
-          totalItemPrice: item.price * item.quantity
-        })),
-        shippingAddress: {
-          fullName: savedOrder.shippingAddress?.recipientName || 'N/A',
-          street: savedOrder.shippingAddress?.street || 'N/A',
-          city: savedOrder.shippingAddress?.city || 'N/A',
-          state: savedOrder.shippingAddress?.state || 'N/A',
-          postalCode: savedOrder.shippingAddress?.postalCode || 'N/A',
-          country: savedOrder.shippingAddress?.country || 'N/A',
-          phone: savedOrder.shippingAddress?.phone || 'N/A'
-        },
-        paymentMethod: savedOrder.paymentMethod,
-        createdAt: savedOrder.createdAt
-      },
-      result: {
-        isSuccess: true,
-        message: `Order created from VNPAY data with ${savedOrder.orderItems.length} items`,
-        transactionId: vnpTransactionNo,
-        responseCode: vnpResponseCode
-      }
-    }
-
-    console.log('[VNPAY Return] Sending success response from VNPAY data:', JSON.stringify(orderResponse, null, 2))
-
-    return res.json(orderResponse)
-  } catch (err) {
-    console.error('Lỗi tạo order từ VNPAY data:', err)
-    return res.status(400).json({
-      error: 'Tạo đơn hàng thất bại',
-      detail: (err as any)?.message
+  } catch (error) {
+    console.error('Error in createOrderFromVnpayData:', error)
+    return res.status(500).json({
+      status: 'error',
+      message: 'Lỗi tạo đơn hàng từ dữ liệu VNPAY',
+      detail: error instanceof Error ? error.message : 'Unknown error'
     })
   }
 }
+*/
 
 /**
  * API xử lý IPN từ VNPAY
@@ -993,7 +749,7 @@ export const handleIpn = (req: Request, res: Response) => {
     }
 
     // Nếu thanh toán thành công, có thể cập nhật trạng thái order nếu cần
-    console.log('[VNPAY IPN] Payment successful, order should be created via return URL')
+    // Payment successful, order should be created via return URL
 
     // TODO: Có thể thêm logic cập nhật trạng thái order ở đây nếu cần
     // Ví dụ: cập nhật trạng thái từ 'pending' sang 'paid' nếu order đã tồn tại

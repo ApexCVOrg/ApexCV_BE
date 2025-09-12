@@ -9,8 +9,8 @@ router.post('/', async (req, res) => {
     const coupon = new Coupon(req.body)
     await coupon.save()
     res.status(201).json({ success: true, data: coupon })
-  } catch (err: any) {
-    res.status(400).json({ success: false, message: err.message })
+  } catch (err: unknown) {
+    res.status(400).json({ success: false, message: err instanceof Error ? err.message : 'Unknown error' })
   }
 })
 
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 10, isActive } = req.query
-    const filter: any = {}
+    const filter: { isActive?: boolean } = {}
     if (isActive !== undefined) filter.isActive = isActive === 'true'
     const total = await Coupon.countDocuments(filter)
     const coupons = await Coupon.find(filter)
@@ -26,8 +26,8 @@ router.get('/', async (req, res) => {
       .skip((+page - 1) * +limit)
       .limit(+limit)
     res.json({ success: true, data: coupons, total })
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message })
+  } catch (err: unknown) {
+    res.status(500).json({ success: false, message: err instanceof Error ? err.message : 'Unknown error' })
   }
 })
 
@@ -37,8 +37,8 @@ router.patch('/:id', async (req, res) => {
     const coupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true })
     if (!coupon) return res.status(404).json({ success: false, message: 'Coupon not found' })
     res.json({ success: true, data: coupon })
-  } catch (err: any) {
-    res.status(400).json({ success: false, message: err.message })
+  } catch (err: unknown) {
+    res.status(400).json({ success: false, message: err instanceof Error ? err.message : 'Unknown error' })
   }
 })
 
@@ -48,8 +48,8 @@ router.delete('/:id', async (req, res) => {
     const coupon = await Coupon.findByIdAndDelete(req.params.id)
     if (!coupon) return res.status(404).json({ success: false, message: 'Coupon not found' })
     res.json({ success: true, message: 'Deleted' })
-  } catch (err: any) {
-    res.status(400).json({ success: false, message: err.message })
+  } catch (err: unknown) {
+    res.status(400).json({ success: false, message: err instanceof Error ? err.message : 'Unknown error' })
   }
 })
 

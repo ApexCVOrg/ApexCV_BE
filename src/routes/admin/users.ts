@@ -17,19 +17,19 @@ router.get(
   async (req: Request, res: Response): Promise<void> => {
     try {
       const { role, search, page = 1, limit = 10 } = req.query
-      const query: any = {}
+      const query: { role?: string; $or?: Array<{ [key: string]: { $regex: string; $options: string } }> } = {}
 
       // Filter by role if specified
       if (role) {
-        query.role = role
+        query.role = String(role)
       }
 
       // Search by username, email or fullName
       if (search) {
         query.$or = [
-          { username: { $regex: search, $options: 'i' } },
-          { email: { $regex: search, $options: 'i' } },
-          { fullName: { $regex: search, $options: 'i' } }
+          { username: { $regex: String(search), $options: 'i' } },
+          { email: { $regex: String(search), $options: 'i' } },
+          { fullName: { $regex: String(search), $options: 'i' } }
         ]
       }
 
@@ -165,7 +165,6 @@ router.put('/:id', checkPermission(Permission.MANAGE_USERS), async (req: Request
 
     // If password is provided, hash it
     if (updateData.password) {
-      const salt = await bcrypt.genSalt(10)
       updateData.passwordHash = await bcrypt.hash(updateData.password, 10)
       delete updateData.password
     }

@@ -30,8 +30,8 @@ router.post('/', async (req, res) => {
     }
     // Hợp lệ
     res.json({ success: true, data: coupon })
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: err.message })
+  } catch (err: unknown) {
+    res.status(500).json({ success: false, message: err instanceof Error ? err.message : 'Unknown error' })
   }
 })
 

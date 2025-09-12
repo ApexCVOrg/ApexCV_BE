@@ -11,10 +11,6 @@ import connectDB from './config/db'
 import { suggestionsService } from './services/suggestionsService'
 import ChatWebSocketServer from './websocket/chatServer'
 
-// Fix for global.chatWebSocketServer type
-declare global {
-  var chatWebSocketServer: ChatWebSocketServer | undefined
-}
 
 import authRouter from './routes/auth'
 import userRouter from './routes/users'
@@ -30,7 +26,6 @@ import userChatsRouter from './routes/userChats'
 import suggestionsRouter from './routes/suggestions'
 import checkoutRouter from './routes/checkout'
 import paymentVnpayRoutes from './routes/payment-vnpay'
-import sepayRouter from './routes/sepay'
 import couponRouter from './routes/voucher'
 import refundRouter from './routes/refund'
 import sizeRecommendationRouter from './routes/size-recommendation'
@@ -42,7 +37,6 @@ import applyCouponRouter from './routes/apply-coupon'
 import uploadRouter from './routes/upload'
 import { errorHandler } from './middlewares/errorHandler'
 import {
-  API_BASE,
   AUTH_ROUTES,
   USER_ROUTES,
   CATEGORY_ROUTES,
@@ -67,8 +61,11 @@ dotenv.config()
 const initializeServices = async () => {
   try {
     await connectDB()
+    
+
+    
     suggestionsService.initialize()
-    console.log('✅ All services initialized successfully')
+    // Services initialized
   } catch (error) {
     console.error('❌ Error initializing services:', error)
     process.exit(1)
@@ -108,16 +105,14 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true)
-
+      
       // Cho phép tất cả các URL của Vercel
-      if (
-        origin.includes('nidas-fe.vercel.app') ||
-        origin.includes('nidas-projects-e8bff2a3.vercel.app') ||
-        allowedOrigins.includes(origin)
-      ) {
+      if (origin.includes('nidas-fe.vercel.app') || 
+          origin.includes('nidas-projects-e8bff2a3.vercel.app') ||
+          allowedOrigins.includes(origin)) {
         return callback(null, true)
       }
-
+      
       console.log('Blocked origin:', origin)
       return callback(new Error(`Origin ${origin} không được phép`))
     },
@@ -135,28 +130,26 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-// Serve static files from uploads directory with CORS
-app.use('/uploads', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-}, express.static(path.join(__dirname, '../uploads')));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nidas',
-    ttl: 10 * 60,        // 10 minutes
-    autoRemove: 'native'
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 10 * 60 * 1000  // 10 minutes
-  }
-}))
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority',
+      ttl: 10 * 60, // 10 minutes
+      autoRemove: 'native'
+    }),
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 10 * 60 * 1000, // 10 minutes
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    }
+  })
+)
 
 // Health-check route
 app.get('/', (_req: Request, res: Response) => {
@@ -164,31 +157,28 @@ app.get('/', (_req: Request, res: Response) => {
 })
 
 // Register routes
-app.use(API_BASE + AUTH_ROUTES.BASE, authRouter)
-app.use(API_BASE + USER_ROUTES.BASE, userRouter)
-app.use(API_BASE + CATEGORY_ROUTES.BASE, categoryRouter)
-app.use(API_BASE + PRODUCT_ROUTES.BASE, productRouter)
-app.use(API_BASE + REVIEW_ROUTES.BASE, reviewRouter)
-app.use(API_BASE + ORDER_ROUTES.BASE, orderRouter)
-app.use(API_BASE + CART_ROUTES.BASE, cartRouter)
-app.use(API_BASE + BRAND_ROUTES.BASE, brandRouter)
-app.use(API_BASE + MANAGER_ROUTES.BASE, managerRouter)
-app.use(API_BASE + MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
-app.use(API_BASE + USER_CHAT_ROUTES.BASE, userChatsRouter)
-app.use(API_BASE + SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
-app.use(API_BASE + '/checkout', checkoutRouter)
-app.use('/api/payment', paymentVnpayRoutes)
-app.use('/api/sepay', sepayRouter)
-app.use(API_BASE + '/coupon', couponRouter)
-app.use('/api/refund', refundRouter)
+app.use(AUTH_ROUTES.BASE, authRouter)
+app.use(USER_ROUTES.BASE, userRouter)
+app.use(CATEGORY_ROUTES.BASE, categoryRouter)
+app.use(PRODUCT_ROUTES.BASE, productRouter)
+app.use(REVIEW_ROUTES.BASE, reviewRouter)
+app.use(ORDER_ROUTES.BASE, orderRouter)
+app.use(CART_ROUTES.BASE, cartRouter)
+app.use(BRAND_ROUTES.BASE, brandRouter)
+app.use(MANAGER_ROUTES.BASE, managerRouter)
+app.use(MANAGER_CHAT_ROUTES.BASE, managerChatsRouter)
+app.use(USER_CHAT_ROUTES.BASE, userChatsRouter)
+app.use(SUGGESTIONS_ROUTES.BASE, suggestionsRouter)
+app.use('/checkout', checkoutRouter)
+app.use('/payment', paymentVnpayRoutes)
+app.use('/coupons', couponRouter)
 
-app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
-app.use(API_BASE + FAVORITES_ROUTES.BASE, favoritesRouter)
-app.use(API_BASE + CHAT_ROUTES.BASE, chatRouter)
-app.use(API_BASE + ADMIN_ROUTES.BASE, adminRouter)
-app.use(API_BASE + APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
-app.use(API_BASE + '/upload', uploadRouter)
-app.use(API_BASE + '/size-recommendation', sizeRecommendationRouter)
+app.use(CHAT_ROUTES.BASE, chatRouter)
+app.use(FAVORITES_ROUTES.BASE, favoritesRouter)
+app.use(CHAT_ROUTES.BASE, chatRouter)
+app.use(ADMIN_ROUTES.BASE, adminRouter)
+app.use(APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
+app.use('/upload', uploadRouter)
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
@@ -196,17 +186,25 @@ app.use(errorHandler as express.ErrorRequestHandler)
 const server = createServer(app)
 
 // Initialize WebSocket server
-const chatWebSocketServer = new ChatWebSocketServer(server)
-global.chatWebSocketServer = chatWebSocketServer
+new ChatWebSocketServer(server)
 
 // Start server và log thêm IP LAN cho debug
-server.listen(PORT, HOST, async () => {
-  await initializeServices()
-  console.log(`– Server đang chạy trên: http://${HOST}:${PORT}  (cho web/emulator)`)
-  console.log(`– WebSocket server: ws://${HOST}:${PORT}`)
-  const lanIp = getLocalIp()
-  if (lanIp) {
-    console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
-    console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+const startServer = async () => {
+  try {
+    await initializeServices()
+    server.listen(PORT, HOST, () => {
+      console.log(`– Server đang chạy trên: https://nidas-be.onrender.com  (production)`)
+      console.log(`– WebSocket server: wss://nidas-be.onrender.com`)
+      const lanIp = getLocalIp()
+      if (lanIp) {
+        console.log(`– Địa chỉ LAN: http://${lanIp}:${PORT}  (cho device thật)`)
+        console.log(`– WebSocket LAN: ws://${lanIp}:${PORT}`)
+      }
+    })
+  } catch (error) {
+    console.error('❌ Failed to start server:', error)
+    process.exit(1)
   }
-})
+}
+
+startServer()

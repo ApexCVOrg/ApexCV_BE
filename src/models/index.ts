@@ -4,6 +4,6 @@ import { Product } from './Product'
 import { Review } from './Review'
 import { Order } from './Order'
 import { Cart } from './Cart'
-import RefundRequest from './RefundRequest'
+import { Coupon } from './Coupon'
 
-export { User, Category, Product, Review, Order, Cart, RefundRequest }
+export { User, Category, Product, Review, Order, Cart, Coupon }

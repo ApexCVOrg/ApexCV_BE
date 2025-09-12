@@ -126,8 +126,8 @@ export const applyCoupon = async (req: Request, res: Response) => {
         remainingUsage: coupon.maxUsage - coupon.used
       }
     })
-  } catch (error) {
-    console.error('Error in applyCoupon:', error)
+  } catch {
+    console.error('Error in applyCoupon')
     return res.status(500).json({
       success: false,
       message: 'Lỗi server. Vui lòng thử lại sau.',

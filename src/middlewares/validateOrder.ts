@@ -15,14 +15,14 @@ export const validateOrderItems = (req: Request, res: Response, next: NextFuncti
     }
 
     // Kiểm tra từng item có size và màu đầy đủ không
-    const invalidItems = orderItems.filter((item: any) => {
+    const invalidItems = orderItems.filter((item: { size?: Array<{ size?: string; color?: string }> }) => {
       // Kiểm tra item có size array không
       if (!item.size || !Array.isArray(item.size) || item.size.length === 0) {
         return true
       }
 
       // Kiểm tra từng size item có size và color không
-      return item.size.some((sizeItem: any) => {
+      return item.size.some((sizeItem: { size?: string; color?: string }) => {
         return !sizeItem.size || !sizeItem.color
       })
     })
@@ -32,7 +32,7 @@ export const validateOrderItems = (req: Request, res: Response, next: NextFuncti
       return res.status(400).json({
         error: 'Size and color are required for all items',
         detail: 'Please select size and color for all products before checkout',
-        invalidItems: invalidItems.map((item: any) => ({
+        invalidItems: invalidItems.map((item: { product?: string; name?: string }) => ({
           product: item.product,
           name: item.name
         }))
@@ -40,10 +40,10 @@ export const validateOrderItems = (req: Request, res: Response, next: NextFuncti
     }
 
     // Kiểm tra thêm: size và color không được rỗng
-    const emptySizeColorItems = orderItems.filter((item: any) => {
-      return item.size.some((sizeItem: any) => {
-        return !sizeItem.size.trim() || !sizeItem.color.trim()
-      })
+    const emptySizeColorItems = orderItems.filter((item: { size?: Array<{ size?: string; color?: string }> }) => {
+      return item.size?.some((sizeItem: { size?: string; color?: string }) => {
+        return !sizeItem.size?.trim() || !sizeItem.color?.trim()
+      }) || false
     })
 
     if (emptySizeColorItems.length > 0) {
@@ -51,7 +51,7 @@ export const validateOrderItems = (req: Request, res: Response, next: NextFuncti
       return res.status(400).json({
         error: 'Size and color cannot be empty',
         detail: 'Please provide valid size and color values',
-        invalidItems: emptySizeColorItems.map((item: any) => ({
+        invalidItems: emptySizeColorItems.map((item: { product?: string; name?: string }) => ({
           product: item.product,
           name: item.name
         }))

@@ -31,7 +31,7 @@ router.get('/', validateGetChats, async (req: Request, res: Response) => {
     const limit = parseInt(req.query.limit as string) || 10
     const status = req.query.status as 'open' | 'closed' | undefined
 
-    const filter: any = {}
+    const filter: { status?: 'open' | 'closed' } = {}
     if (status) {
       filter.status = status
     }
@@ -128,7 +128,7 @@ router.post('/:chatId/messages', validateSendMessage, async (req: AuthRequest, r
       })
     }
 
-    const message = await chatService.sendManagerMessage(chatId, managerId, content, attachments, undefined, undefined, req);
+    const message = await chatService.sendManagerMessage(chatId, managerId, content, attachments)
 
     res.json({
       success: true,
@@ -185,7 +185,7 @@ router.patch('/:chatId/close', validateCloseSession, async (req: AuthRequest, re
       })
     }
 
-    await chatService.closeSession(chatId, managerId, note, req);
+    await chatService.closeSession(chatId, managerId, note)
 
     res.json({
       success: true,

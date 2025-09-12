@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import { Product } from '../models/Product'
 import { Order } from '../models/Order'
-import { User } from '../models/User'
-import { Category } from '../models/Category'
+// import { User } from '../models/User'
+// import { Category } from '../models/Category'
 import { DashboardData, SalesChartData, TopProduct, OrderStat } from '../types/type.d'
 
 // Helper function to get month name
@@ -181,9 +181,9 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
 
     // Process sales chart data
     const salesChart: SalesChartData[] = salesChartData.map((item: any) => ({
-      month: getMonthName(item._id.month),
-      revenue: item.revenue,
-      orders: item.orders
+      month: getMonthName((item as any)._id.month),
+      revenue: (item as any).revenue,
+      orders: (item as any).orders
     }))
 
     // Process top products
@@ -225,12 +225,12 @@ export const getDashboardSummary = async (_req: Request, res: Response): Promise
       success: true,
       data: dashboardData
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching dashboard summary:', error)
     res.status(500).json({
       success: false,
       message: 'Error fetching dashboard summary',
-      error: error.message
+      error: (error as Error).message
     })
   }
 }
@@ -254,11 +254,11 @@ export const getLowStockProducts = async (_req: Request, res: Response): Promise
         products: lowStockProducts
       }
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     res.status(500).json({
       success: false,
       message: 'Error fetching low stock products',
-      error: error.message
+      error: (error as Error).message
     })
   }
 }
@@ -498,9 +498,23 @@ export const getPublicTopSellingProducts = async (req: Request, res: Response): 
     const topProducts = await Order.aggregate([
       { $match: { paidAt: { $gte: startDate }, isPaid: true } },
       { $unwind: '$orderItems' },
-      { $lookup: { from: 'products', localField: 'orderItems.product', foreignField: '_id', as: 'product' } },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'orderItems.product',
+          foreignField: '_id',
+          as: 'product'
+        }
+      },
       { $unwind: '$product' },
-      { $lookup: { from: 'categories', localField: 'product.categories', foreignField: '_id', as: 'category' } },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'product.categories',
+          foreignField: '_id',
+          as: 'category'
+        }
+      },
       {
         $group: {
           _id: '$orderItems.product',

@@ -1,5 +1,5 @@
 // API Base path
-export const API_BASE = '/api'
+export const API_BASE = ''
 
 // Auth routes
 export const AUTH_ROUTES = {

@@ -24,7 +24,11 @@ export const checkManagerAuth = async (req: AuthRequest, res: Response, next: Ne
     const token = authHeader.substring(7) // Remove 'Bearer ' prefix
 
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as {
+      id: string
+      email: string
+      role: string
+    }
 
     if (!decoded) {
       res.status(401).json({

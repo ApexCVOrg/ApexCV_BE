@@ -22,8 +22,6 @@ import {
   getCustomerById,
   updateCustomer,
   deleteCustomer,
-  getSettings,
-  updateSettings,
   getSalesStats,
   getUserStats,
   getOrderStats,
@@ -132,10 +130,10 @@ router.get('/dashboard/sales-chart', getSalesChart)
 router.get('/logs', async (req, res) => {
   try {
     const { page = 1, limit = 20, action, adminId, target } = req.query
-    const query: Record<string, any> = {}
-    if (action) query['action'] = action
-    if (adminId) query['adminId'] = adminId
-    if (target) query['target'] = target
+    const query: Record<string, string> = {}
+    if (action) query['action'] = String(action)
+    if (adminId) query['adminId'] = String(adminId)
+    if (target) query['target'] = String(target)
     const skip = (Number(page) - 1) * Number(limit)
     const [logs, total] = await Promise.all([
       AuditLog.find(query)
@@ -155,8 +153,8 @@ router.get('/logs', async (req, res) => {
         pages: Math.ceil(total / Number(limit))
       }
     })
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Error fetching audit logs', error: err })
+  } catch {
+    res.status(500).json({ success: false, message: 'Error fetching audit logs' })
   }
 })
 
@@ -165,7 +163,7 @@ router.get('/admins', async (req, res) => {
   try {
     const admins = await User.find({ role: 'admin' }).select('_id username email')
     res.json({ success: true, data: admins })
-  } catch (err) {
+  } catch {
     res.status(500).json({ success: false, message: 'Error fetching admins' })
   }
 })

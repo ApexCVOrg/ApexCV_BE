@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { ChatSessionModel } from '../models/ChatSession'
 import { ChatMessageModel } from '../models/ChatMessage'
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/nidas_db'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://nidasorgweb:Thithithi%400305@nidas.mrltlak.mongodb.net/nidas?retryWrites=true&w=majority'
 
 async function migrateChatSchema() {
   try {
@@ -69,7 +69,7 @@ async function migrateChatSchema() {
       )
     }
 
-    console.log('Migration completed successfully!')
+    // Migration completed
   } catch (error) {
     console.error('Migration failed:', error)
   } finally {

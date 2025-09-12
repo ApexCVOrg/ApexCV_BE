@@ -10,43 +10,23 @@ interface ChatClient {
   chatId?: string
 }
 
-interface IProduct {
-  _id: string;
-  name: string;
-  description?: string;
-  price: number;
-  discountPrice?: number;
-  images: string[];
-  sizes: { size: string; stock: number }[];
-  colors: string[];
-  tags: string[];
-  brand?: { _id: string; name: string };
-  categories?: { _id: string; name: string }[];
-  status: string;
-  ratingsAverage: number;
-  ratingsQuantity: number;
-  createdAt: Date;
-}
-
 interface ChatMessage {
-  type: 'message' | 'join' | 'leave' | 'typing' | 'read' | 'unread_count' | 'manager_send_product' | 'user_click_product';
-  chatId: string;
-  userId?: string;
-  managerId?: string;
-  content?: string;
-  role?: 'user' | 'manager';
-  timestamp?: Date;
-  isTyping?: boolean;
+  type: 'message' | 'join' | 'leave' | 'typing' | 'read' | 'unread_count'
+  chatId: string
+  userId?: string
+  managerId?: string
+  content?: string
+  role?: 'user' | 'manager'
+  timestamp?: Date
+  isTyping?: boolean
   attachments?: Array<{
-    filename: string;
-    originalName: string;
-    mimetype: string;
-    size: number;
-    url: string;
-  }>;
-  messageType?: 'text' | 'file' | 'image' | 'product';
-  product?: IProduct;
-  slug?: string;
+    filename: string
+    originalName: string
+    mimetype: string
+    size: number
+    url: string
+  }>
+  messageType?: 'text' | 'file' | 'image'
 }
 
 class ChatWebSocketServer {
@@ -65,10 +45,10 @@ class ChatWebSocketServer {
     })
   }
 
-  private handleConnection(ws: WebSocket, request: any) {
+  private handleConnection(ws: WebSocket, request: { url?: string }) {
     try {
       // Extract token from query string
-      const url = new URL(request.url, 'http://localhost')
+      const url = new URL(request.url || '', 'https://nidas-be.onrender.com')
       const token = url.searchParams.get('token')
 
       if (!token) {
@@ -77,7 +57,7 @@ class ChatWebSocketServer {
       }
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as any
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as { id: string; role: string }
       const clientId = `${decoded.id}_${Date.now()}`
 
       const client: ChatClient = {
@@ -134,41 +114,24 @@ class ChatWebSocketServer {
         this.handleMarkAsRead(clientId, message.chatId)
         break
       case 'unread_count':
-        this.handleUnreadCount(clientId);
-        break;
-      case 'manager_send_product':
-        this.handleManagerSendProduct(clientId, message);
-        break;
-      case 'user_click_product':
-        this.handleUserClickProduct(clientId, message);
-        break;
+        this.handleUnreadCount(clientId)
+        break
     }
   }
 
   private handleJoin(clientId: string, chatId: string) {
     const client = this.clients.get(clientId)
-    if (!client) {
-      console.log('Client not found for join:', clientId)
-      return
-    }
-
-    console.log('Client joining chat:', {
-      clientId,
-      userId: client.userId,
-      role: client.role,
-      chatId
-    })
+    if (!client) return
 
     client.chatId = chatId
 
     // Add to chat room
     if (!this.chatRooms.has(chatId)) {
-      console.log('Creating new chat room:', chatId)
       this.chatRooms.set(chatId, new Set())
     }
     this.chatRooms.get(chatId)!.add(clientId)
 
-    console.log(`Client ${clientId} joined chat ${chatId}. Room size: ${this.chatRooms.get(chatId)!.size}`)
+    console.log(`Client ${clientId} joined chat ${chatId}`)
 
     // Mark messages as read when joining
     this.handleMarkAsRead(clientId, chatId)
@@ -220,21 +183,11 @@ class ChatWebSocketServer {
     const client = this.clients.get(clientId)
     if (!client || !message.content) return
 
-    console.log('Handling chat message:', {
-      clientId,
-      clientRole: client.role,
-      chatId: message.chatId,
-      content: message.content,
-      messageType: message.messageType
-    })
-
     try {
       // Save message to database
       if (client.role === 'manager') {
-        console.log('Saving manager message to database')
         await chatService.sendManagerMessage(message.chatId, client.userId, message.content, message.attachments)
       } else {
-        console.log('Saving user message to database')
         await chatService.sendUserMessage(message.chatId, message.content, 'user', false, message.attachments)
       }
 
@@ -266,6 +219,20 @@ class ChatWebSocketServer {
         })
       }
 
+      // If it's a manager message, broadcast to the specific user
+      if (client.role === 'manager') {
+        this.broadcastToUser(message.chatId, {
+          type: 'message',
+          chatId: message.chatId,
+          content: message.content,
+          role: client.role as 'user' | 'manager',
+          userId: client.userId,
+          timestamp: new Date(),
+          attachments: message.attachments,
+          messageType: message.messageType
+        })
+      }
+
       // Update unread count for all clients in the room
       this.updateUnreadCountForRoom(message.chatId)
     } catch (error) {
@@ -278,7 +245,7 @@ class ChatWebSocketServer {
     if (!client) return
 
     try {
-      await chatService.markMessagesAsRead(chatId, client.userId)
+      await chatService.markMessagesAsRead(chatId)
 
       // Notify other clients that messages were read
       this.broadcastToRoom(
@@ -358,26 +325,16 @@ class ChatWebSocketServer {
 
   private broadcastToRoom(chatId: string, message: any, excludeClientId?: string) {
     const room = this.chatRooms.get(chatId)
-    if (!room) {
-      console.log('No room found for chatId:', chatId)
-      return
-    }
+    if (!room) return
 
-    console.log('Broadcasting to room:', chatId, 'Clients in room:', room.size)
     const messageStr = JSON.stringify(message)
 
     room.forEach((clientId) => {
-      if (clientId === excludeClientId) {
-        console.log('Excluding client:', clientId)
-        return
-      }
+      if (clientId === excludeClientId) return
 
       const client = this.clients.get(clientId)
       if (client && client.ws.readyState === WebSocket.OPEN) {
-        console.log('Sending message to client:', clientId, 'Role:', client.role)
         client.ws.send(messageStr)
-      } else {
-        console.log('Client not available or connection closed:', clientId)
       }
     })
   }
@@ -416,10 +373,10 @@ class ChatWebSocketServer {
   }
 
   // Public method to broadcast to all managers
-  public broadcastToAllManagers(message: any) {
+  public broadcastToAllManagers(message: ChatMessage) {
     const messageStr = JSON.stringify(message)
 
-    this.clients.forEach((client, clientId) => {
+    this.clients.forEach((client) => {
       if (client.role === 'manager' && client.ws.readyState === WebSocket.OPEN) {
         client.ws.send(messageStr)
       }
@@ -427,84 +384,14 @@ class ChatWebSocketServer {
   }
 
   // Public method to broadcast to specific user
-  public broadcastToUser(chatId: string, message: any) {
+  public broadcastToUser(chatId: string, message: ChatMessage) {
     const messageStr = JSON.stringify(message)
 
-    this.clients.forEach((client, clientId) => {
+    this.clients.forEach((client) => {
       if (client.role === 'user' && client.chatId === chatId && client.ws.readyState === WebSocket.OPEN) {
         client.ws.send(messageStr)
       }
     })
-  }
-
-  // Public method to broadcast cart update to a specific user
-  public broadcastCartUpdate(userId: string) {
-    this.clients.forEach((client, clientId) => {
-      if (client.userId === userId && client.ws.readyState === WebSocket.OPEN) {
-        client.ws.send(JSON.stringify({ type: 'cart_update' }))
-      }
-    })
-  }
-
-  // Handle manager sending product to user
-  private async handleManagerSendProduct(clientId: string, message: ChatMessage) {
-    const client = this.clients.get(clientId);
-    if (!client || client.role !== 'manager' || !message.product) return;
-
-    console.log('Manager sending product:', {
-      clientId,
-      managerId: client.userId,
-      chatId: message.chatId,
-      productId: message.product._id,
-      productName: message.product.name
-    });
-
-    try {
-      // Save product message to database
-      await chatService.sendManagerMessage(
-        message.chatId, 
-        client.userId, 
-        `Sản phẩm: ${message.product.name}`,
-        undefined,
-        'product',
-        message.product
-      );
-
-      // Broadcast product message to room
-      this.broadcastToRoom(message.chatId, {
-        type: 'new_product_message',
-        chatId: message.chatId,
-        content: `Sản phẩm: ${message.product.name}`,
-        role: 'manager',
-        userId: client.userId,
-        timestamp: new Date(),
-        messageType: 'product',
-        product: message.product
-      });
-
-      // Update unread count for all clients in the room
-      this.updateUnreadCountForRoom(message.chatId);
-
-    } catch (error) {
-      console.error('Error handling manager send product:', error);
-    }
-  }
-
-  // Handle user clicking on product
-  private handleUserClickProduct(clientId: string, message: ChatMessage) {
-    const client = this.clients.get(clientId);
-    if (!client || client.role !== 'user' || !message.slug) return;
-
-    console.log('User clicked product:', {
-      clientId,
-      userId: client.userId,
-      chatId: message.chatId,
-      slug: message.slug
-    });
-
-    // Log analytics or save to database for tracking
-    // This could be used for analytics, recommendations, etc.
-    console.log(`User ${client.userId} clicked product with slug: ${message.slug} in chat ${message.chatId}`);
   }
 }
 

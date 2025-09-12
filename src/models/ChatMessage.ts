@@ -8,30 +8,13 @@ export interface IChatMessage extends MongooseDocument {
   isBotMessage?: boolean // Flag to identify bot messages
   isRead?: boolean // Flag to track if message is read
   attachments?: Array<{
-    filename: string;
-    originalName: string;
-    mimetype: string;
-    size: number;
-    url: string;
-  }>;
-  messageType: 'text' | 'file' | 'image' | 'product';
-  product?: {
-    _id: string;
-    name: string;
-    description?: string;
-    price: number;
-    discountPrice?: number;
-    images: string[];
-    sizes: { size: string; stock: number }[];
-    colors: string[];
-    tags: string[];
-    brand?: { _id: string; name: string };
-    categories?: { _id: string; name: string }[];
-    status: string;
-    ratingsAverage: number;
-    ratingsQuantity: number;
-    createdAt: Date;
-  };
+    filename: string
+    originalName: string
+    mimetype: string
+    size: number
+    url: string
+  }>
+  messageType: 'text' | 'file' | 'image'
 }
 
 const ChatMessageSchema = new Schema<IChatMessage>(
