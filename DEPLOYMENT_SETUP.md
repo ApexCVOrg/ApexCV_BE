@@ -18,7 +18,7 @@ MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/database?retryWrit
 # MONGO_URI=mongodb://localhost:27017/nidas
 
 # Frontend URL
-FRONTEND_URL=https://nidas-fe-git-feature-thindde180805ho-5e4ed2-thydynh03s-projects.vercel.app
+FRONTEND_URL=https://nidas-payment.vercel.app
 EXTRA_ORIGINS=https://apex-cv-fe.vercel.app
 
 # Session & JWT Secrets (Change these!)

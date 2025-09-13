@@ -64,7 +64,7 @@ import { resolveUrlString } from './utils/common'
  * const urlString = vnpay.buildPaymentUrl({
  *     vnp_Amount: 100000,
  *     vnp_IpAddr: '192.168.0.1',
- *     vnp_ReturnUrl: 'https://nidas-fe-git-feature-thindde180805ho-5e4ed2-thydynh03s-projects.vercel.app/payment/vnpay/return',
+ *     vnp_ReturnUrl: 'https://nidas-payment.vercel.app/payment/vnpay/return',
  *     vnp_TxnRef: tnx,
  *     vnp_OrderInfo: `Thanh toan cho ma GD: ${tnx}`,
  * }),
