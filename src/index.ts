@@ -75,15 +75,15 @@ const initializeServices = async () => {
 const app: Application = express()
 const PORT = Number(process.env.PORT) || 5000
 const HOST = process.env.HOST || '0.0.0.0'
-const FRONTEND_URL = process.env.FRONTEND_URL || 'https://nidas-fe.vercel.app'
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://nidas-fe-git-feature-thindde180805ho-5e4ed2-thydynh03s-projects.vercel.app'
 const EXTRA_ORIGINS = process.env.EXTRA_ORIGINS?.split(',') || []
 
 // Danh sách origin được phép
 const allowedOrigins = [
   FRONTEND_URL,
-  'https://nidas-fe.vercel.app',
-  'https://nidas-fe.vercel.app/en',
-  'https://nidas-fe.vercel.app/vi',
+  'https://nidas-fe-git-feature-thindde180805ho-5e4ed2-thydynh03s-projects.vercel.app',
+  'https://nidas-fe-git-feature-thindde180805ho-5e4ed2-thydynh03s-projects.vercel.app/en',
+  'https://nidas-fe-git-feature-thindde180805ho-5e4ed2-thydynh03s-projects.vercel.app/vi',
   'http://localhost:3000',
   ...EXTRA_ORIGINS
 ]
