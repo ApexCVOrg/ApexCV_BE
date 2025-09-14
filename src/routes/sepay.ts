@@ -54,7 +54,7 @@ router.post('/manual-webhook-test', async (req, res) => {
     
   } catch (error) {
     console.error('[SEPAY Manual Test] Error:', error)
-    res.status(500).json({ success: false, message: 'Manual test failed', error: error.message })
+    res.status(500).json({ success: false, message: 'Manual test failed', error: (error as Error).message })
   }
 })
 
