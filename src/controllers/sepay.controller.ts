@@ -186,8 +186,10 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     }
 
     // Parse sessionId from description for transaction record
-    const sidMatch = descriptionText.match(/sid([a-zA-Z0-9]+)/)
+    const sidMatch = descriptionText.match(/sid([a-zA-Z0-9_]+)/)
     const parsedSessionId = sidMatch && sidMatch[1]
+    
+    console.log('[SEPAY Webhook] Parsed sessionId from description:', parsedSessionId)
 
     // 3. Transaction handling - Add points to user (1 VND = 1 point)
     const pointsToAdd = Math.floor(numericAmount)
@@ -344,6 +346,8 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
     const { sessionId } = req.params
     const userId = req.user?._id
 
+    console.log('[SEPAY Status] Checking payment status for sessionId:', sessionId, 'userId:', userId)
+
     if (!userId) {
       return res.status(401).json({ error: 'User not authenticated' })
     }
@@ -355,11 +359,15 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
       status: 'completed'
     })
 
+    console.log('[SEPAY Status] Found transaction by sessionId:', !!transaction)
+
     // Fallback: nếu webhook chưa gán sessionId, thử khớp theo amount và thời gian từ session
     if (!transaction && req.session.sepayPayment && req.session.sepayPayment.sessionId === sessionId) {
       const sessionAmount = Number(req.session.sepayPayment.amount)
       const sessionCreatedAt = new Date(req.session.sepayPayment.createdAt)
       const oneHourAfter = new Date(sessionCreatedAt.getTime() + 60 * 60 * 1000)
+
+      console.log('[SEPAY Status] Fallback search - sessionAmount:', sessionAmount, 'timeRange:', sessionCreatedAt, 'to', oneHourAfter)
 
       // Tìm giao dịch hoàn tất cho user, trùng amount, tạo trong khoảng phiên
       const candidate = await Transaction.findOne({
@@ -369,11 +377,34 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
         createdAt: { $gte: sessionCreatedAt, $lte: oneHourAfter }
       }).sort({ createdAt: -1 })
 
+      console.log('[SEPAY Status] Found candidate transaction:', !!candidate)
+
       if (candidate) {
         // Gán liên kết sessionId để các lần gọi sau match nhanh hơn
         candidate.sessionId = sessionId
         await candidate.save()
         transaction = candidate
+        console.log('[SEPAY Status] Updated candidate with sessionId:', sessionId)
+      }
+    }
+
+    // Additional fallback: search for any recent sepay_payment transaction for this user
+    if (!transaction) {
+      console.log('[SEPAY Status] Additional fallback - searching for recent sepay transactions')
+      const recentTransaction = await Transaction.findOne({
+        userId: userId,
+        type: 'sepay_payment',
+        status: 'completed'
+      }).sort({ createdAt: -1 })
+
+      if (recentTransaction) {
+        console.log('[SEPAY Status] Found recent sepay transaction:', recentTransaction._id)
+        // Check if this transaction was created within the last 10 minutes
+        const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)
+        if (recentTransaction.createdAt >= tenMinutesAgo) {
+          transaction = recentTransaction
+          console.log('[SEPAY Status] Using recent transaction as match')
+        }
       }
     }
 
