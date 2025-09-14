@@ -166,8 +166,8 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     let finalUserId = null
     const descriptionText = transactionDescription || ''
     
-    // Use regex /uid([a-zA-Z0-9]+)/ to find the UID
-    const uidMatch = descriptionText.match(/uid([a-zA-Z0-9]+)/)
+    // Use regex /uid([a-f0-9]{24})/i to extract valid MongoDB ObjectId (24 hex characters)
+    const uidMatch = descriptionText.match(/uid([a-f0-9]{24})/i)
     if (uidMatch && uidMatch[1]) {
       finalUserId = uidMatch[1]
       console.log('[SEPAY Webhook] Parsed userId from description:', finalUserId)
