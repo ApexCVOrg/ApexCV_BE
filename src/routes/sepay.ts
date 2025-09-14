@@ -23,4 +23,11 @@ router.get(SEPAY_ROUTES.POINTS, checkUserAuth, getUserPoints)
 // Lấy lịch sử giao dịch điểm - yêu cầu user đăng nhập
 router.get(SEPAY_ROUTES.POINTS_HISTORY, checkUserAuth, getPointsHistory)
 
+// Test webhook endpoint (for debugging)
+router.post('/test-webhook', (req, res) => {
+  console.log('[SEPAY Test] Test webhook called')
+  console.log('[SEPAY Test] Body:', JSON.stringify(req.body, null, 2))
+  res.json({ success: true, message: 'Test webhook received' })
+})
+
 export default router
