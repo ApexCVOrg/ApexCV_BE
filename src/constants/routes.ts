@@ -151,6 +151,17 @@ export const APPLY_COUPON_ROUTES = {
   BASE: '/apply-coupon'
 } as const
 
+// Sepay routes
+export const SEPAY_ROUTES = {
+  BASE: '/api/sepay',
+  CREATE: '/create',
+  CONFIRM: '/confirm',
+  WEBHOOK: '/webhook',
+  STATUS: '/status/:sessionId',
+  POINTS: '/points',
+  POINTS_HISTORY: '/points/history'
+} as const
+
 export const buildRoute = (base: string, path: string): string => {
   return `${API_BASE}${base}${path}`
 }
