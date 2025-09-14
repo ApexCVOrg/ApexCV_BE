@@ -168,8 +168,13 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     let finalUserId = null
     const descriptionText = transactionDescription || ''
     
-    // Use regex /uid:([a-f0-9]{24})/i to extract valid MongoDB ObjectId (24 hex characters)
-    const uidMatch = descriptionText.match(/uid:([a-f0-9]{24})/i)
+    // Use regex to extract valid MongoDB ObjectId (24 hex characters)
+    // Support both formats: uid:xxx and uidxxx
+    let uidMatch = descriptionText.match(/uid:([a-f0-9]{24})/i)
+    if (!uidMatch) {
+      uidMatch = descriptionText.match(/uid([a-f0-9]{24})/i)
+    }
+    
     if (uidMatch && uidMatch[1]) {
       finalUserId = uidMatch[1]
       console.log('[SEPAY Webhook] Parsed userId from description:', finalUserId)
@@ -188,7 +193,11 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     }
 
     // Parse sessionId from description for transaction record
-    const sidMatch = descriptionText.match(/sid:([a-zA-Z0-9_]+)/)
+    // Support both formats: sid:xxx and sidxxx
+    let sidMatch = descriptionText.match(/sid:([a-zA-Z0-9_]+)/)
+    if (!sidMatch) {
+      sidMatch = descriptionText.match(/sid([a-zA-Z0-9_]+)/)
+    }
     const parsedSessionId = sidMatch && sidMatch[1]
     
     console.log('[SEPAY Webhook] Description text:', descriptionText)
