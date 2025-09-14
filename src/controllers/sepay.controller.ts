@@ -89,70 +89,113 @@ export const createSepayPayment = async (req: Request, res: Response) => {
 export const sepayWebhook = async (req: Request, res: Response) => {
   try {
     console.log('[SEPAY Webhook] ====== WEBHOOK TỪ SEPAY ======')
+    
+    // 1. API Key validation
+    const authHeader = req.headers.authorization
+    const expectedApiKey = process.env.SEPAY_WEBHOOK_KEY
+    
+    if (!expectedApiKey) {
+      console.error('[SEPAY Webhook] SEPAY_WEBHOOK_KEY not configured')
+      return res.status(401).json({ success: false, message: 'Webhook key not configured' })
+    }
+    
+    if (!authHeader || !authHeader.startsWith('Apikey ')) {
+      console.log('[SEPAY Webhook] Missing or invalid Authorization header:', authHeader)
+      return res.status(401).json({ success: false, message: 'Invalid API Key' })
+    }
+    
+    const receivedApiKey = authHeader.substring(7) // Remove 'Apikey ' prefix
+    if (receivedApiKey !== expectedApiKey) {
+      console.log('[SEPAY Webhook] API Key mismatch. Expected:', expectedApiKey, 'Received:', receivedApiKey)
+      return res.status(401).json({ success: false, message: 'Invalid API Key' })
+    }
+    
+    console.log('[SEPAY Webhook] API Key validation passed')
+    
+    // 2. Keep logging for debug
     try {
       console.log('[SEPAY Webhook] Raw body type:', typeof req.body)
       console.log('[SEPAY Webhook] Request body:', JSON.stringify(req.body, null, 2))
-      console.log('[SEPAY Webhook] Headers:', req.headers)
+      console.log('[SEPAY Webhook] Headers:', JSON.stringify(req.headers, null, 2))
     } catch (logErr) {
-      console.log('[SEPAY Webhook] Could not stringify body for log')
+      console.log('[SEPAY Webhook] Could not stringify body/headers for log:', logErr)
     }
 
+    // 1. Map payload fields correctly from real Sepay webhook format
     const { 
-      transactionId, 
-      amount, 
-      status, 
+      referenceCode, 
+      id, 
+      transferAmount, 
+      content, 
       description,
-      userId, // Sepay có thể gửi userId trong webhook
-      timestamp 
+      gateway,
+      transactionDate,
+      accountNumber
     } = req.body
 
-    // Kiểm tra signature từ Sepay (bảo mật)
-    // const signature = req.headers['x-sepay-signature']
-    // if (!verifySepaySignature(req.body, signature)) {
-    //   return res.status(400).json({ error: 'Invalid signature' })
-    // }
+    // Use referenceCode or fallback to id as transactionId
+    const transactionId = referenceCode || id?.toString()
+    // Use transferAmount as amount
+    const numericAmount = Number(transferAmount)
+    // Use content or fallback to description as transaction description
+    const transactionDescription = content || description || 'Sepay payment'
+    // Always treat as success since Sepay only calls webhook for successful transactions
+    const status = 'success'
 
-    // Chuẩn hóa dữ liệu cơ bản
-    const normalizedStatus = String(status || '').toLowerCase()
-    const numericAmount = Number(amount)
+    console.log('[SEPAY Webhook] Mapped fields:', {
+      transactionId,
+      amount: numericAmount,
+      description: transactionDescription,
+      gateway,
+      accountNumber
+    })
 
     if (!transactionId || isNaN(numericAmount)) {
-      // Dữ liệu không hợp lệ hoàn toàn
-      return res.status(400).json({ success: false, message: 'Invalid webhook data' })
+      console.log('[SEPAY Webhook] Invalid webhook data - missing transactionId or invalid amount')
+      return res.json({ success: false, message: 'Invalid webhook data' })
     }
 
-    if (normalizedStatus !== 'success') {
-      // Không thành công: trả 200 để tránh Sepay retry nhưng không cộng điểm
-      return res.json({ success: false, message: `Payment not successful (status=${status})` })
-    }
-
-    // Kiểm tra xem giao dịch đã được xử lý chưa
+    // 3. Transaction handling - Check if transactionId already exists
     const existingTransaction = await Transaction.findOne({ transactionId })
     if (existingTransaction) {
       console.log('[SEPAY Webhook] Transaction already processed:', transactionId)
       return res.json({ success: true, message: 'Transaction already processed' })
     }
 
-    // Parse uid/sid từ description: ApexCV|uid:<uid>|sid:<sid>|amt:<amt>
-    const uidMatch = typeof description === 'string' && description.match(/uid:([^|]+)/)
-    const sidMatch = typeof description === 'string' && description.match(/sid:([^|]+)/)
-    const parsedUserId = uidMatch && uidMatch[1]
-    const parsedSessionId = sidMatch && sidMatch[1]
-
-    const finalUserId = userId || parsedUserId
-    // Tìm user
-    const user = finalUserId ? await User.findById(finalUserId) : null
-    if (!user) {
-      // Không xác định được user: trả về 200 để tránh retry vô hạn, nhưng không cộng điểm
-      return res.json({ success: false, message: 'User not found from webhook payload' })
+    // 2. Extract userId from description using regex
+    let finalUserId = null
+    const descriptionText = transactionDescription || ''
+    
+    // Use regex /uid([a-zA-Z0-9]+)/ to find the UID
+    const uidMatch = descriptionText.match(/uid([a-zA-Z0-9]+)/)
+    if (uidMatch && uidMatch[1]) {
+      finalUserId = uidMatch[1]
+      console.log('[SEPAY Webhook] Parsed userId from description:', finalUserId)
+    }
+    
+    if (!finalUserId) {
+      console.log('[SEPAY Webhook] User not found in description:', descriptionText)
+      return res.json({ success: false, message: 'User not found in description' })
     }
 
-    // Cập nhật điểm cho user (1 VND = 1 điểm)
+    // Tìm user
+    const user = await User.findById(finalUserId)
+    if (!user) {
+      console.log('[SEPAY Webhook] User not found in database:', finalUserId)
+      return res.json({ success: false, message: 'User not found in description' })
+    }
+
+    // Parse sessionId from description for transaction record
+    const sidMatch = descriptionText.match(/sid([a-zA-Z0-9]+)/)
+    const parsedSessionId = sidMatch && sidMatch[1]
+
+    // 3. Transaction handling - Add points to user (1 VND = 1 point)
     const pointsToAdd = Math.floor(numericAmount)
-    user.points = (user.points || 0) + pointsToAdd
+    const oldPoints = user.points || 0
+    user.points = oldPoints + pointsToAdd
     await user.save()
 
-    // Tạo transaction record
+    // Create Transaction record
     const transaction = new Transaction({
       userId: user._id,
       type: 'sepay_payment',
@@ -160,7 +203,7 @@ export const sepayWebhook = async (req: Request, res: Response) => {
       points: pointsToAdd,
       transactionId: transactionId,
       sessionId: parsedSessionId || undefined,
-      description: description || 'Sepay payment',
+      description: transactionDescription,
       status: 'completed'
     })
     
@@ -168,15 +211,25 @@ export const sepayWebhook = async (req: Request, res: Response) => {
 
     console.log('[SEPAY Webhook] Payment processed successfully:', {
       userId: user._id,
-      amount: amount,
+      transactionId: transactionId,
+      amount: numericAmount,
       pointsAdded: pointsToAdd,
-      newBalance: user.points
+      oldBalance: oldPoints,
+      newBalance: user.points,
+      gateway: gateway,
+      accountNumber: accountNumber
     })
 
-    res.json({ success: true, message: 'Payment processed successfully', newBalance: user.points })
+    // 4. Response format - Always return HTTP 200 with JSON
+    return res.json({ 
+      success: true, 
+      message: 'Payment processed successfully', 
+      newBalance: user.points 
+    })
   } catch (err) {
     console.error('[SEPAY Webhook] Error processing webhook:', err)
-    res.status(500).json({ success: false, message: 'Webhook processing failed', detail: (err as any)?.message })
+    // Always return HTTP 200 to avoid Sepay retry loops
+    return res.json({ success: false, message: 'Webhook processing failed', detail: (err as any)?.message })
   }
 }
 
