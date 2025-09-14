@@ -403,10 +403,12 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
       }).sort({ createdAt: -1 })
 
       if (recentTransaction) {
-        console.log('[SEPAY Status] Found recent sepay transaction:', recentTransaction._id)
+        console.log('[SEPAY Status] Found recent sepay transaction:', recentTransaction._id, 'createdAt:', recentTransaction.createdAt)
         // Check if this transaction was created within the last 5 minutes AND after session creation
         const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
         const sessionCreatedAt = new Date(req.session.sepayPayment.createdAt)
+        
+        console.log('[SEPAY Status] Time comparison - fiveMinutesAgo:', fiveMinutesAgo, 'sessionCreatedAt:', sessionCreatedAt, 'transactionCreatedAt:', recentTransaction.createdAt)
         
         if (recentTransaction.createdAt >= fiveMinutesAgo && recentTransaction.createdAt >= sessionCreatedAt) {
           transaction = recentTransaction
@@ -414,7 +416,26 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
         } else {
           console.log('[SEPAY Status] Recent transaction too old or before session creation')
         }
+      } else {
+        console.log('[SEPAY Status] No recent sepay transactions found for user:', userId)
       }
+    }
+
+    // Debug: List all recent transactions for this user
+    if (!transaction) {
+      console.log('[SEPAY Status] Debug - listing all recent transactions for user:', userId)
+      const allRecentTransactions = await Transaction.find({
+        userId: userId,
+        type: 'sepay_payment'
+      }).sort({ createdAt: -1 }).limit(5)
+      
+      console.log('[SEPAY Status] Recent transactions:', allRecentTransactions.map(t => ({
+        id: t._id,
+        sessionId: t.sessionId,
+        amount: t.amount,
+        status: t.status,
+        createdAt: t.createdAt
+      })))
     }
 
     if (transaction) {
