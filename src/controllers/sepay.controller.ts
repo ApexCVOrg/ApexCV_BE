@@ -47,32 +47,26 @@ export const createSepayPayment = async (req: Request, res: Response) => {
     // Tạo QR code URL cho Sepay với description chứa định danh
     const qrCodeUrl = `https://qr.sepay.vn/img?bank=MBBank&acc=0949064234&template=compact&amount=${amount}&des=${encodeURIComponent(desc)}`
 
-    // Lưu thông tin thanh toán vào session để xử lý sau
-    req.session.sepayPayment = {
+    // Lưu thông tin thanh toán vào database thay vì session
+    const pendingTransaction = new Transaction({
       userId: userId,
+      type: 'sepay_payment',
       amount: amount,
-      description: desc,
+      points: 0, // Sẽ được cập nhật khi webhook đến
       sessionId: sessionId,
-      createdAt: new Date().toISOString()
-    }
+      description: desc,
+      status: 'pending'
+    })
+    
+    await pendingTransaction.save()
 
-    req.session.save((err) => {
-      if (err) {
-        console.error('[SEPAY] Error saving session:', err)
-        return res.status(500).json({
-          error: 'Failed to save session',
-          detail: 'Please try again'
-        })
-      }
-
-      console.log('[SEPAY] Session saved successfully')
-      res.json({
-        success: true,
-        qrCodeUrl: qrCodeUrl,
-        sessionId: sessionId,
-        amount: amount,
-        message: 'QR code thanh toán đã được tạo thành công'
-      })
+    console.log('[SEPAY] Pending transaction saved to database')
+    res.json({
+      success: true,
+      qrCodeUrl: qrCodeUrl,
+      sessionId: sessionId,
+      amount: amount,
+      message: 'QR code thanh toán đã được tạo thành công'
     })
   } catch (err) {
     console.error('[SEPAY] Error creating payment:', err)
@@ -128,7 +122,7 @@ export const sepayWebhook = async (req: Request, res: Response) => {
 
     // Kiểm tra xem giao dịch đã được xử lý chưa
     const existingTransaction = await Transaction.findOne({ transactionId })
-    if (existingTransaction) {
+    if (existingTransaction && existingTransaction.status === 'completed') {
       console.log('[SEPAY Webhook] Transaction already processed:', transactionId)
       return res.json({ success: true, message: 'Transaction already processed' })
     }
@@ -152,19 +146,27 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     user.points = (user.points || 0) + pointsToAdd
     await user.save()
 
-    // Tạo transaction record
-    const transaction = new Transaction({
-      userId: user._id,
-      type: 'sepay_payment',
-      amount: numericAmount,
-      points: pointsToAdd,
-      transactionId: transactionId,
-      sessionId: parsedSessionId || undefined,
-      description: description || 'Sepay payment',
-      status: 'completed'
-    })
-    
-    await transaction.save()
+    // Cập nhật hoặc tạo transaction record
+    if (existingTransaction) {
+      // Cập nhật transaction đã tồn tại
+      existingTransaction.points = pointsToAdd
+      existingTransaction.transactionId = transactionId
+      existingTransaction.status = 'completed'
+      await existingTransaction.save()
+    } else {
+      // Tạo transaction mới
+      const transaction = new Transaction({
+        userId: user._id,
+        type: 'sepay_payment',
+        amount: numericAmount,
+        points: pointsToAdd,
+        transactionId: transactionId,
+        sessionId: parsedSessionId || undefined,
+        description: description || 'Sepay payment',
+        status: 'completed'
+      })
+      await transaction.save()
+    }
 
     console.log('[SEPAY Webhook] Payment processed successfully:', {
       userId: user._id,
@@ -196,16 +198,20 @@ export const confirmSepayPayment = async (req: Request, res: Response) => {
       })
     }
 
-    // Lấy thông tin thanh toán từ session
-    const paymentData = req.session.sepayPayment
-    if (!paymentData || paymentData.sessionId !== sessionId) {
+    // Tìm transaction pending với sessionId này
+    const pendingTransaction = await Transaction.findOne({
+      sessionId: sessionId,
+      status: 'pending'
+    })
+    
+    if (!pendingTransaction) {
       return res.status(400).json({
-        error: 'Invalid session or payment data not found'
+        error: 'Payment session not found or already processed'
       })
     }
 
     // Kiểm tra amount với tolerance ±1 VND
-    const expected = Number(paymentData.amount)
+    const expected = Number(pendingTransaction.amount)
     const received = Number(amount)
     if (isNaN(expected) || isNaN(received)) {
       return res.status(400).json({ error: 'Invalid amount' })
@@ -217,7 +223,7 @@ export const confirmSepayPayment = async (req: Request, res: Response) => {
     }
 
     // Tìm user
-    const user = await User.findById(paymentData.userId)
+    const user = await User.findById(pendingTransaction.userId)
     if (!user) {
       return res.status(400).json({
         error: 'User not found'
@@ -229,23 +235,11 @@ export const confirmSepayPayment = async (req: Request, res: Response) => {
     user.points = (user.points || 0) + pointsToAdd
     await user.save()
 
-    // Tạo transaction record
-    const transaction = new Transaction({
-      userId: user._id,
-      type: 'sepay_payment',
-      amount: received,
-      points: pointsToAdd,
-      transactionId: transactionId,
-      sessionId: sessionId,
-      description: paymentData.description,
-      status: 'completed'
-    })
-    
-    await transaction.save()
-
-    // Xóa session sau khi xử lý thành công
-    delete req.session.sepayPayment
-    req.session.save()
+    // Cập nhật transaction record
+    pendingTransaction.points = pointsToAdd
+    pendingTransaction.transactionId = transactionId
+    pendingTransaction.status = 'completed'
+    await pendingTransaction.save()
 
     console.log('[SEPAY] Payment confirmed successfully:', {
       userId: user._id,
@@ -259,13 +253,13 @@ export const confirmSepayPayment = async (req: Request, res: Response) => {
       message: `Thanh toán thành công! Bạn đã nhận được ${pointsToAdd} điểm`,
       data: {
         transaction: {
-          id: transaction._id,
-          type: transaction.type,
-          amount: transaction.amount,
-          points: transaction.points,
-          transactionId: transaction.transactionId,
-          status: transaction.status,
-          createdAt: transaction.createdAt
+          id: pendingTransaction._id,
+          type: pendingTransaction.type,
+          amount: pendingTransaction.amount,
+          points: pendingTransaction.points,
+          transactionId: pendingTransaction.transactionId,
+          status: pendingTransaction.status,
+          createdAt: pendingTransaction.createdAt
         },
         user: {
           id: user._id,
@@ -302,25 +296,18 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
       status: 'completed'
     })
 
-    // Fallback: nếu webhook chưa gán sessionId, thử khớp theo amount và thời gian từ session
-    if (!transaction && req.session.sepayPayment && req.session.sepayPayment.sessionId === sessionId) {
-      const sessionAmount = Number(req.session.sepayPayment.amount)
-      const sessionCreatedAt = new Date(req.session.sepayPayment.createdAt)
-      const oneHourAfter = new Date(sessionCreatedAt.getTime() + 60 * 60 * 1000)
-
-      // Tìm giao dịch hoàn tất cho user, trùng amount, tạo trong khoảng phiên
-      const candidate = await Transaction.findOne({
+    // Nếu chưa tìm thấy, thử tìm theo sessionId trong database (không phụ thuộc session)
+    if (!transaction) {
+      // Tìm transaction pending với sessionId này
+      const pendingTransaction = await Transaction.findOne({
+        sessionId: sessionId,
         userId: userId,
-        status: 'completed',
-        amount: sessionAmount,
-        createdAt: { $gte: sessionCreatedAt, $lte: oneHourAfter }
-      }).sort({ createdAt: -1 })
-
-      if (candidate) {
-        // Gán liên kết sessionId để các lần gọi sau match nhanh hơn
-        candidate.sessionId = sessionId
-        await candidate.save()
-        transaction = candidate
+        status: 'pending'
+      })
+      
+      if (pendingTransaction) {
+        // Nếu vẫn pending, có thể webhook chưa đến hoặc có lỗi
+        console.log('[SEPAY] Transaction still pending:', sessionId)
       }
     }
 
