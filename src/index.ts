@@ -35,6 +35,7 @@ import chatRouter from './routes/chat'
 import adminRouter from './routes/admin/admin'
 import applyCouponRouter from './routes/apply-coupon'
 import uploadRouter from './routes/upload'
+import sepayRouter from './routes/sepay'
 import { errorHandler } from './middlewares/errorHandler'
 import {
   AUTH_ROUTES,
@@ -52,7 +53,8 @@ import {
   USER_CHAT_ROUTES,
   FAVORITES_ROUTES,
   CHAT_ROUTES,
-  APPLY_COUPON_ROUTES
+  APPLY_COUPON_ROUTES,
+  SEPAY_ROUTES
 } from './constants/routes'
 
 dotenv.config()
@@ -179,6 +181,7 @@ app.use(CHAT_ROUTES.BASE, chatRouter)
 app.use(ADMIN_ROUTES.BASE, adminRouter)
 app.use(APPLY_COUPON_ROUTES.BASE, applyCouponRouter)
 app.use('/upload', uploadRouter)
+app.use(SEPAY_ROUTES.BASE, sepayRouter)
 
 app.use(errorHandler as express.ErrorRequestHandler)
 
