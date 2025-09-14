@@ -120,6 +120,8 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     } catch (logErr) {
       console.log('[SEPAY Webhook] Could not stringify body/headers for log:', logErr)
     }
+    
+    console.log('[SEPAY Webhook] ====== WEBHOOK RECEIVED ======')
 
     // 1. Map payload fields correctly from real Sepay webhook format
     const { 
@@ -166,8 +168,8 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     let finalUserId = null
     const descriptionText = transactionDescription || ''
     
-    // Use regex /uid([a-f0-9]{24})/i to extract valid MongoDB ObjectId (24 hex characters)
-    const uidMatch = descriptionText.match(/uid([a-f0-9]{24})/i)
+    // Use regex /uid:([a-f0-9]{24})/i to extract valid MongoDB ObjectId (24 hex characters)
+    const uidMatch = descriptionText.match(/uid:([a-f0-9]{24})/i)
     if (uidMatch && uidMatch[1]) {
       finalUserId = uidMatch[1]
       console.log('[SEPAY Webhook] Parsed userId from description:', finalUserId)
@@ -186,7 +188,7 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     }
 
     // Parse sessionId from description for transaction record
-    const sidMatch = descriptionText.match(/sid([a-zA-Z0-9_]+)/)
+    const sidMatch = descriptionText.match(/sid:([a-zA-Z0-9_]+)/)
     const parsedSessionId = sidMatch && sidMatch[1]
     
     console.log('[SEPAY Webhook] Parsed sessionId from description:', parsedSessionId)
@@ -219,14 +221,16 @@ export const sepayWebhook = async (req: Request, res: Response) => {
       oldBalance: oldPoints,
       newBalance: user.points,
       gateway: gateway,
-      accountNumber: accountNumber
+      accountNumber: accountNumber,
+      sessionId: parsedSessionId
     })
 
     // 4. Response format - Always return HTTP 200 with JSON
     return res.json({ 
       success: true, 
       message: 'Payment processed successfully', 
-      newBalance: user.points 
+      newBalance: user.points,
+      sessionId: parsedSessionId
     })
   } catch (err) {
     console.error('[SEPAY Webhook] Error processing webhook:', err)
