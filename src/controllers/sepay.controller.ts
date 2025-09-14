@@ -194,9 +194,10 @@ export const sepayWebhook = async (req: Request, res: Response) => {
 
     // Parse sessionId from description for transaction record
     // Support both formats: sid:xxx and sidxxx
-    let sidMatch = descriptionText.match(/sid:([a-zA-Z0-9_]+)/)
+    // Stop at 'amt' to avoid including amount in sessionId
+    let sidMatch = descriptionText.match(/sid:([a-zA-Z0-9_]+?)(?=amt|$)/)
     if (!sidMatch) {
-      sidMatch = descriptionText.match(/sid([a-zA-Z0-9_]+)/)
+      sidMatch = descriptionText.match(/sid([a-zA-Z0-9_]+?)(?=amt|$)/)
     }
     const parsedSessionId = sidMatch && sidMatch[1]
     
