@@ -191,6 +191,10 @@ export const sepayWebhook = async (req: Request, res: Response) => {
     const sidMatch = descriptionText.match(/sid:([a-zA-Z0-9_]+)/)
     const parsedSessionId = sidMatch && sidMatch[1]
     
+    console.log('[SEPAY Webhook] Description text:', descriptionText)
+    console.log('[SEPAY Webhook] Regex match result:', sidMatch)
+    console.log('[SEPAY Webhook] Parsed sessionId:', parsedSessionId)
+    
     console.log('[SEPAY Webhook] Parsed sessionId from description:', parsedSessionId)
 
     // 3. Transaction handling - Add points to user (1 VND = 1 point)
@@ -436,6 +440,26 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
         status: t.status,
         createdAt: t.createdAt
       })))
+      
+      // Additional fallback: if we have session data, try to find any recent transaction
+      if (req.session.sepayPayment && req.session.sepayPayment.sessionId === sessionId) {
+        const sessionCreatedAt = new Date(req.session.sepayPayment.createdAt)
+        const sessionAmount = Number(req.session.sepayPayment.amount)
+        
+        // Find the most recent completed transaction after session creation
+        const recentCompletedTransaction = await Transaction.findOne({
+          userId: userId,
+          type: 'sepay_payment',
+          status: 'completed',
+          amount: sessionAmount,
+          createdAt: { $gte: sessionCreatedAt }
+        }).sort({ createdAt: -1 })
+        
+        if (recentCompletedTransaction) {
+          console.log('[SEPAY Status] Found recent completed transaction by amount and time:', recentCompletedTransaction._id)
+          transaction = recentCompletedTransaction
+        }
+      }
     }
 
     if (transaction) {
