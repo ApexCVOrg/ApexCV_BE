@@ -42,7 +42,7 @@ export const createSepayPayment = async (req: Request, res: Response) => {
     }
 
     // Tạo sessionId và nhúng vào mô tả để webhook parse lại
-    const sessionId = `sepay_${Date.now()}_${userId}`
+    const sessionId = `sepay${Date.now()}${userId}`
     const desc = `ApexCV|uid:${userId}|sid:${sessionId}|amt:${amount}`
     // Tạo QR code URL cho Sepay với description chứa định danh
     const qrCodeUrl = `https://qr.sepay.vn/img?bank=MBBank&acc=0949064234&template=compact&amount=${amount}&des=${encodeURIComponent(desc)}`
