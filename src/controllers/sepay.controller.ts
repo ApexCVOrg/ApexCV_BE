@@ -389,7 +389,8 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
     }
 
     // Additional fallback: search for any recent sepay_payment transaction for this user
-    if (!transaction) {
+    // Only if we have session data to compare
+    if (!transaction && req.session.sepayPayment && req.session.sepayPayment.sessionId === sessionId) {
       console.log('[SEPAY Status] Additional fallback - searching for recent sepay transactions')
       const recentTransaction = await Transaction.findOne({
         userId: userId,
@@ -399,33 +400,62 @@ export const checkPaymentStatus = async (req: Request, res: Response) => {
 
       if (recentTransaction) {
         console.log('[SEPAY Status] Found recent sepay transaction:', recentTransaction._id)
-        // Check if this transaction was created within the last 10 minutes
-        const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)
-        if (recentTransaction.createdAt >= tenMinutesAgo) {
+        // Check if this transaction was created within the last 5 minutes AND after session creation
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
+        const sessionCreatedAt = new Date(req.session.sepayPayment.createdAt)
+        
+        if (recentTransaction.createdAt >= fiveMinutesAgo && recentTransaction.createdAt >= sessionCreatedAt) {
           transaction = recentTransaction
-          console.log('[SEPAY Status] Using recent transaction as match')
+          console.log('[SEPAY Status] Using recent transaction as match - created after session')
+        } else {
+          console.log('[SEPAY Status] Recent transaction too old or before session creation')
         }
       }
     }
 
     if (transaction) {
-      // Lấy thông tin user mới nhất
-      const user = await User.findById(userId).select('points')
+      // Double check: ensure transaction was created after session creation
+      let isValidTransaction = true
       
-      res.json({
-        success: true,
-        paid: true,
-        transaction: {
-          id: transaction._id,
-          amount: transaction.amount,
-          points: transaction.points,
-          createdAt: transaction.createdAt
-        },
-        user: {
-          points: user?.points || 0
+      if (req.session.sepayPayment && req.session.sepayPayment.sessionId === sessionId) {
+        const sessionCreatedAt = new Date(req.session.sepayPayment.createdAt)
+        const transactionCreatedAt = new Date(transaction.createdAt)
+        
+        // Transaction must be created after session creation
+        if (transactionCreatedAt < sessionCreatedAt) {
+          console.log('[SEPAY Status] Transaction created before session - invalid')
+          isValidTransaction = false
         }
-      })
+      }
+      
+      if (isValidTransaction) {
+        // Lấy thông tin user mới nhất
+        const user = await User.findById(userId).select('points')
+        
+        console.log('[SEPAY Status] Returning success - valid transaction found')
+        res.json({
+          success: true,
+          paid: true,
+          transaction: {
+            id: transaction._id,
+            amount: transaction.amount,
+            points: transaction.points,
+            createdAt: transaction.createdAt
+          },
+          user: {
+            points: user?.points || 0
+          }
+        })
+      } else {
+        console.log('[SEPAY Status] Transaction found but invalid - returning not paid')
+        res.json({
+          success: true,
+          paid: false,
+          message: 'Payment not completed yet'
+        })
+      }
     } else {
+      console.log('[SEPAY Status] No transaction found - returning not paid')
       res.json({
         success: true,
         paid: false,
